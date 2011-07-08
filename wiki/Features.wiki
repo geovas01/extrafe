@@ -1,0 +1,16 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+A list of all the features of ExtraFE that completed and work...
+
+
+= Details =
+
+*ExtraFE* the main goal is to provide to the end user the simplicity and the user friendly GUI to use this frontend for emulators, music, video and other components that i provide.
+
+Main page and blog is http://www.azrael.co.cc
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
