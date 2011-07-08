@@ -6,11 +6,12 @@
 Main page and blog is http://www.azrael.co.cc
 
 ExtraFE splits in two main programs the *confEditor* and *ExtraFE*.
-  * *confEditor* is the configuration program for ExtraFE.
+  * *confEditor* is the configuration program for ExtraFE.<br>
+All the user work is here he must provide all the information that the program wants to work properly. 
+  * *ExtraFE* is the frontend program for the confEditor.<br>
+It provides to the user all the simplicity and the easy of use with visual 
+effects to run the programs, emulators etc.
  
 ----
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+<font color="red">*confEditor*</font>
