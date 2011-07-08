@@ -2,11 +2,11 @@
 
 == Introduction ==
 
-*ExtraFE* the main goal is to provide to the end user the simplicity and the user friendly GUI to use this frontend for emulators, music, video and other components that i provide.
+*ExtraFE* the main goal is to provide to the end user the simplicity and the user friendly GUI to use this frontend for emulators, music, video and other components that i provide.<br>
 Main page and blog is http://www.azrael.co.cc
 
 ExtraFE splits in two main programs the *confEditor* and *ExtraFE*.
-  *bullet *confEditor* is the configuration program for ExtraFE.
+  * *confEditor* is the configuration program for ExtraFE.
  
 ----
 
