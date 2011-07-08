@@ -6,7 +6,7 @@
 Main page and blog is http://www.azrael.co.cc
 
 ExtraFE splits in two main programs the *confEditor* and *ExtraFE*.
-*bullet *confEditor* is the configuration program for ExtraFE.
+  *bullet *confEditor* is the configuration program for ExtraFE.
  
 ----
 
