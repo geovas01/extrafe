@@ -4,10 +4,11 @@
  
   * ~~Rewwriting from the scratch the UI.~~ 
   * Config Settings for confEditor.
-  * ~~Master configuration for ExtraFE.~~
-  * Master Config Settings for Mame.
+  * Master configuration for ExtraFE.
+  * ~~Master Config Settings for Mame.~~
   * Setting, creating and manipulating Mame Database in XML.
-  * Settings for mame builds, MamePlus and MamePlusXT
+  * ~~Settings for mame builds, MamePlus and MamePlusXT.~~
+  * Tools Settings usefull for Mame.
   * Master Config settings for Zinc.
   * Master Config settings for Hatari.
   * Master Config settings for pSX.
