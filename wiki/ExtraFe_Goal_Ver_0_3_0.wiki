@@ -1,8 +1,10 @@
-#summary One-sentence summary of this page.
+#summary confEditor and Extrafe Ver 0.3.0 Goals.
 
-= Introduction =
+= confEditor =
+ 
+  * Rewwriting from the scratch the UI. 
+  * 
 
-Add your content here.
 
 
 = Details =
