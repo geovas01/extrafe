@@ -2,18 +2,18 @@
 
 = confEditor =
  
-  * ~~Rewwriting from the scratch the UI.~~ 
-  * Config Settings for confEditor.
-  * Master configuration for ExtraFE.
-  * ~~Master Config Settings for Mame.~~
-  * Setting, creating and manipulating Mame Database in XML.
-  * ~~Settings for mame builds, MamePlus and MamePlusXT.~~
-  * Tools Settings usefull for Mame.
-  * Master Config settings for Zinc.
-  * Master Config settings for Hatari.
-  * Master Config settings for pSX.
-  * Master Config settings for Kigb.
-  * GUID, and Master Settings for Weather widget.
-  * Time and Date, local and global settings widget.  
+  * ~~Rewwriting from the scratch the UI.~~ (100% Done)
+  * Config Settings for confEditor. (70% Done)
+  * Master configuration for ExtraFE. (0% Done)
+  * ~~Master Config Settings for Mame.~~ (100% Done)
+  * Setting, creating and manipulating Mame Database in XML. (50% Done)
+  * ~~Settings for mame builds, MamePlus and MamePlusXT.~~ (100% Done)
+  * Tools Settings usefull for Mame. (20% Done)
+  * Master Config settings for Zinc. (20% Done)
+  * Master Config settings for Hatari. (20% Done)
+  * Master Config settings for pSX. (20% Done)
+  * Master Config settings for Kigb. (20% Done)
+  * GUID, and Master Settings for Weather widget. (0% Done)
+  * Time and Date, local and global settings widget. (0% Done)
 
 = Extrafe =
