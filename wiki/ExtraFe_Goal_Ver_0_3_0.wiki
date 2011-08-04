@@ -2,7 +2,7 @@
 
 = confEditor =
  
-  * ~~Rewwriting from the scratch the UI.~~ (100% Done)
+  * ~~<font color='red>'Rewwriting from the scratch the UI.</font>~~ (100% Done)
   * Config Settings for confEditor. (70% Done)
   * Master configuration for ExtraFE. (0% Done)
   * ~~Master Config Settings for Mame.~~ (100% Done)
