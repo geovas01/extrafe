@@ -1,13 +1,16 @@
-#summary One-sentence summary of this page.
+#summary Installing ExtraFe and its components.
 
-= Introduction =
+= Install =
 
-Add your content here.
+Installation of ExtraFe comes in two ways.
+ 
+ # The setup version.
+ # The zip versio.
 
+= The Setup Version. =
 
-= Details =
+Just Download the Setup version and run as admninistrator with double click. Follow the instractions and voila. You have a group in your start menu called ExtraFe. Please run <font color='red'>*First*</font> the confEditor. 
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= The Zip Version. =
+
+Download the zip file and unzip it everywhere you want. The folder that will created named ExtraFe(some Version) has two folders, confEditor and ExtraFe. Go to confEditor and please run <font color='red'>*First*</font> the confEditor.exe. 
