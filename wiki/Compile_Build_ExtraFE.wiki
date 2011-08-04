@@ -8,7 +8,7 @@ Rev. 0.2.... and Under.
 
 <font color='blue'>confEditor</font>
 
-* Delphi 7.
+* Delphi 7
 * Jvcl Component Library.
 * .... 
 
