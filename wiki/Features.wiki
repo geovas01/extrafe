@@ -15,3 +15,5 @@ effects to run the programs, emulators etc.
 ----
 
 <font color="red">*confEditor*</font>
+
+The page is not Competed...
