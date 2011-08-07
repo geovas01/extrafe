@@ -17,3 +17,5 @@
   * Time and Date, local and global settings widget. (0% Done)
 
 = Extrafe =
+
+When the condEditor complete then i write the goals for the ExtrFE.
