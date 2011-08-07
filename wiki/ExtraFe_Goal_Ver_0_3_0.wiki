@@ -18,4 +18,4 @@
 
 = Extrafe =
 
-When the condEditor complete then i write the goals for the ExtrFE.
+When the condEditor complete then i write the goals for the ExtrFe.
