@@ -127,6 +127,8 @@ end;
 
 procedure IPSEnableClick_MamePlus;
 begin
+  if FromArrows_Mamedirs = True then
+    Conf.sCheckBox34.Checked := False;
   if Conf.sCheckBox34.Checked = False then
     begin
       Conf.sEdit13.Enabled := False;
@@ -152,6 +154,8 @@ end;
 
 procedure IPSEnableClick_MameXT;
 begin
+  if FromArrows_Mamedirs = True then
+    Conf.sCheckBox130.Checked := False;
   if Conf.sCheckBox130.Checked = False then
     begin
       Conf.sEdit17.Enabled := False;
@@ -1519,19 +1523,27 @@ begin
         Readln(GameCount,Game);
         Count := Count + 1;
         GamePlayTime_Memo.Lines.Add(Game);
-        if FromDatabase = False then
+        if FromArrows_Mamedirs = False then
           begin
-            Splash_Screen.Progress_Label(((100 * Count) div (Lines-1)),'Loading MameXT Play/Time Count List');
-            Splash_Screen.sGauge1.Suffix := '%';
-            Application.ProcessMessages;
+            if FromDatabase = False then
+              begin
+                Splash_Screen.Progress_Label(((100 * Count) div (Lines-1)),'Loading MameXT Play/Time Count List');
+                Splash_Screen.sGauge1.Suffix := '%';
+              end
+            else
+              begin
+                Conf.sGauge_MameData.Progress := (100 * Count) div (Lines-1);
+                Conf.sGauge_MameData.Suffix := '%';
+                Conf.sLabel109.Caption := 'Loading MameXT Play/Time Count List';
+              end;
           end
         else
           begin
-            Conf.sGauge_MameData.Progress := (100 * Count) div (Lines-1);
-//            Conf.sGauge_MameData.Suffix := '%';
-            Conf.sLabel109.Caption := 'Loading MameXT Play/Time Count List';
-            Application.ProcessMessages;
+            Conf.sGauge_MameChange.Progress := (100 * Count) div (Lines-1);
+            Conf.sGauge_MameChange.Suffix := '%';
+            Conf.sLabel112.Caption := 'Loading MameXT Play/Time Count List';
           end;
+        Application.ProcessMessages;
       end;
   CloseFile(GameCount);
 end;

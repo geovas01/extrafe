@@ -1128,16 +1128,16 @@ begin
 //      MameIni.WriteString('MamePaths','Type1','');
       MameIni.WriteInteger('SelMame','Selected',-1);
       MameIni.WriteBool('SelMame','ShowOnly',False);
-      MameIni.WriteString('MameDirs','Cabinets_Dir','Default');
-      MameIni.WriteString('MameDirs','Flyers_Dir','Default');
-      MameIni.WriteString('MameDirs','Marquees_Dir','Default');
-      MameIni.WriteString('MameDirs','Control_Panels_Dir','Default');
-      MameIni.WriteString('MameDirs','Pcbs_Dir','Default');
-      MameIni.WriteString('MameDirs','Artwork_Preview_Dir','Default');
-      MameIni.WriteString('MameDirs','Titles_Dir','Default');
-      MameIni.WriteString('MameDirs','Select_Dir','Default');
-      MameIni.WriteString('MameDirs','Scores_Dir','Default');
-      MameIni.WriteString('MameDirs','Bosses_Dir','Default');
+      MameIni.WriteString('MameDirs','Cabinets_Dir_-1','Default');
+      MameIni.WriteString('MameDirs','Flyers_Dir_-1','Default');
+      MameIni.WriteString('MameDirs','Marquees_Dir_-1','Default');
+      MameIni.WriteString('MameDirs','Control_Panels_Dir_-1','Default');
+      MameIni.WriteString('MameDirs','Pcbs_Dir_-1','Default');
+      MameIni.WriteString('MameDirs','Artwork_Preview_Dir_-1','Default');
+      MameIni.WriteString('MameDirs','Titles_Dir_-1','Default');
+      MameIni.WriteString('MameDirs','Select_Dir_-1','Default');
+      MameIni.WriteString('MameDirs','Scores_Dir_-1','Default');
+      MameIni.WriteString('MameDirs','Bosses_Dir_-1','Default');
     end;
   //pSX Start Inis
   PsxIni := TiniFile.Create(Program_Path +'config\psx.ini');
@@ -1271,7 +1271,6 @@ begin
             begin
               Conf.sLabel109.Caption := 'SetSettings To Mame (ConfEditor)';
               Conf.sGauge_MameData.Progress := 70;
-              Application.ProcessMessages;
             end;
         end
       else

@@ -261,15 +261,24 @@ begin
             XMLDoc := CreateXMLDoc;
             FGa := TGauseStream.Create;
             try
-              Splash_Screen.sLabel1.Caption := 'Loading Mame Database...';
+              if FromArrows_Mamedirs = False then
+                Splash_Screen.sLabel1.Caption := 'Loading Mame Database...'
+              else
+                Conf.sLabel112.Caption := 'Loading Mame Database...';
               Application.ProcessMessages;
               XMLDoc.PreserveWhiteSpace := True;
               FGa.LoadFromFile(PathXmlMame+'_efuse.xml');
-              FGa.Gause := Splash_Screen.sGauge1;
+              if FromArrows_Mamedirs = False then
+                FGa.Gause := Splash_Screen.sGauge1
+              else
+                FGa.Gause := Conf.sGauge_MameChange;
               XMLDoc.LoadFromStream(FGa);
             finally
               SetTheGridForSetup;
-              Splash_Screen.sLabel1.Caption := 'Setting Mame Database...';
+              if FromArrows_Mamedirs = False then
+                Splash_Screen.sLabel1.Caption := 'Setting Mame Database...'
+              else
+                Conf.sLabel112.Caption := 'Setting Mame Database...';
               gameList := xmlDoc.SelectNodes('/NxGrid/Row');
               Conf.nxtgrd_mame.AddRow(gameList.Length);
               conf.nxtgrd_mame.BeginUpdate;
@@ -284,7 +293,10 @@ begin
                   if GetNodeTextStr(nodegame,'CloneOf','') <> '' then
                     Conf.nxtgrd_mame.Cell[6,rowCount].AsString := GetNodeTextStr(nodegame,'CloneOf');
                   rowCount := rowCount + 1;
-                  Splash_Screen.sGauge1.Progress := (100 * iNode) div (gameList.Length-1);
+                  if FromArrows_Mamedirs = False then
+                    Splash_Screen.sGauge1.Progress := (100 * iNode) div (gameList.Length-1)
+                  else
+                    Conf.sGauge_MameChange.Progress := (100 * iNode) div (gameList.Length-1);
                   Application.ProcessMessages;
                 end;
               Conf.sLabel104.Caption := Conf.nxtgrd_mame.Cell[1,rowCount-1].AsString;

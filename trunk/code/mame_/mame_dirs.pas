@@ -93,6 +93,8 @@ begin
   MameIni.WriteInteger('SelMame','Selected',SelectedMame);
   if Mame_Exe <> '' then
     begin
+      Conf.Enabled := False;
+      DisableMenuButtons(False);
       FromArrows_Mamedirs:= True;
       Conf.sLabel112.Visible := True;
       Conf.sGauge_MameChange.Visible := True;
@@ -100,6 +102,9 @@ begin
       Conf.sLabel112.Visible := False;
       Conf.sGauge_MameChange.Visible := False;
       FromArrows_Mamedirs := False;
+      SaveMame_DirsAtExit;
+      DisableMenuButtons(True);
+      Conf.Enabled := True;
     end
   else
     MamePanels_Clear;
@@ -122,6 +127,8 @@ begin
   MameIni.WriteInteger('SelMame','Selected',SelectedMame);
   if Mame_Exe <> '' then
     begin
+      Conf.Enabled := False;
+      DisableMenuButtons(False);
       FromArrows_Mamedirs:= True;
       Conf.sLabel112.Visible := True;
       Conf.sGauge_MameChange.Visible := True;
@@ -129,6 +136,9 @@ begin
       Conf.sLabel112.Visible := False;
       Conf.sGauge_MameChange.Visible := False;
       FromArrows_Mamedirs := False;
+      SaveMame_DirsAtExit;
+      DisableMenuButtons(True);
+      Conf.Enabled := True;
     end
   else
     MamePanels_Clear;
@@ -165,6 +175,7 @@ begin
           else Conf.sEdit64.Text := '';
         end;
     end;
+  Mame_Exe := Conf.sEdit64.Text;
 end;
 
 procedure GetMame;
@@ -280,14 +291,14 @@ begin
       for i := k to 9 do
         begin
           CompNotFound := False;
-          value := MameIni.ReadString('MameDirs',foldersMame[i]+'_Dir',value);
+          value := MameIni.ReadString('MameDirs',foldersMame[i]+'_Dir_'+IntToStr(SelectedMame),value);
           if foldersMame[i] = 'Control_Panels' then
             realNameComp := 'Control Panels'
           else if foldersMame[i] = 'Artwork_Preview' then
             realNameComp := 'Artwork Preview'
           else
             realNameComp := foldersMame[i];
-          if value = 'Default' then
+          if (value = 'Default') or (value = '') then
             value := ExtractFilePath(Mame_Exe)+realNameComp;
           if not DirectoryExists(value) then
             CreateDir(value);
@@ -484,9 +495,8 @@ begin
                 end;
             end;
           CompNotFound := False;
-          MameIni.WriteString('MameDirs',foldersMame[i]+'_Dir',value);
+          MameIni.WriteString('MameDirs',foldersMame[i]+'_Dir_'+IntToStr(SelectedMame),value);
         end;
-
       Mame_Global_MemoIni.Lines.SaveToFile(ExtractFilePath(Conf.sEdit64.Text)+'mame.ini');
       FromMame_DirsToFindDirs := False;
     end;
