@@ -18,10 +18,10 @@ effects to run the programs, emulators etc.
 
  * Great Looking and Easy using new UserInterFace.
  * One Button Config For Emulators. That mean the you choose your Emulator and the program setups the default settings of the emulator. The emulator is ready to run.
- * In Mame section easy looking Database and information about mame.
+ * Add, delete new rom directories for mame with one click.
+ * In Mame section easy looking Database and information about mame games. You can sort the games from , gamenama, romname, manufactor, year , clone.
  * Advance save in every move you make inside the confEditor.
 
 <font color="red">*ExtraFe*</font>
 
 I must complete the confEditor and then wirte about ExtraFe.
-
