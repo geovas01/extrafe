@@ -1407,7 +1407,7 @@ end;
 
 procedure TConf.sComboBox72Change(Sender: TObject);
 begin
-  ShowResults_MameDatabase;
+  ShowDatabaseStatsFor(sComboBox72.Text);
 end;
 
 procedure TConf.nxtgrd_ips_mamextCellClick(Sender: TObject; ACol,

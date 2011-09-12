@@ -35,17 +35,15 @@ end;
 procedure global_Find_FilesClose;
 begin
   if gFindFiles = 'mame' then
-    begin
-      Conf.sComboBox72.Visible := False;
-      Conf.grp115.Visible := False;
-      RunMameDataBase;
-    end;
+    CreateNewMameDataBase;
 end;
 
 procedure global_Find_DirsClose;
 begin
   if FromMame_DirsToFindDirs = True then
     SetMamePath(gFindDirs)
+  else if gFindDirs = 'NewRom_Dir' then
+    AddNewRom_Dir 
   else if gFindDirs = 'IPSDir_mameplus' then
     SetTheNewIPSDir_MamePlus
   else if gFindDirs = 'IPSDir_mamext' then

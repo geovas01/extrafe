@@ -42,7 +42,8 @@ uses
   form_color in 'code\other_forms_\form_color.pas' {frm_color},
   global in 'code\others\global.pas',
   form_splash in 'code\other_forms_\form_splash.pas' {Splash_Screen},
-  form_general in 'code\other_forms_\form_general.pas' {FGeneral};
+  form_general in 'code\other_forms_\form_general.pas' {FGeneral},
+  xmlext in 'code\others\xmlext.pas';
 
 var
   Map : THandle;

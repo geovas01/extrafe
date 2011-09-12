@@ -3,7 +3,8 @@ unit mame_dirs;
 interface
 
 uses
-  SysUtils,StdCtrls,FunctionX,ShellAPI,Classes,sEdit,Types,Graphics;
+  SysUtils,StdCtrls,FunctionX,ShellAPI,Classes,sEdit,Types,
+  Graphics,Controls;
 
   procedure SetMame_DirsFromMameIni;
   procedure SaveMame_DirsAtExit;
@@ -32,6 +33,8 @@ uses
   procedure ResetMameConfig_Global;
   procedure MameDirs_Clear;
   procedure MamePanels_Clear;
+
+  procedure InitGlobal_MameMemo_ForMameIni;
 
 Const
   AllMameBuilds32: array [0..3] of string = ('mame.exe','mamepp.exe','mamep.exe','mamepuiXT_x86.exe');
@@ -336,13 +339,28 @@ begin
           t2 := Trim(Copy(text,r,100));
           if t1 = 'rompath' then
             begin
+              r1 := Length(text);
+              t2 := Trim(Copy(text,r,r1-(r-1)));
               Conf.sComboBox1.Clear;
               Conf.sComboBox1.Items.Add('Choose or Add directory...');
               RomsDirs := TStringList.Create;
               RomsDirs.Delimiter := ';';
-              RomsDirs.DelimitedText := t2;
-              for r1 := 0 to RomsDirs.Count - 1 do
-                Conf.sComboBox1.Items.Add(RomsDirs[r1]);
+              RomsDirs.DelimitedText := '"' + StringReplace(t2, RomsDirs.Delimiter, '"' + RomsDirs.Delimiter + '"', [rfReplaceAll]) + '"';
+              for r1 := 0 to RomsDirs.Count - 2 do
+                begin
+                  if RomsDirs[r1] = 'roms' then
+                    begin
+                      Conf.sComboBox1.Items.Add(ExtractFilePath(Mame_Exe)+'roms');
+                      if FromDatabase = False then
+                        Conf.sComboBox72.Items.Add(ExtractFilePath(Mame_Exe)+'roms');
+                    end
+                  else
+                    begin
+                      Conf.sComboBox1.Items.Add(RomsDirs[r1]);
+                      if FromDatabase = False then
+                        Conf.sComboBox72.Items.Add(RomsDirs[r1]);
+                    end
+                end;
               Conf.sComboBox1.Items.Add('add...');
               Conf.sComboBox1.ItemIndex := 0;
               RomsDirs.Free;
@@ -691,6 +709,8 @@ begin
           Conf.sBitBtn42.Visible := true
       else
         begin
+          gFindDirs := 'NewRom_Dir';
+          FromMame_DirsToFindDirs := False;
           Conf.Find_Dirs.InitialDir := ExtractFilePath(Mame_Exe);
           Conf.Find_Dirs.Execute;
         end;
@@ -702,6 +722,7 @@ end;
 procedure ShowRomPathResults;
 begin
   MenuButton6;
+  ShowDatabaseStatsFor(Conf.sComboBox1.Text);
 end;
 
 procedure ListBoxOfSetupedMames(Line:Integer;Position: TRect);
@@ -854,6 +875,28 @@ begin
   ResetToDefaultTopic_MameOthers;
   ResetToDefaultTopic_MameBuilds;
   CheckTopicsConfig;
+end;
+
+procedure InitGlobal_MameMemo_ForMameIni;
+var
+  MameIniFile: TextFile;
+  text,value: string;
+begin
+  Mame_Global_MemoIni.Free;
+  Mame_Global_MemoIni := TMemo.Create(Conf);
+  Mame_Global_MemoIni.Parent := Conf;
+  Mame_Global_MemoIni.Visible := False;
+  Mame_Global_MemoIni.Align := alClient;
+  Mame_Global_MemoIni.WordWrap := False;
+  value := ExtractFilePath(Mame_Exe) + 'mame.ini';
+  AssignFile(MameIniFile,value);
+  Reset(MameIniFile);
+    while not Eof(MameIniFile) do
+      begin
+        Readln(MameIniFile,text);
+        Mame_Global_MemoIni.Lines.Add(text);
+      end;
+  CloseFile(MameIniFile);
 end;
 
 end.

@@ -2,7 +2,7 @@ unit mainconf;
 
 interface
 uses
-  Windows,Variants,Classes,SysUtils,Forms,StdCtrls, ComCtrls,IniFiles,ExtCtrls,Controls,
+  Windows,Variants,Classes,SysUtils,Forms,StdCtrls,ComCtrls,IniFiles,ExtCtrls,
   Graphics,FunctionX,
   main,
   form_splash,
@@ -1181,30 +1181,14 @@ begin
 end;
 
 procedure StartEmuMame;
-var
-  MameIniFile: TextFile;
-  text,value: string;
 begin
   SelectedMame := MameIni.ReadInteger('SelMame','Selected',SelectedMame);
   Mame_Exe := MameIni.ReadString('MamePaths','Mame'+IntToStr(SelectedMame),Mame_Exe);
   if Mame_Exe <> '' then
     begin
       Conf.sEdit64.Text := Mame_Exe;
-      Mame_Global_MemoIni.Free;
-      Mame_Global_MemoIni := TMemo.Create(Conf);
-      Mame_Global_MemoIni.Parent := Conf;
-      Mame_Global_MemoIni.Visible := False;
-      Mame_Global_MemoIni.Align := alClient;
-      Mame_Global_MemoIni.WordWrap := False;
-      value := ExtractFilePath(Mame_Exe) + 'mame.ini';
-      AssignFile(MameIniFile,value);
-      Reset(MameIniFile);
-      while not Eof(MameIniFile) do
-        begin
-          Readln(MameIniFile,text);
-          Mame_Global_MemoIni.Lines.Add(text);
-        end;
-      CloseFile(MameIniFile);
+      if not Assigned(Mame_Global_MemoIni) then
+        InitGlobal_MameMemo_ForMameIni;
       SetMame_DirsFromMameIni;
       if FromArrows_Mamedirs = False then
         begin

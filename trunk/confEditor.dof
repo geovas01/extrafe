@@ -90,7 +90,7 @@ MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=
 [Directories]
-OutputDir=
+OutputDir=D:\myprojects\ExtraFe\r-and-test-versions\ExtraFe-Mnimi
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
@@ -115,7 +115,7 @@ AutoIncBuild=1
 MajorVer=0
 MinorVer=2
 Release=1
-Build=186
+Build=235
 Debug=0
 PreRelease=0
 Special=0
@@ -126,7 +126,7 @@ CodePage=1253
 [Version Info Keys]
 CompanyName=
 FileDescription=Configuration Editor for ExtraFe
-FileVersion=0.2.1.186
+FileVersion=0.2.1.235
 InternalName=confEditor
 LegalCopyright=
 LegalTrademarks=
@@ -169,3 +169,6 @@ Item26=C:\Program Files\Delphi7SE\components\alite\D7;C:\Program Files\Delphi7SE
 Item27=C:\Program Files\Delphi7SE\components\alite\D7;C:\Program Files\Delphi7SE\components\GLibWMI1\sources;C:\Program Files\Delphi7SE\components\JVCL337\jvcl\run;C:\Program Files\Delphi7SE\components\JVCL337\jvcl\devtools\InstallerTests
 Item28=C:\Program Files\Delphi7SE\components\alite\D7;C:\Program Files\Delphi7SE\components\GLibWMI1\sources;C:\Program Files\Delphi7SE\components\JVCL337\jvcl\run;C:\Program Files\Delphi7SE\components\JVCL337\jvcl\devtools
 Item29=C:\Program Files\Delphi7SE\components\alite\D7;C:\Program Files\Delphi7SE\components\GLibWMI1\sources;C:\Program Files\Delphi7SE\components\JVCL337\jvcl\run;C:\Program Files\Delphi7SE\components\JVCL337\jvcl
+[HistoryLists\hlOutputDirectorry]
+Count=1
+Item0=D:\myprojects\ExtraFe\r-and-test-versions\ExtraFe-Mnimi
