@@ -471,7 +471,6 @@ var
   gFindFiles,gFindDirs: string;
   resolutions: TStringList; //List with all avialable graphic card resolutions
 //Mame Global Vars
-  Mame_Exe: string;
   Mame_Global_MemoIni: TMemo;
 
 implementation
@@ -621,10 +620,7 @@ end;
 procedure TConf.FormDestroy(Sender: TObject);
 begin
   ConfIni.Free;
-  MameIni.Free;
-  pSXIni.Free;
   RealpSXIni.Free;
-  Resolutions.Free;
   Mame_Global_MemoIni.Free;
   GamePlayTime_Memo.Free;
 end;

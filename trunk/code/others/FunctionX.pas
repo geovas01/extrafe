@@ -182,6 +182,7 @@ var
   i       : Integer;
   DevMode : TDeviceMode;
 begin
+  resolutions := TStringList.Create;
   i:=0;
   {$IFOPT R+}
    {$DEFINE CKRANGE}

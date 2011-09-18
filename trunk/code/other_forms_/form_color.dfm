@@ -1,5 +1,5 @@
 object frm_color: Tfrm_color
-  Left = 191
+  Left = 239
   Top = 119
   BorderStyle = bsNone
   ClientHeight = 168
@@ -18,7 +18,7 @@ object frm_color: Tfrm_color
     Left = 0
     Top = 0
     Width = 152
-    Height = 162
+    Height = 168
     SelectedColor = clDefault
     HotTrackFont.Charset = DEFAULT_CHARSET
     HotTrackFont.Color = clWindowText

@@ -59,7 +59,7 @@ begin
       if Mame_Exe <> '' then
         begin
           FromMame_OthersToFindOthers := True;
-          value := ExtractFilePath(Mame_Exe) + 'mame.ini';
+          value := FullPathMame_Exe + 'mame.ini';
           AssignFile(MameIniFile,value);
           Reset(MameIniFile);
           while not Eof(MameIniFile) do
@@ -294,12 +294,12 @@ end;
 
 procedure ResetToDefaultTopic_MameOthers;
 begin
-  Conf.sCheckBox24.Checked := True;
-  Conf.sCheckBox27.Checked := False;
+  Conf.sCheckBox24.Checked := False;
+  Conf.sCheckBox27.Checked := True;
   Conf.sCheckBox28.Checked := False;
   Conf.sCheckBox29.Checked := False;
   Conf.sCheckBox30.Checked := False;
-  Conf.sCheckBox31.Checked := False;
+  Conf.sCheckBox31.Checked := True;
   Conf.sComboBox75.Text := 'default';
   Conf.sbar_mame_threadpriority.Position := 0;
   MameThreadPriorityChange;
@@ -321,9 +321,9 @@ end;
 procedure CheckMameOthers_TopicSettings;
 begin
   Conf.sButton7.Enabled := False;
-  if Conf.sCheckBox24.Checked <> True then
+  if Conf.sCheckBox24.Checked <> False then
     Conf.sButton7.Enabled := True;
-  if Conf.sCheckBox27.Checked <> False then
+  if Conf.sCheckBox27.Checked <> True then
     Conf.sButton7.Enabled := True;
   if Conf.sCheckBox28.Checked <> False then
     Conf.sButton7.Enabled := True;
@@ -331,7 +331,7 @@ begin
     Conf.sButton7.Enabled := True;
   if Conf.sCheckBox30.Checked <> False then
     Conf.sButton7.Enabled := True;
-  if Conf.sCheckBox31.Checked <> False then
+  if Conf.sCheckBox31.Checked <> True then
     Conf.sButton7.Enabled := True;
   if Conf.sComboBox75.Text <> 'default' then
     Conf.sButton7.Enabled := True;

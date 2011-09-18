@@ -1,4 +1,4 @@
-unit xmlext;
+unit mame_xmlext;
 
 interface
 
@@ -6,6 +6,60 @@ uses
   OmniXML, OmniXMLProperties,OmniXMLUtils;
 
 type
+
+/// Row dirs for mame config.xml
+  TRowDir = class(TGpXMLData)
+  private
+    function GetMameName: WideString;
+    procedure SetMameName(const Value:WideString);
+    function GetCabinetName: WideString;
+    procedure SetCabinetName(const Value:WideString);
+    function GetFlyerName: WideString;
+    procedure SetFlyerName(const Value:WideString);
+    function GetMarqueesName: WideString;
+    procedure SetMarqueesName(const Value:WideString);
+    function GetControlPanelName: WideString;
+    procedure SetControlPanelName(const Value:WideString);
+    function GetPcbName: WideString;
+    procedure SetPcbName(const Value:WideString);
+    function GetArtworkPreviewName: WideString;
+    procedure SetArtworkPreviewName(const Value:WideString);
+    function GetTitleName: WideString;
+    procedure SetTitleName(const Value:WideString);
+    function GetSelectName: WideString;
+    procedure SetSelectName(const Value:WideString);
+    function GetScoreName: WideString;
+    procedure SetScoreName(const Value:WideString);
+    function GetBossName: WideString;
+    procedure SetBossName(const Value:WideString);
+  public
+    constructor Create(Node: IXMLNode); override;
+
+    property MameName: WideString read GetMameName write SetMameName;
+    property Cabinets: WideString read GetCabinetName write SetCabinetName;
+    property Flyers: WideString read GetFlyerName write SetFlyerName;
+    property Marquees: WideString read GetMarqueesName write SetMarqueesName;
+    property Control_Panels: WideString read GetControlPanelName write SetControlPanelName;
+    property PCBs: WideString read GetPcbName write SetPcbName;
+    property Artwork_Preview: WideString read GetArtworkPreviewName write SetArtworkPreviewName;
+    property Titles: WideString read GetTitleName write SetTitleName;
+    property Select: WideString read GetSelectName write SetSelectName;
+    property Scores: WideString read GetScoreName write SetScoreName;
+    property Bosses: WideString read GetBossName write SetBossName;
+  end;
+
+  TRowsDir = class(TGpXMLList)
+  protected
+    function GetRowDir(Value: integer): TRowDir;
+  public
+    constructor Create(ParentNode: IXMLNode); reintroduce;
+
+    function AddRowDir: TRowDir; reintroduce;
+
+    property RowsDir[Value: integer]: TRowDir read GetRowDir; default;
+  end;
+
+/// Row path for mame config.xml
   TRowPath = class(TGpXMLData)
   private
     function GetMameName: WideString;
@@ -36,6 +90,7 @@ type
     property RowsPath[Value: integer]: TRowPath read GetRowPath; default;
   end;
 
+/// Row for mame *_efuse.xml  
   TRow = class(TGpXMLData)
   private
     function GetId: Integer;
@@ -101,15 +156,26 @@ type
   TMameXMLPath = class(TGpXmlDocList)
   private
     fRowsPath: TRowsPath;
+    fRowsDirs: TRowsDir;
     function GetCondition: WideString;
     procedure SetCondition(const Value: WideString);
+    function GetSelected: Integer;
+    procedure SetSelected(const Value: Integer);
+    function GetFullPathOfSelectedMame: WideString;
+    procedure SetFullPathOfSelectedMame(const Value: WideString);
+    function GetSelectedMame: WideString;
+    procedure SetSelectedMame(const Value: WideString);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
 
     property Condition: WideString read GetCondition write SetCondition;
+    property Selected: Integer read GetSelected write SetSelected;
+    property SelectedMame: WideString read GetSelectedMame write SetSelectedMame;
+    property FullPathOfSelectedMame: WideString read GetFullPathOfSelectedMame write SetFullPathOfSelectedMame;
 
     property RowsPath: TRowsPath read fRowsPath;
+    property RowsDir: TRowsDir read fRowsDirs;
   end;
 
 implementation
@@ -193,12 +259,144 @@ begin
   SetXMLAttrPropWide(6, Value);
 end;
 
+constructor TRowDir.Create(Node: IXMLNode);
+begin
+  inherited;
+
+  InitChildNodes(['MameName', 'Cabinets', 'Flyers', 'Marquess', 'Control_Panels', 'Pcbs', 'Artwork_Preview', 'Titles', 'Select', 'Scores', 'Bosses'], ['', '', '', '', '', '', '', '', '', '', '']);
+end;
+
+//TRowDir row properties...
+function TRowDir.GetMameName: WideString;
+begin
+  Result := GetXMLAttrPropWide(0);
+end;
+
+procedure TRowDir.SetMameName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(0, Value);
+end;
+
+function TRowDir.GetCabinetName: WideString;
+begin
+  Result := GetXMLAttrPropWide(1);
+end;
+
+procedure TRowDir.SetCabinetName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(1, Value);
+end;
+
+function TRowDir.GetFlyerName: WideString;
+begin
+  Result := GetXMLAttrPropWide(2);
+end;
+
+procedure TRowDir.SetFlyerName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(2, Value);
+end;
+
+function TRowDir.GetMarqueesName: WideString;
+begin
+  Result := GetXMLAttrPropWide(3);
+end;
+
+procedure TRowDir.SetMarqueesName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(3, Value);
+end;
+
+function TRowDir.GetControlPanelName: WideString;
+begin
+  Result := GetXMLAttrPropWide(4);
+end;
+
+procedure TRowDir.SetControlPanelName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(4, Value);
+end;
+
+function TRowDir.GetPcbName: WideString;
+begin
+  Result := GetXMLAttrPropWide(5);
+end;
+
+procedure TRowDir.SetPcbName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(5, Value);
+end;
+
+function TRowDir.GetArtworkPreviewName: WideString;
+begin
+  Result := GetXMLAttrPropWide(6);
+end;
+
+procedure TRowDir.SetArtworkPreviewName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(6, Value);
+end;
+
+function TRowDir.GetTitleName: WideString;
+begin
+  Result := GetXMLAttrPropWide(7);
+end;
+
+procedure TRowDir.SetTitleName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(7, Value);
+end;
+
+function TRowDir.GetSelectName: WideString;
+begin
+  Result := GetXMLAttrPropWide(8);
+end;
+
+procedure TRowDir.SetSelectName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(8, Value);
+end;
+
+function TRowDir.GetScoreName: WideString;
+begin
+  Result := GetXMLAttrPropWide(9);
+end;
+
+procedure TRowDir.SetScoreName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(9, Value);
+end;
+
+function TRowDir.GetBossName: WideString;
+begin
+  Result := GetXMLAttrPropWide(10);
+end;
+
+procedure TRowDir.SetBossName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(10, Value);
+end;
+
+constructor TRowsDir.Create(parentNode: IXMLNode);
+begin
+  inherited Create(parentNode, '', 'rowdir', TRowDir);
+end;
+
+function TRowsDir.AddRowDir: TRowDir;
+begin
+  result := TRowDir(inherited Add);
+end;
+
+function TRowsDir.GetRowDir(Value: Integer): TRowDir;
+begin
+  Result := TRowDir(inherited Items[Value]);
+end;
+
 constructor TRowPath.Create(Node: IXMLNode);
 begin
   inherited;
 
   InitChildNodes(['MameName', 'PathId', 'RomPath', 'RomsFound'], ['', '', '', '']);
-
 end;
 
 //TRowPath rows properties...
@@ -332,9 +530,10 @@ begin
   xmlPI := XMLDoc.CreateProcessingInstruction('xml', 'version="1.0" encoding="utf-8"');
   XMLDoc.InsertBefore(xmlPI, node);
 
-  InitChildNodes(['Condition'], ['']);
+  InitChildNodes(['Condition', 'Selected', 'SelectedMame', 'FullPathOfSelectedMame'], ['', '', '', '']);
 
   fRowsPath := TRowsPath.Create(node);
+  fRowsDirs := TRowsDir.Create(node);
 end;
 
 function TMameXMLPath.GetCondition;
@@ -345,6 +544,36 @@ end;
 procedure TMameXMLPath.SetCondition(const Value: WideString);
 begin
   SetXMLAttrPropWide(0, Value);
+end;
+
+function TMameXMLPath.GetSelected;
+begin
+  Result := GetXMLAttrPropInt(1);
+end;
+
+procedure TMameXMLPath.SetSelected(const Value: Integer);
+begin
+  SetXMLAttrPropInt(1, Value);  
+end;
+
+function TMameXMLPath.GetSelectedMame;
+begin
+  Result := GetXMLAttrPropWide(2);
+end;
+
+procedure TMameXMLPath.SetSelectedMame(const Value: WideString);
+begin
+  SetXMLAttrPropWide(2, Value);
+end;
+
+function TMameXMLPath.GetFullPathOfSelectedMame;
+begin
+  Result := GetXMLAttrPropWide(3);
+end;
+
+procedure TMameXMLPath.SetFullPathOfSelectedMame(const Value: WideString);
+begin
+  SetXMLAttrPropWide(3, Value);
 end;
 
 destructor TMameXML.Destroy;

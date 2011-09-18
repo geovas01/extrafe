@@ -38,7 +38,7 @@ procedure TFormWizard.btn1Click(Sender: TObject);
 var
   mamepath: string;
 begin
-  mamepath := MameIni.ReadString('Path','FullDir',mamepath);
+{  mamepath := MameIni.ReadString('Path','FullDir',mamepath);
   if (FileExists(mamepath + 'catver.ini')) or (sEdit1.Text <> '') then
     begin
       RunGenres := True;
@@ -51,7 +51,7 @@ begin
       mmo1.Lines.Add('The Catver.ini doesnt found in Mame directory');
       mmo1.Lines.Add('Please add it manually or skip the process');
       mmo1.Lines.Add('Remember that you can do this action from then database statistics form');
-    end;
+    end;}
 end;
 
 procedure TFormWizard.sBitBtn1Click(Sender: TObject);
@@ -63,7 +63,7 @@ begin
   Conf.Find_Files.InitialDir := mamedir;
   Conf.Find_Files.FileName := '';
   Conf.Find_Files.Filter := 'Catver.ini |Catver.ini';
-  MameIni.WriteString('Temp','Edit',sEdit1.Text);
+//  MameIni.WriteString('Temp','Edit',sEdit1.Text);
   Conf.Find_Files.Execute;
 end;
 

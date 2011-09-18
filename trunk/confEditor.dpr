@@ -43,7 +43,7 @@ uses
   global in 'code\others\global.pas',
   form_splash in 'code\other_forms_\form_splash.pas' {Splash_Screen},
   form_general in 'code\other_forms_\form_general.pas' {FGeneral},
-  xmlext in 'code\others\xmlext.pas';
+  mame_xmlext in 'code\mame_\mame_xmlext.pas';
 
 var
   Map : THandle;

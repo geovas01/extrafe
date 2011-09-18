@@ -1,5 +1,5 @@
 unit mainconf;
-
+           
 interface
 uses
   Windows,Variants,Classes,SysUtils,Forms,StdCtrls,ComCtrls,IniFiles,ExtCtrls,
@@ -8,7 +8,8 @@ uses
   form_splash,
   menu,
   ce_themes,ce_config,
-  mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database;
+  mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
+  OmniXML,OmniXMLUtils;
 
   procedure StartConfEditor;
   procedure StartProgConfEditor;
@@ -39,7 +40,7 @@ var
 //Inis
   ConfIni,
   ExtraFEIni,
-  MameIni,ZincIni,HatariIni,pSXIni,KigbIni,
+  ZincIni,HatariIni,KigbIni,
   WeatherIni,
   TimeDateIni : TIniFile;
 //ConfEditor Vars
@@ -48,6 +49,7 @@ var
   WinEffectsTime: Integer;
 //ExtraFe Vars
 //Mame Vars
+  MameConfigFile,Mame_Exe,FullPathMame_Exe: String;
   SelectedMame: Shortint;
   Started,FromDatabase: Boolean;
 //Zinc Vars
@@ -62,15 +64,24 @@ implementation
 Procedure StartSkinEngine;
 var
   i: Integer;
-  skinnames: TStringList;
+//  skinnames: TStringList;
+  rec : TSearchRec;
+  themeName: string;
 Begin
   Conf.skinM.SkinDirectory := Program_Path+'media\confeditor\skins';
-  SkinNames := TStringList.Create;
-  Conf.SkinM.SkinName := Conf.SkinM.GetSkinNames(SkinNames);
+//  SkinNames := TStringList.Create;
+//  Conf.SkinM.SkinName := Conf.SkinM.GetSkinNames(SkinNames);
   Conf.sLB_ce_themes.Items.Clear;
-  for i := 0 to skinnames.Count -1 do
-    Conf.sLB_ce_themes.Items.Add(SkinNames[i]);
-  FreeAndNil(SkinNames);
+  if FindFirst(Conf.SkinM.SkinDirectory+'\*.*' , faAnyFile, Rec) = 0 then
+    begin
+      repeat
+        if ((Rec.Attr and faDirectory) <> faDirectory) then
+          begin
+            themeName := Trim(Copy(rec.Name,0,Length(rec.Name)-4));
+            Conf.sLB_ce_themes.Items.Add(themeName);
+          end;
+      until FindNext(Rec) <> 0;
+    end;
   i := ConfIni.ReadInteger('Themes','Theme',i);
   Conf.sLB_ce_themes.Selected[i] := true;
   Conf.sLabelFX3.Caption := Conf.sLB_ce_themes.Items.Strings[i];
@@ -79,8 +90,9 @@ Begin
   SetAllCursor(i+1);
   GroupBoxColors(i);
   conf.skinM.SkinName := Conf.sLB_ce_themes.Items.Strings[i];
-  Conf.skinM.Active := True;
+  Conf.skinM.Active := False;
   Application.ProcessMessages;
+//  skinnames.Free;
 end;
 
 Procedure GroupBoxColors(i : Integer);
@@ -1097,13 +1109,13 @@ procedure StartConfEditor;
 begin
   Program_Path := ExtractFilePath(Application.ExeName); //The Path of my program
   ConfEditor_ImagePath:= Program_Path+'media\confeditor\images\'; // The Path of programs images
-  resolutions := TStringList.Create; //Cration of the resolution list
   StartProgConfEditor;
   StartEmuMame;
   StartEmuZinc;
   StartEmuHatari;
   StartEmupSX;
   StartEmuKigb;
+  resolutions.Free;
 end;
 
 procedure ReadInisAndCreateDefaultFolders;
@@ -1120,27 +1132,6 @@ begin
       ConfIni.WriteInteger('Config','EffectsTime',400);
     end;
   confEditorIniSettings;
-  //Mame Start Inis
-  MameIni := TiniFile.Create(Program_Path +'config\mame.ini');
-  if not MameIni.SectionExists('MamePaths') then
-    begin
-//      MameIni.WriteString('MamePaths','Mame1','');
-//      MameIni.WriteString('MamePaths','Type1','');
-      MameIni.WriteInteger('SelMame','Selected',-1);
-      MameIni.WriteBool('SelMame','ShowOnly',False);
-      MameIni.WriteString('MameDirs','Cabinets_Dir_-1','Default');
-      MameIni.WriteString('MameDirs','Flyers_Dir_-1','Default');
-      MameIni.WriteString('MameDirs','Marquees_Dir_-1','Default');
-      MameIni.WriteString('MameDirs','Control_Panels_Dir_-1','Default');
-      MameIni.WriteString('MameDirs','Pcbs_Dir_-1','Default');
-      MameIni.WriteString('MameDirs','Artwork_Preview_Dir_-1','Default');
-      MameIni.WriteString('MameDirs','Titles_Dir_-1','Default');
-      MameIni.WriteString('MameDirs','Select_Dir_-1','Default');
-      MameIni.WriteString('MameDirs','Scores_Dir_-1','Default');
-      MameIni.WriteString('MameDirs','Bosses_Dir_-1','Default');
-    end;
-  //pSX Start Inis
-  PsxIni := TiniFile.Create(Program_Path +'config\psx.ini');
   if not FileExists(Program_Path+'Config') then
     CreateDir(Program_Path+'Config');
 end;
@@ -1182,11 +1173,25 @@ end;
 
 procedure StartEmuMame;
 begin
-  SelectedMame := MameIni.ReadInteger('SelMame','Selected',SelectedMame);
-  Mame_Exe := MameIni.ReadString('MamePaths','Mame'+IntToStr(SelectedMame),Mame_Exe);
+  if FileExists(ExtractFilePath(Application.ExeName)+'media/emulators/arcade/mame/config/config.xml') then
+    begin
+      MameConfigFile := ExtractFilePath(Application.ExeName)+'media/emulators/arcade/mame/config/config.xml';
+      if not Assigned(MameXmlConfigDoc) then
+        MameXmlConfigDoc := CreateXMLDoc;
+      MameXmlConfigDoc.Load(MameConfigFile);
+      nodegame := MameXmlConfigDoc.SelectSingleNode('MamePath');
+      if GetNodeAttrStr(nodegame,'SelectedMame','') <> '' then
+        Mame_Exe := GetNodeAttrStr(nodegame,'SelectedMame');
+      if GetNodeAttrStr(nodegame,'Selected','') <> '' then
+        SelectedMame := GetNodeAttrInt(nodegame,'Selected');
+      if GetNodeAttrStr(nodegame,'FullPathOfSelectedMame','') <> '' then
+        FullPathMame_Exe := GetNodeAttrStr(nodegame,'FullPathOfSelectedMame');
+    end
+  else
+    SelectedMame := -1;
   if Mame_Exe <> '' then
     begin
-      Conf.sEdit64.Text := Mame_Exe;
+      Conf.sEdit64.Text := FullPathMame_Exe+Mame_Exe;
       if not Assigned(Mame_Global_MemoIni) then
         InitGlobal_MameMemo_ForMameIni;
       SetMame_DirsFromMameIni;

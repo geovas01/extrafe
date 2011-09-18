@@ -1,5 +1,5 @@
 object FormWizard: TFormWizard
-  Left = 326
+  Left = 408
   Top = 203
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -7171,6 +7171,5 @@ object FormWizard: TFormWizard
     OnClick = sBitBtn1Click
     SkinData.SkinSection = 'BUTTON'
     ImageIndex = 12
-    Images = Conf.sAlphaImageList3
   end
 end

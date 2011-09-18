@@ -26,11 +26,11 @@ Begin
     2 : begin
         end;
     3 : begin
-          MameIni.WriteString('MameIni','Rotate','0');
-          MameIni.WriteString('MameIni','Ror','0');
-          MameIni.WriteString('MameIni','Rol','0');
-          MameIni.WriteString('MameIni','Autoror','0');
-          MameIni.WriteString('MameIni','Autorol','0');
+//          MameIni.WriteString('MameIni','Rotate','0');
+//          MameIni.WriteString('MameIni','Ror','0');
+//          MameIni.WriteString('MameIni','Rol','0');
+//          MameIni.WriteString('MameIni','Autoror','0');
+//          MameIni.WriteString('MameIni','Autorol','0');
         end;
     4 : begin
         end;
@@ -49,7 +49,7 @@ begin
   Conf.Find_Files.InitialDir := mamedir;
   Conf.Find_Files.FileName := '';
   Conf.Find_Files.Filter := 'History.dat |History.dat';
-  MameIni.WriteString('Temp','Edit',conf.sEdit56.Text);
+//  MameIni.WriteString('Temp','Edit',conf.sEdit56.Text);
   Conf.Find_Files.Execute;
 end;
 
@@ -62,7 +62,7 @@ begin
   Conf.Find_Files.InitialDir := mamedir;
   Conf.Find_Files.FileName := '';
   Conf.Find_Files.Filter := 'Mameinfo.dat| Mameinfo.dat';
-  MameIni.WriteString('Temp','Edit',conf.sEdit57.Text);
+//  MameIni.WriteString('Temp','Edit',conf.sEdit57.Text);
   Conf.Find_Files.Execute;
 end;
 

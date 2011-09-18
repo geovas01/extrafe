@@ -6,7 +6,7 @@ uses
   Windows, SysUtils,Controls,StdCtrls, Buttons,
   Variants, Classes, Graphics, Forms,ComCtrls, ExtCtrls,
   comobj, FunctionX,NxColumnClasses,NxCustomGridControl,
-  OmniXML,OmniXMLUtils,xmlext;
+  OmniXML,OmniXMLUtils,mame_xmlext;
 
   procedure SetMame_DatabaseFromMameIni;
 
@@ -30,6 +30,18 @@ uses
   procedure ReloadDatabase(XML_MameInUsepath, XML_MamePaths: string);
   procedure MameDatabase_Clear;
 
+var
+  MameXmlUseDoc: IXMLDocument;
+  MameXmlConfigDoc: IXMLDocument;
+  MameXMLUse: TMameXML;
+  MameXMLConfig: TMameXMLPath;
+  Row: TRow;
+  RowPath: TRowPath;
+  RowDir: TRowDir;
+  nodegame: IXMLNode;
+  gameList : IXMLNodeList;
+  PathXmlMame,PathXmlMamePath: string;
+
 implementation
 
 
@@ -37,32 +49,28 @@ uses
   main,mainconf,mame_dirs,menu,form_splash;
 
 var
-  MameXmlDoc: IXMLDocument;
-  MameXmlPathDoc: IXMLDocument;
-  MameXML: TMameXML;
-  MameXMLPath: TMameXMLPath;
-  Row: TRow;
-  RowPath: TRowPath;
-  nodegame: IXMLNode;
-  gameList : IXMLNodeList;
   iNode,FinalRomsFound,k: Integer;
   rec : TSearchRec;
   FGa: TGauseStream;
   RomFound: Boolean;
-  PathXmlMame,PathXmlMamePath: string;
 
 procedure CreateNewMameDataBase;
 begin
-  SetupAndStartData(True);
-  GetMameXML;
-  SetupNewDatabase;
-  StartEmuMame;
-  FromDatabase := False;
-  SetupAndStartData(False);
-  Screen.Cursor := crDefault;
-  Conf.sLabel108.Caption := 'Directory : All';
-  Conf.sLabel109.Caption := 'Overall Status';
-  Conf.sGauge_MameData.Progress := 100;
+  if CreateNewMame = True then
+    begin
+      Conf.sBitBtn36.Enabled := True;
+      Conf.sBitBtn37.Enabled := True;
+      SetupAndStartData(True);
+      GetMameXML;
+      SetupNewDatabase;
+      StartEmuMame;
+      FromDatabase := False;
+      SetupAndStartData(False);
+      Screen.Cursor := crDefault;
+      Conf.sLabel108.Caption := 'Directory : All';
+      Conf.sLabel109.Caption := 'Overall Status';
+      Conf.sGauge_MameData.Progress := 100;
+    end;
 end;
 
 procedure GetMameXML;
@@ -73,7 +81,7 @@ begin
   Conf.sLabel109.Caption := 'Generating Mame XML...';
   Application.ProcessMessages;
   FindXMLPaths;
-  RunCaptured(ExtractFileDrive(Mame_Exe),Mame_Exe,' -lx',PathXmlMame+'.xml');
+  RunCaptured(ExtractFileDrive(FullPathMame_Exe),Mame_Exe,' -lx',PathXmlMame+'.xml');
 end;
 
 procedure SetupNewDatabase;
@@ -88,23 +96,22 @@ begin
   FinalRomsFound := 0;
   Screen.Cursor := AniBusy;
   try
-    MameXmlDoc := CreateXMLDoc;
-    MameXML := TMameXML.Create;
-    MameXMLPath := TMameXMLPath.Create;
+    MameXmlUseDoc := CreateXMLDoc;
+    MameXMLUse := TMameXML.Create;
+    MameXMLConfig := TMameXMLPath.Create;
     FGa := TGauseStream.Create;
     try
-      MameXmlDoc.PreserveWhiteSpace := True;
-      FindXMLPaths;
+      MameXmlUseDoc.PreserveWhiteSpace := True;
       FGa.LoadFromFile(PathXmlMame+'.xml');
       FGa.Gause := Conf.sGauge_MameData;
-      MameXmlDoc.LoadFromStream(FGa);
+      MameXmlUseDoc.LoadFromStream(FGa);
       Conf.sLabel109.Caption := 'Searching for Roms (Please Wait...)';
       SetTheGridForSetup;
       Application.ProcessMessages;
     finally
-      nodegame := MameXmlDoc.SelectSingleNode('mame');
+      nodegame := MameXmlUseDoc.SelectSingleNode('mame');
       MameBuildName := GetNodeAttrStr(nodegame,'build');
-      gameList := MameXmlDoc.SelectNodes('/mame/game');
+      gameList := MameXmlUseDoc.SelectNodes('/mame/game');
       Conf.nxtgrd_mame.AddRow(gameList.Length);
       conf.nxtgrd_mame.BeginUpdate;
       for iNode := 0 to gameList.Length - 1 do
@@ -148,7 +155,7 @@ begin
               ColInf[6] := '33';
             end;
           RomFound := False;
-          Row := MameXML.Rows.Add;
+          Row := MameXMLUse.Rows.Add;
           Row.Id := iNode;
           row.GameName := ColInf[0];
           row.RomName := ColInf[1];
@@ -168,34 +175,70 @@ begin
           Conf.sGauge_MameData.Suffix := '% ('+IntToStr(iNode+1)+'/'+IntToStr(gameList.Length)+')';
           Application.ProcessMessages;
         end;
-      MameXML.Ver := MameBuildName;
-      MameXML.MameExeName := ExtractFileName(Mame_Exe);
-      MameXML.RomsEmulated := iNode;
-      MameXML.FinalRomsFound := FinalRomsFound;
-      MameXMLPath.Condition := 'Active';
-      RowPath := MameXMLPath.RowsPath.AddPath;
-      RowPath.MameName := ExtractFileName(Mame_Exe);
+      MameXMLUse.Ver := MameBuildName;
+      MameXMLUse.MameExeName := Mame_Exe;
+      MameXMLUse.RomsEmulated := iNode;
+      MameXMLUse.FinalRomsFound := FinalRomsFound;
+      MameXMLConfig.Condition := 'Active';
+      MameXMLConfig.SelectedMame := Mame_Exe;
+      MameXMLConfig.FullPathOfSelectedMame := FullPathMame_Exe;
+      GetSelectedMameNum(Mame_Exe);
+      MameXMLConfig.Selected := SelectedMame;
+      RowDir := MameXMLConfig.RowsDir.AddRowDir;
+      RowDir.MameName := Mame_Exe;
+      if not DirectoryExists(FullPathMame_Exe+'cabinets') then
+        CreateDir(FullPathMame_Exe+'cabinets');
+      RowDir.Cabinets := FullPathMame_Exe+'cabinets';
+      if not DirectoryExists(FullPathMame_Exe+'flyers') then
+        CreateDir(FullPathMame_Exe+'flyers');
+      RowDir.Flyers := FullPathMame_Exe+'flyers';
+      if not DirectoryExists(FullPathMame_Exe+'marquees') then
+        CreateDir(FullPathMame_Exe+'marquees');
+      RowDir.Marquees := FullPathMame_Exe+'marquees';
+      if not DirectoryExists(FullPathMame_Exe+'cpanel') then
+        CreateDir(FullPathMame_Exe+'control panels');
+      RowDir.Control_Panels := FullPathMame_Exe+'cpanel';
+      if not DirectoryExists(FullPathMame_Exe+'pcbs') then
+        CreateDir(FullPathMame_Exe+'pcbs');
+      RowDir.PCBs := FullPathMame_Exe+'pcbs';
+      if not DirectoryExists(FullPathMame_Exe+'artwork preview') then
+        CreateDir(FullPathMame_Exe+'artwork preview');
+      RowDir.Artwork_Preview := FullPathMame_Exe+'artwork preview';
+      if not DirectoryExists(FullPathMame_Exe+'titles') then
+        CreateDir(FullPathMame_Exe+'titles');
+      RowDir.Titles := FullPathMame_Exe+'titles';
+      if not DirectoryExists(FullPathMame_Exe+'select') then
+        CreateDir(FullPathMame_Exe+'select');
+      RowDir.Select := FullPathMame_Exe+'select';
+      if not DirectoryExists(FullPathMame_Exe+'scores') then
+        CreateDir(FullPathMame_Exe+'scores');
+      RowDir.Scores := FullPathMame_Exe+'scores';
+      if not DirectoryExists(FullPathMame_Exe+'bosses') then
+        CreateDir(FullPathMame_Exe+'bosses');
+      RowDir.Bosses := FullPathMame_Exe+'bosses';
+      RowPath := MameXMLConfig.RowsPath.AddPath;
+      RowPath.MameName := Mame_Exe;
       RowPath.PathId := 1;
-      RowPath.RomPath := ExtractFilePath(Mame_Exe)+'roms';
+      RowPath.RomPath := FullPathMame_Exe+'roms';
       RowPath.RomsFound := FinalRomsFound;
       BestFitForMameGrid;
       Conf.nxtgrd_mame.EndUpdate;
       Conf.sLabel104.Caption := 'Mame Version (Build) : '+MameBuildName;
       Conf.sLabel106.Caption := 'Overall Emulated : '+IntToStr(iNode);
       Conf.sLabel107.Caption := 'Roms Found : '+IntToStr(FinalRomsFound);
-      UrlMame(ExtractFileName(Mame_Exe));
+      UrlMame(Mame_Exe);
       Application.ProcessMessages;
       FGa.Free;
     end;
   finally
     InitGlobal_MameMemo_ForMameIni;
-    Conf.sComboBox72.Items.Add(ExtractFilePath(Mame_Exe)+'roms');
+    Conf.sComboBox72.Items.Add(FullPathMame_Exe+'roms');
     AddNewDirTo_MameDirs;
     Conf.sGauge_MameData.Suffix := '%';
     Conf.sLabel109.Caption := 'Saving Database...';
     Application.ProcessMessages;
-    MameXML.SaveToFile(PathXmlMame+'_efuse.xml',ofIndent);
-    MameXMLPath.SaveToFile(PathXmlMamePath+'mame_paths.xml',ofIndent);
+    MameXMLUse.SaveToFile(PathXmlMame+'_efuse.xml',ofIndent);
+    MameXMLConfig.SaveToFile(PathXmlMamePath+'config.xml',ofIndent);
   end;
   ReloadDatabase(PathXmlMame,PathXmlMamePath);
 end;
@@ -270,10 +313,10 @@ begin
       if FileExists(PathXmlMame+'_efuse.xml') then
         begin
           try
-            MameXmlDoc := CreateXMLDoc;
-            MameXmlPathDoc := CreateXMLDoc;
-            MameXML := TMameXML.Create;
-            MameXMLPath := TMameXMLPath.Create;
+            MameXmlUseDoc := CreateXMLDoc;
+            MameXmlConfigDoc := CreateXMLDoc;
+            MameXMLUse := TMameXML.Create;
+            MameXMLConfig := TMameXMLPath.Create;
             FGa := TGauseStream.Create;
             try
               if FromArrows_Mamedirs = False then
@@ -281,26 +324,26 @@ begin
               else
                 Conf.sLabel112.Caption := 'Loading Mame Database...';
               Application.ProcessMessages;
-              MameXmlDoc.PreserveWhiteSpace := True;
+              MameXmlUseDoc.PreserveWhiteSpace := True;
               FGa.LoadFromFile(PathXmlMame+'_efuse.xml');
-              MameXmlPathDoc.Load(PathXmlMamePath+'mame_paths.xml');
+              MameXmlConfigDoc.Load(PathXmlMamePath+'config.xml');
               if FromArrows_Mamedirs = False then
                 FGa.Gause := Splash_Screen.sGauge1
               else
                 FGa.Gause := Conf.sGauge_MameChange;
-              MameXmlDoc.LoadFromStream(FGa);
+              MameXmlUseDoc.LoadFromStream(FGa);
             finally
               SetTheGridForSetup;
               if FromArrows_Mamedirs = False then
                 Splash_Screen.sLabel1.Caption := 'Setting Mame Database...'
               else
                 Conf.sLabel112.Caption := 'Setting Mame Database...';
-              nodegame := MameXmlDoc.SelectSingleNode('MameInfo');
+              nodegame := MameXmlUseDoc.SelectSingleNode('MameInfo');
               MameName := GetNodeAttrStr(nodegame,'MameExeName');
               MameBuildVer := GetNodeAttrStr(nodegame,'ver');
               TotalRoms := GetNodeAttrInt(nodegame,'FinalRomsFound');
               TotalEmulated := GetNodeAttrInt(nodegame,'RomsEmulated');
-              gameList := MameXmlDoc.SelectNodes('/MameInfo/row');
+              gameList := MameXmlUseDoc.SelectNodes('/MameInfo/row');
               nodegame := gameList.Item[gameList.Length-1];
               Conf.nxtgrd_mame.AddRow(gameList.Length);
               conf.nxtgrd_mame.BeginUpdate;
@@ -328,22 +371,42 @@ begin
               BestFitForMameGrid;
               Conf.nxtgrd_mame.EndUpdate;
               //Add To MameXML
-              MameXML.Ver := MameBuildVer;
-              MameXML.MameExeName := MameName;
-              MameXML.RomsEmulated := TotalEmulated;
-              MameXML.FinalRomsFound := TotalRoms;
+              MameXMLUse.Ver := MameBuildVer;
+              MameXMLUse.MameExeName := MameName;
+              MameXMLUse.RomsEmulated := TotalEmulated;
+              MameXMLUse.FinalRomsFound := TotalRoms;
               //Add To MameXMLPath
-              nodegame := MameXmlPathDoc.SelectSingleNode('MamePath');
-              MameXMLPath.Condition := GetNodeAttrStr(nodegame,'Condition');
-              gameList := MameXmlPathDoc.SelectNodes('/MamePath/rowpath');
+              nodegame := MameXmlConfigDoc.SelectSingleNode('MamePath');
+              MameXMLConfig.Condition := GetNodeAttrStr(nodegame,'Condition');
+              MameXMLConfig.SelectedMame := GetNodeAttrStr(nodegame,'SelectedMame');
+              MameXMLConfig.FullPathOfSelectedMame := GetNodeAttrStr(nodegame,'FullPathOfSelectedMame');
+              MameXMLConfig.Selected := GetNodeAttrInt(nodegame,'Selected');
+              gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowpath');
               for iNode := 0 to gameList.Length -1 do
                 begin
                   nodegame := gameList.Item[INode];
-                  RowPath := MameXMLPath.RowsPath.AddPath;
+                  RowPath := MameXMLConfig.RowsPath.AddPath;
                   RowPath.MameName := GetNodeAttrStr(nodegame,'MameName');
                   RowPath.PathId := GetNodeAttrInt(nodegame,'PathId');
                   RowPath.RomPath := GetNodeAttrStr(nodegame,'RomPath');
                   RowPath.RomsFound := GetNodeAttrInt(nodegame,'RomsFound');
+                end;
+              gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
+              for iNode := 0 to gameList.Length -1 do
+                begin
+                  nodegame := gameList.Item[iNode];
+                  RowDir := MameXMLConfig.RowsDir.AddRowDir;
+                  RowDir.MameName := GetNodeAttrStr(nodegame,'MameName');
+                  RowDir.Cabinets := GetNodeAttrStr(nodegame,'Cabinets');
+                  RowDir.Flyers := GetNodeAttrStr(nodegame,'Flyers');
+                  RowDir.Marquees := GetNodeAttrStr(nodegame,'Marquess');
+                  RowDir.Control_Panels := GetNodeAttrStr(nodegame,'Control_Panels');
+                  RowDir.PCBs := GetNodeAttrStr(nodegame,'Pcbs');
+                  RowDir.Artwork_Preview := GetNodeAttrStr(nodegame,'Artwork_Preview');
+                  RowDir.Titles := GetNodeAttrStr(nodegame,'Titles');
+                  RowDir.Select := GetNodeAttrStr(nodegame,'Select');
+                  RowDir.Scores := GetNodeAttrStr(nodegame,'Scores');
+                  RowDir.Bosses := GetNodeAttrStr(nodegame,'Bosses');
                 end;
               //Show Info for Mame
               Conf.sLabel104.Caption := 'Mame Version (Build) : '+MameBuildVer;
@@ -391,7 +454,7 @@ begin
       Conf.sLabel109.Caption := 'Loading Overall Information...';
       Application.ProcessMessages;
       Conf.nxtgrd_mame.ClearRows;
-      gameList := MameXmlDoc.SelectNodes('/MameInfo/row');
+      gameList := MameXmlUseDoc.SelectNodes('/MameInfo/row');
       Conf.nxtgrd_mame.AddRow(gameList.Length);
       Conf.nxtgrd_mame.BeginUpdate;
       for iNode := 0 to gameList.Length -1 do
@@ -412,7 +475,7 @@ begin
           Conf.sGauge_MameData.Progress := (100 * iNode) div (gameList.Length-1);
           Conf.sGauge_MameData.Suffix := '% ('+IntToStr(iNode +1 )+'/'+IntToStr(gameList.Length)+')';
         end;
-      nodegame := MameXmlDoc.SelectSingleNode('MameInfo');
+      nodegame := MameXmlUseDoc.SelectSingleNode('MameInfo');
       Conf.sLabel107.Caption := 'Roms Found : '+GetNodeAttrStr(nodegame,'FinalRomsFound');
       Conf.sLabel108.Caption := 'Directory : '+Dir;
       Conf.sLabel109.Caption := 'Overall Roms Status';
@@ -427,9 +490,9 @@ begin
       Conf.sLabel109.Caption := 'Found Missing Roms...';
       Application.ProcessMessages;
       Conf.nxtgrd_mame.ClearRows;
-      nodegame := MameXmlDoc.SelectSingleNode('MameInfo');
+      nodegame := MameXmlUseDoc.SelectSingleNode('MameInfo');
       Conf.nxtgrd_mame.AddRow(GetNodeAttrInt(nodegame,'RomsEmulated') - GetNodeAttrInt(nodegame,'FinalRomsFound'));
-      gameList := MameXmlDoc.SelectNodes('/MameInfo/row');
+      gameList := MameXmlUseDoc.SelectNodes('/MameInfo/row');
       Conf.nxtgrd_mame.BeginUpdate;
       for iNode := 0 to gameList.Length -1 do
         begin
@@ -464,7 +527,7 @@ begin
       Application.ProcessMessages;
       CurrentRow := -1;
       Conf.nxtgrd_mame.ClearRows;
-      gameList := MameXmlPathDoc.SelectNodes('/MamePath/rowpath');
+      gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowpath');
       for iNode := 0 to gameList.Length -1 do
         begin
           nodegame := gameList.Item[iNode];
@@ -475,7 +538,7 @@ begin
                 NumOfRoms := GetNodeAttrInt(nodegame,'RomsFound');
               end;
         end;
-      gameList := MameXmlDoc.SelectNodes('/MameInfo/row');
+      gameList := MameXmlUseDoc.SelectNodes('/MameInfo/row');
       XMLPaths := TStringList.Create;
       Conf.nxtgrd_mame.AddRow(NumOfRoms);
       Conf.nxtgrd_mame.BeginUpdate;
@@ -510,6 +573,7 @@ begin
           Conf.sGauge_MameData.Suffix := '% ('+IntToStr(iNode +1)+'/'+IntToStr(gameList.Length)+')';
           Application.ProcessMessages;
         end;
+      FreeAndNil(XMLPaths);
       Conf.nxtgrd_mame.EndUpdate;
       Conf.sLabel107.Caption := 'Roms Found : '+IntToStr(NumOfRoms);
       Conf.sLabel108.Caption := 'Directory : '+Dir;
@@ -535,23 +599,23 @@ begin
   Conf.sLabel109.Caption := 'Adding roms from new directory...';
   Application.ProcessMessages;
   FindXMLPaths;
-  nodegame :=  MameXmlDoc.SelectSingleNode('MameInfo');
+  nodegame :=  MameXmlUseDoc.SelectSingleNode('MameInfo');
   OldFinalRomsFound := StrToInt(GetNodeAttrStr(nodegame,'FinalRomsFound'));
-  gameList := MameXmlPathDoc.SelectNodes('/MamePath/rowpath');
+  gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowpath');
   for iNode := 0 to gameList.Length - 1 do
   begin
     nodegame := gameList.Item[iNode];
     if GetNodeAttrStr(nodegame,'MameName','') = ExtractFileName(Mame_Exe) then
       PathID := StrToInt(GetNodeAttrStr(nodegame,'PathId'));
   end;
-  gameList := MameXmlDoc.SelectNodes('/MameInfo/row');
+  gameList := MameXmlUseDoc.SelectNodes('/MameInfo/row');
   Conf.nxtgrd_mame.AddRow(gameList.Length);
   Conf.nxtgrd_mame.BeginUpdate;
-  MameXML.Rows.Clear;
+  MameXMLUse.Rows.Clear;
   for iNode := 0 to gameList.Length - 1 do
     begin
       nodegame := gameList.Item[iNode];
-      Row := MameXML.Rows.Add;
+      Row := MameXMLUse.Rows.Add;
       Row.Id := iNode;
       Row.GameName := GetNodeAttrStr(nodegame,'GameName');
       Conf.nxtgrd_mame.Cell[1,iNode].AsString := GetNodeAttrStr(nodegame,'GameName');
@@ -619,17 +683,17 @@ begin
     end;
   Conf.nxtgrd_mame.EndUpdate;
   //Add path to XmlPaths
-  RowPath := MameXMLPath.RowsPath.AddPath;
+  RowPath := MameXMLConfig.RowsPath.AddPath;
   RowPath.MameName := ExtractFileName(Mame_Exe);
   RowPath.PathId := PathID + 1;
   RowPath.RomPath := Conf.Find_Dirs.Directory;
   RowPath.RomsFound := FinalRomsFound;
   //Add finalroms to Mame xml in use...
-  MameXML.FinalRomsFound := OldFinalRomsFound + uniqueRomsFound;
+  MameXMLUse.FinalRomsFound := OldFinalRomsFound + uniqueRomsFound;
   Conf.sLabel109.Caption := 'Saving Database...';
   Application.ProcessMessages;
-  MameXML.SaveToFile(PathXmlMame+'_efuse.xml',ofIndent);
-  MameXMLPath.SaveToFile(PathXmlMamePath+'mame_paths.xml',ofIndent);
+  MameXMLUse.SaveToFile(PathXmlMame+'_efuse.xml',ofIndent);
+  MameXMLConfig.SaveToFile(PathXmlMamePath+'config.xml',ofIndent);
   Conf.sComboBox72.Items.Add(Conf.Find_Dirs.Directory);
   Conf.sGauge_MameData.Suffix := '%';
   AddNewDirTo_MameDirs;
@@ -672,9 +736,9 @@ begin
           Break;
         end;
     end;
-  SaveMame_DirsAtExit;
   FromDatabase := True;
-  SetMame_DirsFromMameIni;
+  SaveMame_DirsAtExit;
+//  SetMame_DirsFromMameIni;
 end;
 
 procedure ReloadDatabase(XML_MameInUsepath, XML_MamePaths: string);
@@ -682,14 +746,14 @@ begin
   try
     Conf.sLabel109.Caption := 'Reload Database...';
     Application.ProcessMessages;
-    MameXmlDoc := CreateXMLDoc;
-    MameXmlPathDoc := CreateXMLDoc;
+    MameXmlUseDoc := CreateXMLDoc;
+    MameXmlConfigDoc := CreateXMLDoc;
     FGa := TGauseStream.Create;
-    MameXmlDoc.PreserveWhiteSpace := True;
+    MameXmlUseDoc.PreserveWhiteSpace := True;
     FGa.LoadFromFile(XML_MameInUsepath+'_efuse.xml');
     FGa.Gause := Conf.sGauge_MameData;
-    MameXmlDoc.LoadFromStream(FGa);
-    MameXmlPathDoc.Load(XML_MamePaths+'mame_paths.xml');
+    MameXmlUseDoc.LoadFromStream(FGa);
+    MameXmlConfigDoc.Load(XML_MamePaths+'config.xml');
   finally
   end;
 end;
@@ -715,8 +779,8 @@ end;
 
 procedure FindXMLPaths;
 begin
-  PathXmlMamePath := Program_Path+'media\emulators\arcade\mame\xmlfiles\';
-  PathXmlMame := Program_Path+'media\emulators\arcade\mame\xmlfiles\'+ExtractFileName(Mame_Exe);
+  PathXmlMamePath := Program_Path+'media\emulators\arcade\mame\config\';
+  PathXmlMame := Program_Path+'media\emulators\arcade\mame\database\'+ExtractFileName(Mame_Exe);
   Delete(PathXmlMame,Length(PathXmlMame)-3,4);
 end;
 

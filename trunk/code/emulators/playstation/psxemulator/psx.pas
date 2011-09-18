@@ -385,7 +385,7 @@ var
   WhatFile,psxFullDir,PsxExe: String;
   i: Integer;
 Begin
-  if name = 'ff1' then
+{  if name = 'ff1' then
     begin
       //writing the exe
       //i := Conf.sEdit1.GetTextLen;
@@ -394,7 +394,7 @@ Begin
       //writing the source drive
       //i := pos('\',Conf.sEdit1.Text);
       //WhatFile := Trim(Copy(Conf.sEdit1.Text,0,i));
-      PsxIni.WriteString('Path','InitDir',WhatFile);
+//      PsxIni.WriteString('Path','InitDir',WhatFile);
       //writing the full dir
       //i := pos('.',Conf.sEdit1.Text);
       //WhatFile := Trim(copy(Conf.sEdit1.Text,0,i-7));
@@ -464,14 +464,14 @@ Begin
           Conf.sEdit7.Text := Conf.Find_Files.FileName;
           RealpSXIni.WriteString('Cards','Card2',Conf.Find_Files.FileName);
         end;
-    end;
+    end;}
 end;
 
 Procedure CreateDefaultIni;
 var
   pSXPath: String;
 Begin
-  psxPath := PsxIni.ReadString('Path','FullDir',psxPath);
+{  psxPath := PsxIni.ReadString('Path','FullDir',psxPath);
   RealpSXIni := TIniFile.Create(psxPath+'psx.ini');
   //paths
   RealpSXIni.WriteString('Paths','SaveStatePath','saves');
@@ -665,7 +665,7 @@ Begin
   RealpSXIni.WriteString('Cards','Card1','');
   RealpSXIni.WriteString('Cards','Card2','');
   //Language //Not Used In ExtraFe
-  RealpSXIni.WriteString('Language','CurrentLanguage','45006e0067006c006900730068000000');
+  RealpSXIni.WriteString('Language','CurrentLanguage','45006e0067006c006900730068000000');}
 end;
 
 
@@ -675,7 +675,7 @@ var
   ReadmeLine: TextFile;
   r: Integer;
 Begin
-  ReadMeFile := PsxIni.ReadString('Path','FullDir',ReadMeFile);
+//  ReadMeFile := PsxIni.ReadString('Path','FullDir',ReadMeFile);
   ReadMeFile := ReadMeFile +'Readme.txt';
   AssignFile(ReadMeLine,ReadMeFile);
   Reset(ReadMeLine);
@@ -1803,12 +1803,12 @@ Begin
   Conf.sLabel12.Visible := False;
   Conf.Height := 408;
   Conf.sGauge1.Visible := false;
-  Text := pSXIni.ReadString('Path','ExeName',Text);
+//  Text := pSXIni.ReadString('Path','ExeName',Text);
   Conf.sWebLabel1.Caption := text;
   Conf.sWebLabel1.URL := 'http://psxemulator.gazaxian.com/';
   Conf.sLabel1.Caption := '1.13';
   Conf.sLabelFX3.Caption := 'Games Listed :';
-  Text := PsxIni.ReadString('Totalgames','Total',text);
+//  Text := PsxIni.ReadString('Totalgames','Total',text);
   Conf.sLabel2.Caption := Text;
   Conf.sGauge2.CalcPercents := false;
   Conf.sGauge2.MaxValue := StrToInt(Text);

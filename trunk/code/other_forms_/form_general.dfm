@@ -1,5 +1,5 @@
 object FGeneral: TFGeneral
-  Left = 220
+  Left = 275
   Top = 177
   BorderIcons = []
   BorderStyle = bsSingle

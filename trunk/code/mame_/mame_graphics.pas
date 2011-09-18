@@ -238,7 +238,7 @@ begin
   Screen_Memo.Visible := False;
   Screen_Memo.Align := alClient;
   Screen_Memo.WordWrap := False;
-  value := ExtractFilePath(Mame_Exe) + 'mame.ini';
+  value := FullPathMame_Exe + 'mame.ini';
   if Save = True then
     begin
       AssignFile(MScreenIniFile,value);
@@ -353,7 +353,7 @@ begin
       Conf.DMI1.Active := False;
       if Mame_Exe <> '' then
         begin
-          value := ExtractFilePath(Mame_Exe) + 'mame.ini';
+          value := FullPathMame_Exe + 'mame.ini';
           AssignFile(MameIniFile,value);
           Reset(MameIniFile);
           while not Eof(MameIniFile) do

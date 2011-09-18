@@ -4,5 +4,6 @@
 #define GettingStarted 3
 #define Systemrequirements 4
 #define Gettinghelp 5
-#define vfg 6
-#define Newtopic 7
+#define History 6
+#define ExtraFe020Meleti 7
+#define ExtraFe010Aiodi 8

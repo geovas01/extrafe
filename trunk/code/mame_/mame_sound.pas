@@ -83,7 +83,7 @@ begin
       if Mame_Exe <> '' then
         begin
           FromMame_SoundToFindSound := True;
-          value := ExtractFilePath(Mame_Exe) + 'mame.ini';
+          value := FullPathMame_Exe + 'mame.ini';
           AssignFile(MameIniFile,value);
           Reset(MameIniFile);
           while not Eof(MameIniFile) do

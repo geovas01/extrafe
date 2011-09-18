@@ -50,6 +50,35 @@ a.rvts7, span.rvts7 /* Font Style */
 span.rvts8 /* Font Style */
 {
 }
+span.rvts9
+{
+ font-family: 'Courier New', 'Courier', monospace;
+}
+span.rvts10
+{
+ font-family: 'Courier New', 'Courier', monospace;
+ font-weight: bold;
+ color: #ff00ff;
+}
+span.rvts11
+{
+ font-family: 'Courier New', 'Courier', monospace;
+}
+span.rvts12
+{
+ font-family: 'wingdings';
+}
+span.rvts13
+{
+ font-family: 'Courier New', 'Courier', monospace;
+ font-weight: bold;
+ color: #00a5ff;
+}
+span.rvts14
+{
+ font-family: 'Courier New', 'Courier', monospace;
+ color: #00a5ff;
+}
 /* ========== Para Styles ========== */
 p,ul,ol /* Paragraph Style */
 {
@@ -79,4 +108,8 @@ p,ul,ol /* Paragraph Style */
 .rvps4
 {
  text-align: right;
+}
+.rvps5
+{
+ background: #00a5ff;
 }

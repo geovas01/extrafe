@@ -57,9 +57,10 @@ uses
 
   procedure MameBuilds_Clear;
 
+
 var
   FromMame_BuildsToFindBuilds,FontFromSystem,IPSRunFirst: Boolean;
-  IPSPath,HiScorePath: String;
+  IPSPath,HiScorePath,ipsNotFoundImg: String;
   IsIPSChecked,IsApplyChecked,NewIPSDir: Boolean;
   GamePlayTime_Memo: TMemo;
 
@@ -138,7 +139,7 @@ begin
       Conf.nxtgrd_ips_mameplus.ClearRows;
       Conf.nxtgrd_ips_mameplus.Columns.Clear;
       Conf.nxtgrd_ips_mameplus.Enabled := False;
-      MameIni.WriteString('MamePlus','IPSChecked','False');
+//      MameIni.WriteString('MamePlus','IPSChecked','False');
     end
   else
     begin
@@ -148,7 +149,7 @@ begin
       Conf.sLabel35.Enabled := True;
       Conf.nxtgrd_ips_mameplus.Enabled := True;
       GetIPS_MamePlus;
-      MameIni.WriteString('MamePlus','IPSChecked','True');
+//      MameIni.WriteString('MamePlus','IPSChecked','True');
     end;
 end;
 
@@ -165,7 +166,7 @@ begin
       Conf.nxtgrd_ips_mamext.ClearRows;
       Conf.nxtgrd_ips_mamext.Columns.Clear;
       Conf.nxtgrd_ips_mamext.Enabled := False;
-      MameIni.WriteString('MamePlusXT','IPSChecked','False');
+//      MameIni.WriteString('MamePlusXT','IPSChecked','False');
     end
   else
     begin
@@ -175,7 +176,7 @@ begin
       Conf.sLabel38.Enabled := True;
       Conf.nxtgrd_ips_mamext.Enabled := True;
       GetIPS_MameXT;
-      MameIni.WriteString('MamePlusXT','IPSChecked','True');
+//      MameIni.WriteString('MamePlusXT','IPSChecked','True');
     end;
 end;
 
@@ -196,6 +197,7 @@ begin
         end
       else
         begin
+          ipsNotFoundImg :=  Program_Path+'media\emulators\arcade\mame\imgaes\ipsnotfound.png';
           if not DirectoryExists(ExtractFilePath(Mame_Exe)+'hi') then
             CreateDir(ExtractFilePath(Mame_Exe)+'hi');
           if not DirectoryExists(ExtractFilePath(Mame_Exe)+'ips') then
@@ -206,11 +208,11 @@ begin
               EnableBuild_MamePlusXT(False);
               BuildsClick;
               Builds_MamePlus;
-              if not MameIni.SectionExists('MamePlus') then
+{              if not MameIni.SectionExists('MamePlus') then
                 begin
                   MameIni.WriteString('MamePlus','IPSChecked','False');
                   MameIni.WriteString('MamePlus','HiScoreChecked','False');
-                end;
+                end;}
             end
           else if (ExtractFileName(Mame_Exe) = 'mamepuiXT_x86.exe') or (ExtractFileName(Mame_Exe) = 'mamepuiXT_x64.exe') then
             begin
@@ -218,11 +220,11 @@ begin
               EnableBuild_MamePlusXT(True);
               BuildsClick;
               Builds_MameXT;
-              if not MameIni.SectionExists('MamePlusXT') then
+{              if not MameIni.SectionExists('MamePlusXT') then
                 begin
                   MameIni.WriteString('MamePlusXT','IPSChecked','False');
                   MameIni.WriteString('MamePlusXT','HiScoreChecked','False');
-                end;
+                end;}
             end;
           FromMame_BuildsToFindBuilds := True;
           value := ExtractFilePath(Mame_Exe) + 'mame.ini';
@@ -257,7 +259,7 @@ begin
                   HiScorePath := t3;
                   if ExtractFileName(Mame_Exe) = 'mamep.exe' then
                     begin
-                      t4 := MameIni.ReadString('MamePlus','HiScoreChecked',t4);
+//                      t4 := MameIni.ReadString('MamePlus','HiScoreChecked',t4);
                       if t4 = 'True' then
                         Conf.sCheckBox33.Checked := StrToBool(t4)
                       else
@@ -265,7 +267,7 @@ begin
                     end
                   else
                     begin
-                      t4 := MameIni.ReadString('MamePlusXT','HiScoreChecked',t4);
+//                      t4 := MameIni.ReadString('MamePlusXT','HiScoreChecked',t4);
                       if t4 = 'True' then
                         Conf.sCheckBox129.Checked := StrToBool(t4)
                       else
@@ -294,7 +296,7 @@ begin
                   IPSPath := t3;
                   if ExtractFileName(Mame_Exe) = 'mamep.exe' then
                     begin
-                      t4 := MameIni.ReadString('MamePlus','IPSChecked',t4);
+//                      t4 := MameIni.ReadString('MamePlus','IPSChecked',t4);
                       if t4 = 'True' then
                         Conf.sCheckBox34.Checked := StrToBool(t4)
                       else
@@ -302,7 +304,7 @@ begin
                     end
                   else
                     begin
-                      t4 := MameIni.ReadString('MamePlusXT','IPSChecked',t4);
+//                      t4 := MameIni.ReadString('MamePlusXT','IPSChecked',t4);
                       if t4 = 'True' then
                         Conf.sCheckBox130.Checked := StrToBool(t4)
                       else
@@ -381,7 +383,7 @@ begin
         end;
       if IsApplyChecked = True then
         begin
-          Conf.nxtgrd_ips_mameplus.SaveToXMLFile(Program_Path+'\media\emulators\arcade\mame\xmlfiles\ips_mamep.xml');
+          Conf.nxtgrd_ips_mameplus.SaveToXMLFile(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml');
           IsApplyChecked := False;
         end;
       Mame_Global_MemoIni.Lines.SaveToFile(ExtractFilePath(Mame_Exe)+'mame.ini');
@@ -515,9 +517,9 @@ var
   DatFile: TextFile;
   CheckIPSFolder_MamePlus: Boolean;
 begin
-  if (FromDatabase = True) and FileExists(Program_Path+'\media\emulators\arcade\mame\xmlfiles\ips_mamep.xml') then
-    DeleteFile(Program_Path+'\media\emulators\arcade\mame\xmlfiles\ips_mamep.xml');
-  if (FileExists(Program_Path+'\media\emulators\arcade\mame\xmlfiles\ips_mamep.xml')) and (NewIPSDir = False) then
+  if (FromDatabase = True) and FileExists(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml') then
+    DeleteFile(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml');
+  if (FileExists(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml')) and (NewIPSDir = False) then
     begin
       CheckIPSFolder_MamePlus := True;
       try
@@ -536,7 +538,7 @@ begin
               Conf.sLabel110.Caption := 'Please Wait';
             end;
           XMLDoc.PreserveWhiteSpace := True;
-          XMLDoc.Load(Program_Path+'\media\emulators\arcade\mame\xmlfiles\ips_mamep.xml');
+          XMLDoc.Load(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml');
         finally
           CountF := CountFilesOrFolders(IPSPath,'folders');
           SetupIPSMameGrid('MamePlus');
@@ -644,7 +646,7 @@ begin
                             if FileExists(IPSPath+'\'+rec.Name+'\'+Trim(Copy(recdat.Name,0,Length(recdat.Name)-4))+'.png') then
                               t1 := IPSPath+'\'+rec.Name+'\'+Trim(Copy(recdat.Name,0,Length(recdat.Name)-4))+'.png'
                             else
-                              t1 := Program_Path+'media\confeditor\images\ipsnotfound.png';
+                              t1 := ipsNotFoundImg;
                             Conf.nxtgrd_ips_mameplus.Cell[8,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := t1;
                             Conf.nxtgrd_ips_mameplus.RowHeight[Conf.nxtgrd_ips_mameplus.LastAddedRow] := 80;
                             CountDat := 0;
@@ -725,7 +727,7 @@ begin
             end;
           Application.ProcessMessages;
           if CheckIPSFolder_MamePlus = True then
-            Conf.nxtgrd_ips_mameplus.SaveToXMLFile(Program_Path+'\media\emulators\arcade\mame\xmlfiles\ips_mamep.xml');
+            Conf.nxtgrd_ips_mameplus.SaveToXMLFile(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml');
           FindClose(rec);
         end;
       Conf.sLabel110.Visible := False;
@@ -871,9 +873,9 @@ var
   DatFile: TextFile;
   CheckIPSFolder_MameXT: Boolean;
 begin
-  if (FromDatabase = True) and FileExists(Program_Path+'\media\emulators\arcade\mame\xmlfiles\ips_mamext.xml') then
-    DeleteFile(Program_Path+'\media\emulators\arcade\mame\xmlfiles\ips_mamext.xml');
-  if (FileExists(Program_Path+'\media\emulators\arcade\mame\xmlfiles\ips_mamext.xml')) and (NewIPSDir = False) then
+  if (FromDatabase = True) and FileExists(Program_Path+'\media\emulators\arcade\mame\database\ips_mamext.xml') then
+    DeleteFile(Program_Path+'\media\emulators\arcade\mame\database\ips_mamext.xml');
+  if (FileExists(Program_Path+'\media\emulators\arcade\mame\database\ips_mamext.xml')) and (NewIPSDir = False) then
     begin
       CheckIPSFolder_MameXT := True;
       try
@@ -892,7 +894,7 @@ begin
               Conf.sLabel111.Caption := 'Please Wait';
             end;
           XMLDoc.PreserveWhiteSpace := True;
-          XMLDoc.Load(Program_Path+'\media\emulators\arcade\mame\xmlfiles\ips_mamext.xml');
+          XMLDoc.Load(Program_Path+'\media\emulators\arcade\mame\database\ips_mamext.xml');
         finally
           CountF := CountFilesOrFolders(IPSPath,'folders');
           SetupIPSMameGrid('MameXT');
@@ -1009,7 +1011,7 @@ begin
                             if FileExists(IPSPath+'\'+rec.Name+'\'+Trim(Copy(recdat.Name,0,Length(recdat.Name)-4))+'.png') then
                               t1 := IPSPath+'\'+rec.Name+'\'+Trim(Copy(recdat.Name,0,Length(recdat.Name)-4))+'.png'
                             else
-                              t1 := Program_Path+'media\confeditor\images\ipsnotfound.png';
+                              t1 := ipsNotFoundImg;
                             Conf.nxtgrd_ips_mamext.Cell[8,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := t1;
                             Conf.nxtgrd_ips_mamext.RowHeight[Conf.nxtgrd_ips_mamext.LastAddedRow] := 80;
                             CountDat := 0;
@@ -1090,7 +1092,7 @@ begin
             end;
           Application.ProcessMessages;
           if CheckIPSFolder_MameXT = True then
-            Conf.nxtgrd_ips_mamext.SaveToXMLFile(Program_Path+'\media\emulators\arcade\mame\xmlfiles\ips_mamext.xml');
+            Conf.nxtgrd_ips_mamext.SaveToXMLFile(Program_Path+'\media\emulators\arcade\mame\database\ips_mamext.xml');
           FindClose(rec);
         end;
       Conf.sLabel111.Visible := False;
@@ -1184,7 +1186,7 @@ begin
       if ExtractFileName(HiScorePath) <> 'hiscore.dat' then
         Conf.sLabel102.Visible := True;
       Conf.sBitBtn1.Enabled := True;
-      MameIni.WriteString('MamePlus','HiScoreChecked','True');
+//      MameIni.WriteString('MamePlus','HiScoreChecked','True');
     end
   else
     begin
@@ -1192,7 +1194,7 @@ begin
       Conf.sEdit12.Text := '';
       Conf.sLabel102.Visible := False;
       Conf.sBitBtn1.Enabled := False;
-      MameIni.WriteString('MamePlus','HiScoreChecked','False');
+//      MameIni.WriteString('MamePlus','HiScoreChecked','False');
     end;
 end;
 
@@ -1205,7 +1207,7 @@ begin
       if ExtractFileName(HiScorePath) <> 'hiscore.dat' then
         Conf.sLabel103.Visible := True;
       Conf.sBitBtn99.Enabled := True;
-      MameIni.WriteString('MamePlusXT','HiScoreChecked','True');
+//      MameIni.WriteString('MamePlusXT','HiScoreChecked','True');
     end
   else
     begin
@@ -1213,7 +1215,7 @@ begin
       Conf.sEdit16.Text := '';
       Conf.sLabel103.Visible := False;
       Conf.sBitBtn99.Enabled := False;
-      MameIni.WriteString('MamePlusXT','HiScoreChecked','False');
+//      MameIni.WriteString('MamePlusXT','HiScoreChecked','False');
     end;
 end;
 

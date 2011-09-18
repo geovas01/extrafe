@@ -45,13 +45,18 @@
 				</object>
 
 	</li></ul></li><li> <object type="text/sitemap">
-				<param name="Name" value="vfg">
-				<param name="Local" value="vfg.html">
+				<param name="Name" value="History">
+				<param name="Local" value="History.html">
 				</object>
 
 	<ul><li> <object type="text/sitemap">
-				<param name="Name" value="New topic">
-				<param name="Local" value="Newtopic.html">
+				<param name="Name" value="ExtraFe 0.2.0 (Meleti)">
+				<param name="Local" value="ExtraFe020Meleti.html">
+				</object>
+
+	</li><li> <object type="text/sitemap">
+				<param name="Name" value="ExtraFe 0.1.0 (Aiodi)">
+				<param name="Local" value="ExtraFe010Aiodi.html">
 				</object>
 
 	</li></ul></li></ul>

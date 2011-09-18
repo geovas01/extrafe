@@ -1,5 +1,5 @@
 object Splash_Screen: TSplash_Screen
-  Left = 261
+  Left = 326
   Top = 238
   BorderIcons = []
   BorderStyle = bsDialog

@@ -1500,5 +1500,30 @@ Total_sub=35
 1222=Zilec-Zenitone (Konami license)
 Total_sub=1222
 [Favorites]
-Favorites(All)=0
-Total_Sub=-1
+0=Favorites(All)
+Total_Sub=0
+1=NIKOS
+NIKOS=8
+Favorites(All)=16
+2=VOULIS FAV
+VOULIS FAV=8
+[NIKOS]
+0=rygar
+1=gberet
+2=wardner
+3=wbdeluxe
+4=wbmlb
+5=atetris
+6=pitfall2
+7=repulse
+Total_sub=7
+[VOULIS FAV]
+0=gauntlet
+1=shinobi
+2=exedexes
+3=digdug
+4=pbobble
+5=puzznic
+6=popnpop
+7=pnickj
+Total_sub=7

@@ -35,7 +35,7 @@ end;
 procedure global_Find_FilesClose;
 begin
   if gFindFiles = 'mame' then
-    CreateNewMameDataBase;
+    CreateNewMameDataBase;          
 end;
 
 procedure global_Find_DirsClose;
