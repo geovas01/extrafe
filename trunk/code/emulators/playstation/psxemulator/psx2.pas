@@ -73,7 +73,7 @@ implementation
 
 Procedure pSXcdImages;
 Begin
-  if Conf.Find_Dirs.Directory <> '' then
+{  if Conf.Find_Dirs.Directory <> '' then
     begin
       if Conf.Find_Dirs.Directory = Program_Path + 'emulators\psx\cdimages' then
         begin
@@ -85,12 +85,12 @@ Begin
           Conf.sEdit8.Text := Conf.Find_Dirs.Directory;
           RealpSXIni.WriteString('Paths','CDImagePath',Conf.Find_Dirs.Directory);
         end;
-    end;
+    end;}
 end;
 
 Procedure pSXcards;
 Begin
-  if Conf.Find_Dirs.Directory <> '' then
+{  if Conf.Find_Dirs.Directory <> '' then
     begin
       if Conf.Find_Dirs.Directory = Program_Path + 'emulators\psx\cards' then
         begin
@@ -102,12 +102,12 @@ Begin
           Conf.sEdit5.Text := Conf.Find_Dirs.Directory;
           RealpSXIni.WriteString('Paths','MemoryCardPath',Conf.Find_Dirs.Directory);
         end;
-    end;
+    end;}
 end;
 
 Procedure pSXsaves;
 Begin
-  if Conf.Find_Dirs.Directory <> '' then
+{  if Conf.Find_Dirs.Directory <> '' then
     begin
       if Conf.Find_Dirs.Directory = Program_Path + 'emulators\psx\saves' then
         begin
@@ -119,12 +119,12 @@ Begin
           Conf.sEdit4.Text := Conf.Find_Dirs.Directory;
           RealpSXIni.WriteString('Paths','SaveStatePath',Conf.Find_Dirs.Directory);
         end;
-    end;
+    end;}
 end;
 
 Procedure pSXscreenshots;
 Begin
-  if Conf.Find_Dirs.Directory <> '' then
+{  if Conf.Find_Dirs.Directory <> '' then
     begin
       if Conf.Find_Dirs.Directory = Program_Path + 'emulators\psx\screenshots' then
         begin
@@ -136,7 +136,7 @@ Begin
           Conf.sEdit3.Text := Conf.Find_Dirs.Directory;
           RealpSXIni.WriteString('Paths','ScreenShotsPath',Conf.Find_Dirs.Directory);
         end;
-    end;
+    end;}
 end;
 
 Procedure pSXmemcard(i : Integer);

@@ -115,10 +115,13 @@ end;
 
 procedure MameChooseEffect;
 begin
-  gFindFiles := 'visual_effect';
-  Conf.Find_Files.InitialDir := Program_Path + 'emulators';
-  Conf.Find_Files.Filter := 'All (Png) artwork files|*.png';
-  Conf.Find_Files.Execute;
+  if Mame_Exe <> '' then
+    begin
+      gFindFiles := 'visual_effect';
+      Conf.Find_Files.InitialDir := Program_Path + 'emulators';
+      Conf.Find_Files.Filter := 'All (Png) artwork files|*.png';
+      Conf.Find_Files.Execute;
+    end;
 end;
 
 Procedure MameVideomodeChange(VideoMode: string);
@@ -746,7 +749,7 @@ begin
               Mame_Global_MemoIni.Lines.Insert(k,vie+'          '+Conf.sComboBox8.Text);
             end;
         end;
-      Mame_Global_MemoIni.Lines.SaveToFile(ExtractFilePath(Mame_Exe)+'mame.ini');
+      Mame_Global_MemoIni.Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
       FromMame_GrpaphicsToFindGraphics := False;
     end;
 end;
@@ -842,72 +845,75 @@ end;
 procedure CheckMameGraphics_TopicSettings;
 begin
   Conf.sButton5.Enabled := False;
-  if Conf.sCheckBox3.Checked <> False then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox4.Checked <> True then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox5.Checked <> True then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox6.Checked <> True then
-    Conf.sButton5.Enabled := True;
-  if Conf.sbar_mame_emulatrionspeed.Position <> 100 then
-    Conf.sButton5.Enabled := True;
-  if Conf.sComboBox20.Text <> 'Default' then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox41.Checked <> False then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox40.Checked <> False then
-    Conf.sButton5.Enabled := True;
-  if Conf.sbar_mame_pausebrightness.Position <> 65 then
-    Conf.sButton5.Enabled := True;
-  if Conf.sbar_mame_gammacorrection.Position <> 100 then
-    Conf.sButton5.Enabled := True;
-  if Conf.sbar_mame_brightnesscorrection.Position <> 100 then
-    Conf.sButton5.Enabled := True;
-  if Conf.sbar_mame_contrastcorrection.Position <> 100 then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox15.Checked <> False then
-    Conf.sButton5.Enabled := True;
-  if Conf.sComboBox9.Text <> 'Draw Every Frame' then
-    Conf.sButton5.Enabled := True;
-  if Conf.sComboBox2.Text <> 'Direct 3D' then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox7.Checked <> True then
-    Conf.sButton5.Enabled := True;
-  if Conf.sComboBox3.Text <> 'Version 9' then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox8.Checked <> True then
-    Conf.sButton5.Enabled := True;
-  if Conf.sbar_mame_Fgamma.Position <> 100 then
-    Conf.sButton5.Enabled := True;
-  if Conf.sbar_mame_Fbrightness.Position <> 100 then
-    Conf.sButton5.Enabled := True;
-  if Conf.sbar_mame_Fcontrast.Position <> 100 then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox9.Checked <> False then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox11.Checked <> False then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox12.Checked <> False then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox13.Checked <> False then
-    Conf.sButton5.Enabled := True;
-  if Conf.sCheckBox14.Checked <> False then
-    Conf.sButton5.Enabled := True;
-  if Conf.sbar_mame_secondstorun.Position <> 0 then
-    Conf.sButton5.Enabled := True;
-  if Conf.sbar_mame_scalescreen.Position <> 1 then
-    Conf.sButton5.Enabled := True;
-  if Conf.sEdit1.Text <> 'none' then
-    Conf.sButton5.Enabled := True;
-  if Conf.sComboBox5.Text <> 'auto' then
-    Conf.sButton5.Enabled := True;
-  if Conf.sComboBox6.Text <> 'auto' then
-    Conf.sButton5.Enabled := True;
-  if Conf.sComboBox7.Text <> 'auto' then
-    Conf.sButton5.Enabled := True;
-  if Conf.sComboBox8.Text <> 'auto' then
-    Conf.sButton5.Enabled := True;
+  if Mame_Exe <> '' then
+    begin
+      if Conf.sCheckBox3.Checked <> False then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox4.Checked <> True then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox5.Checked <> True then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox6.Checked <> True then
+        Conf.sButton5.Enabled := True;
+      if Conf.sbar_mame_emulatrionspeed.Position <> 100 then
+        Conf.sButton5.Enabled := True;
+      if Conf.sComboBox20.Text <> 'Default' then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox41.Checked <> False then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox40.Checked <> False then
+        Conf.sButton5.Enabled := True;
+      if Conf.sbar_mame_pausebrightness.Position <> 65 then
+        Conf.sButton5.Enabled := True;
+      if Conf.sbar_mame_gammacorrection.Position <> 100 then
+        Conf.sButton5.Enabled := True;
+      if Conf.sbar_mame_brightnesscorrection.Position <> 100 then
+        Conf.sButton5.Enabled := True;
+      if Conf.sbar_mame_contrastcorrection.Position <> 100 then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox15.Checked <> False then
+        Conf.sButton5.Enabled := True;
+      if Conf.sComboBox9.Text <> 'Draw Every Frame' then
+        Conf.sButton5.Enabled := True;
+      if Conf.sComboBox2.Text <> 'Direct 3D' then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox7.Checked <> True then
+        Conf.sButton5.Enabled := True;
+      if Conf.sComboBox3.Text <> 'Version 9' then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox8.Checked <> True then
+        Conf.sButton5.Enabled := True;
+      if Conf.sbar_mame_Fgamma.Position <> 100 then
+        Conf.sButton5.Enabled := True;
+      if Conf.sbar_mame_Fbrightness.Position <> 100 then
+        Conf.sButton5.Enabled := True;
+      if Conf.sbar_mame_Fcontrast.Position <> 100 then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox9.Checked <> False then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox11.Checked <> False then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox12.Checked <> False then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox13.Checked <> False then
+        Conf.sButton5.Enabled := True;
+      if Conf.sCheckBox14.Checked <> False then
+        Conf.sButton5.Enabled := True;
+      if Conf.sbar_mame_secondstorun.Position <> 0 then
+        Conf.sButton5.Enabled := True;
+      if Conf.sbar_mame_scalescreen.Position <> 1 then
+        Conf.sButton5.Enabled := True;
+      if Conf.sEdit1.Text <> 'none' then
+        Conf.sButton5.Enabled := True;
+      if Conf.sComboBox5.Text <> 'auto' then
+        Conf.sButton5.Enabled := True;
+      if Conf.sComboBox6.Text <> 'auto' then
+        Conf.sButton5.Enabled := True;
+      if Conf.sComboBox7.Text <> 'auto' then
+        Conf.sButton5.Enabled := True;
+      if Conf.sComboBox8.Text <> 'auto' then
+        Conf.sButton5.Enabled := True;
+    end;
 end;
 
 procedure CheckButtonTopicsConfig_MameGraphics;

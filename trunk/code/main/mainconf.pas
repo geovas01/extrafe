@@ -9,7 +9,7 @@ uses
   menu,
   ce_themes,ce_config,
   mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
-  OmniXML,OmniXMLUtils;
+  OmniXML,OmniXMLUtils,mame_xmlext;
 
   procedure StartConfEditor;
   procedure StartProgConfEditor;
@@ -49,7 +49,7 @@ var
   WinEffectsTime: Integer;
 //ExtraFe Vars
 //Mame Vars
-  MameConfigFile,Mame_Exe,FullPathMame_Exe: String;
+  MameConfigFile,MameDatabaseFile,Mame_Exe,FullPathMame_Exe: String;
   SelectedMame: Shortint;
   Started,FromDatabase: Boolean;
 //Zinc Vars
@@ -63,16 +63,16 @@ implementation
 
 Procedure StartSkinEngine;
 var
-  i: Integer;
-//  skinnames: TStringList;
+  HowScenes: Integer;
+  skinnames: TStringList;
   rec : TSearchRec;
   themeName: string;
 Begin
   Conf.skinM.SkinDirectory := Program_Path+'media\confeditor\skins';
-//  SkinNames := TStringList.Create;
-//  Conf.SkinM.SkinName := Conf.SkinM.GetSkinNames(SkinNames);
+  SkinNames := TStringList.Create;
+  Conf.SkinM.SkinName := Conf.SkinM.GetSkinNames(SkinNames);
   Conf.sLB_ce_themes.Items.Clear;
-  if FindFirst(Conf.SkinM.SkinDirectory+'\*.*' , faAnyFile, Rec) = 0 then
+  if SysUtils.FindFirst(Conf.SkinM.SkinDirectory+'\*.*' , faAnyFile, Rec) = 0 then
     begin
       repeat
         if ((Rec.Attr and faDirectory) <> faDirectory) then
@@ -82,17 +82,17 @@ Begin
           end;
       until FindNext(Rec) <> 0;
     end;
-  i := ConfIni.ReadInteger('Themes','Theme',i);
-  Conf.sLB_ce_themes.Selected[i] := true;
-  Conf.sLabelFX3.Caption := Conf.sLB_ce_themes.Items.Strings[i];
-  Conf.img_ce_theme.Picture.LoadFromFile('media\confeditor\skins\preview\'+conf.sLB_ce_themes.items.strings[i]+'.png');
-  ThemeCreator(i+1);
-  SetAllCursor(i+1);
-  GroupBoxColors(i);
-  conf.skinM.SkinName := Conf.sLB_ce_themes.Items.Strings[i];
-  Conf.skinM.Active := False;
+  HowScenes := ConfIni.ReadInteger('Themes','Theme',HowScenes);
+  Conf.sLB_ce_themes.Selected[HowScenes] := true;
+  Conf.sLabelFX3.Caption := Conf.sLB_ce_themes.Items.Strings[howscenes];
+  Conf.img_ce_theme.Picture.LoadFromFile('media\confeditor\skins\preview\'+conf.sLB_ce_themes.items.strings[howscenes]+'.png');
+  ThemeCreator(HowScenes+1);
+  SetAllCursor(HowScenes+1);
+  GroupBoxColors(HowScenes);
+  conf.skinM.SkinName := Conf.sLB_ce_themes.Items.Strings[howscenes];
+  Conf.skinM.Active := True;
   Application.ProcessMessages;
-//  skinnames.Free;
+  skinnames.Free;
 end;
 
 Procedure GroupBoxColors(i : Integer);
@@ -1172,12 +1172,16 @@ begin
 end;
 
 procedure StartEmuMame;
+var
+  kst: Integer;
 begin
   if FileExists(ExtractFilePath(Application.ExeName)+'media/emulators/arcade/mame/config/config.xml') then
     begin
       MameConfigFile := ExtractFilePath(Application.ExeName)+'media/emulators/arcade/mame/config/config.xml';
       if not Assigned(MameXmlConfigDoc) then
         MameXmlConfigDoc := CreateXMLDoc;
+      if FromDatabase = False then
+        MameXMLConfig := TMameXMLPath.Create;
       MameXmlConfigDoc.Load(MameConfigFile);
       nodegame := MameXmlConfigDoc.SelectSingleNode('MamePath');
       if GetNodeAttrStr(nodegame,'SelectedMame','') <> '' then
@@ -1189,8 +1193,33 @@ begin
     end
   else
     SelectedMame := -1;
+  PathXmlMamePath := Program_Path+'media\emulators\arcade\mame\config\';
+  PathXmlMame := Program_Path+'media\emulators\arcade\mame\database\'+Mame_Exe;
+  Delete(PathXmlMame,Length(PathXmlMame)-3,4);
   if Mame_Exe <> '' then
     begin
+      MameDatabaseFile := PathXmlMame+'_efuse.xml';
+      if FromDatabase = False then
+        begin
+          try
+            FGa := TGauseStream.Create;
+            MameXmlUseDoc := CreateXMLDoc;
+            MameXMLUse := TMameXML.Create;
+          finally
+            if FromArrows_Mamedirs = False then
+              Splash_Screen.sLabel1.Caption := 'Loading Mame Database...'
+            else
+              Conf.sLabel112.Caption := 'Loading Mame Database...';
+            Application.ProcessMessages;
+            MameXmlUseDoc.PreserveWhiteSpace := True;
+            FGa.LoadFromFile(MameDatabaseFile);
+            if FromArrows_Mamedirs = False then
+              FGa.Gause := Splash_Screen.sGauge_Splash
+            else
+              FGa.Gause := Conf.sGauge_MameChange;
+            MameXmlUseDoc.LoadFromStream(FGa);
+          end;
+        end;
       Conf.sEdit64.Text := FullPathMame_Exe+Mame_Exe;
       if not Assigned(Mame_Global_MemoIni) then
         InitGlobal_MameMemo_ForMameIni;
@@ -1311,7 +1340,25 @@ begin
       FromDatabase := False;
     end
   else
-    Checkwin64ForListBox(SelectedMame,true);
+    begin
+      Started := True;
+      if not Assigned(MameXmlConfigDoc) then
+        begin
+          MameXmlConfigDoc := CreateXMLDoc;
+          SelectedMame := -2;
+        end
+      else
+        begin
+          gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
+          for kst := 0 to gameList.Length - 1 do
+            begin
+              nodegame := gameList.Item[kst];
+             SetupedMame[kst] := GetNodeAttrStr(nodegame,'MameName');
+            end;
+        end;
+      Checkwin64ForListBox(SelectedMame);
+      Started := False;
+    end;
 end;
 
 procedure StartEmuZinc;

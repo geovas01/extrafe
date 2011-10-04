@@ -12,6 +12,10 @@ type
   private
     function GetMameName: WideString;
     procedure SetMameName(const Value:WideString);
+    function GetMamePath: WideString;
+    procedure SetMamePath(const Value:WideString);
+    function GetSelected: Integer;
+    procedure SetSelected(const Value: Integer);
     function GetCabinetName: WideString;
     procedure SetCabinetName(const Value:WideString);
     function GetFlyerName: WideString;
@@ -36,6 +40,8 @@ type
     constructor Create(Node: IXMLNode); override;
 
     property MameName: WideString read GetMameName write SetMameName;
+    property MamePath: WideString  read GetMamePath write SetMamePath;
+    property Selected: Integer read GetSelected write SetSelected;
     property Cabinets: WideString read GetCabinetName write SetCabinetName;
     property Flyers: WideString read GetFlyerName write SetFlyerName;
     property Marquees: WideString read GetMarqueesName write SetMarqueesName;
@@ -141,6 +147,10 @@ type
     procedure SetRomsEmulated(const Value: Integer);
     function GetFinalRomsFound: Integer;
     procedure SetFinalRomsFound(const Value: Integer);
+    function GetIpsChecked: WideString;
+    procedure SetIpsChecked(const Value: WideString);
+    function GetHiScoreChecked: WideString;
+    procedure SetHiScoreChecked(const Value: WideString);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -149,6 +159,8 @@ type
     property MameExeName: WideString read GetMameExeName write SetMameExeName;
     property RomsEmulated: Integer read GetRomsEmulated write SetRomsEmulated;
     property FinalRomsFound: Integer read GetFinalRomsFound write SetFinalRomsFound;
+    property IpsChecked: WideString read GetIpsChecked write SetIpsChecked;
+    property HiScoreChecked: WideString read GetHiScoreChecked write SetHiScoreChecked;    
 
     property Rows: TRows read fRows;
   end;
@@ -263,7 +275,7 @@ constructor TRowDir.Create(Node: IXMLNode);
 begin
   inherited;
 
-  InitChildNodes(['MameName', 'Cabinets', 'Flyers', 'Marquess', 'Control_Panels', 'Pcbs', 'Artwork_Preview', 'Titles', 'Select', 'Scores', 'Bosses'], ['', '', '', '', '', '', '', '', '', '', '']);
+  InitChildNodes(['MameName', 'MamePath', 'Selected', 'Cabinets', 'Flyers', 'Marquess', 'Control_Panels', 'Pcbs', 'Artwork_Preview', 'Titles', 'Select', 'Scores', 'Bosses'], ['', '', '', '', '', '', '', '', '', '', '', '', '']);
 end;
 
 //TRowDir row properties...
@@ -277,104 +289,124 @@ begin
   SetXMLAttrPropWide(0, Value);
 end;
 
-function TRowDir.GetCabinetName: WideString;
+function TRowDir.GetMamePath: WideString;
 begin
   Result := GetXMLAttrPropWide(1);
 end;
 
-procedure TRowDir.SetCabinetName(const Value: WideString);
+procedure TRowDir.SetMamePath(const Value:WideString);
 begin
   SetXMLAttrPropWide(1, Value);
 end;
 
-function TRowDir.GetFlyerName: WideString;
+function TRowDir.GetSelected: Integer;
 begin
-  Result := GetXMLAttrPropWide(2);
+  Result := GetXMLAttrPropInt(2);
 end;
 
-procedure TRowDir.SetFlyerName(const Value: WideString);
+procedure TRowDir.SetSelected(const Value:Integer);
 begin
-  SetXMLAttrPropWide(2, Value);
+  SetXMLAttrPropInt(2 ,Value);
 end;
 
-function TRowDir.GetMarqueesName: WideString;
+function TRowDir.GetCabinetName: WideString;
 begin
   Result := GetXMLAttrPropWide(3);
 end;
 
-procedure TRowDir.SetMarqueesName(const Value: WideString);
+procedure TRowDir.SetCabinetName(const Value: WideString);
 begin
   SetXMLAttrPropWide(3, Value);
 end;
 
-function TRowDir.GetControlPanelName: WideString;
+function TRowDir.GetFlyerName: WideString;
 begin
   Result := GetXMLAttrPropWide(4);
 end;
 
-procedure TRowDir.SetControlPanelName(const Value: WideString);
+procedure TRowDir.SetFlyerName(const Value: WideString);
 begin
   SetXMLAttrPropWide(4, Value);
 end;
 
-function TRowDir.GetPcbName: WideString;
+function TRowDir.GetMarqueesName: WideString;
 begin
   Result := GetXMLAttrPropWide(5);
 end;
 
-procedure TRowDir.SetPcbName(const Value: WideString);
+procedure TRowDir.SetMarqueesName(const Value: WideString);
 begin
   SetXMLAttrPropWide(5, Value);
 end;
 
-function TRowDir.GetArtworkPreviewName: WideString;
+function TRowDir.GetControlPanelName: WideString;
 begin
   Result := GetXMLAttrPropWide(6);
 end;
 
-procedure TRowDir.SetArtworkPreviewName(const Value: WideString);
+procedure TRowDir.SetControlPanelName(const Value: WideString);
 begin
   SetXMLAttrPropWide(6, Value);
 end;
 
-function TRowDir.GetTitleName: WideString;
+function TRowDir.GetPcbName: WideString;
 begin
   Result := GetXMLAttrPropWide(7);
 end;
 
-procedure TRowDir.SetTitleName(const Value: WideString);
+procedure TRowDir.SetPcbName(const Value: WideString);
 begin
   SetXMLAttrPropWide(7, Value);
 end;
 
-function TRowDir.GetSelectName: WideString;
+function TRowDir.GetArtworkPreviewName: WideString;
 begin
   Result := GetXMLAttrPropWide(8);
 end;
 
-procedure TRowDir.SetSelectName(const Value: WideString);
+procedure TRowDir.SetArtworkPreviewName(const Value: WideString);
 begin
   SetXMLAttrPropWide(8, Value);
 end;
 
-function TRowDir.GetScoreName: WideString;
+function TRowDir.GetTitleName: WideString;
 begin
   Result := GetXMLAttrPropWide(9);
 end;
 
-procedure TRowDir.SetScoreName(const Value: WideString);
+procedure TRowDir.SetTitleName(const Value: WideString);
 begin
   SetXMLAttrPropWide(9, Value);
 end;
 
-function TRowDir.GetBossName: WideString;
+function TRowDir.GetSelectName: WideString;
 begin
   Result := GetXMLAttrPropWide(10);
 end;
 
-procedure TRowDir.SetBossName(const Value: WideString);
+procedure TRowDir.SetSelectName(const Value: WideString);
 begin
   SetXMLAttrPropWide(10, Value);
+end;
+
+function TRowDir.GetScoreName: WideString;
+begin
+  Result := GetXMLAttrPropWide(11);
+end;
+
+procedure TRowDir.SetScoreName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(11, Value);
+end;
+
+function TRowDir.GetBossName: WideString;
+begin
+  Result := GetXMLAttrPropWide(12);
+end;
+
+procedure TRowDir.SetBossName(const Value: WideString);
+begin
+  SetXMLAttrPropWide(12, Value);
 end;
 
 constructor TRowsDir.Create(parentNode: IXMLNode);
@@ -476,7 +508,7 @@ begin
   xmlPI := XMLDoc.CreateProcessingInstruction('xml', 'version="1.0" encoding="utf-8"');
   XMLDoc.InsertBefore(xmlPI, node);
 
-  InitChildNodes(['ver', 'MameExeName', 'RomsEmulated', 'FinalRomsFound'], ['', '', '', '']);
+  InitChildNodes(['ver', 'MameExeName', 'RomsEmulated', 'FinalRomsFound','IpsChecked','HiScoreChecked'], ['', '', '', '', '', '']);
 
   fRows := TRows.Create(node);
 end;
@@ -520,6 +552,27 @@ procedure TMameXML.SetFinalRomsFound(const Value: Integer);
 begin
   SetXMLAttrPropInt(3, Value);
 end;
+
+function TMameXML.GetIpsChecked: WideString;
+begin
+  Result := GetXMLAttrPropWide(4);
+end;
+
+procedure TMameXML.SetIpsChecked(const Value: WideString);
+begin
+  SetXMLAttrPropWide(4 ,Value);
+end;
+
+function TMameXML.GetHiScoreChecked: WideString;
+begin
+  Result := GetXMLAttrPropWide(5);
+end;
+
+procedure TMameXML.SetHiScoreChecked(const Value: WideString);
+begin
+  SetXMLAttrPropWide(5 ,Value);
+end;
+
 
 constructor TMameXMLPath.Create;
 var
@@ -575,6 +628,7 @@ procedure TMameXMLPath.SetFullPathOfSelectedMame(const Value: WideString);
 begin
   SetXMLAttrPropWide(3, Value);
 end;
+
 
 destructor TMameXML.Destroy;
 begin

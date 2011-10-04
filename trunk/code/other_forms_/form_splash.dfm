@@ -18,7 +18,7 @@ object Splash_Screen: TSplash_Screen
   OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
-  object sGauge1: TsGauge
+  object sGauge_Splash: TsGauge
     Left = 6
     Top = 260
     Width = 513

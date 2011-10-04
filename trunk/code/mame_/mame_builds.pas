@@ -4,7 +4,7 @@ interface
 uses
   SysUtils,NxColumnClasses,NxGrid,NxCustomGridControl,pngimage,
   Forms,Graphics,Classes,OmniXML,OmniXMLUtils,mame_dirs,StdCtrls,
-  Controls,Dialogs;
+  Controls,Dialogs,mame_database,FileCtrl,global;
 
   procedure SetMame_BuildsFromMameIni;
   procedure SaveMame_BuildsAtExit;
@@ -183,13 +183,13 @@ end;
 procedure SetMame_BuildsFromMameIni;
 var
   MameIniFile: TextFile;
-  value,text,t1,t2,t3,t4: string;
+  value,text,t1,t2,t3,CheckIps,CheckHiscore: string;
   r: integer;
 begin
   if Started = True then
     begin
       Tools_SystemFont_RadioButtonClick;
-      if (ExtractFileName(Mame_Exe) <> 'mamep.exe') and (ExtractFileName(Mame_Exe) <> 'mamepuiXT_x86.exe') and (ExtractFileName(Mame_Exe) <> 'mamepuiXT_x64.exe') then
+      if (Mame_Exe <> 'mamep.exe') and (Mame_Exe <> 'mamepuiXT_x86.exe') and (Mame_Exe <> 'mamepuiXT_x64.exe') then
         begin
           EnableBuild_Mameplus(False);
           EnableBuild_MamePlusXT(False);
@@ -198,21 +198,16 @@ begin
       else
         begin
           ipsNotFoundImg :=  Program_Path+'media\emulators\arcade\mame\imgaes\ipsnotfound.png';
-          if not DirectoryExists(ExtractFilePath(Mame_Exe)+'hi') then
-            CreateDir(ExtractFilePath(Mame_Exe)+'hi');
-          if not DirectoryExists(ExtractFilePath(Mame_Exe)+'ips') then
-            CreateDir(ExtractFilePath(Mame_Exe)+'ips');
-          if ExtractFileName(Mame_Exe) = 'mamep.exe' then
+          if not DirectoryExists(FullPathMame_Exe+'hi') then
+            CreateDir(FullPathMame_Exe+'hi');
+          if not DirectoryExists(FullPathMame_Exe+'ips') then
+            CreateDir(FullPathMame_Exe+'ips');
+          if Mame_Exe = 'mamep.exe' then
             begin
               EnableBuild_MamePlus(True);
               EnableBuild_MamePlusXT(False);
               BuildsClick;
               Builds_MamePlus;
-{              if not MameIni.SectionExists('MamePlus') then
-                begin
-                  MameIni.WriteString('MamePlus','IPSChecked','False');
-                  MameIni.WriteString('MamePlus','HiScoreChecked','False');
-                end;}
             end
           else if (ExtractFileName(Mame_Exe) = 'mamepuiXT_x86.exe') or (ExtractFileName(Mame_Exe) = 'mamepuiXT_x64.exe') then
             begin
@@ -220,14 +215,12 @@ begin
               EnableBuild_MamePlusXT(True);
               BuildsClick;
               Builds_MameXT;
-{              if not MameIni.SectionExists('MamePlusXT') then
-                begin
-                  MameIni.WriteString('MamePlusXT','IPSChecked','False');
-                  MameIni.WriteString('MamePlusXT','HiScoreChecked','False');
-                end;}
             end;
+          nodegame := MameXmlUseDoc.SelectSingleNode('MameInfo');
+          CheckIps := GetNodeAttrStr(nodegame,'IpsChecked');
+          CheckHiscore := GetNodeAttrStr(nodegame,'HiScoreChecked');
           FromMame_BuildsToFindBuilds := True;
-          value := ExtractFilePath(Mame_Exe) + 'mame.ini';
+          value := FullPathMame_Exe+'mame.ini';
           AssignFile(MameIniFile,value);
           Reset(MameIniFile);
           while not Eof(MameIniFile) do
@@ -238,14 +231,14 @@ begin
               t2 := Trim(Copy(text,r,100));
               if t1 = 'confirm_quit' then
                 begin
-                  if ExtractFileName(Mame_Exe) = 'mamep.exe' then
+                  if Mame_Exe = 'mamep.exe' then
                     Conf.sCheckBox32.Checked := StrToBool(t2)
                   else
                     Conf.sCheckBox44.Checked := StrToBool(t2);
                 end
               else if t1 = 'audio_sync' then
                 begin
-                  if ExtractFileName(Mame_Exe) = 'mamep.exe' then
+                  if Mame_Exe = 'mamep.exe' then
                     Conf.sCheckBox10.Checked := StrToBool(t2)
                   else
                     Conf.sCheckBox28.Checked := StrToBool(t2);
@@ -253,30 +246,28 @@ begin
               else if t1 = 'hiscore_directory' then
                 begin
                   if t2 = 'hi' then
-                    t3 := ExtractFilePath(Mame_Exe)+'hi'
+                    t3 := FullPathMame_Exe+'hi'
                   else
                     t3 := t2;
                   HiScorePath := t3;
-                  if ExtractFileName(Mame_Exe) = 'mamep.exe' then
+                  if Mame_Exe = 'mamep.exe' then
                     begin
-//                      t4 := MameIni.ReadString('MamePlus','HiScoreChecked',t4);
-                      if t4 = 'True' then
-                        Conf.sCheckBox33.Checked := StrToBool(t4)
+                      if CheckHiscore = 'True' then
+                        Conf.sCheckBox33.Checked := StrToBool(CheckHiscore)
                       else
                         HiScorePath_MamePlus;
                     end
                   else
                     begin
-//                      t4 := MameIni.ReadString('MamePlusXT','HiScoreChecked',t4);
-                      if t4 = 'True' then
-                        Conf.sCheckBox129.Checked := StrToBool(t4)
+                      if CheckHiscore = 'True' then
+                        Conf.sCheckBox129.Checked := StrToBool(CheckHiscore)
                       else
                         HiScorePath_MameXT;
                     end;
                 end
               else if t1 = 'ui_transparency' then
                 begin
-                  if ExtractFileName(Mame_Exe) = 'mamep.exe' then
+                  if Mame_Exe = 'mamep.exe' then
                     begin
                       Conf.sbar_Mame_UITransparent_MamePlus.Position := StrToInt(t2);
                       MameUITrasparentChange_MamePlus;
@@ -290,30 +281,28 @@ begin
               else if t1 = 'ipspath' then
                 begin
                   if t2 = 'ips' then
-                    t3 := ExtractFilePath(Mame_Exe)+'ips'
+                    t3 := Mame_Exe+'ips'
                   else
                     t3 := t2;
                   IPSPath := t3;
-                  if ExtractFileName(Mame_Exe) = 'mamep.exe' then
+                  if Mame_Exe = 'mamep.exe' then
                     begin
-//                      t4 := MameIni.ReadString('MamePlus','IPSChecked',t4);
-                      if t4 = 'True' then
-                        Conf.sCheckBox34.Checked := StrToBool(t4)
+                      if CheckIps = 'True' then
+                        Conf.sCheckBox34.Checked := StrToBool(CheckIps)
                       else
                         IPSEnableClick_MamePlus;
                     end
                   else
                     begin
-//                      t4 := MameIni.ReadString('MamePlusXT','IPSChecked',t4);
-                      if t4 = 'True' then
-                        Conf.sCheckBox130.Checked := StrToBool(t4)
+                      if CheckIps = 'True' then
+                        Conf.sCheckBox130.Checked := StrToBool(CheckIps)
                       else
                         IPSEnableClick_MameXT;
                     end;
                 end;
             end;
           CloseFile(MameIniFile);
-          if ExtractFileName(Mame_Exe) <> 'mamep.exe' then
+          if Mame_Exe <> 'mamep.exe' then
             begin
               GetMameXT_GamesList;
               RunGameCount_PlayTime_MameXT_Memo;
@@ -468,11 +457,14 @@ end;
 
 procedure Tools_FontComboBoxChange;
 begin
-  Conf.LMDFontSizeComboBox1.Items.Clear;
-  Conf.sLabel41.Enabled := True;
-  Conf.LMDFontSizeComboBox1.FontName := Conf.LMDFontComboBox1.Font.Name;
-  Conf.LMDFontSizeComboBox1.Init;
-  Conf.LMDFontSizeComboBox1.Enabled := True;
+  if Mame_Exe <> '' then
+    begin
+      Conf.LMDFontSizeComboBox1.Items.Clear;
+      Conf.sLabel41.Enabled := True;
+      Conf.LMDFontSizeComboBox1.FontName := Conf.LMDFontComboBox1.Font.Name;
+      Conf.LMDFontSizeComboBox1.Init;
+      Conf.LMDFontSizeComboBox1.Enabled := True;
+    end;
 end;
 
 procedure Tools_FontSizeComboBoxChange;
@@ -561,7 +553,7 @@ begin
                   if Started = True then
                     begin
                       Splash_Screen.Progress_Label((100 * k2) div (CountF-1),'Try to Sotring IPS ('+t1+')');
-                      Splash_Screen.sGauge1.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
+                      Splash_Screen.sGauge_Splash.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
                     end
                   else
                     begin
@@ -597,7 +589,7 @@ begin
       finally
         xmlDoc := nil;
         if Started = True then
-          Splash_Screen.sGauge1.Suffix := '%'
+          Splash_Screen.sGauge_Splash.Suffix := '%'
         else
           begin
             Conf.sLabel110.Visible := False;
@@ -919,7 +911,7 @@ begin
                       if Started = True then
                         begin
                           Splash_Screen.Progress_Label((100 * k2) div (CountF-1),'Try to Sotring IPS ('+t1+')');
-                          Splash_Screen.sGauge1.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
+                          Splash_Screen.sGauge_Splash.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
                         end
                       else
                         begin
@@ -962,7 +954,7 @@ begin
       finally
         xmlDoc := nil;
         if Started = True then
-          Splash_Screen.sGauge1.Suffix := '%'
+          Splash_Screen.sGauge_Splash.Suffix := '%'
         else
           begin
             Conf.sLabel111.Visible := False;
@@ -1115,7 +1107,7 @@ var
   i: Integer;
 begin
   Conf.sComboBox76.Items.Add('Please Choose a Game');
-  GamePath := ExtractFilePath(Mame_Exe)+'ini\mameui.ini';
+  GamePath := FullPathMame_Exe+'ini\mameui.ini';
   AssignFile(GameCount,GamePath);
   Reset(GameCount);
   while not Eof(GameCount) do
@@ -1143,7 +1135,7 @@ var
   Game,GamePath,GameCT: string;
   i: Integer;
 begin
-  GamePath := ExtractFilePath(Mame_Exe)+'ini\mameui.ini';
+  GamePath := FullPathMame_Exe+'ini\mameui.ini';
   AssignFile(GameCount,GamePath);
   Reset(GameCount);
   while not Eof(GameCount) do
@@ -1250,15 +1242,15 @@ end;
 procedure FindIPSDir_MamePlus;
 begin
   gFindDirs := 'IPSDir_mameplus';
-  Conf.Find_Dirs.InitialDir := IPSPath;
-  Conf.Find_Dirs.Execute;
+  if SelectDirectory(IPSPath, [sdAllowCreate, sdPerformCreate, sdPrompt],0) then
+    global_Find_DirsClose;
 end;
 
 procedure FindIPSDir_MameXT;
 begin
   gFindDirs := 'IPSDir_mamext';
-  Conf.Find_Dirs.InitialDir := IPSPath;
-  Conf.Find_Dirs.Execute;
+  if SelectDirectory(IPSPath, [sdAllowCreate, sdPerformCreate, sdPrompt],0) then
+    global_Find_DirsClose;
 end;
 
 procedure SetupIPSMameGrid(Name:string);
@@ -1509,7 +1501,7 @@ begin
   GamePlayTime_Memo.Visible := False;
   GamePlayTime_Memo.Align := alClient;
   GamePlayTime_Memo.WordWrap := False;
-  GamePath := ExtractFilePath(Mame_Exe)+'ini\mameui.ini';
+  GamePath := FullPathMame_Exe+'ini\mameui.ini';
   AssignFile(GameCount,GamePath);
   Reset(GameCount);
     while not Eof(GameCount) do
@@ -1530,7 +1522,7 @@ begin
             if FromDatabase = False then
               begin
                 Splash_Screen.Progress_Label(((100 * Count) div (Lines-1)),'Loading MameXT Play/Time Count List');
-                Splash_Screen.sGauge1.Suffix := '%';
+                Splash_Screen.sGauge_Splash.Suffix := '%';
               end
             else
               begin
@@ -1552,8 +1544,7 @@ end;
 
 procedure SetTheNewIPSDir_MamePlus;
 begin
-  Conf.sEdit13.Text := Conf.Find_Dirs.Directory;
-  IPSPath := Conf.sEdit13.Text;
+  Conf.sEdit13.Text := IPSPath;
   Conf.nxtgrd_ips_mameplus.Columns.Clear;
   Conf.nxtgrd_ips_mameplus.ClearRows;
   Conf.nxtgrd_ips_mameplus.Caption := 'I Have no Data to Show.';
@@ -1564,8 +1555,7 @@ end;
 
 procedure SetTheNewIPSDir_MameXT;
 begin
-  Conf.sEdit17.Text := Conf.Find_Dirs.Directory;
-  IPSPath := Conf.sEdit17.Text;
+  Conf.sEdit17.Text := IPSPath;
   Conf.nxtgrd_ips_mamext.Columns.Clear;
   Conf.nxtgrd_ips_mamext.ClearRows;
   Conf.nxtgrd_ips_mamext.Caption := 'I Have no Data to Show.';

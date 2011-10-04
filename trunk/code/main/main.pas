@@ -37,7 +37,6 @@ type
     SkinM: TsSkinManager;SkinP: TsSkinProvider;
 //  Dialogs Components
     Find_Files: TOpenDialog;
-    Find_Dirs: TJvSelectDirectory;
 //  Machine Info Components
     SDI1: TSoundDeviceInfo;
     DMI1: TDesktopMonitorInfo;
@@ -100,7 +99,7 @@ type
     sLabel92: TsLabel;sLabel94: TsLabel;sLabel95: TsLabel;sLabel96: TsLabel;sLabel97: TsLabel;sLabel98: TsLabel;sLabel99: TsLabel;sLabel100: TsLabel;
     sLabel101: TsLabel;sLabel32: TsLabel;sLabel33: TsLabel;sLabel34: TsLabel;sLabel35: TsLabel;sLabel36: TsLabel;sLabel37: TsLabel;sLabel38: TsLabel;
     sLabel39: TsLabel;sLabel40: TsLabel;sLabel41: TsLabel;sLabel42: TsLabel;sLabel43: TsLabel;sLabel102: TsLabel;sLabel103: TsLabel;sLabel104: TsLabel;
-    sLabel105: TsLabel;sLabel106: TsLabel;sLabel107: TsLabel;sLabel108: TsLabel;sLabel109: TsLabel;sLabel110: TsLabel;sLabel111: TsLabel;sLabel112: TsLabel;
+    sLabel105: TsLabel;sLabel106: TsLabel;sLabel107: TsLabel;sLabel109: TsLabel;sLabel110: TsLabel;sLabel111: TsLabel;sLabel112: TsLabel;
 //  sCheckBox Components
     sCheckBox26: TsCheckBox;sCheckBox16: TsCheckBox;sCheckBox17: TsCheckBox;sCheckBox35: TsCheckBox;sCheckBox36: TsCheckBox;sCheckBox37: TsCheckBox;
     sCheckBox38: TsCheckBox;sCheckBox39: TsCheckBox;sCheckBox3: TsCheckBox;sCheckBox4: TsCheckBox;sCheckBox5: TsCheckBox;sCheckBox6: TsCheckBox;sCheckBox7: TsCheckBox;
@@ -217,6 +216,7 @@ type
     LMDFontComboBox1: TLMDFontComboBox;LMDFontSizeComboBox1: TLMDFontSizeComboBox;
 //  UnKnow Panels
     sPanel1: TsPanel;pnl1: TPanel;pnl2: TPanel;pnl3: TPanel;pnl4: TPanel;
+    sBitBtn102: TsBitBtn;
 
     procedure FormCreate(Sender: TObject);
     procedure Find_DirsClose(Sender: TObject);
@@ -458,6 +458,7 @@ type
     procedure sButton9Click(Sender: TObject);
     procedure sBitBtn101Click(Sender: TObject);
     procedure sCheckBox130Click(Sender: TObject);
+    procedure sBitBtn102Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -1480,6 +1481,11 @@ end;
 procedure TConf.sCheckBox130Click(Sender: TObject);
 begin
   IPSEnableClick_MameXT;
+end;
+
+procedure TConf.sBitBtn102Click(Sender: TObject);
+begin
+  EraseMameDir(sComboBox72.Text);
 end;
 
 end.

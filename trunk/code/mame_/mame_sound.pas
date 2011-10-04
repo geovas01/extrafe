@@ -59,10 +59,13 @@ end;
 
 Procedure MameChooseJoystickMap;
 begin
-  gFindFiles := 'joystick_map';
-  Conf.Find_Files.InitialDir := Program_Path + 'emulators';
-  Conf.Find_Files.Filter := 'Maps (*.map, *.txt)|*.map;|*.txt';
-  Conf.Find_Files.Execute;
+  if Mame_Exe <> '' then
+    begin
+      gFindFiles := 'joystick_map';
+      Conf.Find_Files.InitialDir := Program_Path + 'emulators';
+      Conf.Find_Files.Filter := 'Maps (*.map, *.txt)|*.map;|*.txt';
+      Conf.Find_Files.Execute;
+    end;
 end;
 
 Procedure MameResetJoystickMap;
@@ -327,7 +330,7 @@ begin
               Mame_Global_MemoIni.Lines.Insert(k,'positional_device          '+Conf.sComboBox17.Text);
             end;
         end;
-      Mame_Global_MemoIni.Lines.SaveToFile(ExtractFilePath(Mame_Exe)+'mame.ini');
+      Mame_Global_MemoIni.Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
       FromMame_SoundToFindSound := False;
     end;
 end;
@@ -398,54 +401,57 @@ end;
 procedure CheckMameSound_TopicSettings;
 begin
   Conf.sButton6.Enabled := False;
-  if Conf.sCheckBox23.Checked <> True then
-    Conf.sButton6.Enabled := True;
-  if Conf.sCheckBox16.Checked <> False then
-    Conf.sButton6.Enabled := True;
-  if Conf.sCheckBox17.Checked <> False then
-    Conf.sButton6.Enabled := True;
-  if Conf.sCheckBox18.Checked <> False then
-    Conf.sButton6.Enabled := True;
-  if Conf.sCheckBox19.Checked <> False then
-    Conf.sButton6.Enabled := True;
-  if Conf.sCheckBox20.Checked <> False then
-    Conf.sButton6.Enabled := True;
-  if Conf.sCheckBox21.Checked <> False then
-    Conf.sButton6.Enabled := True;
-  if Conf.sCheckBox22.Checked <> False then
-    Conf.sButton6.Enabled := True;
-  if Conf.sbar_mame_joysdeadzone.Position <> 30 then
-    Conf.sButton6.Enabled := True;
-  if Conf.sbar_mame_joysaturation.Position <> 85 then
-    Conf.sButton6.Enabled := True;
-  if Conf.sEdit15.Text <> 'auto' then
-    Conf.sButton6.Enabled := True;
-  if Conf.sComboBox10.Text <> 'keyboard' then
-    Conf.sButton6.Enabled := True;
-  if Conf.sComboBox11.Text <> 'keyboard' then
-    Conf.sButton6.Enabled := True;
-  if Conf.sComboBox12.Text <> 'keyboard' then
-    Conf.sButton6.Enabled := True;
-  if Conf.sComboBox13.Text <> 'keyboard' then
-    Conf.sButton6.Enabled := True;
-  if Conf.sComboBox14.Text <> 'keyboard' then
-    Conf.sButton6.Enabled := True;
-  if Conf.sComboBox15.Text <> 'mouse' then
-    Conf.sButton6.Enabled := True;
-  if Conf.sComboBox16.Text <> 'keyboard' then
-    Conf.sButton6.Enabled := True;
-  if Conf.sComboBox17.Text <> 'keyboard' then
-    Conf.sButton6.Enabled := True;
-  if Conf.sCheckBox26.Checked <> True then
-    Conf.sButton6.Enabled := True;
-  if Conf.sCheckBox43.Checked <> True then
-    Conf.sButton6.Enabled := True;
-  if Conf.sComboBox18.Text <> '48000' then
-    Conf.sButton6.Enabled := True;
-  if Conf.sbar_mame_valumeattenuation.Position <> 0 then
-    Conf.sButton6.Enabled := True;
-  if Conf.sbar_mame_audiolatency.Position <> 2 then
-    Conf.sButton6.Enabled := True;
+  if Mame_Exe <> '' then
+    begin
+      if Conf.sCheckBox23.Checked <> True then
+        Conf.sButton6.Enabled := True;
+      if Conf.sCheckBox16.Checked <> False then
+        Conf.sButton6.Enabled := True;
+      if Conf.sCheckBox17.Checked <> False then
+        Conf.sButton6.Enabled := True;
+      if Conf.sCheckBox18.Checked <> False then
+        Conf.sButton6.Enabled := True;
+      if Conf.sCheckBox19.Checked <> False then
+        Conf.sButton6.Enabled := True;
+      if Conf.sCheckBox20.Checked <> False then
+        Conf.sButton6.Enabled := True;
+      if Conf.sCheckBox21.Checked <> False then
+        Conf.sButton6.Enabled := True;
+      if Conf.sCheckBox22.Checked <> False then
+        Conf.sButton6.Enabled := True;
+      if Conf.sbar_mame_joysdeadzone.Position <> 30 then
+        Conf.sButton6.Enabled := True;
+      if Conf.sbar_mame_joysaturation.Position <> 85 then
+        Conf.sButton6.Enabled := True;
+      if Conf.sEdit15.Text <> 'auto' then
+        Conf.sButton6.Enabled := True;
+      if Conf.sComboBox10.Text <> 'keyboard' then
+        Conf.sButton6.Enabled := True;
+      if Conf.sComboBox11.Text <> 'keyboard' then
+        Conf.sButton6.Enabled := True;
+      if Conf.sComboBox12.Text <> 'keyboard' then
+        Conf.sButton6.Enabled := True;
+      if Conf.sComboBox13.Text <> 'keyboard' then
+        Conf.sButton6.Enabled := True;
+      if Conf.sComboBox14.Text <> 'keyboard' then
+        Conf.sButton6.Enabled := True;
+      if Conf.sComboBox15.Text <> 'mouse' then
+        Conf.sButton6.Enabled := True;
+      if Conf.sComboBox16.Text <> 'keyboard' then
+        Conf.sButton6.Enabled := True;
+      if Conf.sComboBox17.Text <> 'keyboard' then
+        Conf.sButton6.Enabled := True;
+      if Conf.sCheckBox26.Checked <> True then
+        Conf.sButton6.Enabled := True;
+      if Conf.sCheckBox43.Checked <> True then
+        Conf.sButton6.Enabled := True;
+      if Conf.sComboBox18.Text <> '48000' then
+        Conf.sButton6.Enabled := True;
+      if Conf.sbar_mame_valumeattenuation.Position <> 0 then
+        Conf.sButton6.Enabled := True;
+      if Conf.sbar_mame_audiolatency.Position <> 2 then
+        Conf.sButton6.Enabled := True;
+    end;
 end;
 
 procedure CheckButtonTopicsConfig_MameSound;

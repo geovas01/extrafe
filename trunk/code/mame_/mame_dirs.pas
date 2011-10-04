@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils,StdCtrls,FunctionX,ShellAPI,Classes,sEdit,Types,
-  Graphics,Controls,OmniXML,OmniXMLUtils,FileCtrl;
+  Graphics,Controls,OmniXML,OmniXMLUtils,FileCtrl,Forms,Windows;
 
   procedure SetMame_DirsFromMameIni;
   procedure SaveMame_DirsAtExit;
@@ -21,7 +21,7 @@ uses
   procedure SelectMameUp;
   procedure SelectMameDown;
   procedure SearchForSelectedMame(num: Integer);
-  procedure CheckWin64ForListBox(num:ShortInt;sel:Boolean);
+  procedure CheckWin64ForListBox(num:ShortInt);
   procedure ListBoxOfSetupedMames(Line:Integer;Position: TRect);
   procedure ShowOnlySetupedMameBuilds;
   procedure MameChooseRomsDirsOrAdd;
@@ -44,8 +44,9 @@ Const
 
 var
   component: TComponent;
-  setupedMame: array [0..5] of string;
   FromMame_DirsToFindDirs,ArrowClick,FromArrows_Mamedirs,CreateNewMame: Boolean;
+  NewRomDirectory: String;
+  SetupedMame: array [0..5] of string;
 
 implementation
 
@@ -55,7 +56,7 @@ uses
 
 var
   Inode_Dirs: Integer;
-  OldDir,OldDirN: String;
+  OldDir: String;
 
 procedure RightPageDirs;
 begin
@@ -94,27 +95,28 @@ begin
     end;
   if SelectedMame = 0 then
     conf.sBitBtn36.Enabled := False;
-  SearchForSelectedMame(SelectedMame);
-  Conf.sCheckListBox1.Selected[SelectedMame] := True;
-//  MameIni.WriteInteger('SelMame','Selected',SelectedMame);
-  if Mame_Exe <> '' then
+  if FileExists(ExtractFilePath(Application.ExeName)+'media/emulators/arcade/mame/config/config.xml') then
     begin
-      Conf.sCheckListBox1.Checked[SelectedMame] := True;
-      Conf.Enabled := False;
-      DisableMenuButtons(False);
-      FromArrows_Mamedirs:= True;
-      Conf.sLabel112.Visible := True;
-      Conf.sGauge_MameChange.Visible := True;
-      StartEmuMame;
-      Conf.sLabel112.Visible := False;
-      Conf.sGauge_MameChange.Visible := False;
-      FromArrows_Mamedirs := False;
-      SaveMame_DirsAtExit;
-      DisableMenuButtons(True);
-      Conf.Enabled := True;
-    end
-  else
-    MamePanels_Clear;
+      SearchForSelectedMame(SelectedMame);
+      Conf.sCheckListBox1.Selected[SelectedMame] := True;
+      if Mame_Exe <> '' then
+        begin
+          Conf.sCheckListBox1.Checked[SelectedMame] := True;
+          Conf.Enabled := False;
+          DisableMenuButtons(False);
+          FromArrows_Mamedirs:= True;
+          Conf.sLabel112.Visible := True;
+          Conf.sGauge_MameChange.Visible := True;
+          StartEmuMame;
+          Conf.sLabel112.Visible := False;
+          Conf.sGauge_MameChange.Visible := False;
+          FromArrows_Mamedirs := False;
+          DisableMenuButtons(True);
+          Conf.Enabled := True;
+        end
+      else
+        MamePanels_Clear;
+    end;
 end;
 
 procedure SelectMameDown;
@@ -128,61 +130,102 @@ begin
     end;
   if SelectedMame = Conf.sCheckListBox1.Count - 1 then
     conf.sBitBtn37.Enabled := False;
-  SearchForSelectedMame(SelectedMame);
-  Conf.sCheckListBox1.Selected[SelectedMame] := True;
-//  MameIni.WriteInteger('SelMame','Selected',SelectedMame);
-  if Mame_Exe <> '' then
+  if FileExists(ExtractFilePath(Application.ExeName)+'media/emulators/arcade/mame/config/config.xml') then
     begin
-      Conf.sCheckListBox1.Checked[SelectedMame] := True;
-      Conf.Enabled := False;
-      DisableMenuButtons(False);
-      FromArrows_Mamedirs:= True;
-      Conf.sLabel112.Visible := True;
-      Conf.sGauge_MameChange.Visible := True;
-      StartEmuMame;
-      Conf.sLabel112.Visible := False;
-      Conf.sGauge_MameChange.Visible := False;
-      FromArrows_Mamedirs := False;
-      SaveMame_DirsAtExit;
-      DisableMenuButtons(True);
-      Conf.Enabled := True;
-    end
-  else
-    MamePanels_Clear;
+      SearchForSelectedMame(SelectedMame);
+      Conf.sCheckListBox1.Selected[SelectedMame] := True;
+      if Mame_Exe <> '' then
+        begin
+          Conf.sCheckListBox1.Checked[SelectedMame] := True;
+          Conf.Enabled := False;
+          DisableMenuButtons(False);
+          FromArrows_Mamedirs:= True;
+          Conf.sLabel112.Visible := True;
+          Conf.sGauge_MameChange.Visible := True;
+          StartEmuMame;
+          Conf.sLabel112.Visible := False;
+          Conf.sGauge_MameChange.Visible := False;
+          FromArrows_Mamedirs := False;
+          DisableMenuButtons(True);
+          Conf.Enabled := True;
+        end
+      else
+        MamePanels_Clear;
+    end;
 end;
 
 procedure SearchForSelectedMame(num: Integer);
 var
   k: Integer;
-  whatmame: string;
+  MameName,MamePath: string;
+  FindMame: Boolean;
 begin
-  if IsWindows64 = true then
+  MameName := '';
+  MamePath := '';
+  FindMame := False;
+  if Assigned(MameXMLConfig) then
+    MameXMLConfig.Clear;
+  gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
+  for Inode_Dirs := 0 to gameList.Length - 1 do
+  begin
+    nodegame := gameList.Item[Inode_dirs];
+    RowDir := MameXMLConfig.RowsDir.AddRowDir;
+    RowDir.MameName := GetNodeAttrStr(nodegame,'MameName');
+    RowDir.MamePath := GetNodeAttrStr(nodegame,'MamePath');
+    RowDir.Selected := GetNodeAttrInt(nodegame,'Selected');
+    RowDir.Cabinets := GetNodeAttrStr(nodegame,'Cabinets');
+    RowDir.Flyers := GetNodeAttrStr(nodegame,'Flyers');
+    RowDir.Marquees := GetNodeAttrStr(nodegame,'Marquess');
+    RowDir.Control_Panels := GetNodeAttrStr(nodegame,'Control_Panels');
+    RowDir.PCBs := GetNodeAttrStr(nodegame,'Pcbs');
+    RowDir.Artwork_Preview := GetNodeAttrStr(nodegame,'Artwork_Preview');
+    RowDir.Titles := GetNodeAttrStr(nodegame,'Titles');
+    RowDir.Select := GetNodeAttrStr(nodegame,'Select');
+    RowDir.Scores := GetNodeAttrStr(nodegame,'Scores');
+    RowDir.Bosses := GetNodeAttrStr(nodegame,'Bosses');
+    if IsWindows64 = true then
+      begin
+        if GetNodeAttrStr(nodegame,'MameName') = conf.sCheckListBox1.Items[num] then
+          begin
+            MameName := GetNodeAttrStr(nodegame,'MameName');
+            Mame_Exe := MameName;
+            MamePath := GetNodeAttrStr(nodegame,'MamePath');
+            FindMame := True;
+          end
+        else
+          if FindMame = False then
+            Mame_Exe := '';
+      end
+     else
+      begin
+        if GetNodeAttrStr(nodegame,'MameName') = conf.sCheckListBox1.Items[num] then
+          begin
+            MameName := GetNodeAttrStr(nodegame,'MameName');
+            Mame_Exe := MameName;
+            MamePath := GetNodeAttrStr(nodegame,'MamePath');
+            FindMame := True;
+          end
+        else
+          if FindMame = False then
+            Mame_Exe := '';
+      end;
+  end;
+  gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowpath');
+  for Inode_Dirs := 0 to gameList.Length - 1 do
     begin
-      for k := 0 to 6 do
-        begin
-//          whatmame := MameIni.ReadString('MamePaths','Type'+IntToStr(k),whatmame);
-          if whatmame = conf.sCheckListBox1.Items[num] then
-            begin
-//              Conf.sEdit64.Text := MameIni.ReadString('MamePaths','Mame'+IntToStr(k),Conf.sEdit64.Text);
-              Break;
-            end
-          else Conf.sEdit64.Text := '';
-        end;
-    end
-   else
-    begin
-      for k := 0 to 4 do
-        begin
-//          whatmame := MameIni.ReadString('MamePaths','Type'+IntToStr(k),whatmame);
-          if whatmame = conf.sCheckListBox1.Items[num] then
-            begin
-//              Conf.sEdit64.Text := MameIni.ReadString('MamePaths','Mame'+IntToStr(k),Conf.sEdit64.Text);
-              Break;
-            end
-          else Conf.sEdit64.Text := '';
-        end;
+      nodegame := gameList.Item[Inode_Dirs];
+      RowPath := MameXMLConfig.RowsPath.AddPath;
+      RowPath.MameName := GetNodeAttrStr(nodegame,'MameName');
+      RowPath.PathId := GetNodeAttrInt(nodegame,'PathId');
+      RowPath.RomPath := GetNodeAttrStr(nodegame,'RomPath');
+      RowPath.RomsFound := GetNodeAttrInt(nodegame,'RomsFound');
     end;
-  Mame_Exe := Conf.sEdit64.Text;
+  MameXMLConfig.Condition := 'Active';
+  MameXMLConfig.SelectedMame := Mame_Exe;
+  MameXMLConfig.FullPathOfSelectedMame := MamePath;
+  MameXMLConfig.Selected := num;
+  MameXMLConfig.SaveToFile(MameConfigFile,ofIndent);
+  Conf.sEdit64.Text := MamePath+Mame_exe;
 end;
 
 procedure GetMame;
@@ -206,38 +249,89 @@ end;
 
 procedure CheckForMameAndCreateIni;
 var
-  Selected: Byte;
+  eraseolddirs,foundMame: Boolean;
+  li,lo: Integer;
 Begin
+  li := 1;
+  lo := 1;
   CreateNewMame := False;
-  if (Conf.Find_Files.FileName <> '') and (Mame_Exe <> ExtractFileName(Conf.Find_Files.FileName)) then
+  eraseolddirs := False;
+  foundMame := False;
+  if (Conf.Find_Files.FileName <> '') and (Conf.Find_Files.FileName <> FullPathMame_Exe+Mame_Exe) then
     begin
-      Mame_Exe := ExtractFileName(Conf.Find_Files.FileName);
-      FullPathMame_Exe := ExtractFilePath(Conf.Find_Files.FileName);
-      ShellExecute(0,'open',PChar(FullPathMame_Exe+Mame_Exe),PChar('-createconfig'),nil,0);
-      Conf.sEdit64.Text := FullPathMame_Exe + Mame_Exe;
-      CreateNewMame := True;
+      gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
+      for Inode_Dirs := 0 to gameList.Length - 1 do
+        begin
+          nodegame := gameList.Item[Inode_Dirs];
+          if ExtractFileName(Conf.Find_Files.FileName) = GetNodeAttrStr(nodegame,'MameName') then
+            foundMame := True;
+        end;
+      if foundMame = False then
+        begin
+          Mame_Exe := ExtractFileName(Conf.Find_Files.FileName);
+          FullPathMame_Exe := ExtractFilePath(Conf.Find_Files.FileName);
+          ShellExecute(0,'open',PChar(FullPathMame_Exe+Mame_Exe),PChar('-createconfig'),nil,0);
+          Conf.sEdit64.Text := FullPathMame_Exe + Mame_Exe;
+          CreateNewMame := True;
+        end
+      else
+        begin
+          if MessageBox(0,'There is an already installed mame version." & vbcrlf & "Do you want to replace it with the new one?','Replace Mame',+mb_YesNo +mb_ICONWARNING) = 6 then
+            begin
+              SysUtils.DeleteFile(MameDatabaseFile);
+              MameDatabaseFile := Trim(Copy(MameDatabaseFile,0,Length(MameDatabaseFile)-10));
+              MameDatabaseFile := MameDatabaseFile + '.xml';
+              SysUtils.DeleteFile(MameDatabaseFile);
+//              MameName := ExtractFileName(Conf.Find_Files.FileName);
+//              nodegame := MameXmlConfigDoc.SelectSingleNode('MamePath');
+//              DeleteAllChildren(nodegame,'rowpath[@MameName="'+MameName+'"');
+//              DeleteAllChildren(nodegame,'rowdir[@MameName="'+MameName+'"');
+              gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowPath');
+              for Inode_Dirs := 0 to gameList.Length - 1 do
+                begin
+                  nodegame := gameList.Item[Inode_Dirs];
+                    if GetNodeAttrStr(nodegame,'MameName','') = ExtractFileName(Conf.Find_Files.FileName) then
+                      li:= li + 1;
+                end;
+              gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
+              for Inode_Dirs := 0 to gameList.Length - 1 do
+                begin
+                  nodegame := gameList.Item[Inode_Dirs];
+                  if GetNodeAttrStr(nodegame,'MameName','') <> ExtractFileName(Conf.Find_Files.FileName) then
+                    lo := lo + 1;
+                end;
+              nodegame := MameXmlConfigDoc.SelectSingleNode('/MamePath');
+              repeat
+                DeleteNode(nodegame, 'rowpath[@MameName="'+ExtractFileName(Conf.Find_Files.FileName)+'"]');
+                DeleteNode(nodegame, 'rowdir[@MameName="'+ExtractFileName(Conf.Find_Files.FileName)+'"]');
+                lo := lo -1;
+                li := li -1;
+              until (lo <= 0) and (li <= 0) ;
+              MameXmlConfigDoc.Save(MameConfigFile,ofIndent);
+              Mame_Exe := ExtractFileName(Conf.Find_Files.FileName);
+              FullPathMame_Exe := ExtractFilePath(Conf.Find_Files.FileName);
+              ShellExecute(0,'open',PChar(FullPathMame_Exe+Mame_Exe),PChar('-createconfig'),nil,0);
+              Conf.sEdit64.Text := FullPathMame_Exe + Mame_Exe;
+              CreateNewMame := True;
+            end
+        end;
     end;
 end;
 
 procedure SetMame_DirsFromMameIni;
 var
   MameIniFile: TextFile;
-  value,realNameComp,text,t1,t2: string;
-  CComp: Byte;
-  i,k,r,r1: Integer;
-  CompNotFound: Boolean;
+  value,text,t1,t2: string;
+  k,r,r1: Integer;
   RomsDirs: TStringList;
 begin
   FromMame_DirsToFindDirs := True;
-  k:= 0;
-  CheckWin64ForListBox(SelectedMame,True);
+  if FromArrows_Mamedirs = False then
+    CheckWin64ForListBox(SelectedMame);
   if Mame_Exe <> '' then
     begin
-      Conf.sCheckListBox1.Checked[SelectedMame] := true;
-      if SelectedMame = 0 then
-        conf.sBitBtn36.Enabled := False
-      else if SelectedMame = Conf.sCheckListBox1.Count -1 then
-        conf.sBitBtn37.Enabled := False;
+      for k := 0 to 5 do
+        SetupedMame[k] := '';
       gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
       for Inode_Dirs := 0 to gameList.Length - 1 do
         begin
@@ -256,6 +350,7 @@ begin
                 Conf.sEdit58.Text := GetNodeAttrStr(nodegame,'Scores');
                 Conf.sEdit59.Text := GetNodeAttrStr(nodegame,'Bosses');
               end;
+          SetupedMame[Inode_Dirs] := GetNodeAttrStr(nodegame,'MameName');
         end;
       k:= 0;
       value := FullPathMame_Exe + 'mame.ini';
@@ -275,6 +370,12 @@ begin
               t2 := Trim(Copy(text,r,r1-(r-1)));
               Conf.sComboBox1.Clear;
               Conf.sComboBox1.Items.Add('Choose or Add directory...');
+              if FromDatabase = False then
+                begin
+                  Conf.sComboBox72.Clear;
+                  Conf.sComboBox72.Items.Add('Overall Roms');
+                  Conf.sComboBox72.Items.Add('Missing Roms');
+                end;
               RomsDirs := TStringList.Create;
               RomsDirs.Delimiter := ';';
               RomsDirs.DelimitedText := '"' + StringReplace(t2, RomsDirs.Delimiter, '"' + RomsDirs.Delimiter + '"', [rfReplaceAll]) + '"';
@@ -295,6 +396,8 @@ begin
                 end;
               Conf.sComboBox1.Items.Add('add...');
               Conf.sComboBox1.ItemIndex := 0;
+              if FromDatabase = False then
+                Conf.sComboBox72.ItemIndex := 0;
               k := k + 1;
               FreeAndNil(RomsDirs);              
             end
@@ -361,70 +464,50 @@ begin
   ArrowClick := False;
 end;
 
-procedure CheckWin64ForListBox(num:ShortInt;sel:Boolean);
+procedure CheckWin64ForListBox(num:ShortInt);
 var
-  FoundMame: string;
-  i: Integer;
+  ko: Integer;
 begin
   Conf.sCheckListBox1.Clear;
-  for i := 0 to 5 do
-    setupedMame[i] := '';
   if IsWindows64 = False then
     begin
-      if num <> -1 then
-        begin
-          for i := 0 to 3 do
-            begin
-              FoundMame := '';
-//              FoundMame := MameIni.ReadString('MamePaths','Mame'+IntToStr(i),FoundMame);
-              if FoundMame <> '' then
-                setupedMame[i] := 'True'
-              else
-                setupedMame[i] := 'False';
-            end;
-        end;
-      Conf.sCheckListBox1.Items.Add('mame.exe');
-      Conf.sCheckListBox1.Items.Add('mamepp.exe');
-      Conf.sCheckListBox1.Items.Add('mamep.exe');
-      Conf.sCheckListBox1.Items.Add('mamepuiXT_x86.exe');
+      for ko := 0 to 3 do
+        Conf.sCheckListBox1.Items.Add(AllMameBuilds32[ko]);
     end
   else
     begin
-      if num <> -1 then
-        begin
-          for i := 0 to 5 do
-            begin
-              FoundMame := '';
-//            FoundMame := MameIni.ReadString('MamePaths','Mame'+IntToStr(i),FoundMame);
-              if FoundMame <> '' then
-                setupedMame[i] := 'True'
-              else
-                setupedMame[i] := 'False';
-            end;
-        end;
-      Conf.sCheckListBox1.Items.Add('mame.exe');
-      Conf.sCheckListBox1.Items.Add('mamepp.exe');
-      Conf.sCheckListBox1.Items.Add('mame64.exe');
-      Conf.sCheckListBox1.Items.Add('mamep.exe');
-      Conf.sCheckListBox1.Items.Add('mamepuiXT_x86.exe');
-      Conf.sCheckListBox1.Items.Add('mamepuiXT_x64.exe');
+      for ko := 0 to 5 do
+        Conf.sCheckListBox1.Items.Add(AllMameBuilds64[ko]);
     end;
-  if num = -1 then
+  if Mame_Exe <> '' then
     begin
-      SelectedMame := 0;
-      Conf.sBitBtn36.Enabled := False;
+      Conf.sCheckListBox1.Selected[SelectedMame] := True;
+      Conf.sCheckListBox1.Checked[SelectedMame] := True;
+    end
+  else
+    begin
+      if (Started = True) and (SelectedMame <> -2) then
+        begin
+          nodegame := MameXmlConfigDoc.SelectSingleNode('MamePath');
+          Conf.sCheckListBox1.Selected[GetNodeAttrInt(nodegame,'Selected')] := True;
+        end
+      else
+        Conf.sCheckListBox1.Selected[0] := True;
     end;
-  Conf.sCheckListBox1.Selected[SelectedMame] := sel;
+  if SelectedMame = -2 then
+    begin
+      Conf.sBitBtn36.Enabled := False;
+      Conf.sBitBtn37.Enabled := False;
+      Conf.sCheckBox127.Enabled := False;
+    end
+  else if SelectedMame = 0 then
+    conf.sBitBtn36.Enabled := False
+  else if SelectedMame = Conf.sCheckListBox1.Count -1 then
+    conf.sBitBtn37.Enabled := False;
 end;
 
 procedure SaveMame_DirsAtExit;
-var
-  i,k: Integer;
-  CComp: Byte;
-  CompNotFound: Boolean;
-  value,realNameComp: string;
 begin
-  k := 0;
   if FromDatabase = False then
     begin
       if Mame_Exe <> '' then
@@ -449,6 +532,7 @@ begin
                   begin
                     RowDir := MameXMLConfig.RowsDir.AddRowDir;
                     RowDir.MameName := Mame_Exe;
+                    RowDir.MamePath := GetNodeAttrStr(nodegame,'MamePath');
                     RowDir.Cabinets := Conf.sEdit3.Text;
                     RowDir.Flyers := Conf.sEdit8.Text;
                     RowDir.Marquees := Conf.sEdit10.Text;
@@ -464,6 +548,7 @@ begin
                   begin
                     RowDir := MameXMLConfig.RowsDir.AddRowDir;
                     RowDir.MameName := GetNodeAttrStr(nodegame,'MameName');
+                    RowDir.MamePath := GetNodeAttrStr(nodegame,'MamePath');
                     RowDir.Cabinets := GetNodeAttrStr(nodegame,'Cabinets');
                     RowDir.Flyers := GetNodeAttrStr(nodegame,'Flyers');
                     RowDir.Marquees := GetNodeAttrStr(nodegame,'Marquess');
@@ -486,8 +571,6 @@ begin
 end;
 
 procedure OldDirIs(name: string);
-var
-  i: Integer;
 begin
   if name = 'mamesnapshots' then
     OldDir := Conf.sEdit2.Text
@@ -521,67 +604,54 @@ begin
     OldDir :=  Conf.sEdit62.Text
   else if name = 'mamestate' then
     OldDir := Conf.sEdit63.Text;
-{ repeat
-    i := Pos('\',OldDir);
-    OldDir := Trim(Copy(OldDir,i+1,Length(OldDir)-i));
-  until i = 0;}
-//  OldDir := OldDir + '\';
 end;
 
 procedure GetMamePath(name:string);
-var
-  options : TSelectDirOpts;
 begin
   FromMame_DirsToFindDirs := True;
   OldDirIs(name);
-//  if FileCtrl.SelectDirectory(OldDirN,[sdAllowCreate,sdPerformCreate],1000) then
-//    SetMamePath(gFindDirs);
-  Conf.Find_Dirs.InitialDir := OldDir;
   gFindDirs := name;
-  Conf.Find_Dirs.Execute;
+  if Mame_Exe <> '' then
+    if SelectDirectory(OldDir,[sdAllowCreate,sdPerformCreate],0) then
+      global_Find_DirsClose;
 end;
-
-
 
 procedure SetMamePath(name:string);
 begin
-  if (Conf.Find_Dirs.Directory <> '') and (Conf.Find_Dirs.Directory <> OldDir) then
-    begin
-      if name = 'mamesnapshots' then
-        Conf.sEdit2.Text := Conf.Find_Dirs.Directory
-      else if name = 'mamesamples' then
-        Conf.sEdit4.Text := Conf.Find_Dirs.Directory
-      else if name = 'mamecabinets' then
-        Conf.sEdit3.Text := Conf.Find_Dirs.Directory
-      else if name = 'mameflyers' then
-        conf.sEdit8.Text := Conf.Find_Dirs.Directory
-      else if name = 'mamemarquees' then
-        conf.sEdit10.Text := Conf.Find_Dirs.Directory
-      else if name = 'mamecontrolpanels' then
-        conf.sEdit6.Text := Conf.Find_Dirs.Directory
-      else if name = 'mamepcbs' then
-        Conf.sEdit9.Text := Conf.Find_Dirs.Directory
-      else if name = 'mameartworkpreview' then
-        Conf.sEdit7.Text := Conf.Find_Dirs.Directory
-      else if name = 'mametitles' then
-        Conf.sEdit11.Text := Conf.Find_Dirs.Directory
-      else if name = 'mameselect' then
-        Conf.sEdit5.Text := Conf.Find_Dirs.Directory
-      else if name = 'mamescores' then
-        Conf.sEdit58.Text := Conf.Find_Dirs.Directory
-      else if name = 'mamebosses' then
-        Conf.sEdit59.Text := Conf.Find_Dirs.Directory
-      else if name = 'mamecrosshair' then
-        Conf.sEdit60.Text := Conf.Find_Dirs.Directory
-      else if name = 'mameartwork' then
-        Conf.sEdit61.Text := Conf.Find_Dirs.Directory
-      else if name = 'mameinputfiles' then
-        Conf.sEdit62.Text := Conf.Find_Dirs.Directory
-      else if name = 'mamestate' then
-        conf.sEdit63.Text := Conf.Find_Dirs.Directory;
-      ChangeMemoForMame_Dirs(name);
-      FromMame_DirsToFindDirs := False;
-    end;
+  if name = 'mamesnapshots' then
+    Conf.sEdit2.Text := OldDir
+  else if name = 'mamesamples' then
+    Conf.sEdit4.Text := OldDir
+  else if name = 'mamecabinets' then
+    Conf.sEdit3.Text := OldDir
+  else if name = 'mameflyers' then
+    conf.sEdit8.Text := OldDir
+  else if name = 'mamemarquees' then
+    conf.sEdit10.Text := OldDir
+  else if name = 'mamecontrolpanels' then
+    conf.sEdit6.Text := OldDir
+  else if name = 'mamepcbs' then
+    Conf.sEdit9.Text := OldDir
+  else if name = 'mameartworkpreview' then
+    Conf.sEdit7.Text := OldDir
+  else if name = 'mametitles' then
+    Conf.sEdit11.Text := OldDir
+  else if name = 'mameselect' then
+    Conf.sEdit5.Text := OldDir
+  else if name = 'mamescores' then
+    Conf.sEdit58.Text := OldDir
+  else if name = 'mamebosses' then
+    Conf.sEdit59.Text := OldDir
+  else if name = 'mamecrosshair' then
+    Conf.sEdit60.Text := OldDir
+  else if name = 'mameartwork' then
+    Conf.sEdit61.Text := OldDir
+  else if name = 'mameinputfiles' then
+    Conf.sEdit62.Text := OldDir
+  else if name = 'mamestate' then
+    conf.sEdit63.Text := OldDir;
+  ChangeMemoForMame_Dirs(name);
+  FromMame_DirsToFindDirs := False;
 end;
 
 procedure ChangeMemoForMame_Dirs(find: string);
@@ -634,84 +704,71 @@ end;
 
 procedure ShowOnlySetupedMameBuilds;
 var
-  SelectedMameExe: string;
-  k,l: Integer;
+  oldMameName: string;
+  itemNum: Integer;
+  MameExists: Boolean;
+  Mame_Name: array [0..5] of string;
+  Mame_Path: array [0..5] of string;
+  Mame_Selected: array [0..5] of string;
 begin
-  l := 0;
-  if conf.sCheckBox127.Checked = true then
+  for itemNum := 0 to 5 do
     begin
-      k := Conf.sCheckListBox1.ItemIndex;
-      if k = -1 then
-        SelectedMameExe := ''
-      else
-        SelectedMameExe := Conf.sCheckListBox1.Items.Strings[k];
-      Conf.sCheckListBox1.Clear;
-      if IsWindows64 = False then
+      Mame_Name[itemNum] := '';
+      Mame_Path[itemNum] := '';
+      Mame_Selected[itemNum] := '';
+    end;
+  itemNum := Conf.sCheckListBox1.ItemIndex;
+  oldMameName := Conf.sCheckListBox1.Items.Strings[itemNum];
+  Conf.sCheckListBox1.Clear;
+  gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
+  if Conf.sCheckBox127.Checked = True then
+    begin
+      for Inode_Dirs := 0 to gameList.Length - 1 do
         begin
-          for k := l to 3 do
+          nodegame := gameList.Item[Inode_dirs];
+          Mame_Name[Inode_Dirs] := GetNodeAttrStr(nodegame,'MameName');
+          Mame_Path[Inode_Dirs] := GetNodeAttrStr(nodegame,'MamePath');
+          Mame_Selected[Inode_Dirs] := GetNodeAttrStr(nodegame,'Selected');
+        end;
+      if Mame_Name[0] <> '' then
+        begin
+          for itemNum := 0 to 5 do
             begin
-              if setupedMame[k] = 'True' then
-                Conf.sCheckListBox1.Items.Add(AllMameBuilds32[k]);
+              if Mame_Name[itemNum] <> '' then
+                  Conf.sCheckListBox1.Items.Add(Mame_Name[itemNum]);
             end;
+        end;
+      for itemNum := 0 to gameList.Length - 1 do
+        begin
+          if conf.sCheckListBox1.Items.Strings[itemNum] = oldMameName then
+            MameExists := True;
+        end;
+      if MameExists = true then
+        begin
+          itemNum := Conf.sCheckListBox1.Items.IndexOf(oldMameName);
+          Conf.sCheckListBox1.Checked[itemNum] := True;
+          Conf.sCheckListBox1.Selected[itemNum] := True;
         end
       else
         begin
-          for k := 0 to 5 do
-            begin
-              if setupedMame[k] = 'True' then
-                Conf.sCheckListBox1.Items.Add(AllMameBuilds64[k]);
-            end;
+          Conf.sCheckListBox1.Checked[0] := True;
+          Conf.sCheckListBox1.Selected[0] := True;
+          MameXMLConfig.SelectedMame := Mame_Name[0];
+          MameXMLConfig.FullPathOfSelectedMame := Mame_Path[0];
+          MameXMLConfig.Selected := StrToInt(Mame_Selected[0]);
+          MameXMLConfig.SaveToFile(MameConfigFile,ofIndent);
+          FromArrows_Mamedirs := True;
+          Conf.sLabel112.Visible := True;
+          Conf.sGauge_MameChange.Visible := True;
+          StartEmuMame;
+          Conf.sLabel112.Visible := False;
+          Conf.sGauge_MameChange.Visible := False;
+          FromArrows_Mamedirs := False;
         end;
     end
   else
     begin
-      if Conf.sCheckListBox1.Count - 1 > - 1 then
-        begin
-          k := Conf.sCheckListBox1.ItemIndex;
-          SelectedMameExe := Conf.sCheckListBox1.Items.Strings[k];
-        end;
-      Conf.sCheckListBox1.Clear;
-      if IsWindows64 = False then
-        for k := l to 3 do
-          Conf.sCheckListBox1.Items.Add(AllMameBuilds32[k])
-      else
-        begin
-          for k := 0 to 5 do
-            Conf.sCheckListBox1.Items.Add(AllMameBuilds64[k]);
-        end;
-    end;
-  if (Conf.sCheckListBox1.Count - 1 = -1) or (Conf.sCheckListBox1.Count - 1 = 0) then
-    begin
-      Conf.sBitBtn36.Enabled := False;
-      Conf.sBitBtn37.Enabled := False;
-    end;
-  if Conf.sCheckListBox1.Count - 1 > - 1 then
-    begin
-      for k := l to conf.sCheckListBox1.Count - 1 do
-        begin
-          if conf.sCheckListBox1.Items.Strings[k] = SelectedMameExe then
-            begin
-              Conf.sCheckListBox1.Selected[k] := True;
-              Conf.sCheckListBox1.Checked[k] := True;
-              Break;
-            end;
-        end;
-      if (Conf.sCheckListBox1.ItemIndex = 0) and (Conf.sCheckListBox1.Count - 1 <> 0) then
-        begin
-          Conf.sBitBtn36.Enabled := False;
-          Conf.sBitBtn37.Enabled := True;
-        end
-      else if (Conf.sCheckListBox1.ItemIndex = Conf.sCheckListBox1.Count - 1) and (Conf.sCheckListBox1.Count - 1 > 0) then
-        begin
-          Conf.sBitBtn36.Enabled := True;
-          Conf.sBitBtn37.Enabled := False;
-        end
-      else if ((Conf.sCheckListBox1.ItemIndex > 0) and (Conf.sCheckListBox1.ItemIndex < Conf.sCheckListBox1.Count - 1)) or
-        (Conf.sCheckListBox1.Count -1 > 0) then
-        begin
-          Conf.sBitBtn36.Enabled := True;
-          Conf.sBitBtn37.Enabled := True;
-        end;
+      Checkwin64ForListBox(SelectedMame);
     end;
 end;
 
@@ -725,8 +782,14 @@ begin
         begin
           gFindDirs := 'NewRom_Dir';
           FromMame_DirsToFindDirs := False;
-          Conf.Find_Dirs.InitialDir := ExtractFilePath(Mame_Exe);
-          Conf.Find_Dirs.Execute;
+          NewRomDirectory := FullPathMame_Exe;
+          if Mame_Exe <> '' then
+            begin
+              if SelectDirectory(NewRomDirectory, [sdAllowCreate, sdPerformCreate, sdPrompt],0) then
+                global_Find_DirsClose
+              else
+                Conf.sComboBox1.ItemIndex := 0;
+            end;
         end;
     end
   else
@@ -742,25 +805,21 @@ end;
 procedure ListBoxOfSetupedMames(Line:Integer;Position: TRect);
 var
   s: string;
+  k: Integer;
+  foundMame: Boolean;
 begin
+  foundMame := False;
   s := Conf.sCheckListBox1.Items[Line];
-  if Conf.sCheckBox127.Checked = False then
-    begin
-      if setupedMame[Line] = 'True' then
-        begin
-          Conf.sCheckListBox1.Canvas.Font.Style := Conf.sCheckListBox1.Canvas.Font.Style + [fsBold];
-          Conf.sCheckListBox1.Canvas.Font.Color := clHotLight;
-        end
-      else
-        Conf.sCheckListBox1.Canvas.Font.Color := clMedGray;
-      Conf.sCheckListBox1.Canvas.TextRect(Position,Position.Left,Position.Top,s);
-    end
-  else
+  for k := 0 to 5 do
+    if SetupedMame[k] = s then
+      foundMame := True;
+  Conf.sCheckListBox1.Canvas.Font.Color := clMedGray;
+  if foundMame = True then
     begin
       Conf.sCheckListBox1.Canvas.Font.Style := Conf.sCheckListBox1.Canvas.Font.Style + [fsBold];
       Conf.sCheckListBox1.Canvas.Font.Color := clHotLight;
-      Conf.sCheckListBox1.Canvas.TextRect(Position,Position.Left,Position.Top,s);
     end;
+  Conf.sCheckListBox1.Canvas.TextRect(Position,Position.Left,Position.Top,s);
 end;
 
 procedure MameDirs_Clear;
@@ -840,38 +899,41 @@ end;
 procedure CheckMameDirs_TopicSettings;
 begin
   Conf.sButton4.Enabled := False;
-  if LowerCase(Conf.sEdit2.Text) <> LowerCase(FullPathMame_Exe+'snap') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit4.Text) <> LowerCase(FullPathMame_Exe+'samples') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit3.Text) <> LowerCase(FullPathMame_Exe+'cabinets') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit8.Text) <> LowerCase(FullPathMame_Exe+'flyers') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit10.Text) <> LowerCase(FullPathMame_Exe+'marquees') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit6.Text) <> LowerCase(FullPathMame_Exe+'cpanel') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit9.Text) <> LowerCase(FullPathMame_Exe+'pcbs') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit7.Text) <> LowerCase(FullPathMame_Exe+'artwork preview') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit11.Text) <> LowerCase(FullPathMame_Exe+'titles') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit5.Text) <> LowerCase(FullPathMame_Exe+'select') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit58.Text) <> LowerCase(FullPathMame_Exe+'scores') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit59.Text) <> LowerCase(FullPathMame_Exe+'bosses') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit60.Text) <> LowerCase(FullPathMame_Exe+'crosshair') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit61.Text) <> LowerCase(FullPathMame_Exe+'artwork') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit62.Text) <> LowerCase(FullPathMame_Exe+'inp') then
-    Conf.sButton4.Enabled := True;
-  if LowerCase(Conf.sEdit63.Text) <> LowerCase(FullPathMame_Exe+'sta') then
-    Conf.sButton4.Enabled := True;
+  if Mame_Exe <> '' then
+    begin
+      if LowerCase(Conf.sEdit2.Text) <> LowerCase(FullPathMame_Exe+'snap') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit4.Text) <> LowerCase(FullPathMame_Exe+'samples') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit3.Text) <> LowerCase(FullPathMame_Exe+'cabinets') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit8.Text) <> LowerCase(FullPathMame_Exe+'flyers') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit10.Text) <> LowerCase(FullPathMame_Exe+'marquees') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit6.Text) <> LowerCase(FullPathMame_Exe+'cpanel') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit9.Text) <> LowerCase(FullPathMame_Exe+'pcbs') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit7.Text) <> LowerCase(FullPathMame_Exe+'artwork preview') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit11.Text) <> LowerCase(FullPathMame_Exe+'titles') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit5.Text) <> LowerCase(FullPathMame_Exe+'select') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit58.Text) <> LowerCase(FullPathMame_Exe+'scores') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit59.Text) <> LowerCase(FullPathMame_Exe+'bosses') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit60.Text) <> LowerCase(FullPathMame_Exe+'crosshair') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit61.Text) <> LowerCase(FullPathMame_Exe+'artwork') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit62.Text) <> LowerCase(FullPathMame_Exe+'inp') then
+        Conf.sButton4.Enabled := True;
+      if LowerCase(Conf.sEdit63.Text) <> LowerCase(FullPathMame_Exe+'sta') then
+        Conf.sButton4.Enabled := True;
+    end;
 end;
 
 procedure CheckButtonTopicsConfig_MameDirs;

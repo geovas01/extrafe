@@ -9,7 +9,7 @@ uses
 
 type
   TSplash_Screen = class(TForm)
-    sGauge1: TsGauge;
+    sGauge_Splash: TsGauge;
     JvBmpAnimator1: TJvBmpAnimator;
     ImageList_Splash: TImageList;
     sSkinProvider1: TsSkinProvider;
@@ -43,7 +43,7 @@ end;
 
 procedure TSplash_Screen.Progress_Label(num: Integer; Words: string);
 begin
-  sGauge1.Progress := num;
+  sGauge_Splash.Progress := num;
   sLabel1.Caption := Words;
   Application.ProcessMessages;
 end;

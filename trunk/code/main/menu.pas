@@ -875,7 +875,7 @@ begin
     begin
       ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
       Cmenustate := 'em_kigb_paths';
-      ShowButtonDown(6,'EM_HNADHELDS_NINTENDO_KIGB_DIRS');
+      ShowButtonDown(6,'EM_HANDHELDS_NINTENDO_KIGB_DIRS');
       ShowHidePanel(CurrentPanel,'Pem_kigb_paths');
     end;
 end;

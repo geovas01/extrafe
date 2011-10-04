@@ -264,7 +264,7 @@ begin
               Mame_Global_MemoIni.Lines.Insert(k,'uifont          '+Conf.sComboBox75.Text);
             end;
         end;
-      Mame_Global_MemoIni.Lines.SaveToFile(ExtractFilePath(Mame_Exe)+'mame.ini');
+      Mame_Global_MemoIni.Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
       FromMame_OthersToFindOthers := False;
     end;
 end;
@@ -321,40 +321,43 @@ end;
 procedure CheckMameOthers_TopicSettings;
 begin
   Conf.sButton7.Enabled := False;
-  if Conf.sCheckBox24.Checked <> False then
-    Conf.sButton7.Enabled := True;
-  if Conf.sCheckBox27.Checked <> True then
-    Conf.sButton7.Enabled := True;
-  if Conf.sCheckBox28.Checked <> False then
-    Conf.sButton7.Enabled := True;
-  if Conf.sCheckBox29.Checked <> False then
-    Conf.sButton7.Enabled := True;
-  if Conf.sCheckBox30.Checked <> False then
-    Conf.sButton7.Enabled := True;
-  if Conf.sCheckBox31.Checked <> True then
-    Conf.sButton7.Enabled := True;
-  if Conf.sComboBox75.Text <> 'default' then
-    Conf.sButton7.Enabled := True;
-  if Conf.sbar_mame_threadpriority.Position <> 0 then
-    Conf.sButton7.Enabled := True;
-  if Conf.sCheckBox39.Checked <> True then
-    Conf.sButton7.Enabled := True;
-  if Conf.sbar_mame_beamwidth.Position <> 100 then
-    Conf.sButton7.Enabled := True;
-  if Conf.sbar_mame_flicker.Position <> 0 then
-    Conf.sButton7.Enabled := True;
-  if Conf.sComboBox73.Text <> 'auto' then
-    Conf.sButton7.Enabled := True;
-  if Conf.sComboBox19.Text <> 'internal' then
-    Conf.sButton7.Enabled := True;
-  if Conf.sCheckBox35.Checked <> True then
-    Conf.sButton7.Enabled := True;
-  if Conf.sCheckBox36.Checked <> True then
-    Conf.sButton7.Enabled := True;
-  if Conf.sCheckBox37.Checked <> True then
-    Conf.sButton7.Enabled := True;
-  if Conf.sCheckBox38.Checked <> False then
-    Conf.sButton7.Enabled := True;
+  if Mame_Exe <> '' then
+    begin
+      if Conf.sCheckBox24.Checked <> False then
+        Conf.sButton7.Enabled := True;
+      if Conf.sCheckBox27.Checked <> True then
+        Conf.sButton7.Enabled := True;
+      if Conf.sCheckBox28.Checked <> False then
+        Conf.sButton7.Enabled := True;
+      if Conf.sCheckBox29.Checked <> False then
+        Conf.sButton7.Enabled := True;
+      if Conf.sCheckBox30.Checked <> False then
+        Conf.sButton7.Enabled := True;
+      if Conf.sCheckBox31.Checked <> True then
+        Conf.sButton7.Enabled := True;
+      if Conf.sComboBox75.Text <> 'default' then
+        Conf.sButton7.Enabled := True;
+      if Conf.sbar_mame_threadpriority.Position <> 0 then
+        Conf.sButton7.Enabled := True;
+      if Conf.sCheckBox39.Checked <> True then
+        Conf.sButton7.Enabled := True;
+      if Conf.sbar_mame_beamwidth.Position <> 100 then
+        Conf.sButton7.Enabled := True;
+      if Conf.sbar_mame_flicker.Position <> 0 then
+        Conf.sButton7.Enabled := True;
+      if Conf.sComboBox73.Text <> 'auto' then
+        Conf.sButton7.Enabled := True;
+      if Conf.sComboBox19.Text <> 'internal' then
+        Conf.sButton7.Enabled := True;
+      if Conf.sCheckBox35.Checked <> True then
+        Conf.sButton7.Enabled := True;
+      if Conf.sCheckBox36.Checked <> True then
+        Conf.sButton7.Enabled := True;
+      if Conf.sCheckBox37.Checked <> True then
+        Conf.sButton7.Enabled := True;
+      if Conf.sCheckBox38.Checked <> False then
+        Conf.sButton7.Enabled := True;
+    end;
 end;
 
 procedure CheckButtonTopicsConfig_MameOthers;
