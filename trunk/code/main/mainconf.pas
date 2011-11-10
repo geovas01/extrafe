@@ -1,5 +1,5 @@
 unit mainconf;
-           
+
 interface
 uses
   Windows,Variants,Classes,SysUtils,Forms,StdCtrls,ComCtrls,IniFiles,ExtCtrls,
@@ -9,12 +9,19 @@ uses
   menu,
   ce_themes,ce_config,
   mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
-  OmniXML,OmniXMLUtils,mame_xmlext;
+  OmniXML,OmniXMLUtils,mame_xmlext,ce_xmlext;
 
-  procedure StartConfEditor;
+
   procedure StartProgConfEditor;
+  procedure StartConfEditor;
+  procedure ReadConfiguration;
+  procedure FirstTimeStart;
+
   procedure StartProgExtraFE;
+
   procedure StartEmuMame;
+  procedure ShowProgress(progress: Integer; Comment: string);
+
   procedure StartEmuZinc;
   procedure StartEmuHatari;
   procedure StartEmupSX;
@@ -23,9 +30,7 @@ uses
   procedure StartProTimeDate;
   procedure CreateSTBarInfo;
   procedure HideAllPanels;
-  procedure ReadInisAndCreateDefaultFolders;
   procedure StartSkinEngine;
-  procedure confEditorIniSettings;
   procedure GroupBoxColors(i : Integer);
   procedure LoadStaticImages;
   procedure SetAllCursor(Theme: Byte);
@@ -35,24 +40,27 @@ uses
   procedure LoadCostumCursors;
 
 var
+//Application Vars
+  ExtraFePath: string;
 //Cursors
   Arrow,TArrow,Link,Busy,Horizontal,Vertical,Precision : Byte;
-//Inis
-  ConfIni,
-  ExtraFEIni,
-  ZincIni,HatariIni,KigbIni,
-  WeatherIni,
-  TimeDateIni : TIniFile;
 //ConfEditor Vars
+  CeXmlDoc: IXMLDocument;
+  CeXML: TCE_Configuration;
+  Row_Theme: TRowCe_Themes;
+  Row_Config: TRowCe_Config;
+  nodeCe: IXMLNode;
+  Ce_List : IXMLNodeList;
   CE_SHelpInCaption,CE_SHelpInMain: Boolean;
-  WinEffectsType: string;
-  WinEffectsTime: Integer;
+  WinEffectsType,Ce_XMLPath: string;
+  WinEffectsTime,Inode_Ce,ThemeNumber: Integer;
 //ExtraFe Vars
 //Mame Vars
   MameConfigFile,MameDatabaseFile,Mame_Exe,FullPathMame_Exe: String;
   SelectedMame: Shortint;
   Started,FromDatabase: Boolean;
 //Zinc Vars
+  Zinc_Exe,FullPathZinc_Exe,ZincDatabaseFile: String;
 //Hatari Vars
 //pSX Vars
 //Kigb Vars
@@ -63,7 +71,6 @@ implementation
 
 Procedure StartSkinEngine;
 var
-  HowScenes: Integer;
   skinnames: TStringList;
   rec : TSearchRec;
   themeName: string;
@@ -82,14 +89,13 @@ Begin
           end;
       until FindNext(Rec) <> 0;
     end;
-  HowScenes := ConfIni.ReadInteger('Themes','Theme',HowScenes);
-  Conf.sLB_ce_themes.Selected[HowScenes] := true;
-  Conf.sLabelFX3.Caption := Conf.sLB_ce_themes.Items.Strings[howscenes];
-  Conf.img_ce_theme.Picture.LoadFromFile('media\confeditor\skins\preview\'+conf.sLB_ce_themes.items.strings[howscenes]+'.png');
-  ThemeCreator(HowScenes+1);
-  SetAllCursor(HowScenes+1);
-  GroupBoxColors(HowScenes);
-  conf.skinM.SkinName := Conf.sLB_ce_themes.Items.Strings[howscenes];
+  Conf.sLB_ce_themes.Selected[ThemeNumber] := true;
+  Conf.sLabelFX3.Caption := Conf.sLB_ce_themes.Items.Strings[ThemeNumber];
+  Conf.img_ce_theme.Picture.LoadFromFile('media\confeditor\skins\preview\'+conf.sLB_ce_themes.items.strings[ThemeNumber]+'.png');
+  ThemeCreator(ThemeNumber+1);
+  SetAllCursor(ThemeNumber+1);
+  GroupBoxColors(ThemeNumber);
+  conf.skinM.SkinName := Conf.sLB_ce_themes.Items.Strings[ThemeNumber];
   Conf.skinM.Active := True;
   Application.ProcessMessages;
   skinnames.Free;
@@ -1118,41 +1124,89 @@ begin
   resolutions.Free;
 end;
 
-procedure ReadInisAndCreateDefaultFolders;
+procedure FirstTimeStart;
 begin
-  //ConfEditor Start Inis
-  Confini := TiniFile.Create(Program_Path +'config\confeditor.ini');
-  if not ConfIni.SectionExists('Themes') then
-    ConfIni.WriteInteger('Themes','Theme',0);
-  if not ConfIni.SectionExists('Config') then
-    begin
-      ConfIni.WriteBool('Config','HelpInCaption',True);
-      ConfIni.WriteBool('Config','HelpInMainPanel',True);
-      ConfIni.WriteString('Config','WindowEffects','None');
-      ConfIni.WriteInteger('Config','EffectsTime',400);
-    end;
-  confEditorIniSettings;
-  if not FileExists(Program_Path+'Config') then
-    CreateDir(Program_Path+'Config');
-end;
-
-procedure confEditorIniSettings;
-begin
-  CE_SHelpInMain := ConfIni.ReadBool('Config','HelpInMainPanel',CE_SHelpInMain);
+  CeXmlDoc := CreateXMLDoc;
+  CeXML := TCE_Configuration.Create;
+  CeXML.Ver :=  GetVersion(ExtraFePath+'confeditor.exe');
+  STBarInfo1 := 'Version : '+ GetVersion(ExtraFePath+'confeditor.exe');
+  Row_Theme := CeXML.Rows.AddRow;
+  Row_Theme.ThemeNumber := 0;
+  Row_Config := CeXML.Rows_Conf.AddRow;
+  Row_Config.HelpInCaption := True;
+  Row_Config.HelpInMainMenu := True;
+  Row_Config.WindowsEffects := 'None';
+  Row_Config.EffectsTime := 400;
+  ThemeNumber := 0;
+  CE_SHelpInCaption := True;
+  CE_SHelpInMain := True;
+  WinEffectsType := 'None';
+  WinEffectsTime := 400;
   conf.sCheckBox1.Checked := CE_SHelpInMain;
-  CE_SHelpInCaption := ConfIni.ReadBool('Config','HelpInCaption',CE_SHelpInCaption);
   Conf.sCheckBox2.Checked := CE_SHelpInCaption;
-  WinEffectsType := ConfIni.ReadString('Config','WindowEffects',WinEffectsType);
   Conf.sComboBox74.ItemIndex  := Conf.sComboBox74.IndexOf(WinEffectsType);
   Conf.sComboBox74.Text := WinEffectsType;
+  Started := True;
   WindowsEffectsType;
-  WinEffectsTime := ConfIni.ReadInteger('Config','EffectsTime',WinEffectsTime);
+  Conf.se1.Value := WinEffectsTime;
+  CeXML.SaveToFile(Ce_XMLPath,ofIndent);
+end;
+
+procedure ReadConfiguration;
+begin
+  CeXmlDoc := CreateXMLDoc;
+  CeXmlDoc.Load(Ce_XMLPath);
+  CeXML := TCE_Configuration.Create;
+  nodeCe := CeXmlDoc.SelectSingleNode('/confEditor');
+  if GetNodeAttrStr(nodeCe,'Ver','') <> GetVersion(ExtraFePath+'confeditor.exe') then
+    begin
+      CeXML.Ver := GetVersion(ExtraFePath+'confeditor.exe');
+      STBarInfo1 := 'Version : '+GetVersion(ExtraFePath+'confeditor.exe');
+    end
+  else
+    begin
+      CeXML.Ver := GetNodeAttrStr(nodeCe,'Ver');
+      STBarInfo1 := 'Version : '+GetNodeAttrStr(nodeCe,'Ver');
+    end;
+  Ce_List := CeXmlDoc.SelectNodes('/confEditor/rowtheme');
+  for Inode_Ce := 0 to Ce_List.Length - 1 do
+    begin
+      nodeCe := Ce_List.Item[Inode_Ce];
+      Row_Theme := CeXML.Rows.AddRow;
+      Row_Theme.ThemeNumber := GetNodeAttrInt(nodeCe,'ThemeNumber');
+    end;
+  ThemeNumber := GetNodeAttrInt(nodeCe,'ThemeNumber');
+  Ce_List := CeXmlDoc.SelectNodes('/confEditor/rowconfig');
+  for Inode_Ce := 0 to Ce_List.Length - 1 do
+    begin
+      nodeCe := Ce_List.Item[Inode_Ce];
+      Row_Config := CeXML.Rows_Conf.AddRow;
+      Row_Config.HelpInCaption := GetNodeAttrBool(nodeCe,'HelpInCaption');
+      Row_Config.HelpInMainMenu := GetNodeAttrBool(nodeCe,'HelpInMainMenu');
+      Row_Config.WindowsEffects := GetNodeAttrStr(nodeCe,'WindowsEffects');
+      Row_Config.EffectsTime := GetNodeAttrInt(nodeCe,'EffectsTime');
+    end;
+  CE_SHelpInCaption := StrToBool(GetNodeAttrStr(nodeCe,'HelpInCaption'));
+  CE_SHelpInMain := StrToBool(GetNodeAttrStr(nodeCe,'HelpInMainMenu'));
+  WinEffectsType := GetNodeAttrStr(nodeCe,'WindowsEffects');
+  WinEffectsTime := GetNodeAttrInt(nodeCe,'EffectsTime');
+  conf.sCheckBox1.Checked := CE_SHelpInMain;
+  Conf.sCheckBox2.Checked := CE_SHelpInCaption;
+  Conf.sComboBox74.ItemIndex  := Conf.sComboBox74.IndexOf(WinEffectsType);
+  Conf.sComboBox74.Text := WinEffectsType;
+  Started := True;
+  WindowsEffectsType;
   Conf.se1.Value := WinEffectsTime;
 end;
 
 procedure StartProgConfEditor;
 begin
-  ReadInisAndCreateDefaultFolders;
+  ExtraFePath := ExtractFilePath(Application.ExeName);
+  Ce_XMLPath := ExtraFePath+'media\confeditor\config\config.xml';
+  if FileExists(Ce_XMLPath) then
+    ReadConfiguration
+  else
+    FirstTimeStart;
   StartSkinEngine;
   Splash_Screen.Show;
   CDirPath := Conf.Caption;
@@ -1224,119 +1278,18 @@ begin
       if not Assigned(Mame_Global_MemoIni) then
         InitGlobal_MameMemo_ForMameIni;
       SetMame_DirsFromMameIni;
-      if FromArrows_Mamedirs = False then
-        begin
-          if FromDatabase = False then
-            Splash_Screen.Progress_Label(40,'Mame Directories Ready')
-          else
-            begin
-              Conf.sLabel109.Caption := 'SetSettings To Mame (ConfEditor)';
-              Conf.sGauge_MameData.Progress := 10;
-            end
-        end
-      else
-        begin
-          Conf.sLabel112.Caption := 'Mame Directories Ready';
-          Conf.sGauge_MameChange.Progress := 20;
-        end;
-      Application.ProcessMessages;
-      Sleep(50);
-      Started := True;
+      ShowProgress(20,'Mame Directories Ready');
       SetMame_GraphicsFromMameIni;
-      if FromArrows_Mamedirs = False then
-        begin
-          if FromDatabase = False then
-            Splash_Screen.Progress_Label(50,'Mame Graphics Ready')
-          else
-            begin
-              Conf.sLabel109.Caption := 'SetSettings To Mame (ConfEditor)';
-              Conf.sGauge_MameData.Progress := 30;
-            end;
-        end
-      else
-        begin
-          Conf.sLabel112.Caption := 'Mame Graphics Ready';
-          Conf.sGauge_MameChange.Progress := 40;
-        end;
-      Application.ProcessMessages;
-      Sleep(50);
-      Started := True;
+      ShowProgress(35,'Mame Graphics Ready');
       SetMame_SoundFromMameIni;
-      if FromArrows_Mamedirs = False then
-        begin
-          if FromDatabase = False then
-            Splash_Screen.Progress_Label(60,'Mame Sound Ready')
-          else
-            begin
-              Conf.sLabel109.Caption := 'SetSettings To Mame (ConfEditor)';
-              Conf.sGauge_MameData.Progress := 50;
-            end;
-        end
-      else
-        begin
-          Conf.sLabel112.Caption := 'Mame Sound Ready';
-          Conf.sGauge_MameChange.Progress := 60;
-        end;
-      Application.ProcessMessages;
-      Sleep(50);
-      Started := True;
+      ShowProgress(50,'Mame Sound Ready');
       SetMame_OthersFromMameIni;
-      if FromArrows_Mamedirs = False then
-        begin
-          if FromDatabase = False then
-            Splash_Screen.Progress_Label(70,'Mame Others Ready')
-          else
-            begin
-              Conf.sLabel109.Caption := 'SetSettings To Mame (ConfEditor)';
-              Conf.sGauge_MameData.Progress := 70;
-            end;
-        end
-      else
-        begin
-          Conf.sLabel112.Caption := 'Mame Others Ready';
-          Conf.sGauge_MameChange.Progress := 70;
-        end;
-      Application.ProcessMessages;
-      Sleep(50);
-      Started := True;
+      ShowProgress(65,'Mame Others Ready');
       SetMame_BuildsFromMameIni;
-      if FromArrows_Mamedirs = False then
-        begin
-          if FromDatabase = False then
-            Splash_Screen.Progress_Label(90,'Mame Builds Ready')
-          else
-            begin
-              Conf.sLabel109.Caption := 'SetSettings To Mame (ConfEditor)';
-              Conf.sGauge_MameData.Progress := 90;
-            end;
-        end
-      else
-        begin
-          Conf.sLabel112.Caption := 'Mame Builds Ready';
-          Conf.sGauge_MameChange.Progress := 85;
-        end;
-      Application.ProcessMessages;
-      Sleep(50);
-      Started := true;
+      ShowProgress(80,'Mame Builds Ready');
       SetMame_DatabaseFromMameIni;
-      if FromArrows_Mamedirs = False then
-        begin
-          if FromDatabase = False then
-            Splash_Screen.Progress_Label(90,'Mame Database Ready')
-          else
-            begin
-              Conf.sLabel109.Caption := 'SetSettings To Mame (ConfEditor)';
-              Conf.sGauge_MameData.Progress := 100;
-              Application.ProcessMessages;
-            end;
-        end
-      else
-        begin
-          Conf.sLabel112.Caption := 'Mame Database Ready';
-          Conf.sGauge_MameChange.Progress := 100;
-        end;
-      Application.ProcessMessages;
-      Sleep(50);
+      ShowProgress(100,'Mame Database Ready');
+      Started := False;
       FromDatabase := False;
     end
   else
@@ -1393,7 +1346,6 @@ end;
 
 procedure CreateSTBarInfo;
 begin
-  STBarInfo1 := 'Version : '+GetVersion(ExtractFilePath(Application.ExeName)+'confeditor.exe');
   conf.stat1.Panels[0].Text := STBarInfo1;
   if IsWindows64 = true then
     STBarInfo2 := 'Windows 64 Bit'
@@ -1415,6 +1367,28 @@ begin
   BMPImage.LoadFromResourceName(HInstance,'CONFEDITOR');
   Conf.Menu_Image.Bitmap := BMPImage;
   BMPImage.Free;
+end;
+
+procedure ShowProgress(progress: Integer; Comment: string);
+begin
+  if FromArrows_Mamedirs = False then
+    begin
+      if FromDatabase = False then
+        Splash_Screen.Progress_Label(progress,Comment)
+      else
+        begin
+          Conf.sLabel109.Caption := 'SetSettings To Mame (ConfEditor)';
+          Conf.sGauge_MameData.Progress := progress;
+        end
+    end
+  else
+    begin
+      Conf.sLabel112.Caption := Comment;
+      Conf.sGauge_MameChange.Progress := progress;
+    end;
+  Application.ProcessMessages;
+  Sleep(50);
+  Started := True;
 end;
 
 end.

@@ -2,6 +2,9 @@ unit ce_themes;
 
 interface
 
+  uses
+    SysUtils,OmniXML,OmniXMLUtils;
+
   procedure click_ce_themes;
   procedure click_apply_ce_themes;
   procedure ThemeCreator(num: Byte);
@@ -16,8 +19,7 @@ var
   i,k : Integer;
 begin
   k := conf.sLB_ce_themes.ItemIndex;
-  i := ConfIni.ReadInteger('Themes','Theme',i);
-  if conf.sLB_ce_themes.Selected[i] = False then
+  if conf.sLB_ce_themes.Selected[ThemeNumber] = False then
     begin
       conf.sBB_apply_ce_themes.Enabled := true;
       conf.img_ce_theme.Picture.LoadFromFile('media\confeditor\skins\preview\'+conf.sLB_ce_themes.Items.Strings[k]+'.png');
@@ -25,9 +27,8 @@ begin
   else
     begin
       conf.sBB_apply_ce_themes.Enabled := False;
-      Conf.img_ce_theme.Picture.LoadFromFile('media\confeditor\skins\preview\'+conf.sLB_ce_themes.Items.Strings[i]+'.png');
+      Conf.img_ce_theme.Picture.LoadFromFile('media\confeditor\skins\preview\'+conf.sLB_ce_themes.Items.Strings[ThemeNumber]+'.png');
     end;
-
 end;
 
 procedure click_apply_ce_themes;
@@ -37,7 +38,8 @@ begin
   i := Conf.sLB_ce_themes.ItemIndex;
   Conf.skinM.SkinName := Conf.sLB_ce_themes.Items.Strings[i];
   conf.sBB_apply_ce_themes.Enabled := False;
-  ConfIni.WriteInteger('Themes','Theme',i);
+  Row_Theme.ThemeNumber := i;
+  CeXML.SaveToFile(Ce_XMLPath,ofIndent);
   Conf.sLabelFX3.Caption := Conf.sLB_ce_themes.Items.Strings[i];
   ThemeCreator(i+1);
   SetAllCursor(i+1);

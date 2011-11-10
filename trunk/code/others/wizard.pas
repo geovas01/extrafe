@@ -58,13 +58,13 @@ procedure TFormWizard.sBitBtn1Click(Sender: TObject);
 var
   mamedir: String;
 begin
-  ConfIni.WriteString('Find','FindFilesWho','Catver');
-  mamedir := ConfIni.ReadString('Path','FullDir',mamedir);
-  Conf.Find_Files.InitialDir := mamedir;
-  Conf.Find_Files.FileName := '';
-  Conf.Find_Files.Filter := 'Catver.ini |Catver.ini';
+//  ConfIni.WriteString('Find','FindFilesWho','Catver');
+//  mamedir := ConfIni.ReadString('Path','FullDir',mamedir);
+//  Conf.Find_Files.InitialDir := mamedir;
+//  Conf.Find_Files.FileName := '';
+//  Conf.Find_Files.Filter := 'Catver.ini |Catver.ini';
 //  MameIni.WriteString('Temp','Edit',sEdit1.Text);
-  Conf.Find_Files.Execute;
+//  Conf.Find_Files.Execute;
 end;
 
 procedure TFormWizard.btn2Click(Sender: TObject);

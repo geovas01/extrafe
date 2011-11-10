@@ -3,7 +3,7 @@ unit ce_config;
 interface
 
 uses
-  SysUtils;
+  SysUtils,OmniXML,OmniXMLUtils;
 
   procedure CheckShowHelpInMainPanel;
   procedure CheckShowHelpInFormCaption;
@@ -18,13 +18,15 @@ uses
 procedure CheckShowHelpInMainPanel;
 begin
   CE_SHelpInMain := conf.sCheckBox1.Checked;
-  ConfIni.WriteBool('Config','HelpInMainPanel',CE_SHelpInMain);
+  Row_Config.HelpInMainMenu := CE_SHelpInMain;
+  CeXML.SaveToFile(Ce_XMLPath,ofIndent);
 end;
 
 procedure CheckShowHelpInFormCaption;
 begin
   CE_SHelpInCaption := Conf.sCheckBox2.Checked;
-  ConfIni.WriteBool('Config','HelpInCaption',CE_SHelpInCaption);
+  Row_Config.HelpInCaption := CE_SHelpInCaption;
+  CeXML.SaveToFile(Ce_XMLPath,ofIndent);
   if CE_SHelpInCaption = true then
     Conf.Caption := '"confEditor"    Path: ConfEditor>Configuration'
   else
@@ -59,13 +61,18 @@ begin
     9 : WinEffectsType := WEffTypes[5];
     10 : WinEffectsType := WEffTypes[Random(5)];
   end;
-  ConfIni.WriteString('Config','WindowEffects',Conf.sComboBox74.Text);
+  if Started = False then
+    begin
+      Row_Config.WindowsEffects := Conf.sComboBox74.Items.Strings[Conf.sComboBox74.itemIndex];
+      CeXML.SaveToFile(Ce_XMLPath,ofIndent);
+    end;
 end;
 
 procedure WindowsEffectsTimeChange;
 begin
   WinEffectsTime := Conf.se1.Value;
-  ConfIni.WriteInteger('Config','EffectsTime',Conf.se1.Value);
+  Row_Config.EffectsTime := WinEffectsTime;
+  CeXML.SaveToFile(Ce_XMLPath,ofIndent);
 end;
 
 end.

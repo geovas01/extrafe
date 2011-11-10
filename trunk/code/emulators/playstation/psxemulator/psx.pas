@@ -1851,7 +1851,7 @@ procedure pSXFindFilesCanClose;
 var
   whatfile: string;
 begin
-  whatfile :=  ConfIni.ReadString('Find','FindFileswho',WhatFile);
+//  whatfile :=  ConfIni.ReadString('Find','FindFileswho',WhatFile);
   if whatfile = 'pSX' then
     pSXCanClose('ff1')
   else if whatfile = 'RomPsx' then
@@ -1888,7 +1888,7 @@ end;
 
 procedure psxButtonFindClick;
 begin
-  ConfIni.WriteString('Find','FindFilesWho','pSX');
+//  ConfIni.WriteString('Find','FindFilesWho','pSX');
   Conf.Find_Files.InitialDir := Program_Path+'emulators';
   Conf.Find_Files.FileName := '';
   Conf.Find_Files.Filter := 'Execute (exe)|*.exe';
@@ -1897,7 +1897,7 @@ end;
 
 procedure psxFindSystemRom;
 begin
-  ConfIni.WriteString('Find','FindFilesWho','RomPsx');
+//  ConfIni.WriteString('Find','FindFilesWho','RomPsx');
   Conf.Find_Files.InitialDir := Program_Path+'emulators';
   Conf.Find_Files.FileName := '';
   Conf.Find_Files.Filter := 'SCPH1001.BIN (bin)|*.bin';

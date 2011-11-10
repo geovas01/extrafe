@@ -5,8 +5,14 @@ interface
 uses
   Windows, SysUtils,Controls,StdCtrls, Buttons,
   Variants, Classes, Graphics, Forms,ComCtrls, ExtCtrls,
-  comobj, FunctionX,NxColumnClasses,NxCustomGridControl,
+  comobj, FunctionX,NxColumns,NxColumnClasses,NxCustomGridControl,
   OmniXML,OmniXMLUtils,mame_xmlext,Dialogs;
+
+type  
+  THtmlColClick = class(TObject)
+  public
+    procedure DoHtmlColClick(Sender: TObject; Href: WideString);
+  end;
 
   procedure SetMame_DatabaseFromMameIni;
 
@@ -55,6 +61,7 @@ var
   iNode,FinalRomsFound,k: Integer;
   rec : TSearchRec;
   RomFound: Boolean;
+  htmlClass: THtmlColClick;
 
 procedure CreateNewMameDataBase;
 begin
@@ -327,7 +334,7 @@ procedure SetCursorToBusy(AreBusy:Boolean);
 var
   ThemeNum: Byte;
 begin
-  ThemeNum := ConfIni.ReadInteger('Themes','Theme',ThemeNum);
+//  ThemeNum := ConfIni.ReadInteger('Themes','Theme',ThemeNum);
   SetCursors(ThemeNum - 1);
   SetAllCursor(ThemeNum - 1);
   if AreBusy = true then
@@ -348,7 +355,7 @@ begin
       Conf.img26.Cursor := Arrow;
       Conf.nxtgrd_mame.Cursor := Arrow;
       Conf.sComboBox72.Cursor := Arrow;
-      Conf.sGauge_MameData.Cursor := Arrow;    
+      Conf.sGauge_MameData.Cursor := Arrow;
     end;
 end;
 
@@ -356,53 +363,14 @@ procedure SetMame_DatabaseFromMameIni;
 var
   MameBuildVer,MameName: string;
   TotalRoms,TotalEmulated: Integer;
+  isThereAnyRomDirSetuped: Boolean;
 begin
   if FromDatabase = false then
     begin
       if FileExists(PathXmlMame+'_efuse.xml') then
         begin
+          isThereAnyRomDirSetuped := False;
           SetTheGridForSetup;
-          if FromArrows_Mamedirs = False then
-            Splash_Screen.sLabel1.Caption := 'Setting Mame Database...'
-          else
-            Conf.sLabel112.Caption := 'Setting Mame Database...';
-          nodegame := MameXmlUseDoc.SelectSingleNode('MameInfo');
-          MameName := GetNodeAttrStr(nodegame,'MameExeName');
-          MameBuildVer := GetNodeAttrStr(nodegame,'ver');
-          TotalRoms := GetNodeAttrInt(nodegame,'FinalRomsFound');
-          TotalEmulated := GetNodeAttrInt(nodegame,'RomsEmulated');
-          gameList := MameXmlUseDoc.SelectNodes('/MameInfo/row');
-          nodegame := gameList.Item[gameList.Length-1];
-          Conf.nxtgrd_mame.AddRow(gameList.Length);
-          conf.nxtgrd_mame.BeginUpdate;
-          for iNode := 0 to gameList.Length - 1 do
-            begin
-              nodegame := gameList.Item[iNode];
-              Conf.nxtgrd_mame.Cell[1,iNode].AsString := GetNodeAttrStr(nodegame,'GameName');
-              Conf.nxtgrd_mame.Cell[2,iNode].AsString := GetNodeAttrStr(nodegame,'RomName');
-              if GetNodeAttrStr(nodegame,'Manufactor','') <> '' then
-                Conf.nxtgrd_mame.Cell[4,iNode].AsString := GetNodeAttrStr(nodegame,'Manufactor');
-              if GetNodeAttrStr(nodegame,'Year','') <> '' then
-                Conf.nxtgrd_mame.Cell[5,iNode].AsString := GetNodeAttrStr(nodegame,'Year');
-              if GetNodeAttrStr(nodegame,'CloneOf','') <> '' then
-                Conf.nxtgrd_mame.Cell[6,iNode].AsString := GetNodeAttrStr(nodegame,'CloneOf');
-              if GetNodeAttrStr(nodegame,'PathOf','') <> '' then
-                Conf.nxtgrd_mame.Cell[3,iNode].AsInteger := 32
-              else
-                Conf.nxtgrd_mame.Cell[3,iNode].AsInteger := 33;
-              if FromArrows_Mamedirs = False then
-                Splash_Screen.sGauge_Splash.Progress := (100 * iNode) div (gameList.Length-1)
-              else
-                Conf.sGauge_MameChange.Progress := (100 * iNode) div (gameList.Length-1);
-              Application.ProcessMessages;
-            end;
-          BestFitForMameGrid;
-          Conf.nxtgrd_mame.EndUpdate;
-          //Add To MameXML
-          MameXMLUse.Ver := MameBuildVer;
-          MameXMLUse.MameExeName := MameName;
-          MameXMLUse.RomsEmulated := TotalEmulated;
-          MameXMLUse.FinalRomsFound := TotalRoms;
           //Add To MameXMLPath
           nodegame := MameXmlConfigDoc.SelectSingleNode('MamePath');
           MameXMLConfig.Condition := GetNodeAttrStr(nodegame,'Condition');
@@ -418,6 +386,8 @@ begin
               RowPath.PathId := GetNodeAttrInt(nodegame,'PathId');
               RowPath.RomPath := GetNodeAttrStr(nodegame,'RomPath');
               RowPath.RomsFound := GetNodeAttrInt(nodegame,'RomsFound');
+              if GetNodeAttrStr(nodegame,'MameName','') = Mame_Exe then
+                isThereAnyRomDirSetuped := True;
             end;
           gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
           for iNode := 0 to gameList.Length -1 do
@@ -438,14 +408,70 @@ begin
               RowDir.Scores := GetNodeAttrStr(nodegame,'Scores');
               RowDir.Bosses := GetNodeAttrStr(nodegame,'Bosses');
             end;
-          //Show Info for Mame
-          Conf.sLabel104.Caption := 'Mame Version (Build) : '+MameBuildVer;
-          UrlMame(MameName);
-          Conf.sLabel106.Caption := 'Overall Emulated : '+IntToStr(TotalEmulated);
-          Conf.sLabel107.Caption := 'Roms Found : '+IntToStr(TotalRoms);
-          Conf.sComboBox72.ItemIndex := 0;
-          Conf.sGauge_MameData.Progress := 100;
-          Conf.sLabel109.Caption := 'Overall Status';
+          if isThereAnyRomDirSetuped = true then
+            begin
+              if FromArrows_Mamedirs = False then
+                  Splash_Screen.sLabel1.Caption := 'Setting Mame Database...'
+              else
+                Conf.sLabel112.Caption := 'Setting Mame Database...';
+              nodegame := MameXmlUseDoc.SelectSingleNode('MameInfo');
+              MameName := GetNodeAttrStr(nodegame,'MameExeName');
+              MameBuildVer := GetNodeAttrStr(nodegame,'ver');
+              TotalRoms := GetNodeAttrInt(nodegame,'FinalRomsFound');
+              TotalEmulated := GetNodeAttrInt(nodegame,'RomsEmulated');
+              gameList := MameXmlUseDoc.SelectNodes('/MameInfo/row');
+              nodegame := gameList.Item[gameList.Length-1];
+              Conf.nxtgrd_mame.AddRow(gameList.Length);
+              conf.nxtgrd_mame.BeginUpdate;
+              for iNode := 0 to gameList.Length - 1 do
+                begin
+                  nodegame := gameList.Item[iNode];
+                  Conf.nxtgrd_mame.Cell[1,iNode].AsString := GetNodeAttrStr(nodegame,'GameName');
+                  Conf.nxtgrd_mame.Cell[2,iNode].AsString := GetNodeAttrStr(nodegame,'RomName');
+                  if GetNodeAttrStr(nodegame,'Manufactor','') <> '' then
+                    Conf.nxtgrd_mame.Cell[4,iNode].AsString := GetNodeAttrStr(nodegame,'Manufactor');
+                  if GetNodeAttrStr(nodegame,'Year','') <> '' then
+                    Conf.nxtgrd_mame.Cell[5,iNode].AsString := GetNodeAttrStr(nodegame,'Year');
+                  if GetNodeAttrStr(nodegame,'CloneOf','') <> '' then
+                    Conf.nxtgrd_mame.Cell[6,iNode].AsString := GetNodeAttrStr(nodegame,'CloneOf');
+                  if GetNodeAttrStr(nodegame,'PathOf','') <> '' then
+                    Conf.nxtgrd_mame.Cell[3,iNode].AsInteger := 32
+                  else
+                    Conf.nxtgrd_mame.Cell[3,iNode].AsInteger := 33;
+                  if FromArrows_Mamedirs = False then
+                    Splash_Screen.sGauge_Splash.Progress := (100 * iNode) div (gameList.Length-1)
+                  else
+                    Conf.sGauge_MameChange.Progress := (100 * iNode) div (gameList.Length-1);
+                  Application.ProcessMessages;
+                end;
+              BestFitForMameGrid;
+              Conf.nxtgrd_mame.EndUpdate;
+              //Add To MameXML
+              MameXMLUse.Ver := MameBuildVer;
+              MameXMLUse.MameExeName := MameName;
+              MameXMLUse.RomsEmulated := TotalEmulated;
+              MameXMLUse.FinalRomsFound := TotalRoms;
+              //Show Info for Mame
+              Conf.sLabel104.Caption := 'Mame Version (Build) : '+MameBuildVer;
+              UrlMame(MameName);
+              Conf.sLabel106.Caption := 'Overall Emulated : '+IntToStr(TotalEmulated);
+              Conf.sLabel107.Caption := 'Roms Found : '+IntToStr(TotalRoms);
+              Conf.sComboBox72.ItemIndex := 0;
+              Conf.sGauge_MameData.Progress := 100;
+              Conf.sLabel109.Caption := 'Overall Status';
+            end
+          else
+            begin
+              Conf.nxtgrd_mame.ClearRows;
+              Conf.nxtgrd_mame.Columns.Clear;
+              Conf.nxtgrd_mame.Columns.Add(TNxHtmlColumn,'');
+              Conf.nxtgrd_mame.Columns[0].Alignment := taCenter;
+              Conf.nxtgrd_mame.Columns[0].Width := 539;
+              Conf.nxtgrd_mame.AddRow();
+              Conf.nxtgrd_mame.Columns[0].Options := [coEditing];
+              Conf.nxtgrd_mame.Cell[0,Conf.nxtgrd_mame.LastAddedRow].AsString := '<b>Found</b> no setuped rom directory. <font color="red">Please</font> go <a href="mame_dir_panel">here</a> and add a rom directory';
+              TNxHtmlColumn(Conf.nxtgrd_mame.Columns[0]).OnClick := htmlClass.DoHtmlColClick;
+            end;
         end;
     end;
   Started := False;
@@ -997,4 +1023,14 @@ begin
     end;
 end;
 
+
+{ THtmlColClick }
+
+procedure THtmlColClick.DoHtmlColClick(Sender: TObject; Href: WideString);
+begin
+  MenuButton1;
+end;
+
+initialization
+  htmlClass := THtmlColClick.Create;
 end.

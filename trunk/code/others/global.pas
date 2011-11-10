@@ -13,7 +13,8 @@ implementation
 
 uses
   main,menu,
-  mame_dirs,mame_graphics,mame_database,mame_builds;
+  mame_dirs,mame_graphics,mame_database,mame_builds,
+  zinc_paths;
 
 procedure global_Find_FilesCanClose;
 begin
@@ -28,7 +29,9 @@ begin
   else if gFindFiles = 'hiscoredat_mamext' then
     FindHiScoreDat_MameXTReturn
   else if gFindFiles = 'MameTools_FontName' then
-    Conf.sEdit125.Text := Conf.Find_Files.FileName;
+    Conf.sEdit125.Text := Conf.Find_Files.FileName
+  else if gFindFiles = 'zinc' then
+    SetUpTheNewZincExe;
 
 end;
 
@@ -47,7 +50,11 @@ begin
   else if gFindDirs = 'IPSDir_mameplus' then
     SetTheNewIPSDir_MamePlus
   else if gFindDirs = 'IPSDir_mamext' then
-    SetTheNewIPSDir_MameXT;
+    SetTheNewIPSDir_MameXT
+  else if gFindDirs = '' then
+    SetTheNewZincRomDirectory
+  else if gFindDirs = '' then
+    SetTheNewZincSnapsDirectory;
 end;
 
 { The procedure to put png image from resource to tsbitbtn

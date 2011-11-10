@@ -60,7 +60,7 @@ uses
 
 var
   FromMame_BuildsToFindBuilds,FontFromSystem,IPSRunFirst: Boolean;
-  IPSPath,HiScorePath,ipsNotFoundImg: String;
+  IPSPath,HiScoreFile,HiScorePath,ipsNotFoundImg: String;
   IsIPSChecked,IsApplyChecked,NewIPSDir: Boolean;
   GamePlayTime_Memo: TMemo;
 
@@ -139,7 +139,8 @@ begin
       Conf.nxtgrd_ips_mameplus.ClearRows;
       Conf.nxtgrd_ips_mameplus.Columns.Clear;
       Conf.nxtgrd_ips_mameplus.Enabled := False;
-//      MameIni.WriteString('MamePlus','IPSChecked','False');
+      MameXmlUseDoc.DocumentElement.SetAttribute('IpsChecked','False');
+      MameXmlUseDoc.Save(MameDatabaseFile,ofNone);
     end
   else
     begin
@@ -148,8 +149,9 @@ begin
       Conf.sBitBtn98.Enabled := True;
       Conf.sLabel35.Enabled := True;
       Conf.nxtgrd_ips_mameplus.Enabled := True;
+      MameXmlUseDoc.DocumentElement.SetAttribute('IpsChecked','True');
+      MameXmlUseDoc.Save(MameDatabaseFile,ofNone);
       GetIPS_MamePlus;
-//      MameIni.WriteString('MamePlus','IPSChecked','True');
     end;
 end;
 
@@ -166,7 +168,8 @@ begin
       Conf.nxtgrd_ips_mamext.ClearRows;
       Conf.nxtgrd_ips_mamext.Columns.Clear;
       Conf.nxtgrd_ips_mamext.Enabled := False;
-//      MameIni.WriteString('MamePlusXT','IPSChecked','False');
+      MameXmlUseDoc.DocumentElement.SetAttribute('IpsChecked','False');
+      MameXmlUseDoc.Save(MameDatabaseFile,ofNone);
     end
   else
     begin
@@ -175,8 +178,9 @@ begin
       Conf.sBitBtn100.Enabled := True;
       Conf.sLabel38.Enabled := True;
       Conf.nxtgrd_ips_mamext.Enabled := True;
+      MameXmlUseDoc.DocumentElement.SetAttribute('IpsChecked','True');
+      MameXmlUseDoc.Save(MameDatabaseFile,ofNone);
       GetIPS_MameXT;
-//      MameIni.WriteString('MamePlusXT','IPSChecked','True');
     end;
 end;
 
@@ -246,10 +250,14 @@ begin
               else if t1 = 'hiscore_directory' then
                 begin
                   if t2 = 'hi' then
-                    t3 := FullPathMame_Exe+'hi'
+                    t3 := FullPathMame_Exe+'hi\'
                   else
                     t3 := t2;
                   HiScorePath := t3;
+                end
+              else if t1 = 'hiscore_file' then
+                begin
+                  HiScorefile := HiScorePath+t2;
                   if Mame_Exe = 'mamep.exe' then
                     begin
                       if CheckHiscore = 'True' then
@@ -281,7 +289,7 @@ begin
               else if t1 = 'ipspath' then
                 begin
                   if t2 = 'ips' then
-                    t3 := Mame_Exe+'ips'
+                    t3 := FullPathMame_Exe+'ips'
                   else
                     t3 := t2;
                   IPSPath := t3;
@@ -307,6 +315,8 @@ begin
               GetMameXT_GamesList;
               RunGameCount_PlayTime_MameXT_Memo;
             end;
+          if (FromArrows_Mamedirs = True) or (FromDatabase = True) then
+            SaveMame_BuildsAtExit;
         end;
       CheckMameBuilds_TopicSettings;
       CheckTopicsConfig;
@@ -319,9 +329,11 @@ procedure SaveMame_BuildsAtExit;
 var
   k,x: Integer;
   value,t1,t2: string;
+  FoundHiScoreDir: Boolean;
 begin
-  if (ExtractFileName(Mame_Exe) = 'mamep.exe') or (ExtractFileName(Mame_Exe) = 'mamepuiXT_x86.exe') or (ExtractFileName(Mame_Exe) = 'mamepuiXT_x64.exe') then
+  if (Mame_Exe = 'mamep.exe') or (Mame_Exe = 'mamepuiXT_x86.exe') or (Mame_Exe = 'mamepuiXT_x64.exe') then
     begin
+      FoundHiScoreDir := False;
       for k := 0 to Mame_Global_MemoIni.Lines.Count - 1 do
         begin
           value := Mame_Global_MemoIni.Lines.Strings[k];
@@ -348,15 +360,16 @@ begin
             begin
               Mame_Global_MemoIni.Lines.Delete(k);
               if (Conf.sCheckBox33.Checked = True) or (Conf.sCheckBox129.Checked = True) then
-                if ExtractFileName(Mame_Exe) = 'mamep.exe' then
-                  Mame_Global_MemoIni.Lines.Insert(k,'hiscore_directory          '+Conf.sEdit12.Text)
+                if Mame_Exe = 'mamep.exe' then
+                  Mame_Global_MemoIni.Lines.Insert(k,'hiscore_directory          '+Trim(Copy(Conf.sEdit12.Text,0,Length(Conf.sEdit12.Text)-11)))
                 else
-                  Mame_Global_MemoIni.Lines.Insert(k,'hiscore_directory          '+Conf.sEdit16.Text);
+                  Mame_Global_MemoIni.Lines.Insert(k,'hiscore_directory          '+Trim(Copy(Conf.sEdit16.Text,0,Length(Conf.sEdit16.Text)-11)));
+              FoundHiScoreDir := True;
             end
           else if t1 = 'ui_transparency' then
             begin
               Mame_Global_MemoIni.Lines.Delete(k);
-              if ExtractFileName(Mame_Exe) = 'mamep.exe' then
+              if Mame_Exe = 'mamep.exe' then
                 Mame_Global_MemoIni.Lines.Insert(k,'ui_transparency          '+Conf.sLabel34.Caption)
               else
                 Mame_Global_MemoIni.Lines.Insert(k,'ui_transparency          '+Conf.sLabel37.Caption);
@@ -364,7 +377,7 @@ begin
           else if t1 = 'ipspath' then
             begin
               Mame_Global_MemoIni.Lines.Delete(k);
-              if ExtractFileName(Mame_Exe) = 'mamep.exe' then
+              if Mame_Exe = 'mamep.exe' then
                 Mame_Global_MemoIni.Lines.Insert(k,'ipspath          '+Conf.sEdit13.Text)
               else
                 Mame_Global_MemoIni.Lines.Insert(k,'ipspath          '+Conf.sEdit17.Text);
@@ -375,7 +388,18 @@ begin
           Conf.nxtgrd_ips_mameplus.SaveToXMLFile(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml');
           IsApplyChecked := False;
         end;
-      Mame_Global_MemoIni.Lines.SaveToFile(ExtractFilePath(Mame_Exe)+'mame.ini');
+      if FoundHiScoreDir = False then
+        begin
+          Mame_Global_MemoIni.Lines.Add('');
+          Mame_Global_MemoIni.Lines.Add('#');
+          Mame_Global_MemoIni.Lines.Add('# EXTRAFE EXTRA OPTIONS');
+          Mame_Global_MemoIni.Lines.Add('#');
+          Mame_Global_MemoIni.Lines.Add('hiscore_directory          hi');
+          Mame_Global_MemoIni.Lines.Add('hiscore_file          hiscore.dat');
+          Mame_Global_MemoIni.Lines.Add('ipspath                   ips');
+          Mame_Global_MemoIni.Lines.Add('ips');
+        end;
+      Mame_Global_MemoIni.Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
       FromMame_BuildsToFindBuilds:= False;
     end;
 end;
@@ -967,7 +991,7 @@ begin
       CheckIPSFolder_MameXT := False;
       CountF := CountFilesOrFolders(IPSPath,'folders');
       iNode := -1;
-      if FindFirst(IPSPath+'\*',faDirectory, Rec) = 0 then
+      if SysUtils.FindFirst(IPSPath+'\*',faDirectory, Rec) = 0 then
         begin
           if NewIPSDir = False then
             Screen.Cursor := AniBusy;
@@ -1007,7 +1031,7 @@ begin
                             Conf.nxtgrd_ips_mamext.Cell[8,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := t1;
                             Conf.nxtgrd_ips_mamext.RowHeight[Conf.nxtgrd_ips_mamext.LastAddedRow] := 80;
                             CountDat := 0;
-                            AssignFile(DatFile,ExtractFilePath(Mame_Exe)+'\IPS\'+rec.Name+'\'+recdat.Name);
+                            AssignFile(DatFile,FullPathMame_Exe+'\IPS\'+rec.Name+'\'+recdat.Name);
                             Reset(DatFile);
                             while not Eof(DatFile) do
                               begin
@@ -1174,11 +1198,12 @@ begin
   if Conf.sCheckBox33.Checked = True then
     begin
       Conf.sEdit12.Enabled := True;
-      Conf.sEdit12.Text := HiScorePath;
-      if ExtractFileName(HiScorePath) <> 'hiscore.dat' then
+      Conf.sEdit12.Text := HiScoreFile;
+      if not FileExists(HiScoreFile) then
         Conf.sLabel102.Visible := True;
       Conf.sBitBtn1.Enabled := True;
-//      MameIni.WriteString('MamePlus','HiScoreChecked','True');
+      MameXmlUseDoc.DocumentElement.SetAttribute('HiScoreChecked','True');
+      MameXmlUseDoc.Save(MameDatabaseFile,ofIndent);
     end
   else
     begin
@@ -1186,7 +1211,8 @@ begin
       Conf.sEdit12.Text := '';
       Conf.sLabel102.Visible := False;
       Conf.sBitBtn1.Enabled := False;
-//      MameIni.WriteString('MamePlus','HiScoreChecked','False');
+      MameXmlUseDoc.DocumentElement.SetAttribute('HiScoreChecked','False');
+      MameXmlUseDoc.Save(MameDatabaseFile,ofIndent);
     end;
 end;
 
@@ -1195,11 +1221,12 @@ begin
   if Conf.sCheckBox129.Checked = True then
     begin
       Conf.sEdit16.Enabled := True;
-      Conf.sEdit16.Text := HiScorePath;
-      if ExtractFileName(HiScorePath) <> 'hiscore.dat' then
+      Conf.sEdit16.Text := HiScoreFile;
+      if not FileExists(HiScoreFile) then
         Conf.sLabel103.Visible := True;
       Conf.sBitBtn99.Enabled := True;
-//      MameIni.WriteString('MamePlusXT','HiScoreChecked','True');
+      MameXmlUseDoc.DocumentElement.SetAttribute('HiScoreChecked','True');
+      MameXmlUseDoc.Save(MameDatabaseFile,ofNone);
     end
   else
     begin
@@ -1207,7 +1234,8 @@ begin
       Conf.sEdit16.Text := '';
       Conf.sLabel103.Visible := False;
       Conf.sBitBtn99.Enabled := False;
-//      MameIni.WriteString('MamePlusXT','HiScoreChecked','False');
+      MameXmlUseDoc.DocumentElement.SetAttribute('HiScoreChecked','False');
+      MameXmlUseDoc.Save(MameDatabaseFile,ofNone);
     end;
 end;
 
@@ -1374,7 +1402,7 @@ end;
 
 procedure ResetToDefaultTopic_MameBuilds;
 begin
-  if ExtractFileName(Mame_Exe) = 'mamep.exe'  then
+  if Mame_Exe = 'mamep.exe'  then
     begin
       Conf.sCheckBox32.Checked := True;
       Conf.sCheckBox10.Checked := False;
@@ -1390,7 +1418,7 @@ begin
       Conf.sButton8.Enabled := False;
       CheckTopicsConfig;
     end
-  else if (ExtractFileName(Mame_Exe) = 'mamepuiXT_x86') or (ExtractFileName(Mame_Exe) = 'mamepuiXT_x64') then
+  else if (Mame_Exe = 'mamepuiXT_x86.exe') or (Mame_Exe = 'mamepuiXT_x64.exe') then
     begin
       Conf.sCheckBox44.Checked := True;
       Conf.sCheckBox128.Checked := False;
@@ -1411,7 +1439,7 @@ end;
 procedure CheckMameBuilds_TopicSettings;
 begin
   Conf.sButton8.Enabled := False;
-  if ExtractFileName(Mame_Exe) = 'mamep.exe'  then
+  if Mame_Exe = 'mamep.exe'  then
     begin
       if Conf.sCheckBox32.Checked <> True then
         Conf.sButton8.Enabled := True;
@@ -1424,7 +1452,7 @@ begin
       if Conf.sCheckBox34.Checked <> False then
         Conf.sButton8.Enabled := True;
     end
-  else if (ExtractFileName(Mame_Exe) = 'mamepuiXT_x86') or (ExtractFileName(Mame_Exe) = 'mamepuiXT_x64') then
+  else if (Mame_Exe = 'mamepuiXT_x86.exe') or (Mame_Exe = 'mamepuiXT_x64.exe') then
     begin
       if Conf.sCheckBox44.Checked <> True then
         Conf.sButton8.Enabled := True;

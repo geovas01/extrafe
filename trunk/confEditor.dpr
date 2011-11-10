@@ -43,7 +43,10 @@ uses
   global in 'code\others\global.pas',
   form_splash in 'code\other_forms_\form_splash.pas' {Splash_Screen},
   form_general in 'code\other_forms_\form_general.pas' {FGeneral},
-  mame_xmlext in 'code\mame_\mame_xmlext.pas';
+  mame_xmlext in 'code\mame_\mame_xmlext.pas',
+  ce_xmlext in 'code\ce_\ce_xmlext.pas',
+  zinc_xmlext in 'code\zinc_\zinc_xmlext.pas',
+  zinc_database in 'code\zinc_\zinc_database.pas';
 
 var
   Map : THandle;

@@ -533,6 +533,7 @@ begin
                     RowDir := MameXMLConfig.RowsDir.AddRowDir;
                     RowDir.MameName := Mame_Exe;
                     RowDir.MamePath := GetNodeAttrStr(nodegame,'MamePath');
+                    RowDir.Selected := GetNodeAttrInt(nodegame,'Selected');
                     RowDir.Cabinets := Conf.sEdit3.Text;
                     RowDir.Flyers := Conf.sEdit8.Text;
                     RowDir.Marquees := Conf.sEdit10.Text;
@@ -549,6 +550,7 @@ begin
                     RowDir := MameXMLConfig.RowsDir.AddRowDir;
                     RowDir.MameName := GetNodeAttrStr(nodegame,'MameName');
                     RowDir.MamePath := GetNodeAttrStr(nodegame,'MamePath');
+                    RowDir.Selected := GetNodeAttrInt(nodegame,'Selected');
                     RowDir.Cabinets := GetNodeAttrStr(nodegame,'Cabinets');
                     RowDir.Flyers := GetNodeAttrStr(nodegame,'Flyers');
                     RowDir.Marquees := GetNodeAttrStr(nodegame,'Marquess');

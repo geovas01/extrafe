@@ -44,26 +44,26 @@ procedure HistoryButtonFindClick;
 var
   mamedir: String;
 begin
-  ConfIni.WriteString('Find','FindFilesWho','MameHistory');
-  mamedir := ConfIni.ReadString('Path','FullDir',mamedir);
-  Conf.Find_Files.InitialDir := mamedir;
-  Conf.Find_Files.FileName := '';
-  Conf.Find_Files.Filter := 'History.dat |History.dat';
+//  ConfIni.WriteString('Find','FindFilesWho','MameHistory');
+//  mamedir := ConfIni.ReadString('Path','FullDir',mamedir);
+//  Conf.Find_Files.InitialDir := mamedir;
+//  Conf.Find_Files.FileName := '';
+//  Conf.Find_Files.Filter := 'History.dat |History.dat';
 //  MameIni.WriteString('Temp','Edit',conf.sEdit56.Text);
-  Conf.Find_Files.Execute;
+//  Conf.Find_Files.Execute;
 end;
 
 procedure MameInfoButtonFindClick;
 var
   mamedir: String;
 begin
-  ConfIni.WriteString('Find','FindFilesWho','MameInfo');
-  mamedir := ConfIni.ReadString('Path','FullDir',mamedir);
-  Conf.Find_Files.InitialDir := mamedir;
-  Conf.Find_Files.FileName := '';
-  Conf.Find_Files.Filter := 'Mameinfo.dat| Mameinfo.dat';
+//  ConfIni.WriteString('Find','FindFilesWho','MameInfo');
+//  mamedir := ConfIni.ReadString('Path','FullDir',mamedir);
+//  Conf.Find_Files.InitialDir := mamedir;
+//  Conf.Find_Files.FileName := '';
+//  Conf.Find_Files.Filter := 'Mameinfo.dat| Mameinfo.dat';
 //  MameIni.WriteString('Temp','Edit',conf.sEdit57.Text);
-  Conf.Find_Files.Execute;
+//  Conf.Find_Files.Execute;
 end;
 
 end.

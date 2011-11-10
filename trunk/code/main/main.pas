@@ -459,6 +459,15 @@ type
     procedure sBitBtn101Click(Sender: TObject);
     procedure sCheckBox130Click(Sender: TObject);
     procedure sBitBtn102Click(Sender: TObject);
+    procedure sBitBtn47Click(Sender: TObject);
+    procedure sBitBtn48Click(Sender: TObject);
+    procedure sBitBtn49Click(Sender: TObject);
+    procedure rb9Click(Sender: TObject);
+    procedure rb10Click(Sender: TObject);
+    procedure rb11Click(Sender: TObject);
+    procedure rb12Click(Sender: TObject);
+    procedure sCheckBox84Click(Sender: TObject);
+    procedure sCheckBox85Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -620,7 +629,6 @@ end;
 
 procedure TConf.FormDestroy(Sender: TObject);
 begin
-  ConfIni.Free;
   RealpSXIni.Free;
   Mame_Global_MemoIni.Free;
   GamePlayTime_Memo.Free;
@@ -1486,6 +1494,51 @@ end;
 procedure TConf.sBitBtn102Click(Sender: TObject);
 begin
   EraseMameDir(sComboBox72.Text);
+end;
+
+procedure TConf.sBitBtn47Click(Sender: TObject);
+begin
+  AddZincExe_Path;
+end;
+
+procedure TConf.sBitBtn48Click(Sender: TObject);
+begin
+  AddZincRoms_Path;
+end;
+
+procedure TConf.sBitBtn49Click(Sender: TObject);
+begin
+  AddZincSnaps_Path;
+end;
+
+procedure TConf.rb9Click(Sender: TObject);
+begin
+  UseZinc_OpenGL_Settings;
+end;
+
+procedure TConf.rb10Click(Sender: TObject);
+begin
+  UseZinc_D3D_Settings;
+end;
+
+procedure TConf.rb11Click(Sender: TObject);
+begin
+  UseZinc_Glide_Settings;
+end;
+
+procedure TConf.rb12Click(Sender: TObject);
+begin
+  UseZinc_Soft_Settings;
+end;
+
+procedure TConf.sCheckBox84Click(Sender: TObject);
+begin
+  Zinc_FilterEnabled;
+end;
+
+procedure TConf.sCheckBox85Click(Sender: TObject);
+begin
+  Zinc_SurroundLiteEnabled;
 end;
 
 end.
