@@ -1,13 +1,25 @@
-#summary One-sentence summary of this page.
-
-= Introduction =
-
-Add your content here.
+#Revision History of Coding ExtraFe and confEditor
 
 
-= Details =
+----
+=confEditor=
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Rev 0.2.1.272
+
+-Fix the error when you try to change the mame it lost the selected row dir of mame.
+-Enable hiscore.dat for MameXT and MamePlus. Works Perfectly.
+-Change the config file form .ini file to .xml and new structure.
+-In mame database panel if find no setuped rom directory then give you a message to add.
+-Enable the IPS files for MameXT and MamePlus. Works perfectly.
+-Click on the image in IPS database and a popup window appears.
+-Basic Structure for ZINC emulator is done.
+-Database created when you choose the xinc.exe for first time.
+-First time start for Zinc works perfectly.
+-Clean some code in mame builds unit.
+-Fix small errors in mame database.
+
+=ExtraFe=
+
+none
+
+----
