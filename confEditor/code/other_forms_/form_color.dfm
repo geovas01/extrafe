@@ -1,0 +1,52 @@
+object frm_color: Tfrm_color
+  Left = 239
+  Top = 119
+  BorderStyle = bsNone
+  ClientHeight = 168
+  ClientWidth = 152
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object JvOfficeColorPanel1: TJvOfficeColorPanel
+    Left = 0
+    Top = 0
+    Width = 152
+    Height = 168
+    SelectedColor = clDefault
+    HotTrackFont.Charset = DEFAULT_CHARSET
+    HotTrackFont.Color = clWindowText
+    HotTrackFont.Height = -11
+    HotTrackFont.Name = 'MS Sans Serif'
+    HotTrackFont.Style = []
+    Align = alClient
+    TabOrder = 0
+    Properties.NoneColorCaption = 'No Color'
+    Properties.DefaultColorCaption = 'Automatic'
+    Properties.CustomColorCaption = 'Other Colors...'
+    Properties.NoneColorHint = 'No Color'
+    Properties.DefaultColorHint = 'Automatic'
+    Properties.CustomColorHint = 'Other Colors...'
+    Properties.NoneColorFont.Charset = DEFAULT_CHARSET
+    Properties.NoneColorFont.Color = clWindowText
+    Properties.NoneColorFont.Height = -11
+    Properties.NoneColorFont.Name = 'MS Sans Serif'
+    Properties.NoneColorFont.Style = []
+    Properties.DefaultColorFont.Charset = DEFAULT_CHARSET
+    Properties.DefaultColorFont.Color = clWindowText
+    Properties.DefaultColorFont.Height = -11
+    Properties.DefaultColorFont.Name = 'MS Sans Serif'
+    Properties.DefaultColorFont.Style = []
+    Properties.CustomColorFont.Charset = DEFAULT_CHARSET
+    Properties.CustomColorFont.Color = clWindowText
+    Properties.CustomColorFont.Height = -11
+    Properties.CustomColorFont.Name = 'MS Sans Serif'
+    Properties.CustomColorFont.Style = []
+  end
+end
