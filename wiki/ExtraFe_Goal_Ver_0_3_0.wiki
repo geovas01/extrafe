@@ -6,10 +6,10 @@
   * <font color='Blue'>Config Settings for confEditor.</font> (70% Done)
   * Master configuration for ExtraFE. (0% Done)
   * <font color='Blue'>Master Config Settings for Mame.</font> (80% Done)
-  * <font color='Blue'>Setting, creating and manipulating Mame Database in XML.</font> (80% Done)
+  * ~~<font color='red'>Setting, creating and manipulating Mame Database in XML.</font>~~ (100% Done)
   * ~~<font color='red'>Settings for mame builds, MamePlus and MamePlusXT.</font>~~ (100% Done)
   * Tools Settings usefull for Mame. (20% Done)
-  * Master Config settings for Zinc. (20% Done)
+  * <font color=blue>Master Config settings for Zinc.</font> (80% Done)
   * Master Config settings for Hatari. (20% Done)
   * Master Config settings for pSX. (20% Done)
   * Master Config settings for Kigb. (20% Done)
@@ -18,4 +18,7 @@
 
 = Extrafe =
 
-When the confEditor complete then i write the goals for the ExtrFe.
+  * ~~<font color='red'>Setup the GLScene and the bass sound library</font>~~ (100% Done)
+  * Create intro and load the textures, sprites, fonts, emulators, widgets, sound, effects, cursors e.t.c (5% Done)
+  * Create the Main Menu (5% Done) 
+  More Coming ....
