@@ -19,6 +19,7 @@
 = Extrafe =
 
   * ~~<font color='red'>Setup the GLScene and the bass sound library</font>~~ (100% Done)
-  * Create intro and load the textures, sprites, fonts, emulators, widgets, sound, effects, cursors e.t.c (5% Done)
-  * Create the Main Menu (5% Done) 
+  * Create intro and load the textures, sprites, fonts, emulators, widgets, sound, effects, cursors e.t.c (10% Done)
+  * Create the Main Menu (10% Done) 
+  * Create Mame load menu, gamelist, info, snaps, effects, animation (2% Done)
   More Coming ....
