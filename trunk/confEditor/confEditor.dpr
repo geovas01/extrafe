@@ -70,7 +70,7 @@ begin
   Splash_Screen := TSplash_Screen.Create(Application);
   Application.Initialize;
   Splash_Screen.Update;
-  Application.Title := 'confEditor';
+  Application.Title := 'confEditor - Configuration tool for ExtraFE';
   Application.CreateForm(TConf, Conf);
   Application.CreateForm(TFormWizard, FormWizard);
   Application.CreateForm(Tfrm_color, frm_color);
