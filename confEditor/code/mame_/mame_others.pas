@@ -2,7 +2,7 @@ unit mame_others;
 
 interface
 uses
-  SysUtils,mame_dirs;
+  SysUtils,Classes,ExtCtrls;
 
   procedure SetMame_OthersFromMameIni;
   procedure SaveMame_OthersAtExit;
@@ -17,13 +17,19 @@ uses
 
   procedure MameOthers_Clear;
 
+// Menu actions
+  procedure Show_mame_otherspanel;
+  procedure em_mame_others_ShowDynamicComps;
+  procedure em_mame_others_FreeDynamicComps;  
+
 var
   FromMame_OthersToFindOthers: Boolean;
 
 implementation
 
 uses
-  main,mainconf;
+  main,mainconf,menu,onflycomponents,FunctionX,
+  mame_dirs,mame_graphics,mame_sound,mame_builds,mame_database;
 
 Procedure MameBeamWidthChange;
 var
@@ -367,6 +373,54 @@ begin
   CheckTopicsConfig;
 end;
 
+procedure Show_mame_otherspanel;
+begin
+  if (Cmenustate = 'em_arcade_mame_graphics') then
+    em_mame_graphics_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_sound') then
+    em_mame_sound_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_paths') then
+    em_mame_dirs_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_builds') then
+    em_mame_builds_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_database') then
+    em_mame_database_FreeDynamicComps;
+  CurrentStateSave;
+  ShowPathInCaption(CDirPath,Conf.sBitBtn9.Caption,False,True);
+  Cmenustate := 'em_arcade_mame_others';
+  em_mame_others_ShowDynamicComps;
+  ShowButtonDown(9,'EM_ARCADE_MAME_OTHERS');
+  CheckButtonTopicsConfig_MameOthers;
+  ShowHidePanel(CurrentPanel,'Pem_mame_others');
+end;
 
+procedure em_mame_others_ShowDynamicComps;
+var
+  i: Integer;
+begin
+  for i := 1 to 3 do
+    begin
+      case i of
+        1 : Image_Comp(Conf.Pem_mame_others,'media\confeditor\images\mame\mame.png',
+              -10,587,155,85,i,True);
+        2 : Image_Comp(Conf.Pem_mame_others,'media\confeditor\images\mame\mame_image.png',
+              558,381,169,280,i,True);
+        3 : Image_Comp(Conf.Pem_mame_others,'media\confeditor\images\mame\others.png',
+              609,2,136,71,i,True);
+      end;
+    end;
+end;
+
+procedure em_mame_others_FreeDynamicComps;
+var
+  i : Integer;
+  Comp: TComponent;
+begin
+  for i := 1 to 3 do
+    begin
+      Comp := FindComponentEx('Conf.Pic'+IntToStr(i));
+      TImage(Comp).Free;
+    end;
+end;
 
 end.

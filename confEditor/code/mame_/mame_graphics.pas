@@ -2,7 +2,7 @@ unit mame_graphics;
 
 interface
 uses
-  SysUtils,StdCtrls,Controls,FunctionX,mame_dirs;
+  SysUtils,StdCtrls,Controls,Classes,ExtCtrls;
 
   procedure SetMame_GraphicsFromMameIni;
   procedure SaveMame_GraphicsAtExit;
@@ -25,14 +25,20 @@ uses
   procedure ResetToDefaultTopic_MameGraphics;
   procedure CheckMameGraphics_TopicSettings;
   procedure CheckButtonTopicsConfig_MameGraphics;
-  
+
   procedure MameGraphics_Clear;
+
+// Menu actions
+  procedure Show_mame_graphicspanel;
+  procedure em_mame_graphics_ShowDynamicComps;
+  procedure em_mame_graphics_FreeDynamicComps;
 var
   FromMame_GrpaphicsToFindGraphics: Boolean;
 
 implementation
 uses
-  main,mainconf;
+  main,mainconf,menu,FunctionX,onflycomponents,
+  mame_dirs,mame_sound,mame_others,mame_database,mame_builds;
 
 Procedure MamePauseChange;
 var
@@ -320,7 +326,7 @@ var
   MameIniFile: TextFile;
   value,text,t1,t2: string;
   r,k: integer;
-  DiffNum: Single;
+  DiffNum: Extended;
 begin
   if Started = True then
     begin
@@ -365,6 +371,8 @@ begin
               r := Pos(' ',text);
               t1 := Trim(Copy(text,0,r));
               t2 := Trim(Copy(text,r,100));
+              //yparxei kapio lathos....
+
               if t1 = 'window' then
                 Conf.sCheckBox3.Checked := StrToBool(t2)
               else if t1 = 'maximize' then
@@ -375,6 +383,7 @@ begin
                 conf.sCheckBox6.Checked := StrToBool(t2)
               else if t1 = 'speed' then
                 begin
+                  DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) * 100;
                   Conf.sbar_mame_emulatrionspeed.Position := Round(DiffNum);
                   MameEmulationSpeedChange;
@@ -392,24 +401,28 @@ begin
                 conf.sCheckBox41.Checked := StrToBool(t2)
               else if t1 = 'pause_brightness' then
                 begin
+                  DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) * 100;
                   Conf.sbar_mame_pausebrightness.Position := Round(DiffNum);
                   MamePauseChange;
                 end
               else if t1 = 'gamma' then
                 begin
+                  DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_gammacorrection.Position := Round(DiffNum);
                   MameGammaChange;
                 end
               else if t1 = 'brightness' then
                 begin
+                  DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_brightnesscorrection.Position := Round(DiffNum);
                   MameBrightnessChange;
                 end
               else if t1 = 'contrast' then
                 begin
+                  DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_contrastcorrection.Position := Round(DiffNum);
                   MameContrastChange;
@@ -438,18 +451,21 @@ begin
                 Conf.sCheckBox8.Checked := StrToBool(t2)
               else if t1 = 'full_screen_gamma' then
                 begin
+                  DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_Fgamma.Position := Round(DiffNum);
                   MameFullscreenGammaChange;
                 end
               else if t1 = 'full_screen_brightness' then
                 begin
+                  DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_Fbrightness.Position := Round(DiffNum);
                   MameFullscreenBrightnessChange;
                 end
               else if t1 = 'full_screen_contrast' then
                 begin
+                  DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_Fcontrast.Position := Round(DiffNum);
                   MameFullscreenContrastChange;
@@ -921,6 +937,56 @@ begin
   FromMame_GrpaphicsToFindGraphics := True;
   CheckMameGraphics_TopicSettings;
   CheckTopicsConfig;
+end;
+
+procedure Show_mame_graphicspanel;
+begin
+  if (Cmenustate = 'em_arcade_mame_paths') then
+    em_mame_dirs_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_sound') then
+    em_mame_sound_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_others') then
+    em_mame_others_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_builds') then
+    em_mame_builds_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_database') then
+    em_mame_database_FreeDynamicComps;
+  CurrentStateSave;
+  ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,True);
+  Cmenustate := 'em_arcade_mame_graphics';
+  em_mame_graphics_ShowDynamicComps;
+  ShowButtonDown(7,'EM_ARCADE_MAME_GRAPHICS');
+  CheckButtonTopicsConfig_MameGraphics;
+  ShowHidePanel(CurrentPanel,'Pem_mame_graphics');
+end;
+
+procedure em_mame_graphics_ShowDynamicComps;
+var
+  i: Integer;
+begin
+  for i := 1 to 3 do
+    begin
+      case i of
+        1 : Image_Comp(Conf.Pem_mame_graphics,'media\confeditor\images\mame\mame.png',
+              -10,587,155,85,i,True);
+        2 : Image_Comp(Conf.Pem_mame_graphics,'media\confeditor\images\mame\mame_image.png',
+              558,381,169,280,i,True);
+        3 : Image_Comp(Conf.Pem_mame_graphics,'media\confeditor\images\mame\graphics.png',
+              593,2,136,71,i,True);
+      end;
+    end;
+end;
+
+procedure em_mame_graphics_FreeDynamicComps;
+var
+  i : Integer;
+  Comp: TComponent;
+begin
+  for i := 1 to 3 do
+    begin
+      Comp := FindComponentEx('Conf.Pic'+IntToStr(i));
+      TImage(Comp).Free;
+    end;
 end;
 
 end.

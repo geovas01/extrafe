@@ -13,6 +13,7 @@ GLYF_EM_CONSOLES_SONY_PSX Bitmap psxemulator.bmp
 GLYF_EM_HANDHELDS Bitmap handhelds.bmp
 GLYF_EM_HANDHELDS_NINTENDO Bitmap gameboy.bmp
 GLYF_EM_HANDHELDS_NINTENDO_KIGB Bitmap kigb.bmp
-GLYF_WEATHER Bitmap weather.bmp
-GLYF_TIMEDATE Bitmap timedate.bmp
+GLYF_WIDGETS Bitmap widgets.bmp
+GLYF_WG_WEATHER Bitmap weather.bmp
+GLYF_WG_TIMEDATE Bitmap timedate.bmp
 GLYF_BACKBUTTON Bitmap back.bmp

@@ -18,6 +18,7 @@ EM_ARCADE_ZINC Bitmap zinc.bmp
 EM_ARCADE_ZINC_DIRS Bitmap zinc_paths.bmp
 EM_ARCADE_ZINC_GRAPHICS Bitmap zinc_graphics.bmp
 EM_ARCADE_ZINC_SOUND Bitmap zinc_sound.bmp
+EM_ARCADE_ZINC_DATABASE Bitmap zinc_database.bmp
 EM_COMPUTERS Bitmap computers.bmp
 EM_COMPUTERS_ATARI Bitmap atari.bmp
 EM_COMPUTERS_ATARI_HATARI Bitmap hatari.bmp
@@ -39,5 +40,6 @@ EM_HANDHELDS_NINTENDO_KIGB_DIRS Bitmap kigb_paths.bmp
 EM_HANDHELDS_NINTENDO_KIGB_SCREEN Bitmap kigb_screen.bmp
 EM_HANDHELDS_NINTENDO_KIGB_SOUND Bitmap kigb_sound.bmp
 EM_HANDHELDS_NINTENDO_KIGB_OTHERS Bitmap kigb_others.bmp
-WEATHER Bitmap weather.bmp
-TIMEDATE Bitmap timedate.bmp
+WIDGETS Bitmap widgets.bmp
+WG_WEATHER Bitmap weather.bmp
+WG_TIMEDATE Bitmap timedate.bmp

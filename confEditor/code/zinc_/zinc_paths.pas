@@ -2,10 +2,11 @@ unit zinc_paths;
 
 interface
 uses
-  SysUtils,FileCtrl,Classes,global,Forms,
-  zinc_xmlext,zinc_database;
+  SysUtils,FileCtrl,Classes,global,Forms,IniFiles,ExtCtrls,
+  zinc_xmlext;
 
   procedure SetZinc_PathsFromZincIni;
+  procedure SaveZinc_PathsAtExit;
 
   procedure AddZincExe_Path;
   procedure SetUpTheNewZincExe;
@@ -18,10 +19,16 @@ uses
   procedure SetUpZincGraphicsFirstTime;
   procedure SetUpZincSoundFirstTime;
 
+// Menu actions
+  procedure Show_zinc_pathspanel;
+  procedure em_zinc_paths_ShowDynamicComps;
+  procedure em_zinc_paths_FreeDynamicComps;
+
 implementation
 
 uses
-  main,mainconf;
+  main,mainconf,menu,onflycomponents,FunctionX,
+  zinc_graphics,zinc_sound,zinc_database;
 
 var
   oldpath,newpath: string;
@@ -40,10 +47,13 @@ begin
   Zinc_Exe := ExtractFileName(Conf.Find_Files.FileName);
   FullPathZinc_Exe := ExtractFilePath(Conf.Find_Files.FileName);
   Zinc_ini := ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\config.ini';
+  if not FileExists(Zinc_ini) then
+    Zinc_Config := TIniFile.Create(Zinc_ini);
   Conf.sEdit53.Text := FullPathZinc_Exe+Zinc_Exe;
   if not DirectoryExists(FullPathZinc_Exe +'roms') then
     CreateDir(FullPathZinc_Exe+'roms');
   Conf.sEdit54.Text := FullPathZinc_Exe + 'roms';
+  Zinc_RomsPath := FullPathZinc_Exe + 'roms';
   if not DirectoryExists(FullPathZinc_Exe +'snaps') then
     CreateDir(FullPathZinc_Exe+ 'snaps');
   conf.sEdit55.Text := FullPathZinc_Exe + 'snaps';
@@ -64,6 +74,13 @@ end;
 procedure SetTheNewZincRomDirectory;
 begin
   Conf.sEdit54.Text := newpath;
+  Zinc_RomsPath := newpath;
+  DeleteFile(ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\database\zinc_efuse.xml');
+  Conf.nxtgrd_zinc.ClearRows;
+  Zinc_Exe := ExtractFileName(Conf.Find_Files.FileName);
+  FullPathZinc_Exe := ExtractFilePath(Conf.Find_Files.FileName);
+  CreateFirstTimeDatabase;
+  Zinc_Config.WriteString('Zinc_Paths','Zinc_Roms',newpath);
 end;
 
 procedure AddZincSnaps_Path;
@@ -83,74 +100,73 @@ procedure CreateRender_cfgFile;
 var
   rf,sf: TStringList;
 begin
-  if not FileExists(FullPathZinc_Exe+'renderer.cfg') then
-    begin
-      rf := TStringList.Create;
-      //Create the test/default renderer cfg
-      rf.Add('; renderer settings');
-      rf.Add('Created from ExtraFe/confEditor');
-      rf.Add('');
-      rf.Add('XSize			= 800	; window/fullscreen X size');
-      rf.Add('YSize			= 600	; window/fullscreen Y size');
-      rf.Add('FullScreen		= 1   	; Fullscreen mode: 0/1');
-      rf.Add('ColorDepth		= 32    ; Fullscreen color depth: 16/32');
-      rf.Add('ScanLines		= 0   	; Scannlines: 0=none, 1=black, 2=bright');
-      rf.Add('Filtering		= 3   	; Texture filtering: 0-3');
-      rf.Add('Blending		= 1 	; Enhanced color blend: ogl: 0/1; D3D: 0-2');
-      rf.Add('Dithering		= 0 	; Dithering: 0/1');
-      rf.Add('ShowFPS			= 0 	; FPS display on startup: 0/1');
-      rf.Add('FrameLimitation	 	= 1 	; Frame limit: 0/1');
-      rf.Add('FrameSkipping           = 0     ; Frame skip: 0/1');
-      rf.Add('FramerateDetection	= 1 	; Auto framerate detection: 0/1');
-      rf.Add('FramerateManual		= 100 	; Manual framerate: 0-1000');
-      rf.Add('TextureType		= 3 	; Tetxures: 0=default, 1=4 bit, 2=5bit, 3=8bit');
-      rf.Add('TextureCaching		= 2 	; Caching type: 0-2');
-      rf.Add('TurnDisplay             = 0     ; Turn the whole display (0-2, 0=default)');
-      rf.Add('EnableKeys      = 1;   Enable/Disable renderer Keys');
-      rf.Add('FastExcel               = 0     ; Speed hack for SF "excel" modes. Will cause glitches if enabled!');
-      rf.SaveToFile(FullPathZinc_Exe + 'renderer_default.cfg');
-      rf.Clear;
-      //Create the zinc renderer cfg
-      rf.Add('; renderer settings');
-      rf.Add('Created from ExtraFe/confEditor');
-      rf.Add('');
-      rf.Add('XSize			= 1024;');
-      rf.Add('YSize			= 768;');
-      rf.Add('FullScreen		= 1;');
-      rf.Add('ColorDepth		= 32;');
-      rf.Add('ScanLines		= 0;');
-      rf.Add('Filtering		= 3;');
-      rf.Add('Blending		= 1;');
-      rf.Add('Dithering		= 0;');
-      rf.Add('ShowFPS			= 0;');
-      rf.Add('FrameLimitation   	= 1;');
-      rf.Add('FrameSkipping           = 0;');
-      rf.Add('FramerateDetection	= 1;');
-      rf.Add('FramerateManual		= 100;');
-      rf.Add('TextureType		= 3;');
-      rf.Add('TextureCaching		= 2;');
-      rf.Add('TurnDisplay       = 0;');
-      rf.Add('EnableKeys      = 1;');
-      rf.Add('FastExcel         = 0;');
-      rf.SaveToFile(FullPathZinc_Exe + 'renderer.cfg');
-      rf.Free;
-      //Create the zinc sound cfg
-      sf := TStringList.Create;
-      sf.Add('; sound settings');
-      sf.Add('Created from ExtraFe/confEditor');
-      sf.Add('');
-      sf.Add('--use-sound=yes');
-      sf.Add('--sound-filter-enable=no');
-      sf.Add('--sound-filter-cutoff=22050');
-      sf.Add('--sound-surround-lite-enable=no');
-      sf.Add('--sound-surround-lite-multiplier=40');
-      sf.Add('--sound-stereo-exciter=no');
-      sf.Add('--use-slow-geometry=yes');
-      sf.Add('--use-stackinram-hack=no');
-      sf.Add('--use-mem-predict=no');
-      sf.SaveToFile(FullPathZinc_Exe+'zinc_sound.cfg');
-      sf.Free;
-    end;
+  rf := TStringList.Create;
+  //Create the test/default renderer cfg
+  rf.Add('; renderer settings');
+  rf.Add('Created from ExtraFe/confEditor');
+  rf.Add('');
+  rf.Add('XSize			= 800	; window/fullscreen X size');
+  rf.Add('YSize			= 600	; window/fullscreen Y size');
+  rf.Add('FullScreen		= 1   	; Fullscreen mode: 0/1');
+  rf.Add('ColorDepth		= 32    ; Fullscreen color depth: 16/32');
+  rf.Add('ScanLines		= 0   	; Scannlines: 0=none, 1=black, 2=bright');
+  rf.Add('Filtering		= 3   	; Texture filtering: 0-3');
+  rf.Add('Blending		= 1 	; Enhanced color blend: ogl: 0/1; D3D: 0-2');
+  rf.Add('Dithering		= 0 	; Dithering: 0/1');
+  rf.Add('ShowFPS			= 0 	; FPS display on startup: 0/1');
+  rf.Add('FrameLimitation	 	= 1 	; Frame limit: 0/1');
+  rf.Add('FrameSkipping           = 0     ; Frame skip: 0/1');
+  rf.Add('FramerateDetection	= 1 	; Auto framerate detection: 0/1');
+  rf.Add('FramerateManual		= 100 	; Manual framerate: 0-1000');
+  rf.Add('TextureType		= 3 	; Tetxures: 0=default, 1=4 bit, 2=5bit, 3=8bit');
+  rf.Add('TextureCaching		= 2 	; Caching type: 0-2');
+  rf.Add('TurnDisplay             = 0     ; Turn the whole display (0-2, 0=default)');
+  rf.Add('EnableKeys      = 1;   Enable/Disable renderer Keys');
+  rf.Add('FastExcel               = 0     ; Speed hack for SF "excel" modes. Will cause glitches if enabled!');
+  rf.SaveToFile(FullPathZinc_Exe + 'renderer_default.cfg');
+  rf.Clear;
+  //Create the zinc renderer cfg
+  rf.Add('; renderer settings');
+  rf.Add('Created from ExtraFe/confEditor');
+  rf.Add('');
+  rf.Add('XSize			= 1024;');
+  rf.Add('YSize			= 768;');
+  rf.Add('FullScreen		= 1;');
+  rf.Add('ColorDepth		= 32;');
+  rf.Add('ScanLines		= 0;');
+  rf.Add('Filtering		= 3;');
+  rf.Add('Blending		= 1;');
+  rf.Add('Dithering		= 0;');
+  rf.Add('ShowFPS			= 0;');
+  rf.Add('FrameLimitation   	= 1;');
+  rf.Add('FrameSkipping           = 0;');
+  rf.Add('FramerateDetection	= 1;');
+  rf.Add('FramerateManual		= 100;');
+  rf.Add('TextureType		= 2;');
+  rf.Add('TextureCaching		= 2;');
+  rf.Add('TurnDisplay       = 0;');
+  rf.Add('EnableKeys      = 1;');
+  rf.Add('FastExcel         = 0;');
+  rf.SaveToFile(FullPathZinc_Exe + 'renderer.cfg');
+  rf.SaveToFile(ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\opengl_renderer.cfg');
+  rf.SaveToFile(ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\d3d_renderer.cfg');
+  rf.Free;
+  //Create the zinc sound cfg
+  sf := TStringList.Create;
+  sf.Add('; sound settings');
+  sf.Add('Created from ExtraFe/confEditor');
+  sf.Add('');
+  sf.Add('--use-sound=yes');
+  sf.Add('--sound-filter-enable=no');
+  sf.Add('--sound-filter-cutoff=22050');
+  sf.Add('--sound-surround-lite-enable=no');
+  sf.Add('--sound-surround-lite-multiplier=40');
+  sf.Add('--sound-stereo-exciter=no');
+  sf.Add('--use-slow-geometry=yes');
+  sf.Add('--use-stackinram-hack=no');
+  sf.Add('--use-mem-predict=no');
+  sf.SaveToFile(FullPathZinc_Exe+'zinc_sound.cfg');
+  sf.Free;
 end;
 
 procedure SetUpZincGraphicsFirstTime;
@@ -187,9 +203,68 @@ end;
 
 procedure SetZinc_PathsFromZincIni;
 begin
-  Conf.sEdit53.Text := FullPathZinc_Exe + Zinc_Exe;
+  Conf.sEdit53.Text := FullPathZinc_Exe + '\'+ Zinc_Exe;
   Conf.sEdit54.Text := Zinc_Config.ReadString('Zinc_Paths','Zinc_Roms',Conf.sEdit54.Text);
   Conf.sEdit55.Text := Zinc_Config.ReadString('Zinc_Paths','Zinc_Snaps',Conf.sEdit55.Text);
 end;
+
+procedure SaveZinc_PathsAtExit;
+var
+  Zpath: string;
+begin
+  if Zinc_Exe <> '' then
+    begin
+      Zpath := Trim(Copy(Conf.sEdit53.Text,0,Length(Conf.sEdit53.Text)- 9));
+      Zinc_Config.WriteString('Zinc_Paths','Zinc_Path',Zpath);
+      Zinc_Config.WriteString('Zinc_Paths','Zinc_Roms',Conf.sEdit54.Text);
+      Zinc_Config.WriteString('Zinc_Paths','Zinc_Snaps',Conf.sEdit55.Text);
+    end;
+end;
+
+procedure Show_zinc_pathspanel;
+begin
+  if (Cmenustate = 'em_arcade_zinc_graphics') then
+    em_zinc_graphics_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_zinc_sound') then
+    em_zinc_sound_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_zinc_database') then
+    em_zinc_database_FreeDynamicComps;
+  CurrentStateSave;
+  ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
+  Cmenustate := 'em_arcade_zinc_paths';
+  em_zinc_paths_ShowDynamicComps;
+  ShowButtonDown(6,'EM_ARCADE_ZINC_DIRS');
+  ShowHidePanel(CurrentPanel,'Pem_zinc_paths');
+end;
+
+procedure em_zinc_paths_ShowDynamicComps;
+var
+  i: Integer;
+begin
+  for i := 1 to 3 do
+    begin
+      case i of
+        1 : Image_Comp(Conf.Pem_zinc_paths,'media\confeditor\images\zinc\zinc.png',
+              3,590,97,75,i,True);
+        2 : Image_Comp(Conf.Pem_zinc_paths,'media\confeditor\images\zinc\zinc_image.png',
+              580,483,150,175,i,True);
+        3 : Image_Comp(Conf.Pem_zinc_paths,'media\confeditor\images\zinc\paths.png',
+              612,2,125,71,i,True);
+      end;
+    end;
+end;
+
+procedure em_zinc_paths_FreeDynamicComps;
+var
+  i : Integer;
+  Comp: TComponent;
+begin
+  for i := 1 to 3 do
+    begin
+      Comp := FindComponentEx('Conf.Pic'+IntToStr(i));
+      TImage(Comp).Free;
+    end;
+end;
+
 
 end.

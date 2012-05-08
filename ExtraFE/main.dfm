@@ -33,6 +33,9 @@ object MainForm: TMainForm
     Top = 8
     object Background_intro: TGLHUDSprite
       Position.Coordinates = {0000000000000000000080BF0000803F}
+      object GLHUDText_Progress_Info: TGLHUDText
+        BitmapFont = Font_Intro
+      end
       object GLHUDText_ExtraFE_Ver: TGLHUDText
         BitmapFont = Font_Intro
         ModulateColor.Color = {60E5D03E5C8F023F2DB21D3F0000803F}
@@ -83,7 +86,7 @@ object MainForm: TMainForm
       end
       object Right_Wing: TGLHUDSprite
       end
-      object GLDummyCube: TGLDummyCube
+      object Dummy_mainmenu: TGLDummyCube
         CubeSize = 1.000000000000000000
       end
     end
@@ -91,7 +94,7 @@ object MainForm: TMainForm
       DepthOfView = 100.000000000000000000
       FocalLength = 50.000000000000000000
       SceneScale = 0.100000001490116100
-      TargetObject = GLDummyCube
+      TargetObject = Dummy_mainmenu
       CameraStyle = csOrthogonal
       Position.Coordinates = {00000000000000000000A0400000803F}
     end
@@ -109,7 +112,7 @@ object MainForm: TMainForm
     Left = 8
     Top = 72
     object Mame_Background: TGLHUDSprite
-      object GLDummyCube1: TGLDummyCube
+      object Dummy_mame: TGLDummyCube
         CubeSize = 1.000000000000000000
       end
     end

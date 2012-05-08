@@ -2,9 +2,10 @@ unit mame_builds;
 
 interface
 uses
-  SysUtils,NxColumnClasses,NxGrid,NxCustomGridControl,pngimage,
-  Forms,Graphics,Classes,OmniXML,OmniXMLUtils,mame_dirs,StdCtrls,
-  Controls,Dialogs,mame_database,FileCtrl,global;
+  SysUtils,Forms,Graphics,Classes,Controls,Dialogs,FileCtrl,StdCtrls,ExtCtrls,
+  OmniXML,OmniXMLUtils,
+  NxColumnClasses,NxGrid,NxCustomGridControl,
+  pngimage;
 
   procedure SetMame_BuildsFromMameIni;
   procedure SaveMame_BuildsAtExit;
@@ -57,6 +58,10 @@ uses
 
   procedure MameBuilds_Clear;
 
+// Menu actions
+  procedure Show_mame_buildspanel;
+  procedure em_mame_builds_ShowDynamicComps;
+  procedure em_mame_builds_FreeDynamicComps;  
 
 var
   FromMame_BuildsToFindBuilds,FontFromSystem,IPSRunFirst: Boolean;
@@ -66,7 +71,9 @@ var
 
 implementation
 uses
-  main,mainconf,FunctionX,form_general,form_splash;
+  main,mainconf,FunctionX,global,menu,onflycomponents,
+  form_general,form_splash,
+  mame_dirs,mame_graphics,mame_sound,mame_others,mame_database;
 
 procedure BuildsClick;
 begin
@@ -1397,7 +1404,6 @@ begin
   Conf.nxtgrd_ips_mamext.ClearRows;
   Conf.nxtgrd_ips_mamext.Caption := 'I Have no Data to Show.';
   Conf.LMDFontComboBox1.ItemIndex := -1;
-  Conf.sEdit25.Text := '';
 end;
 
 procedure ResetToDefaultTopic_MameBuilds;
@@ -1590,6 +1596,56 @@ begin
   NewIpsDir:= True;
   Conf.sCheckBox130.Checked := False;
   Conf.sCheckBox130.Checked := True;
+end;
+
+procedure Show_mame_buildspanel;
+begin
+  if (Cmenustate = 'em_arcade_mame_graphics') then
+    em_mame_graphics_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_sound') then
+    em_mame_sound_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_others') then
+    em_mame_others_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_paths') then
+    em_mame_dirs_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_database') then
+    em_mame_database_FreeDynamicComps;
+  CurrentStateSave;
+  ShowPathInCaption(CDirPath,Conf.sBitBtn10.Caption,False,True);
+  Cmenustate := 'em_arcade_mame_builds';
+  em_mame_builds_ShowDynamicComps;
+  ShowButtonDown(10,'EM_ARCADE_MAME_BUILDS');
+  CheckButtonTopicsConfig_MameBuilds;
+  ShowHidePanel(CurrentPanel,'Pem_mame_builds');
+end;
+
+procedure em_mame_builds_ShowDynamicComps;
+var
+  i: Integer;
+begin
+  for i := 1 to 3 do
+    begin
+      case i of
+        1 : Image_Comp(Conf.Pem_mame_builds,'media\confeditor\images\mame\mame.png',
+              -10,587,155,85,i,True);
+        2 : Image_Comp(Conf.Pem_mame_builds,'media\confeditor\images\mame\mame_image.png',
+              558,381,169,280,i,True);
+        3 : Image_Comp(Conf.Pem_mame_builds,'media\confeditor\images\mame\builds.png',
+              613,2,132,71,i,True);
+      end;
+    end;
+end;
+
+procedure em_mame_builds_FreeDynamicComps;
+var
+  i : Integer;
+  Comp: TComponent;
+begin
+  for i := 1 to 3 do
+    begin
+      Comp := FindComponentEx('Conf.Pic'+IntToStr(i));
+      TImage(Comp).Free;
+    end;
 end;
 
 end.

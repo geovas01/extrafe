@@ -27,15 +27,16 @@ uses
     GLS_MainMenu: TGLScene;
     GlCamera_MainMenu: TGLCamera;
     BackGround: TGLHUDSprite;
-    GLDummyCube: TGLDummyCube;
+    Dummy_mainmenu: TGLDummyCube;
     Left_Wing: TGLHUDSprite;
     Right_Wing: TGLHUDSprite;
     Font_MainMenu: TGLWindowsBitmapFont;
     GLS_mame: TGLScene;
-    GLDummyCube1: TGLDummyCube;
+    Dummy_mame: TGLDummyCube;
     GlCamera_mame: TGLCamera;
     Mame_Background: TGLHUDSprite;
     Font_Mame: TGLWindowsBitmapFont;
+    GLHUDText_Progress_Info: TGLHUDText;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure GLCadencerProgress(Sender: TObject; const deltaTime,
@@ -101,7 +102,7 @@ begin
     Intro(nTime)
   else if CountScenes = 0 then
     begin
-      MatLib.Materials.Clear;
+//      MatLib.Materials.Clear;
       GLCadencer.Scene := GLS_MainMenu;
       GLSceneViewer.Camera := GlCamera_MainMenu;
       GLSceneViewer.Cursor := crDefault;

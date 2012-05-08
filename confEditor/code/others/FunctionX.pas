@@ -34,6 +34,7 @@ function ShellExecAndWait(const FileName, Parameters, dir: string;
   CmdShow: Integer): Boolean;
 //function PortUDP_IsOpen(dwPort : Word; ipAddressStr: AnsiString) : boolean;
 
+
 const
   InfoNum = 10;
   InfoStr: array[1..InfoNum] of string = ('CompanyName', 'FileDescription', 'FileVersion', 'InternalName', 'LegalCopyright', 'LegalTradeMarks', 'OriginalFileName', 'ProductName', 'ProductVersion', 'Comments');

@@ -46,7 +46,13 @@ uses
   mame_xmlext in 'code\mame_\mame_xmlext.pas',
   ce_xmlext in 'code\ce_\ce_xmlext.pas',
   zinc_xmlext in 'code\zinc_\zinc_xmlext.pas',
-  zinc_database in 'code\zinc_\zinc_database.pas';
+  zinc_database in 'code\zinc_\zinc_database.pas',
+  onflycomponents in 'code\main\onflycomponents.pas',
+  ce_wizard in 'code\ce_\ce_wizard.pas',
+  exf_config in 'code\exf_\exf_config.pas',
+  exf_themes in 'code\exf_\exf_themes.pas',
+  wg_timedate in 'code\widgets_\wg_timedate.pas',
+  wg_weather in 'code\widgets_\wg_weather.pas';
 
 var
   Map : THandle;

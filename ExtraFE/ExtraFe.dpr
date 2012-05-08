@@ -11,7 +11,8 @@ uses
   uTweener in 'code\gui\uTweener.pas',
   uGlSceneProfiler in 'code\gui\uGlSceneProfiler.pas',
   mame in 'code\arcade\mame.pas',
-  uSimpleListBox in 'code\arcade\uSimpleListBox.pas';
+  uSimpleListBox in 'code\arcade\uSimpleListBox.pas',
+  uSimplePanel in 'code\arcade\uSimplePanel.pas';
 
 {$R *.res}
 
