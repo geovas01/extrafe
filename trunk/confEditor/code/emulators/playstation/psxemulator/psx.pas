@@ -11,11 +11,7 @@ uses
   Procedure CreateDefaultIni;
   Procedure SetpSXSettings;
   Procedure pSXKeyCode(Key: Word);
-  Procedure RedKey(num: Integer);
   Procedure CNumberToShowString(what: integer);
-  Procedure ChooseKeys1Port;
-  Procedure ChooseKeys2Port;
-  Procedure ShowExtraKeys;
   Procedure pSXStats;
   procedure pSXFindFilesCanClose;
   procedure pSXLoad;
@@ -169,46 +165,6 @@ Begin
   Conf.sLabel15.Left := 196;
   Conf.sLabel15.Top := 344;
   Conf.sLabel15.AutoSize := true;
-  Conf.sEdit35.Left := 36;
-  Conf.sEdit35.Top := 16;
-  Conf.sEdit35.Width := 121;
-  Conf.sEdit35.Height := 21;
-  Conf.sEdit36.Left := 36;
-  Conf.sEdit36.Top := 40;
-  Conf.sEdit36.Width := 121;
-  Conf.sEdit36.Height := 21;
-  Conf.sEdit37.Left := 36;
-  Conf.sEdit37.Top := 64;
-  Conf.sEdit37.Width := 121;
-  Conf.sEdit37.Height := 21;
-  Conf.sEdit38.Left := 36;
-  Conf.sEdit38.Top := 88;
-  Conf.sEdit38.Width := 121;
-  Conf.sEdit38.Height := 21;
-  Conf.sEdit39.Left := 36;
-  Conf.sEdit39.Top := 112;
-  Conf.sEdit39.Width := 121;
-  Conf.sEdit39.Height := 21;
-  Conf.sEdit40.Left := 36;
-  Conf.sEdit40.Top := 136;
-  Conf.sEdit40.Width := 121;
-  Conf.sEdit40.Height := 21;
-  Conf.sEdit41.Left := 36;
-  Conf.sEdit41.Top := 160;
-  Conf.sEdit41.Width := 121;
-  Conf.sEdit41.Height := 21;
-  Conf.sEdit42.Left := 36;
-  Conf.sEdit42.Top := 184;
-  Conf.sEdit42.Width := 121;
-  Conf.sEdit42.Height := 21;
-  Conf.sEdit43.Left := 36;
-  Conf.sEdit43.Top := 208;
-  Conf.sEdit43.Width := 121;
-  Conf.sEdit43.Height := 21;
-  Conf.sEdit44.Left := 36;
-  Conf.sEdit44.Top := 232;
-  Conf.sEdit44.Width := 121;
-  Conf.sEdit44.Height := 21;
 
   //Page Four
   Conf.sComboBox23.BoundLabel.Caption := 'Driver';
@@ -221,91 +177,11 @@ Begin
   Conf.sComboBox24.Top := 72;
   Conf.sComboBox24.Width := 100;
   Conf.sComboBox24.Height := 21;
-  Conf.sEdit27.BoundLabel.Caption := 'Toggle Status Display';
-  Conf.sEdit27.Left := 112;
-  Conf.sEdit27.Top := 24;
-  Conf.sEdit27.Width := 100;
-  Conf.sEdit27.Height := 21;
-  Conf.sEdit28.BoundLabel.Caption := 'Increase Gamma';
-  Conf.sEdit28.Left := 136;
-  Conf.sEdit28.Top := 80;
-  Conf.sEdit28.Width := 100;
-  Conf.sEdit28.Height := 21;
-  Conf.sEdit29.BoundLabel.Caption := 'Decrease Gamma';
-  Conf.sEdit29.Left := 136;
-  Conf.sEdit29.Top := 104;
-  Conf.sEdit29.Width := 100;
-  Conf.sEdit29.Height := 21;
-  Conf.sEdit30.BoundLabel.Caption := 'Increase Brightness';
-  Conf.sEdit30.Left := 136;
-  Conf.sEdit30.Top := 128;
-  Conf.sEdit30.Width := 100;
-  Conf.sEdit30.Height := 21;
-  Conf.sEdit31.BoundLabel.Caption := 'Decrease Brightness';
-  Conf.sEdit31.Left := 136;
-  Conf.sEdit31.Top := 152;
-  Conf.sEdit31.Width := 100;
-  Conf.sEdit31.Height := 21;
-  Conf.sEdit32.BoundLabel.Caption := 'Increase Contrast';
-  Conf.sEdit32.Left := 136;
-  Conf.sEdit32.Top := 176;
-  Conf.sEdit32.Width := 100;
-  Conf.sEdit32.Height := 21;
-  Conf.sEdit33.BoundLabel.Caption := 'Decrease Contrast';
-  Conf.sEdit33.Left := 136;
-  Conf.sEdit33.Top := 200;
-  Conf.sEdit33.Width := 100;
-  Conf.sEdit33.Height := 21;
-  Conf.sEdit34.BoundLabel.Caption := 'Screenshot';
-  Conf.sEdit34.Left := 112;
-  Conf.sEdit34.Top := 272;
-  Conf.sEdit34.Width := 100;
-  Conf.sEdit34.Height := 21;
   Conf.sComboBox25.BoundLabel.Caption := 'Format';
   Conf.sComboBox25.Left := 156;
   Conf.sComboBox25.Top := 304;
   Conf.sComboBox25.Width := 57;
   Conf.sComboBox25.Height := 21;
-  Conf.sEdit25.BoundLabel.Caption := 'Fast Forward';
-  Conf.sEdit25.Left := 344;
-  Conf.sEdit25.Top := 208;
-  Conf.sEdit25.Width := 100;
-  Conf.sEdit25.Height := 21;
-  Conf.sEdit26.BoundLabel.Caption := 'Show VRam';
-  Conf.sEdit26.Left := 344;
-  Conf.sEdit26.Top := 248;
-  Conf.sEdit26.Width := 100;
-  Conf.sEdit26.Height := 21;
-  Conf.sEdit19.BoundLabel.Caption := 'Toggle Sound Status';
-  Conf.sEdit19.Left := 368;
-  Conf.sEdit19.Top := 24;
-  Conf.sEdit19.Width := 100;
-  Conf.sEdit19.Height := 21;
-  Conf.sEdit20.BoundLabel.Caption := 'Mute Sound';
-  Conf.sEdit20.Left := 368;
-  Conf.sEdit20.Top := 48;
-  Conf.sEdit20.Width := 100;
-  Conf.sEdit20.Height := 21;
-  Conf.sEdit21.BoundLabel.Caption := 'Increase Volume';
-  Conf.sEdit21.Left := 368;
-  Conf.sEdit21.Top := 72;
-  Conf.sEdit21.Width := 100;
-  Conf.sEdit21.Height := 21;
-  Conf.sEdit22.BoundLabel.Caption := 'Decrease Volume';
-  Conf.sEdit22.Left := 368;
-  Conf.sEdit22.Top := 96;
-  Conf.sEdit22.Width := 100;
-  Conf.sEdit22.Height := 21;
-  Conf.sEdit23.BoundLabel.Caption := 'Increase XA Volume';
-  Conf.sEdit23.Left := 368;
-  Conf.sEdit23.Top := 120;
-  Conf.sEdit23.Width := 100;
-  Conf.sEdit23.Height := 21;
-  Conf.sEdit24.BoundLabel.Caption := 'Decrease XA Volume';
-  Conf.sEdit24.Left := 368;
-  Conf.sEdit24.Top := 144;
-  Conf.sEdit24.Width := 100;
-  Conf.sEdit24.Height := 21;
 end;
 
 Procedure EnablePSX(What: Boolean);
@@ -346,36 +222,10 @@ Begin
   Conf.sLabel14.Enabled := what;
   Conf.sLabel16.Enabled := what;
   Conf.sLabel15.Enabled := what;
-  Conf.sEdit35.Enabled := what;
-  Conf.sEdit36.Enabled := what;
-  Conf.sEdit37.Enabled := what;
-  Conf.sEdit38.Enabled := what;
-  Conf.sEdit39.Enabled := what;
-  Conf.sEdit40.Enabled := what;
-  Conf.sEdit41.Enabled := what;
-  Conf.sEdit42.Enabled := what;
-  Conf.sEdit43.Enabled := what;
-  Conf.sEdit44.Enabled := what;
 
   //page four
   Conf.sComboBox23.Enabled := what;
   Conf.sComboBox24.Enabled := what;
-  Conf.sEdit19.Enabled := what;
-  Conf.sEdit20.Enabled := what;
-  Conf.sEdit21.Enabled := what;
-  Conf.sEdit22.Enabled := what;
-  Conf.sEdit23.Enabled := what;
-  Conf.sEdit24.Enabled := what;
-  Conf.sEdit25.Enabled := what;
-  Conf.sEdit26.Enabled := what;
-  Conf.sEdit27.Enabled := what;
-  Conf.sEdit28.Enabled := what;
-  Conf.sEdit29.Enabled := what;
-  Conf.sEdit30.Enabled := what;
-  Conf.sEdit31.Enabled := what;
-  Conf.sEdit32.Enabled := what;
-  Conf.sEdit33.Enabled := what;
-  Conf.sEdit34.Enabled := what;
   Conf.sComboBox25.Enabled := what;
 end;
 
@@ -1400,114 +1250,6 @@ Begin
     end;
 end;
 
-Procedure RedKey(num: Integer);
-Begin
-  if num = 19 then
-    Conf.sEdit19.Color := clRed
-  else
-    Conf.sEdit19.Color := clWhite;
-  if num = 20 then
-    Conf.sEdit20.Color := clRed
-  else
-    Conf.sEdit20.Color := clWhite;
-  if num = 21 then
-    Conf.sEdit21.Color := clRed
-  else
-    Conf.sEdit21.Color := clWhite;
-  if num = 22 then
-    Conf.sEdit22.Color := clRed
-  else
-    Conf.sEdit22.Color := clWhite;
-  if num = 23 then
-    Conf.sEdit23.Color := clRed
-  else
-    Conf.sEdit23.Color := clWhite;
-  if num = 24 then
-    Conf.sEdit24.Color := clRed
-  else
-    Conf.sEdit24.Color := clWhite;
-  if num = 25 then
-    Conf.sEdit25.Color := clRed
-  else
-    Conf.sEdit25.Color := clWhite;
-  if num = 26 then
-    Conf.sEdit26.Color := clRed
-  else
-    Conf.sEdit26.Color := clWhite;
-  if num = 27 then
-    Conf.sEdit27.Color := clRed
-  else
-    Conf.sEdit27.Color := clWhite;
-  if num = 28 then
-    Conf.sEdit28.Color := clRed
-  else
-    Conf.sEdit28.Color := clWhite;
-  if num = 29 then
-    Conf.sEdit29.Color := clRed
-  else
-    Conf.sEdit29.Color := clWhite;
-  if num = 30 then
-    Conf.sEdit30.Color := clRed
-  else
-    Conf.sEdit30.Color := clWhite;
-  if num = 31 then
-    Conf.sEdit31.Color := clRed
-  else
-    Conf.sEdit31.Color := clWhite;
-  if num = 32 then
-    Conf.sEdit32.Color := clRed
-  else
-    Conf.sEdit32.Color := clWhite;
-  if num = 33 then
-    Conf.sEdit33.Color := clRed
-  else
-    Conf.sEdit33.Color := clWhite;
-  if num = 34 then
-    Conf.sEdit34.Color := clRed
-  else
-    Conf.sEdit34.Color := clWhite;
-  if num = 35 then
-    Conf.sEdit35.Color := clRed
-  else
-    Conf.sEdit35.Color := clWhite;
-  if num = 36 then
-    Conf.sEdit36.Color := clRed
-  else
-    Conf.sEdit36.Color := clWhite;
-  if num = 37 then
-    Conf.sEdit37.Color := clRed
-  else
-    Conf.sEdit37.Color := clWhite;
-  if num = 38 then
-    Conf.sEdit38.Color := clRed
-  else
-    Conf.sEdit38.Color := clWhite;
-  if num = 39 then
-    Conf.sEdit39.Color := clRed
-  else
-    Conf.sEdit39.Color := clWhite;
-  if num = 40 then
-    Conf.sEdit40.Color := clRed
-  else
-    Conf.sEdit40.Color := clWhite;
-  if num = 41 then
-    Conf.sEdit41.Color := clRed
-  else
-    Conf.sEdit41.Color := clWhite;
-  if num = 42 then
-    Conf.sEdit42.Color := clRed
-  else
-    Conf.sEdit42.Color := clWhite;
-  if num = 43 then
-    Conf.sEdit43.Color := clRed
-  else
-    Conf.sEdit43.Color := clWhite;
-  if num = 44 then
-    Conf.sEdit44.Color := clRed
-  else
-    Conf.sEdit44.Color := clWhite;
-end;
-
 Procedure CNumberToShowString(what: integer);
 begin
   case what of
@@ -1636,160 +1378,6 @@ begin
     203 : ShowString := 'ARROW RIGHT';
     200 : ShowString := 'ARROW DOWN';
   end;
-end;
-Procedure ChooseKeys1Port;
-var
-  tx: Integer;
-Begin
-  tx := RealpSXIni.ReadInteger('Input','Key1Right',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit35.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key1Left',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit36.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key1Up',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit37.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key1Down',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit38.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key1Start',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit39.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key1Select',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit40.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key1Circle',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit41.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key1Triangle',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit42.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key1Cross',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit43.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key1Square',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit44.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Controllers','Controller1Type',tx);
-//  Case tx of
-//    -1 : Conf.sComboBox27.ItemIndex := 0;
-//     0 : Conf.sComboBox27.ItemIndex := 1;
-//     1 : Conf.sComboBox27.ItemIndex := 2;
-//     2 : Conf.sComboBox27.ItemIndex := 3;
-//     3 : Conf.sComboBox27.ItemIndex := 4;
-//  end;
-  tx := RealpSXIni.ReadInteger('Input','Joy1Rumble',tx);
-//  if tx = 0 then
-//    Conf.sCheckBox49.Checked := false
-//  else
-//    Conf.sCheckBox49.Checked := true;
-end;
-
-Procedure ChooseKeys2Port;
-var
-  tx: Integer;
-Begin
-  tx := RealpSXIni.ReadInteger('Input','Key2Right',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit35.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key2Left',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit36.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key2Up',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit37.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key2Down',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit38.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key2Start',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit39.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key2Select',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit40.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key2Circle',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit41.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key2Triangle',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit42.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key2Cross',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit43.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','Key2Square',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit44.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Controllers','Controller2Type',tx);
-//  Case tx of
-//    -1 : Conf.sComboBox27.ItemIndex := 0;
-//     0 : Conf.sComboBox27.ItemIndex := 1;
-//     1 : Conf.sComboBox27.ItemIndex := 2;
-//     2 : Conf.sComboBox27.ItemIndex := 3;
-//     3 : Conf.sComboBox27.ItemIndex := 4;
-//  end;
-  tx := RealpSXIni.ReadInteger('Input','Joy2Rumble',tx);
-//  if tx = 0 then
-//    Conf.sCheckBox49.Checked := false
-//  else
-//    Conf.sCheckBox49.Checked := true;
-end;
-
-Procedure ShowExtraKeys;
-var
-  tx: Integer;
-Begin
-  tx := RealpSXIni.ReadInteger('Input','KeyStatusDisplay',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit27.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyMute',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit20.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyIncVolume',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit21.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyDecVolume',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit22.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyIncXAVolume',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit23.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyDecXAVolume',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit24.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeySoundStatus',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit19.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyFastForward',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit25.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyShowVram',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit26.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyShowVram',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit26.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyIncGamma',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit28.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyDecGamma',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit29.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyIncBrightness',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit30.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyDecBrightness',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit31.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyIncContrast',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit32.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyDecContrast',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit33.Text := ShowString;
-  tx := RealpSXIni.ReadInteger('Input','KeyScreenShot',tx);
-  CNumberToShowString(tx);
-  Conf.sEdit34.Text := ShowString;
 end;
 
 Procedure pSXStats;

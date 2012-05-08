@@ -7,10 +7,6 @@ interface
     GLHUDObjects,GLWindowsFont,GLFilePNG,GLCrossPlatform,GLKeyboard,VectorGeometry;
 
 
-  const
-    EarthMats: array [1..6] of String = ('back', 'mame', 'emulators', 'arcade', 'zinc','exit');
-    PlanetMats: array [1..4] of String = ('planet_1', 'planet_2', 'planet_3','planet_4');
-
   type
   TGroupPlanet = record
     fplanet: TPlanetButton;
@@ -65,49 +61,12 @@ begin
   //tag = 0 then load textures and other stuff.
   if MainForm.Tag = 0 then
     begin
-//    load the main background
       if MainForm.BackGround.Tag = 0 then
         begin
-          AddMaterial(MatLib, 'media\extrafe\main_menu\main_menu.png', 'background');
-          MainForm.BackGround.Material.Assign(MatLib.Materials.GetLibMaterialByName('background').Material);
-          MainForm.BackGround.Height := MainForm.GLSceneViewer.Height;
-          MainForm.BackGround.Width := MainForm.GLSceneViewer.Width;
-          MainForm.BackGround.Position.X := CenterX;
-          MainForm.BackGround.Position.Y := CenterY;
-          MainForm.BackGround.Material.FrontProperties.Diffuse.Alpha := 0;
-          MainForm.BackGround.Material.FrontProperties.Ambient.Red := 255;
-          MainForm.BackGround.Material.FrontProperties.Ambient.Green := 255;
-          MainForm.BackGround.Material.FrontProperties.Ambient.Blue := 255;
-          AddMaterial(MatLib, 'media\extrafe\main_menu\left_w.png', 'left_wing');
-          MainForm.Left_Wing.Material.Assign(MatLib.Materials.GetLibMaterialByName('left_wing').Material);
-          MainForm.Left_Wing.Height := 768;
-          MainForm.Left_Wing.Width := 389;
-          MainForm.Left_Wing.Position.X := 186;
-          MainForm.Left_Wing.Position.Y := CenterY;
-          AddMaterial(MatLib, 'media\extrafe\main_menu\right_w.png', 'right_wing');
-          MainForm.Right_Wing.Material.Assign(MatLib.Materials.GetLibMaterialByName('right_wing').Material);
-          MainForm.Right_Wing.Height := 768;
-          MainForm.Right_Wing.Width := 389;
-          MainForm.Right_Wing.Position.X := 1100;
-          MainForm.Right_Wing.Position.Y := CenterY;
-// Add the planet and the radial matirials
-          AddMaterials(MatLib, 'media\extrafe\main_menu\', EarthMats, EarthMats);
-          AddMaterials(MatLib, 'media\extrafe\main_menu\',PlanetMats, PlanetMats);
 // Init the tweener
           MousePressed := false;
           fTweener := TTweener.Create;
 // Init sprites
-
-{          fHudText := TGLHUDText.CreateAsChild(MainForm.GLDummyCube);
-          with fHudText do
-            begin
-              BitmapFont := MainForm.Font_MainMenu;
-              Text := 'Created by : Azrael11';
-              ModulateColor.SetColor(1, 1, 1, 0.7);
-              Position.SetPoint(5, 740, 0);
-              MainForm.Font_MainMenu.Font.Size := 16;
-              Alignment := taLeftJustify;
-            end;}
 
           fCenterText := TGLHUDText.CreateAsChild(MainForm.BackGround);
           with fCenterText do
@@ -120,7 +79,7 @@ begin
               Alignment := taCenter;
             end;
 
-          fClickedText := TGLHUDText.CreateAsChild(MainForm.GLDummyCube);
+          fClickedText := TGLHUDText.CreateAsChild(MainForm.Dummy_mainmenu);
           with fClickedText do
             begin
               BitmapFont := MainForm.Font_Intro;
@@ -134,7 +93,7 @@ begin
           for i := 1 to 4 do
             with fPlanets[i] do
               begin
-                fPlanet := TPlanetButton.CreateAsChild(MainForm.GLDummyCube);
+                fPlanet := TPlanetButton.CreateAsChild(MainForm.Dummy_mainmenu);
                 with fPlanet do
                   begin
                     Material.LibMaterialName := 'planet_' + inttostr(i);
@@ -169,7 +128,7 @@ begin
                     OnMouseOut := Planets.OnPlanetOut;
                   end;
 
-                fGroup := TRadialGroup.CreateAsChild(MainForm.GLDummyCube);
+                fGroup := TRadialGroup.CreateAsChild(MainForm.Dummy_mainmenu);
                 case i of
                   1: fGroup.AddElements(['arcade', 'zinc']);
                   2: fGroup.AddElements(['arcade']);

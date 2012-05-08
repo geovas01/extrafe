@@ -3,17 +3,23 @@ unit ce_config;
 interface
 
 uses
-  SysUtils,OmniXML,OmniXMLUtils;
+  SysUtils,OmniXML,OmniXMLUtils,Classes,ExtCtrls;
 
   procedure CheckShowHelpInMainPanel;
   procedure CheckShowHelpInFormCaption;
   procedure WindowsEffectsType;
   procedure WindowsEffectsTimeChange;
 
+// Menu actions
+  procedure Show_confEditor_configurationpanel;
+  procedure ce_config_ShowDynamicComps;
+  procedure ce_config_FreeDynamicComps;
+
 implementation
 
 uses
-  main,mainconf;
+  main,mainconf,onflycomponents,FunctionX,menu,
+  ce_wizard,ce_themes;
 
 procedure CheckShowHelpInMainPanel;
 begin
@@ -73,6 +79,48 @@ begin
   WinEffectsTime := Conf.se1.Value;
   Row_Config.EffectsTime := WinEffectsTime;
   CeXML.SaveToFile(Ce_XMLPath,ofIndent);
+end;
+
+procedure ce_config_ShowDynamicComps;
+var
+  i: Integer;
+begin
+  for i := 1 to 3 do
+    begin
+      case i of
+        1 : Image_Comp(Conf.Pce_config,'media\confeditor\images\confeditor\confeditor.png',
+              3,571,155,85,i,True);
+        2 : Image_Comp(Conf.Pce_config,'media\confeditor\images\confeditor\confeditor_image.png',
+              600,381,126,280,i,True);
+        3 : Image_Comp(Conf.Pce_config,'media\confeditor\images\confeditor\configuration.png',
+              499,2,230,71,i,True);
+      end;
+    end;
+end;
+
+procedure ce_config_FreeDynamicComps;
+var
+  i : Integer;
+  Comp: TComponent;
+begin
+  for i := 1 to 3 do
+    begin
+      Comp := FindComponentEx('Conf.Pic'+IntToStr(i));
+      TImage(Comp).Free;
+    end;
+end;
+
+procedure Show_confEditor_configurationpanel;
+begin
+  if Cmenustate = 'startwizard' then
+    ce_wizard_FreeDynamicComps
+  else if Cmenustate = 'ce_themes' then
+    ce_themes_FreeDynamicComps;
+  ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,True);
+  Cmenustate := 'ce_configuration';
+  ce_config_ShowDynamicComps;
+  ShowButtonDown(7,'CONFEDITOR_CONFIG');
+  ShowHidePanel(CurrentPanel,'Pce_config');
 end;
 
 end.

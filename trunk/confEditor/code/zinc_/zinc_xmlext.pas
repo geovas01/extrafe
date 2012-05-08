@@ -19,6 +19,8 @@ type
       procedure SetParentName(const Value: WideString);
       function GetBiosName: WideString;
       procedure SetBiosName(const Value: WideString);
+      function GetIfGameExists: WideString;
+      procedure SetIfGameExists(const Value: WideString);
     public
       constructor Create(Node: IXMLNode); override;
 
@@ -27,6 +29,7 @@ type
       property RomName: WideString read GetRomName write SetRomName;
       property ParentName: WideString read GetParentName write SetParentName;
       property BiosName: WideString read GetBiosName write SetBiosName;
+      property IfGameExists: WideString  read GetIfGameExists write SetIfGameExists;
   end;
 
   TRowsZinc_AddGames = class(TGpXMLList)
@@ -61,7 +64,7 @@ constructor TRowZinc_Game.Create(Node: IXMLNode);
 begin
   inherited;
 
-  InitChildNodes(['RunGameNumber', 'GameName', 'RomName', 'ParentName', 'BiosName'],['', '', '', '', '']);
+  InitChildNodes(['RunGameNumber', 'GameName', 'RomName', 'ParentName', 'BiosName','IfGameExists'],['', '', '', '', '','']);
 end;
 
 function TRowZinc_Game.GetRunGameNummber;
@@ -112,6 +115,16 @@ end;
 procedure TRowZinc_Game.SetBiosName(const Value: WideString);
 begin
   SetXMLAttrPropWide(4, Value);
+end;
+
+function TRowZinc_Game.GetIfGameExists;
+begin
+  Result := GetXMLAttrPropWide(5);
+end;
+
+procedure TRowZinc_Game.SetIfGameExists(const Value: WideString);
+begin
+  SetXMLAttrPropWide(5, Value);
 end;
 
 //TRowsZinc_AddGames properties...

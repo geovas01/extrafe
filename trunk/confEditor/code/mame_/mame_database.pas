@@ -3,10 +3,11 @@ unit mame_database;
 interface
 
 uses
-  Windows, SysUtils,Controls,StdCtrls, Buttons,
-  Variants, Classes, Graphics, Forms,ComCtrls, ExtCtrls,
-  comobj, FunctionX,NxColumns,NxColumnClasses,NxCustomGridControl,
-  OmniXML,OmniXMLUtils,mame_xmlext,Dialogs;
+  Windows, SysUtils,Controls,StdCtrls,Buttons,Variants, Classes, Graphics, Forms,ComCtrls, ExtCtrls,
+  comobj,Dialogs,
+  NxColumns,NxColumnClasses,NxCustomGridControl,
+  OmniXML,OmniXMLUtils,mame_xmlext,
+  FunctionX;
 
 type  
   THtmlColClick = class(TObject)
@@ -19,6 +20,7 @@ type
   procedure CreateNewMameDataBase;
   procedure GetMameXML;
   procedure SetupNewDatabase;
+  procedure CreateAllDirs;
 
   procedure AddNewRom_Dir;
   procedure EraseMameDir(path: string);
@@ -37,6 +39,11 @@ type
   procedure ReloadDatabase(XML_MameInUsepath, XML_MamePaths: string);
   procedure MameDatabase_Clear;
 
+// Menu actions
+  procedure Show_mame_databasepanel;
+  procedure em_mame_database_ShowDynamicComps;
+  procedure em_mame_database_FreeDynamicComps;  
+
 var
   MameXmlUseDoc: IXMLDocument;
   MameXmlConfigDoc: IXMLDocument;
@@ -48,14 +55,15 @@ var
   nodegame: IXMLNode;
   gameList : IXMLNodeList;
   PathXmlMame,PathXmlMamePath: string;
-  FGa: TGauseStream;
   AddNew_RomDir: Boolean;
 
 implementation
 
 
 uses
-  main,mainconf,mame_dirs,menu,form_splash;
+  main,mainconf,menu,onflycomponents,
+  form_splash,
+  mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds;
 
 var
   iNode,FinalRomsFound,k: Integer;
@@ -86,6 +94,8 @@ begin
   Conf.nxtgrd_mame.Columns.Clear;
   Conf.nxtgrd_mame.ClearRows;
   Conf.sGauge_MameData.Progress := 0;
+  PathXmlMame := Program_Path+'media\emulators\arcade\mame\database\'+Mame_Exe;
+  Delete(PathXmlMame,Length(PathXmlMame)-3,4);
   Conf.sLabel109.Caption := 'Generating Mame XML...';
   Application.ProcessMessages;
   RunCaptured(ExtractFileDrive(FullPathMame_Exe),Mame_Exe,' -lx',PathXmlMame+'.xml');
@@ -233,36 +243,7 @@ begin
       RowDir.MameName := Mame_Exe;
       RowDir.MamePath := FullPathMame_Exe;
       RowDir.Selected := SelectedMame;
-      if not DirectoryExists(FullPathMame_Exe+'cabinets') then
-        CreateDir(FullPathMame_Exe+'cabinets');
-      RowDir.Cabinets := FullPathMame_Exe+'cabinets';
-      if not DirectoryExists(FullPathMame_Exe+'flyers') then
-        CreateDir(FullPathMame_Exe+'flyers');
-      RowDir.Flyers := FullPathMame_Exe+'flyers';
-      if not DirectoryExists(FullPathMame_Exe+'marquees') then
-        CreateDir(FullPathMame_Exe+'marquees');
-      RowDir.Marquees := FullPathMame_Exe+'marquees';
-      if not DirectoryExists(FullPathMame_Exe+'cpanel') then
-        CreateDir(FullPathMame_Exe+'control panels');
-      RowDir.Control_Panels := FullPathMame_Exe+'cpanel';
-      if not DirectoryExists(FullPathMame_Exe+'pcbs') then
-        CreateDir(FullPathMame_Exe+'pcbs');
-      RowDir.PCBs := FullPathMame_Exe+'pcbs';
-      if not DirectoryExists(FullPathMame_Exe+'artwork preview') then
-        CreateDir(FullPathMame_Exe+'artwork preview');
-      RowDir.Artwork_Preview := FullPathMame_Exe+'artwork preview';
-      if not DirectoryExists(FullPathMame_Exe+'titles') then
-        CreateDir(FullPathMame_Exe+'titles');
-      RowDir.Titles := FullPathMame_Exe+'titles';
-      if not DirectoryExists(FullPathMame_Exe+'select') then
-        CreateDir(FullPathMame_Exe+'select');
-      RowDir.Select := FullPathMame_Exe+'select';
-      if not DirectoryExists(FullPathMame_Exe+'scores') then
-        CreateDir(FullPathMame_Exe+'scores');
-      RowDir.Scores := FullPathMame_Exe+'scores';
-      if not DirectoryExists(FullPathMame_Exe+'bosses') then
-        CreateDir(FullPathMame_Exe+'bosses');
-      RowDir.Bosses := FullPathMame_Exe+'bosses';
+      CreateAllDirs;
       RowPath := MameXMLConfig.RowsPath.AddPath;
       RowPath.MameName := Mame_Exe;
       RowPath.PathId := 1;
@@ -298,6 +279,40 @@ begin
     MameXMLConfig.SaveToFile(PathXmlMamePath+'config.xml',ofIndent);
   end;
   ReloadDatabase(PathXmlMame,PathXmlMamePath);
+end;
+
+procedure CreateAllDirs;
+begin
+  if not DirectoryExists(FullPathMame_Exe+'cabinets') then
+    CreateDir(FullPathMame_Exe+'cabinets');
+  RowDir.Cabinets := FullPathMame_Exe+'cabinets';
+  if not DirectoryExists(FullPathMame_Exe+'flyers') then
+    CreateDir(FullPathMame_Exe+'flyers');
+  RowDir.Flyers := FullPathMame_Exe+'flyers';
+  if not DirectoryExists(FullPathMame_Exe+'marquees') then
+    CreateDir(FullPathMame_Exe+'marquees');
+  RowDir.Marquees := FullPathMame_Exe+'marquees';
+  if not DirectoryExists(FullPathMame_Exe+'cpanel') then
+    CreateDir(FullPathMame_Exe+'control panels');
+  RowDir.Control_Panels := FullPathMame_Exe+'cpanel';
+  if not DirectoryExists(FullPathMame_Exe+'pcb') then
+    CreateDir(FullPathMame_Exe+'pcb');
+  RowDir.PCBs := FullPathMame_Exe+'pcbs';
+  if not DirectoryExists(FullPathMame_Exe+'artwork preview') then
+    CreateDir(FullPathMame_Exe+'artwork preview');
+  RowDir.Artwork_Preview := FullPathMame_Exe+'artwork preview';
+  if not DirectoryExists(FullPathMame_Exe+'titles') then
+    CreateDir(FullPathMame_Exe+'titles');
+  RowDir.Titles := FullPathMame_Exe+'titles';
+  if not DirectoryExists(FullPathMame_Exe+'select') then
+    CreateDir(FullPathMame_Exe+'select');
+  RowDir.Select := FullPathMame_Exe+'select';
+  if not DirectoryExists(FullPathMame_Exe+'scores') then
+    CreateDir(FullPathMame_Exe+'scores');
+  RowDir.Scores := FullPathMame_Exe+'scores';
+  if not DirectoryExists(FullPathMame_Exe+'bosses') then
+    CreateDir(FullPathMame_Exe+'bosses');
+  RowDir.Bosses := FullPathMame_Exe+'bosses';
 end;
 
 procedure SetTheGridForSetup;
@@ -340,9 +355,6 @@ begin
   if AreBusy = true then
     begin
       Conf.Pem_mame_database.Cursor := Busy;
-      Conf.img24.Cursor := Busy;
-      Conf.img25.Cursor := Busy;
-      Conf.img26.Cursor := Busy;
       Conf.nxtgrd_mame.Cursor := Busy;
       Conf.sComboBox72.Cursor := Busy;
       Conf.sGauge_MameData.Cursor := Busy;
@@ -350,9 +362,6 @@ begin
   else
     begin
       Conf.Pem_mame_database.Cursor := Arrow;
-      Conf.img24.Cursor := Arrow;
-      Conf.img25.Cursor := Arrow;
-      Conf.img26.Cursor := Arrow;
       Conf.nxtgrd_mame.Cursor := Arrow;
       Conf.sComboBox72.Cursor := Arrow;
       Conf.sGauge_MameData.Cursor := Arrow;
@@ -839,7 +848,7 @@ procedure EraseMameDir(path: string);
 var
   M_Exe,M_Path,M_ID,FinalPath: string;
   PathOf_Mame: TStringList;
-  k1,k2,numOfPath: Integer;
+  k1,k2: Integer;
   oldromfound: Boolean;
 begin
   if MessageBox(0,'Do you really want to erase this directory from database?','Erase Directory',+mb_YesNo +mb_ICONWARNING) = 6 then
@@ -1023,6 +1032,53 @@ begin
     end;
 end;
 
+procedure Show_mame_databasepanel;
+begin
+  if (Cmenustate = 'em_arcade_mame_graphics') then
+    em_mame_graphics_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_sound') then
+    em_mame_sound_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_others') then
+    em_mame_others_ShowDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_builds') then
+    em_mame_builds_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_paths') then
+    em_mame_dirs_FreeDynamicComps;
+  ShowPathInCaption(CDirPath,Conf.sBitBtn11.Caption,False,True);
+  Cmenustate := 'em_arcade_mame_database';
+  em_mame_database_ShowDynamicComps;
+  ShowButtonDown(11,'Em_ARCADE_MAME_DATABASE');
+  ShowHidePanel(CurrentPanel,'Pem_mame_database');
+end;
+
+procedure em_mame_database_ShowDynamicComps;
+var
+  i: Integer;
+begin
+  for i := 1 to 3 do
+    begin
+      case i of
+        1 : Image_Comp(Conf.Pem_mame_database,'media\confeditor\images\mame\mame.png',
+              -10,587,155,85,i,True);
+        2 : Image_Comp(Conf.Pem_mame_database,'media\confeditor\images\mame\mame_image.png',
+              558,381,169,280,i,True);
+        3 : Image_Comp(Conf.Pem_mame_database,'media\confeditor\images\mame\database.png',
+              577,2,151,71,i,True);
+      end;
+    end;
+end;
+
+procedure em_mame_database_FreeDynamicComps;
+var
+  i : Integer;
+  Comp: TComponent;
+begin
+  for i := 1 to 3 do
+    begin
+      Comp := FindComponentEx('Conf.Pic'+IntToStr(i));
+      TImage(Comp).Free;
+    end;
+end;
 
 { THtmlColClick }
 

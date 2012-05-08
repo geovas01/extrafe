@@ -3,7 +3,7 @@ unit mame_dirs;
 interface
 
 uses
-  SysUtils,StdCtrls,FunctionX,ShellAPI,Classes,sEdit,Types,
+  SysUtils,StdCtrls,FunctionX,ShellAPI,Classes,sEdit,Types,ExtCtrls,
   Graphics,Controls,OmniXML,OmniXMLUtils,FileCtrl,Forms,Windows;
 
   procedure SetMame_DirsFromMameIni;
@@ -38,6 +38,11 @@ uses
 
   procedure InitGlobal_MameMemo_ForMameIni;
 
+// Menu actions
+  procedure Show_mame_dirspanel;
+  procedure em_mame_dirs_ShowDynamicComps;
+  procedure em_mame_dirs_FreeDynamicComps;
+
 Const
   AllMameBuilds32: array [0..3] of string = ('mame.exe','mamepp.exe','mamep.exe','mamepuiXT_x86.exe');
   AllMameBuilds64: array [0..5] of string = ('mame.exe','mamepp.exe','mame64.exe','mamep.exe','mamepuiXT_x86.exe','mamepuiXT_x64.exe');
@@ -51,7 +56,7 @@ var
 implementation
 
 uses
-  main,mainconf,menu,global,
+  main,mainconf,menu,global,onflycomponents,
   mame_graphics,mame_sound,mame_others,mame_builds,mame_database;
 
 var
@@ -1004,6 +1009,56 @@ begin
         SelectedMame := 2
       else if MameName = 'mamepuiXT_x86.exe' then
         SelectedMame := 3;
+    end;
+end;
+
+procedure Show_mame_dirspanel;
+begin
+  if (Cmenustate = 'em_arcade_mame_graphics') then
+    em_mame_graphics_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_sound') then
+    em_mame_sound_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_others') then
+    em_mame_others_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_builds') then
+    em_mame_builds_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_database') then
+    em_mame_database_FreeDynamicComps;
+  CurrentStateSave;
+  ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
+  Cmenustate := 'em_arcade_mame_paths';
+  em_mame_dirs_ShowDynamicComps;
+  ShowButtonDown(6,'EM_ARCADE_MAME_DIRS');
+  CheckButtonTopicsConfig_MameDirs;
+  ShowHidePanel(CurrentPanel,'Pem_mame_dirs');
+end;
+
+procedure em_mame_dirs_ShowDynamicComps;
+var
+  i: Integer;
+begin
+  for i := 1 to 3 do
+    begin
+      case i of
+        1 : Image_Comp(Conf.Pem_mame_dirs,'media\confeditor\images\mame\mame.png',
+              -10,587,155,85,i,True);
+        2 : Image_Comp(Conf.Pem_mame_dirs,'media\confeditor\images\mame\mame_image.png',
+              558,381,169,280,i,True);
+        3 : Image_Comp(Conf.Pem_mame_dirs,'media\confeditor\images\mame\paths.png',
+              611,2,156,71,i,True);
+      end;
+    end;
+end;
+
+procedure em_mame_dirs_FreeDynamicComps;
+var
+  i : Integer;
+  Comp: TComponent;
+begin
+  for i := 1 to 3 do
+    begin
+      Comp := FindComponentEx('Conf.Pic'+IntToStr(i));
+      TImage(Comp).Free;
     end;
 end;
 

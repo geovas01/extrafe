@@ -99,7 +99,7 @@ end;
 //------------------------------------------------------------------------------
 Procedure TSimpleListBox.SetMousePosition(aX, aY: Integer);
 begin
-  fMouseInBox := (aX < Position.X + 100) and (aX > Position.X - 100)
+  fMouseInBox := (aX < Position.X + 160) and (aX > Position.X - 160)
               and(aY < Position.Y + fHeight) and (aY > Position.Y - fHeight);
   if fMouseInBox then
     fMousePosition := VectorMake(aX, aY, 0);
@@ -185,7 +185,7 @@ begin
 
   fItemHudText := TGlHudText.CreateAsChild(fMainDummy);
   fItemHudText.BitmapFont := fFont;
-  fItemHudText.ModulateColor.SetColor(0,0,0,1);
+  fItemHudText.ModulateColor.SetColor(255,255,255,1);
   fItemHudText.Layout := tlCenter;
 
 //  fItemHudText.Alignment := taRightJustify;

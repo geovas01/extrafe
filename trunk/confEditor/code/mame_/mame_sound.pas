@@ -3,7 +3,7 @@ unit mame_sound;
 interface
 
 uses
-  SysUtils,mame_dirs;
+  SysUtils,Classes,ExtCtrls;
 
   procedure SetMame_SoundFromMameIni;
   procedure SaveMame_SoundAtExit;
@@ -21,13 +21,19 @@ uses
 
   procedure MameSound_Clear;
 
+// Menu actions
+  procedure Show_mame_soundpanel;
+  procedure em_mame_sound_ShowDynamicComps;
+  procedure em_mame_sound_FreeDynamicComps;
+
 var
   FromMame_SoundToFindSound: Boolean;
-  
+
 implementation
 
 uses
-  main,mainconf;
+  main,mainconf,menu,onflycomponents,FunctionX,
+  mame_dirs,mame_graphics,mame_others,mame_builds,mame_database;
 
 Procedure MameValumeAttenuationChange;
 Begin
@@ -113,12 +119,14 @@ begin
                 Conf.sCheckBox20.Checked := StrToBool(t2)
               else if t1 = 'joystick_deadzone' then
                 begin
+                  DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_joysdeadzone.Position := Round(DiffNum);
                   MameJoyDeadzoneChange;
                 end
               else if t1 = 'joystick_saturation' then
                 begin
+                  DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_joysaturation.Position := Round(DiffNum);
                   MameJoySaturationChange;
@@ -461,5 +469,54 @@ begin
   CheckTopicsConfig;
 end;
 
+procedure Show_mame_soundpanel;
+begin
+  if (Cmenustate = 'em_arcade_mame_graphics') then
+    em_mame_graphics_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_paths') then
+    em_mame_dirs_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_others') then
+    em_mame_others_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_builds') then
+    em_mame_builds_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_database') then
+    em_mame_database_FreeDynamicComps;
+  CurrentStateSave;
+  ShowPathInCaption(CDirPath,Conf.sBitBtn8.Caption,False,True);
+  Cmenustate := 'em_arcade_mame_sound';
+  em_mame_sound_ShowDynamicComps;
+  ShowButtonDown(8,'EM_ARCADE_MAME_SOUND');
+  CheckButtonTopicsConfig_MameSound;
+  ShowHidePanel(CurrentPanel,'Pem_mame_sound');
+end;
+
+procedure em_mame_sound_ShowDynamicComps;
+var
+  i: Integer;
+begin
+  for i := 1 to 3 do
+    begin
+      case i of
+        1 : Image_Comp(Conf.Pem_mame_sound,'media\confeditor\images\mame\mame.png',
+              -10,587,155,85,i,True);
+        2 : Image_Comp(Conf.Pem_mame_sound,'media\confeditor\images\mame\mame_image.png',
+              558,381,169,280,i,True);
+        3 : Image_Comp(Conf.Pem_mame_sound,'media\confeditor\images\mame\sound.png',
+              452,2,275,71,i,True);
+      end;
+    end;
+end;
+
+procedure em_mame_sound_FreeDynamicComps;
+var
+  i : Integer;
+  Comp: TComponent;
+begin
+  for i := 1 to 3 do
+    begin
+      Comp := FindComponentEx('Conf.Pic'+IntToStr(i));
+      TImage(Comp).Free;
+    end;
+end;
 
 end.

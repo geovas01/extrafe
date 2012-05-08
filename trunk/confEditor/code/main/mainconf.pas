@@ -63,7 +63,7 @@ var
   SelectedMame: Shortint;
   Started,FromDatabase: Boolean;
 //Zinc Vars
-  Zinc_Exe,FullPathZinc_Exe,ZincDatabaseFile,Zinc_ini: String;
+  Zinc_Exe,FullPathZinc_Exe,Zinc_RomsPath,ZincDatabaseFile,Zinc_ini: String;
   Zinc_Config: TIniFile;
 //Hatari Vars
 //pSX Vars
@@ -136,8 +136,13 @@ Begin
     2 : begin
           for k := 1 to 122 do
             begin
-              component := FindComponentEx('Conf.grp'+inttostr(k));
-              TGroupBox(component).Color := $00e7e7e7;
+              if (k <> 11) and (k <> 12) and (k <> 17) and (k <> 18) and
+                (k <> 20) and (k <> 30) and (k <> 31) and (k <> 32) and
+                (k <> 33) and (k <> 34) and (k <> 35) then
+                begin
+                  component := FindComponentEx('Conf.grp'+inttostr(k));
+                  TGroupBox(component).Color := $00e7e7e7;
+                end;
             end;
           Conf.mmo2.Color := $00e7e7e7;
           Conf.PBuilds_MamePlus.Color := $00e7e7e7;
@@ -224,14 +229,8 @@ begin
   //{ConfEditor}
   //Panel CE_StartWizard
   Conf.Pce_wizard.Cursor := Arrow;
-  Conf.img9.Cursor := Arrow;
-  Conf.img10.Cursor := Arrow;
-  Conf.img11.Cursor := Arrow;
   //Panel CE_Configuration
   Conf.Pce_config.Cursor := Arrow;
-  Conf.img6.Cursor := Arrow;
-  Conf.img7.Cursor := Arrow;
-  Conf.img8.Cursor := Arrow;
   Conf.sCheckBox1.Cursor := Arrow;
   Conf.sCheckBox2.Cursor := Arrow;
   Conf.grp116.Cursor := Arrow;
@@ -239,9 +238,6 @@ begin
   Conf.se1.Cursor := Arrow;
   //Panel CE_Themes
   Conf.Pce_themes.Cursor := Arrow;
-  Conf.img4.Cursor := Arrow;
-  Conf.img5.Cursor := Arrow;
-  Conf.img6.Cursor := Arrow;
   Conf.sLB_ce_themes.Cursor := Arrow;
   Conf.sBB_apply_ce_themes.Cursor := Arrow;
   Conf.img_ce_theme.Cursor := Arrow;
@@ -250,33 +246,20 @@ begin
   //{ExtraFE}
   //Panel EXF_Configuration
   Conf.Pexf_configuration.Cursor := Arrow;
-  Conf.img37.Cursor := Arrow;
-  Conf.img38.Cursor := Arrow;
-  Conf.img39.Cursor := Arrow;
   //Panel EXF_Themes
   Conf.Pexf_themes.Cursor := Arrow;
-  Conf.img34.Cursor := Arrow;
-  Conf.img35.Cursor := Arrow;
-  Conf.img36.Cursor := Arrow;
 
   //{Weather}
-  Conf.Pweather.Cursor := Arrow;
-  Conf.img30.Cursor := Arrow;
-  Conf.img31.Cursor := Arrow;
+  Conf.Pwg_weather.Cursor := Arrow;
 
   //{Time/Date}
-  Conf.Ptimedate.Cursor := Arrow;
-  Conf.img32.Cursor := Arrow;
-  Conf.img33.Cursor := Arrow;
+  Conf.Pwg_timedate.Cursor := Arrow;
 
   //{Mame}
   //Panel Mame_Dirs
   Conf.Pem_mame_dirs.Cursor := Arrow;
   Conf.panel_mame_page1.Cursor := Arrow;
   Conf.panel_mame_page2.Cursor := Arrow;
-  Conf.img12.Cursor := Arrow;
-  Conf.img13.Cursor := Arrow;
-  Conf.img14.Cursor := Arrow;
   Conf.grp95.Cursor := Arrow;
   Conf.sComboBox1.Cursor := Arrow;
   Conf.sBitBtn42.Cursor := Arrow;
@@ -325,9 +308,6 @@ begin
   Conf.sButton22.Cursor := Arrow;
   //Panel Mame_Graphics
   Conf.Pem_mame_graphics.Cursor := Arrow;
-  Conf.img15.Cursor := Arrow;
-  Conf.img16.Cursor := Arrow;
-  Conf.img17.Cursor := Arrow;
   Conf.grp96.cursor := Arrow;
   Conf.sComboBox20.cursor := Arrow;
   Conf.sCheckBox40.cursor := Arrow;
@@ -384,9 +364,6 @@ begin
   Conf.sButton1.Cursor := Arrow;
   //Panel Mame_Sound
   Conf.Pem_mame_sound.Cursor := Arrow;
-  Conf.img18.Cursor := Arrow;
-  Conf.img19.Cursor := Arrow;
-  Conf.img20.Cursor := Arrow;
   Conf.grp10.Cursor := Arrow;
   Conf.grp105.cursor := Arrow;
   Conf.sbar_mame_valumeattenuation.Cursor := Horizontal;
@@ -423,9 +400,6 @@ begin
   Conf.sButton2.Cursor := Arrow;
   //Panel Mame_Others
   Conf.Pem_mame_others.Cursor := Arrow;
-  Conf.img21.Cursor := Arrow;
-  Conf.img22.Cursor := Arrow;
-  Conf.img23.Cursor := Arrow;
   Conf.grp15.Cursor := Arrow;
   Conf.grp16.Cursor := Arrow;
   Conf.grp110.cursor := Arrow;
@@ -455,9 +429,6 @@ begin
   Conf.sButton3.Cursor := Arrow;
   //Panel Mame_Builds
   Conf.Pem_mame_builds.Cursor := Arrow;
-  Conf.img24.Cursor := Arrow;
-  Conf.img25.Cursor := Arrow;
-  Conf.img26.Cursor := Arrow;
   Conf.sBitBtn43.Cursor := Arrow;
   Conf.sBitBtn44.Cursor := Arrow;
   Conf.PBuilds_MameBuilds.Cursor := Arrow;
@@ -506,9 +477,6 @@ begin
   Conf.sButton9.Cursor := Arrow;
   //Panel Mame_Database
   Conf.Pem_mame_database.Cursor := Arrow;
-  Conf.img27.Cursor := Arrow;
-  Conf.img28.Cursor := Arrow;
-  Conf.img29.Cursor := Arrow;
   Conf.grp115.Cursor := Arrow;
   Conf.nxtgrd_mame.Cursor := Arrow;
   Conf.sComboBox72.Cursor := Arrow;
@@ -517,9 +485,6 @@ begin
   //{Zinc}
   //Panel Zinc_Paths
   Conf.Pem_zinc_paths.Cursor := Arrow;
-  Conf.img46.Cursor := Arrow;
-  Conf.img47.Cursor := Arrow;
-  Conf.img48.Cursor := Arrow;
   Conf.sEdit53.Cursor := TArrow;
   Conf.sEdit54.Cursor := TArrow;
   Conf.sEdit55.Cursor := TArrow;
@@ -528,13 +493,8 @@ begin
   Conf.sBitBtn49.Cursor := Arrow;
   //Panel Zinc_Graphics
   Conf.Pem_zinc_graphics.Cursor := Arrow;
-  Conf.img43.Cursor := Arrow;
-  Conf.img43.Cursor := Arrow;
-  Conf.img45.Cursor := Arrow;
   Conf.grp1.Cursor := Arrow;
-  Conf.grp18.Cursor := Arrow;
   Conf.grp19.Cursor := Arrow;
-  Conf.grp20.Cursor := Arrow;
   Conf.grp25.Cursor := Arrow;
   Conf.grp21.Cursor := Arrow;
   Conf.grp22.Cursor := Arrow;
@@ -544,23 +504,12 @@ begin
   Conf.grp27.Cursor := Arrow;
   Conf.grp28.Cursor := Arrow;
   Conf.grp29.Cursor := Arrow;
-  Conf.grp30.Cursor := Arrow;
-  Conf.grp17.Cursor := Arrow;
-  Conf.grp31.Cursor := Arrow;
-  Conf.grp32.Cursor := Arrow;
-  Conf.grp33.Cursor := Arrow;
-  Conf.grp34.Cursor := Arrow;
-  Conf.grp35.Cursor := Arrow;
   Conf.rb3.Cursor := Arrow;
   Conf.rb4.Cursor := Arrow;
   Conf.rb5.Cursor := Arrow;
   Conf.rb6.Cursor := Arrow;
-  Conf.rb7.Cursor := Arrow;
-  Conf.rb8.Cursor := Arrow;
   Conf.rb9.Cursor := Arrow;
   Conf.rb10.Cursor := Arrow;
-  Conf.rb11.Cursor := Arrow;
-  Conf.rb12.Cursor := Arrow;
   Conf.sComboBox26.Cursor := Arrow;
   Conf.sComboBox27.Cursor := Arrow;
   Conf.sComboBox28.Cursor := Arrow;
@@ -573,11 +522,6 @@ begin
   Conf.sComboBox35.Cursor := Arrow;
   Conf.sComboBox36.Cursor := Arrow;
   Conf.sComboBox37.Cursor := Arrow;
-  Conf.sComboBox38.Cursor := Arrow;
-  Conf.sComboBox39.Cursor := Arrow;
-  Conf.sComboBox40.Cursor := Arrow;
-  Conf.sComboBox41.Cursor := Arrow;
-  Conf.sComboBox42.Cursor := Arrow;
   Conf.sCheckBox48.Cursor := Arrow;
   Conf.sCheckBox49.Cursor := Arrow;
   Conf.sCheckBox50.Cursor := Arrow;
@@ -590,40 +534,11 @@ begin
   Conf.sCheckBox57.Cursor := Arrow;
   Conf.sCheckBox58.Cursor := Arrow;
   Conf.sCheckBox59.Cursor := Arrow;
-  Conf.sCheckBox60.Cursor := Arrow;
-  Conf.sCheckBox61.Cursor := Arrow;
-  Conf.sCheckBox62.Cursor := Arrow;
-  Conf.sCheckBox63.Cursor := Arrow;
-  Conf.sCheckBox64.Cursor := Arrow;
-  Conf.sCheckBox65.Cursor := Arrow;
-  Conf.sCheckBox66.Cursor := Arrow;
-  Conf.sCheckBox67.Cursor := Arrow;
-  Conf.sCheckBox68.Cursor := Arrow;
-  Conf.sCheckBox69.Cursor := Arrow;
-  Conf.sCheckBox70.Cursor := Arrow;
-  Conf.sCheckBox71.Cursor := Arrow;
-  Conf.sCheckBox72.Cursor := Arrow;
-  Conf.sCheckBox73.Cursor := Arrow;
-  Conf.sCheckBox74.Cursor := Arrow;
-  Conf.sCheckBox75.Cursor := Arrow;
-  Conf.sCheckBox76.Cursor := Arrow;
-  Conf.sCheckBox77.Cursor := Arrow;
-  Conf.sCheckBox78.Cursor := Arrow;
   Conf.sEdit65.Cursor := TArrow;
   Conf.sEdit66.Cursor := TArrow;
-  Conf.sEdit67.Cursor := TArrow;
-  Conf.sEdit68.Cursor := Precision;
-  Conf.sEdit69.Cursor := Precision;
-  Conf.sEdit70.Cursor := Precision;
-  Conf.sEdit71.Cursor := Precision;
-  Conf.sEdit72.Cursor := Precision;
-  Conf.sEdit73.Cursor := TArrow;
 
   //Panel Zinc_Sound
   Conf.Pem_zinc_sound.Cursor := Arrow;
-  Conf.img40.Cursor := Arrow;
-  Conf.img41.Cursor := Arrow;
-  Conf.img42.Cursor := Arrow;
   Conf.sCheckBox79.Cursor := Arrow;
   Conf.sCheckBox80.Cursor := Arrow;
   Conf.sCheckBox81.Cursor := Arrow;
@@ -637,9 +552,6 @@ begin
   //{Hatari}
   //Panel Hatari_System
   Conf.Pem_hatari_system.Cursor := Arrow;
-  Conf.img58.Cursor := Arrow;
-  Conf.img59.Cursor := Arrow;
-  Conf.img60.Cursor := Arrow;
   Conf.grp36.Cursor := Arrow;
   Conf.grp37.Cursor := Arrow;
   Conf.grp38.Cursor := Arrow;
@@ -684,9 +596,6 @@ begin
 
   //Panel Hatari_Roms
   Conf.Pem_hatari_roms.Cursor := Arrow;
-  Conf.img55.Cursor := Arrow;
-  Conf.img56.Cursor := Arrow;
-  Conf.img57.Cursor := Arrow;
   Conf.grp43.Cursor := Arrow;
   Conf.grp44.Cursor := Arrow;
   Conf.grp49.Cursor := Arrow;
@@ -713,9 +622,6 @@ begin
 
   //Panel Hatari_Screen
   Conf.Pem_hatari_screen.Cursor := Arrow;
-  Conf.img52.Cursor := Arrow;
-  Conf.img53.Cursor := Arrow;
-  Conf.img54.Cursor := Arrow;
   Conf.grp50.Cursor := Arrow;
   Conf.grp51.Cursor := Arrow;
   Conf.grp52.Cursor := Arrow;
@@ -743,9 +649,6 @@ begin
   Conf.sBitBtn73.Cursor := Arrow;
   //Panel Hatari_Joy
   Conf.Pem_hatari_joy.Cursor := Arrow;
-  Conf.img49.Cursor := Arrow;
-  Conf.img50.Cursor := Arrow;
-  Conf.img51.Cursor := Arrow;
   Conf.grp59.Cursor := Arrow;
   Conf.grp60.Cursor := Arrow;
   Conf.grp61.Cursor := Arrow;
@@ -768,9 +671,6 @@ begin
   //{pSX Emulator}
   //Panel pSX_Paths
   Conf.Pem_psx_paths.Cursor := Arrow;
-  Conf.img61.Cursor := Arrow;
-  Conf.img62.Cursor := Arrow;
-  Conf.img63.Cursor := Arrow;
   Conf.grp62.Cursor := Arrow;
   Conf.grp63.Cursor := Arrow;
   Conf.sEdit81.Cursor := TArrow;
@@ -795,9 +695,6 @@ begin
   Conf.sWebLabel2.cursor := Link;
   //Panel pSX_Screen
   Conf.Pem_psx_screen.Cursor := Arrow;
-  Conf.img64.Cursor := Arrow;
-  Conf.img65.Cursor := Arrow;
-  Conf.img66.Cursor := Arrow;
   Conf.grp64.Cursor := Arrow;
   Conf.grp65.Cursor := Arrow;
   Conf.grp66.Cursor := Arrow;
@@ -818,9 +715,6 @@ begin
   Conf.sbar_psx_contrast.Cursor := Horizontal;
   //Panel pSX_Sound
   Conf.Pem_psx_sound.Cursor := Arrow;
-  Conf.img67.Cursor := Arrow;
-  Conf.img68.Cursor := Arrow;
-  Conf.img69.Cursor := Arrow;
   Conf.grp11.Cursor := Arrow;
   Conf.grp12.Cursor := Arrow;
   Conf.grp67.Cursor := Arrow;
@@ -835,63 +729,57 @@ begin
   Conf.sCheckBox42.Cursor := Arrow;
   Conf.sCheckBox45.Cursor := Arrow;
   Conf.sCheckBox47.Cursor := Arrow;
-  Conf.sEdit45.Cursor := Precision;
-  Conf.sEdit44.Cursor := Precision;
-  Conf.sEdit43.Cursor := Precision;
-  Conf.sEdit14.Cursor := Precision;
-  Conf.sEdit46.Cursor := Precision;
-  Conf.sEdit47.Cursor := Precision;
-  Conf.sEdit52.Cursor := Precision;
-  Conf.sEdit18.Cursor := Precision;
-  Conf.sEdit36.Cursor := Precision;
-  Conf.sEdit37.Cursor := Precision;
-  Conf.sEdit41.Cursor := Precision;
-  Conf.sEdit35.Cursor := Precision;
-  Conf.sEdit40.Cursor := Precision;
-  Conf.sEdit39.Cursor := Precision;
-  Conf.sEdit48.Cursor := Precision;
-  Conf.sEdit49.Cursor := Precision;
-  Conf.sEdit50.Cursor := Precision;
-  Conf.sEdit51.Cursor := Precision;
-  Conf.sEdit42.Cursor := Precision;
-  Conf.sEdit38.Cursor := Precision;
+  Conf.sPanel.Cursor := Precision;
+  Conf.sPanel2.Cursor := Precision;
+  Conf.sPanel3.Cursor := Precision;
+  Conf.sPanel4.Cursor := Precision;
+  Conf.sPanel5.Cursor := Precision;
+  Conf.sPanel6.Cursor := Precision;
+  Conf.sPanel7.Cursor := Precision;
+  Conf.sPanel8.Cursor := Precision;
+  Conf.sPanel9.Cursor := Precision;
+  Conf.sPanel10.Cursor := Precision;
+  Conf.sPanel11.Cursor := Precision;
+  Conf.sPanel12.Cursor := Precision;
+  Conf.sPanel13.Cursor := Precision;
+  Conf.sPanel14.Cursor := Precision;
+  Conf.sPanel15.Cursor := Precision;
+  Conf.sPanel16.Cursor := Precision;
+  Conf.sPanel17.Cursor := Precision;
+  Conf.sPanel18.Cursor := Precision;
+  Conf.sPanel19.Cursor := Precision;
+  Conf.sPanel20.Cursor := Precision;
   Conf.img85.Cursor := Arrow;
   Conf.sbar_psx_latency.Cursor := Horizontal;
   Conf.sbar_psx_xalatency.Cursor := Horizontal;
   //Panel pSX_Others
   Conf.Pem_psx_others.Cursor := Arrow;
-  Conf.img70.Cursor := Arrow;
-  Conf.img71.Cursor := Arrow;
-  Conf.img72.Cursor := Arrow;
   Conf.grp13.Cursor := Arrow;
   Conf.grp14.Cursor := Arrow;
   Conf.sComboBox23.Cursor := Arrow;
   Conf.sComboBox24.Cursor := Arrow;
   Conf.sComboBox25.Cursor := Arrow;
   Conf.sComboBox65.Cursor := Arrow;
-  Conf.sEdit19.Cursor := Precision;
-  Conf.sEdit20.Cursor := Precision;
-  Conf.sEdit21.Cursor := Precision;
-  Conf.sEdit22.Cursor := Precision;
-  Conf.sEdit23.Cursor := Precision;
-  Conf.sEdit24.Cursor := Precision;
-  Conf.sEdit25.Cursor := Precision;
-  Conf.sEdit26.Cursor := Precision;
-  Conf.sEdit27.Cursor := Precision;
-  Conf.sEdit28.Cursor := Precision;
-  Conf.sEdit29.Cursor := Precision;
-  Conf.sEdit30.Cursor := Precision;
-  Conf.sEdit31.Cursor := Precision;
-  Conf.sEdit32.Cursor := Precision;
-  Conf.sEdit33.Cursor := Precision;
-  Conf.sEdit34.Cursor := Precision;
+  Conf.sPanel21.Cursor := Precision;
+  Conf.sPanel22.Cursor := Precision;
+  Conf.sPanel23.Cursor := Precision;
+  Conf.sPanel24.Cursor := Precision;
+  Conf.sPanel25.Cursor := Precision;
+  Conf.sPanel26.Cursor := Precision;
+  Conf.sPanel27.Cursor := Precision;
+  Conf.sPanel28.Cursor := Precision;
+  Conf.sPanel29.Cursor := Precision;
+  Conf.sPanel30.Cursor := Precision;
+  Conf.sPanel31.Cursor := Precision;
+  Conf.sPanel32.Cursor := Precision;
+  Conf.sPanel33.Cursor := Precision;
+  Conf.sPanel34.Cursor := Precision;
+  Conf.sPanel35.Cursor := Precision;
+  Conf.sPanel36.Cursor := Precision;
 
   //{Kigb}
   //Panel Kigb_Paths
   Conf.Pem_kigb_paths.Cursor := Arrow;
-  Conf.img73.Cursor := Arrow;
-  Conf.img74.Cursor := Arrow;
-  Conf.img75.Cursor := Arrow;
   Conf.grp69.Cursor := Arrow;
   Conf.grp70.Cursor := Arrow;
   Conf.grp71.Cursor := Arrow;
@@ -938,9 +826,6 @@ begin
   Conf.rb38.Cursor := Arrow;
   //Panel Kigb_Screen
   Conf.Pem_kigb_screen.Cursor := Arrow;
-  Conf.img76.Cursor := Arrow;
-  Conf.img77.Cursor := Arrow;
-  Conf.img78.Cursor := Arrow;
   Conf.grp78.Cursor := Arrow;
   Conf.grp79.Cursor := Arrow;
   Conf.grp80.Cursor := Arrow;
@@ -972,9 +857,6 @@ begin
   Conf.pnl4.Cursor := Precision;
   //Panel Kigb_Sound
   Conf.Pem_kigb_sound.Cursor := Arrow;
-  Conf.img79.Cursor := Arrow;
-  Conf.img80.Cursor := Arrow;
-  Conf.img81.Cursor := Arrow;
   Conf.grp83.Cursor := Arrow;
   Conf.grp84.Cursor := Arrow;
   Conf.grp85.Cursor := Arrow;
@@ -1033,9 +915,6 @@ begin
   Conf.sBitBtn97.Cursor := Arrow;
   //Panel Kigb_Others
   Conf.Pem_kigb_others.Cursor := Arrow;
-  Conf.img82.Cursor := Arrow;
-  Conf.img83.Cursor := Arrow;
-  Conf.img84.Cursor := Arrow;
 end;
 
 {procedure SetCursorToBusy(cur: Byte);
@@ -1094,13 +973,14 @@ begin
   Conf.Pem_mame_others.Left := 727;
   Conf.Pem_mame_builds.Left := 727;
   Conf.Pem_mame_database.Left := 727;
-  Conf.Pweather.Left := 727;
-  Conf.Ptimedate.Left := 727;
+  Conf.Pwg_weather.Left := 727;
+  Conf.Pwg_timedate.Left := 727;
   Conf.Pexf_configuration.Left := 727;
   Conf.Pexf_themes.Left := 727;
   Conf.Pem_zinc_paths.Left := 727;
   Conf.Pem_zinc_graphics.Left := 727;
   Conf.Pem_zinc_sound.Left := 727;
+  Conf.Pem_zinc_database.Left := 727;
   Conf.Pem_hatari_system.Left := 727;
   Conf.Pem_hatari_roms.Left := 727;
   Conf.Pem_hatari_screen.Left := 727;
@@ -1252,10 +1132,10 @@ begin
   else
     SelectedMame := -1;
   PathXmlMamePath := Program_Path+'media\emulators\arcade\mame\config\';
-  PathXmlMame := Program_Path+'media\emulators\arcade\mame\database\'+Mame_Exe;
-  Delete(PathXmlMame,Length(PathXmlMame)-3,4);
   if Mame_Exe <> '' then
     begin
+      PathXmlMame := Program_Path+'media\emulators\arcade\mame\database\'+Mame_Exe;
+      Delete(PathXmlMame,Length(PathXmlMame)-3,4);
       MameDatabaseFile := PathXmlMame+'_efuse.xml';
       if FromDatabase = False then
         begin
@@ -1277,6 +1157,7 @@ begin
               FGa.Gause := Conf.sGauge_MameChange;
             MameXmlUseDoc.LoadFromStream(FGa);
           end;
+          FGa.Free;
         end;
       Conf.sEdit64.Text := FullPathMame_Exe+Mame_Exe;
       if not Assigned(Mame_Global_MemoIni) then
@@ -1327,10 +1208,28 @@ begin
       Zinc_Config := TIniFile.Create(Zinc_ini);
       Zinc_Exe := Zinc_Config.ReadString('Zinc_Paths','Zinc_Exe',Zinc_Exe);
       FullPathZinc_Exe := Zinc_Config.ReadString('Zinc_Paths','Zinc_Path',FullPathZinc_Exe);
+      ZincDatabaseFile := ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\database\zinc_efuse.xml';
+      try
+        FGa := TGauseStream.Create;
+        ZincData_XmlDoc := CreateXMLDoc;
+      finally
+        Splash_Screen.sLabel1.Caption := 'Loading Zinc Database...';
+        Application.ProcessMessages;
+        ZincData_XmlDoc.PreserveWhiteSpace := True;
+        FGa.LoadFromFile(ZincDatabaseFile);
+        FGa.Gause := Splash_Screen.sGauge_Splash;
+        ZincData_XmlDoc.LoadFromStream(FGa);
+      end;
+      FGa.Free;
       ShowZincProgress(20,'Zinc Files Ready');
       SetZinc_PathsFromZincIni;
-      ShowZincProgress(40,'Zinc_Paths Ready');
+      ShowZincProgress(40,'Zinc Paths Ready');
       SetZinc_GraphicsFromZincIni;
+      ShowZincProgress(60,'Zinc Graphics Ready');
+      SetZinc_SoundFromZincIni;
+      ShowZincProgress(80,'Zinc Sound Ready');
+      SetZinc_DatabaseFromZincIni;
+      ShowZincProgress(100,'Zinc Database Ready');
       Started := False;
     end;  
 end;

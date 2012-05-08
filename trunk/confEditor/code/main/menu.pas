@@ -5,7 +5,14 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,StdCtrls,
   sBitBtn,sPanel,pngimage,
-  mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds;
+  ce_config,ce_themes,ce_wizard,
+  exf_config,exf_themes,
+  mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
+  zinc_paths,zinc_graphics,zinc_sound,zinc_database,
+  hatari_system,hatari_roms,hatari_screen,hatari_joy,
+  psx_screen,psx_sound,psx_others,psx_paths,
+  kigb_screen,kigb_sound,kigb_others,kigb_paths,
+  wg_weather,wg_timedate;
 
   procedure runMenuJustOpen;
   procedure ShowCurrentMenu(howmany: Integer; BackButton: Boolean; MenuState: string;Image: Byte);
@@ -13,6 +20,16 @@ uses
   procedure ShowMouseEnterButton(Button: Byte);
   procedure ShowMouseLeaveButton(Button: Byte);
   procedure DisableMenuButtons(What: Boolean);
+  procedure ShowHidePanel(hidePanel,showPanel: string);
+  procedure ShowPathInCaption(OldText,NewText:string;Back,trimw: Boolean);
+  procedure ShowHelpInMainPanel(Button:Integer);
+  procedure TextForMainPanel(CButton: String);
+  procedure HideHelpFromMainPanel;
+  procedure ChangeStatusInfo;
+  procedure CurrentStateSave;
+  procedure ShowMenuImage(Name: string);
+
+// All menu buttons
   procedure MenuBackButton;
   procedure MenuButton1;
   procedure MenuButton2;
@@ -24,14 +41,6 @@ uses
   procedure MenuButton8;
   procedure MenuButton9;
   procedure MenuButton10;
-  procedure ShowHidePanel(hidePanel,showPanel: string);
-  procedure ShowPathInCaption(OldText,NewText:string;Back,trimw: Boolean);
-  procedure ShowHelpInMainPanel(Button:Integer);
-  procedure TextForMainPanel(CButton: String);
-  procedure HideHelpFromMainPanel;
-  procedure ChangeStatusInfo;
-  procedure CurrentStateSave;
-  procedure ShowMenuImage(Name: string);
 
 var
   STBarMessages: Byte;
@@ -43,7 +52,7 @@ uses
 
 procedure runMenuJustOpen;
 begin
-  ShowCurrentMenu(4,False,Cmenustate,0);
+  ShowCurrentMenu(3,False,Cmenustate,0);
 end;
 
 procedure ShowCurrentMenu(howmany: Integer; BackButton: Boolean; MenuState: string;Image: Byte);
@@ -66,13 +75,11 @@ begin
       MenuButtonsNames[0] := 'ConfEditor';
       MenuButtonsNames[1] := 'ExtraFE';
       MenuButtonsNames[2] := 'Emulators';
-      MenuButtonsNames[3] := 'Weather';
-      MenuButtonsNames[4] := 'Time/Date';
+      MenuButtonsNames[3] := 'Widgets';
       MenuBitBtnIcons[0] := 'GLYF_CONFEDITOR';
       MenuBitBtnIcons[1] := 'GLYF_EXTRAFE';
       MenuBitBtnIcons[2] := 'GLYF_EMULATORS';
-      MenuBitBtnIcons[3] := 'GLYF_WEATHER';
-      MenuBitBtnIcons[4] := 'GLYF_TIMEDATE';
+      MenuBitBtnIcons[3] := 'GLYF_WIDGETS';
     end
   else if MenuState = 'confeditor' then
     begin
@@ -123,7 +130,8 @@ begin
       MenuButtonsNames[0] := 'Paths';
       MenuButtonsNames[1] := 'Graphics';
       MenuButtonsNames[2] := 'Sound';
-      for k := 0 to 2 do
+      MenuButtonsNames[3] := 'Database';
+      for k := 0 to 3 do
         MenuBitBtnIcons[k] := 'GLYF_EM_ARCADE_ZINC';
     end
   else if MenuState = 'em_computers' then
@@ -182,6 +190,13 @@ begin
       MenuButtonsNames[3] := 'Others';
       for k := 0 to 3 do
         MenuBitBtnIcons[k] := 'GLYF_EM_HANDHELDS_NINTENDO_KIGB';
+    end
+  else if MenuState = 'widgets' then
+    begin
+      MenuButtonsNames[0] := 'Weather';
+      MenuButtonsNames[1] := 'Time/Date';
+      for k := 0 to 1 do
+        MenuBitBtnIcons[k] := 'GLYF_WIDGETS';
     end;
   Conf.sBitBtn16.Visible := BackButton;
   for i := 0 to howmany do
@@ -236,7 +251,7 @@ procedure ShowMouseEnterButton(Button: Byte);
 begin
   Case Button of
     6 : begin
-          if (Cmenustate = '') or (Cmenustate = 'weather') or (Cmenustate = 'timedate') then
+          if (Cmenustate = '') then
             begin
               ShowMenuImage('CONFEDITOR');
               if (Cmenustate <> 'weather') and (Cmenustate <> 'timedate') then
@@ -254,7 +269,7 @@ begin
           else if (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or (Cmenustate = 'em_arcade_mame_others') or
             (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database') or (Cmenustate = 'em_arcade_mame') then
             ShowMenuImage('EM_ARCADE_MAME_DIRS')
-          else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_sound') then
+          else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_sound') or (Cmenustate = 'em_arcade_zinc_database') then
             ShowMenuImage('EM_ARCADE_ZINC_DIRS')
           else if (Cmenustate = 'em_computers') then
             ShowMenuImage('EM_COMPUTERS_ATARI')
@@ -277,9 +292,11 @@ begin
           else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
             (Cmenustate = 'em_kigb_others') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_DIRS')
+          else if (Cmenustate = 'widgets') or (Cmenustate = 'wg_timedate') then
+            ShowMenuImage('WG_WEATHER');
         end;
     7 : begin
-          if (Cmenustate = '') or (Cmenustate = 'weather') or (Cmenustate = 'timedate') then
+          if (Cmenustate = '') then
             ShowMenuImage('EXTRAFE')
           else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or
             (Cmenustate = 'ce_themes') then
@@ -293,7 +310,7 @@ begin
           else if (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_sound') or (Cmenustate = 'em_arcade_mame_others') or
             (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database') or (Cmenustate = 'em_arcade_mame') then
             ShowMenuImage('EM_ARCADE_MAME_GRAPHICS')
-          else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_paths') or (Cmenustate = 'em_arcade_zinc_sound') then
+          else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_paths') or (Cmenustate = 'em_arcade_zinc_sound') or (Cmenustate = 'em_arcade_zinc_database') then
             ShowMenuImage('EM_ARCADE_ZINC_GRAPHICS')
           else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_screen') or
             (Cmenustate = 'em_computers_hatari_joy') then
@@ -303,10 +320,12 @@ begin
             ShowMenuImage('EM_CONSOLES_SONY_PSX_SCREEN')
           else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_sound') or
             (Cmenustate = 'em_kigb_others') then
-            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_SCREEN');
+            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_SCREEN')
+          else if (Cmenustate = 'widgets') or (Cmenustate = 'wg_weather') then
+            ShowMenuImage('WG_TIMEDATE');
         end;
     8 : begin
-          if (Cmenustate = '') or (Cmenustate = 'weather') or (Cmenustate = 'timedate') then
+          if (Cmenustate = '') then
             ShowMenuImage('EMULATORS')
           else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or
             (Cmenustate = 'ce_configuration') then
@@ -316,7 +335,7 @@ begin
           else if (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_others') or
             (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database') or (Cmenustate = 'em_arcade_mame') then
             ShowMenuImage('EM_ARCADE_MAME_SOUND')
-          else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_paths') then
+          else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_paths') or (Cmenustate = 'em_arcade_zinc_database') then
             ShowMenuImage('EM_ARCADE_ZINC_SOUND')
           else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_system') or
             (Cmenustate = 'em_computers_hatari_joy') then
@@ -329,13 +348,15 @@ begin
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_SOUND');
         end;
     9 : begin
-          if (Cmenustate = '') or (Cmenustate = 'timedate') then
-            ShowMenuImage('WEATHER')
+          if (Cmenustate = '') then
+            ShowMenuImage('WIDGETS')
           else if (Cmenustate = 'emulators') then
             ShowMenuImage('EM_HANDHELDS')
           else if (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or (Cmenustate = 'em_arcade_mame_paths') or
             (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database') or (Cmenustate = 'em_arcade_mame') then
             ShowMenuImage('EM_ARCADE_MAME_OTHERS')
+          else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_paths') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_sound') then
+            ShowMenuImage('EM_ARCADE_ZINC_DATABASE')
           else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_screen') or
             (Cmenustate = 'em_computers_hatari_system') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_JOY')
@@ -347,9 +368,7 @@ begin
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_OTHERS');
         end;
     10 :  begin
-            if (Cmenustate = '') or (Cmenustate = 'weather') then
-              ShowMenuImage('TIMEDATE')
-            else if (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or (Cmenustate = 'em_arcade_mame_others') or
+            if (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or (Cmenustate = 'em_arcade_mame_others') or
             (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_database') or (Cmenustate = 'em_arcade_mame') then
               ShowMenuImage('EM_ARCADE_MAME_BUILDS');
           end;
@@ -377,10 +396,10 @@ procedure ShowMouseLeaveButton(Button: Byte);
 begin
   Case Button of
     6 : begin
-          if Cmenustate = 'weather' then
-            ShowMenuImage('WEATHER')
-          else if Cmenustate = 'timedate' then
-            ShowMenuImage('TIMEDATE')
+          if Cmenustate = 'widgets' then
+            ShowMenuImage('WIDGETS')
+          else if Cmenustate = 'wg_timedate' then
+            ShowMenuImage('WG_TIMEDATE')
           else if Cmenustate = 'confeditor' then
             ShowMenuImage('CONFEDITOR')
           else if (Cmenustate = 'ce_configuration') then
@@ -413,6 +432,8 @@ begin
             ShowMenuImage('EM_ARCADE_ZINC_GRAPHICS')
           else if Cmenustate = 'em_arcade_zinc_sound' then
             ShowMenuImage('EM_ARCADE_ZINC_SOUND')
+          else if (Cmenustate = 'em_arcade_zinc_database') then
+            ShowMenuImage('EM_ARCADE_ZINC_DATABASE')
           else if Cmenustate = 'em_computers' then
             ShowMenuImage('EM_COMPUTERS')
           else if (Cmenustate = 'em_computers_atari') then
@@ -452,10 +473,10 @@ begin
           HideHelpFromMainPanel;
         end;
     7 : begin
-          if Cmenustate = 'weather' then
-            ShowMenuImage('WEATHER')
-          else if Cmenustate = 'timedate' then
-            ShowMenuImage('TIMEDATE')
+          if Cmenustate = 'widgets' then
+            ShowMenuImage('WIDGETS')
+          else if Cmenustate = 'wg_weather' then
+            ShowMenuImage('WG_WEATHER')
           else if (Cmenustate = '') or (Cmenustate = 'confeditor') then
             ShowMenuImage('CONFEDITOR')
           else if (Cmenustate = 'startwizard') then
@@ -488,6 +509,8 @@ begin
             ShowMenuImage('EM_ARCADE_ZINC_DIRS')
           else if Cmenustate = 'em_arcade_zinc_sound' then
             ShowMenuImage('EM_ARCADE_ZINC_SOUND')
+          else if (Cmenustate = 'em_arcade_zinc_database') then
+            ShowMenuImage('EM_ARCADE_ZINC_DATABASE')
           else if (Cmenustate = 'em_computers_atari') then
             ShowMenuImage('EM_COMPUTERS_ATARI')
           else if (Cmenustate = 'em_computers_hatari') then
@@ -548,6 +571,8 @@ begin
             ShowMenuImage('EM_ARCADE_ZINC_GRAPHICS')
           else if Cmenustate = 'em_arcade_zinc_paths' then
             ShowMenuImage('EM_ARCADE_ZINC_DIRS')
+          else if (Cmenustate = 'em_arcade_zinc_database') then
+            ShowMenuImage('EM_ARCADE_ZINC_DATABASE')
           else if (Cmenustate = 'em_computers_atari') then
             ShowMenuImage('EM_COMPUTERS_ATARI')
           else if (Cmenustate = 'em_computers_hatari') then
@@ -596,6 +621,14 @@ begin
             ShowMenuImage('EM_ARCADE_MAME_BUILDS')
           else if Cmenustate = 'em_arcade_mame_database' then
             ShowMenuImage('EM_ARCADE_MAME_DATABASE')
+          else if Cmenustate = 'em_arcade_zinc' then
+            ShowMenuImage('EM_ARCADE_ZINC')
+          else if Cmenustate = 'em_arcade_zinc_paths' then
+            ShowMenuImage('EM_ARCADE_ZINC_DIRS')
+          else if Cmenustate = 'em_arcade_zinc_graphics' then
+            ShowMenuImage('EM_ARCADE_ZINC_GRAPHICS')
+          else if Cmenustate = 'em_arcade_zinc_sound' then
+            ShowMenuImage('EM_ARCADE_ZINC_SOUND')
           else if (Cmenustate = 'em_computers_atari') then
             ShowMenuImage('EM_COMPUTERS_ATARI')
           else if (Cmenustate = 'em_computers_hatari') then
@@ -675,8 +708,23 @@ begin
   showHidePanel(CurrentPanel,'');
   if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or (Cmenustate = 'ce_configuration') or
     (Cmenustate = 'ce_themes') or (Cmenustate = 'extrafe') or (Cmenustate = 'exf_configuration') or
-    (Cmenustate = 'exf_themes') or (Cmenustate = 'emulators')  then
+    (Cmenustate = 'exf_themes') or (Cmenustate = 'emulators') or (Cmenustate = 'widgets') or
+    (Cmenustate = 'wg_weather') or (Cmenustate = 'wg_timedate')then
     begin
+      if Cmenustate = 'ce_configuration' then
+        ce_config_FreeDynamicComps
+      else if Cmenustate = 'startwizard' then
+        ce_wizard_FreeDynamicComps
+      else if Cmenustate = 'ce_themes' then
+        ce_themes_FreeDynamicComps
+      else if Cmenustate = 'exf_configuration' then
+        exf_config_FreeDynamicComps
+      else if Cmenustate = 'exf_themes' then
+        exf_themes_FreeDynamicComps
+      else if Cmenustate = 'wg_weather' then
+        wg_weather_FreeDynamicComps
+      else if Cmenustate = 'wg_timedate' then
+        wg_timedate_FreeDynamicComps;
       ShowPathInCaption(CDirPath,'',True,False);
       Cmenustate := '';
       runMenuJustOpen;
@@ -698,11 +746,39 @@ begin
       ShowButtonDown(16,'EM_ARCADE');
     end
   else if (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or (Cmenustate = 'em_arcade_mame_database') or
-     (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_paths') or 
-     (Cmenustate = 'em_arcade_zinc_paths') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_sound')  then
+     (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_paths') then
     begin
+      if Cmenustate = 'em_arcade_mame_paths' then
+        em_mame_dirs_FreeDynamicComps
+      else if Cmenustate = 'em_arcade_mame_graphics' then
+        em_mame_graphics_FreeDynamicComps
+      else if Cmenustate = 'em_arcade_mame_sound' then
+        em_mame_sound_FreeDynamicComps
+      else if Cmenustate = 'em_arcade_mame_others' then
+        em_mame_others_FreeDynamicComps
+      else if Cmenustate = 'em_arcade_mame_builds' then
+        em_mame_builds_FreeDynamicComps
+      else if Cmenustate = 'em_arcade_mame_database' then
+        em_mame_database_FreeDynamicComps;
       CurrentStateSave;
       ShowPathInCaption(CDirPath,'Mame',True,True);
+      Cmenustate := 'em_arcade';
+      ShowCurrentMenu(1,True,Cmenustate,5);
+      ShowButtonDown(16,'EM_ARCADE');
+    end
+  else if (Cmenustate = 'em_arcade_zinc_paths') or (Cmenustate ='em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_sound') or
+    (Cmenustate = 'em_arcade_zinc_database') then
+    begin
+      if Cmenustate = 'em_arcade_zinc_paths' then
+        em_zinc_paths_FreeDynamicComps
+      else if Cmenustate = 'em_arcade_zinc_graphics' then
+        em_zinc_graphics_FreeDynamicComps
+      else if Cmenustate = 'em_arcade_zinc_sound' then
+        em_zinc_sound_FreeDynamicComps
+      else if Cmenustate = 'em_arcade_zinc_database' then
+        em_zinc_database_FreeDynamicComps;
+      CurrentStateSave;
+      ShowPathInCaption(CDirPath,'Zinc',True,True);
       Cmenustate := 'em_arcade';
       ShowCurrentMenu(1,True,Cmenustate,5);
       ShowButtonDown(16,'EM_ARCADE');
@@ -716,6 +792,14 @@ begin
   else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_screen') or
     (Cmenustate = 'em_computers_hatari_joy') or (Cmenustate = 'em_computers_hatari_system') then
     begin
+      if Cmenustate = 'em_computers_hatari_system' then
+        em_hatari_system_FreeDynamicComps
+      else if Cmenustate = 'em_computers_hatari_roms' then
+        em_hatari_roms_FreeDynamicComps
+      else if Cmenustate = 'em_computers_hatari_screen' then
+        em_hatari_screen_FreeDynamicComps
+      else if Cmenustate = 'em_computers_hatari_joy' then
+        em_hatari_joy_FreeDynamicComps;
       ShowPathInCaption(CDirPath,'Hatari',True,True);
       Cmenustate := 'em_computers_atari';
       ShowCurrentMenu(0,True,Cmenustate,14);
@@ -737,6 +821,14 @@ begin
   else if (Cmenustate = 'em_consoles_psx_paths') or (Cmenustate = 'em_consoles_psx_screen') or
     (Cmenustate = 'em_consoles_psx_sound') or (Cmenustate = 'em_consoles_psx_others' )then
     begin
+      if Cmenustate = 'em_consoles_psx_paths' then
+        em_psx_paths_FreeDynamicComps
+      else if Cmenustate = 'em_consoles_psx_screen' then
+        em_psx_screen_FreeDynamicComps
+      else if Cmenustate = 'em_consoles_psx_sound' then
+        em_psx_sound_FreeDynamicComps
+      else if Cmenustate = 'em_consoles_psx_others' then
+        em_psx_others_FreeDynamicComps;
       ShowPathInCaption(CDirPath,'pSXEmulator',True,True);
       Cmenustate := 'em_consoles_sony';
       ShowCurrentMenu(0,True,Cmenustate,19);
@@ -758,16 +850,24 @@ begin
   else if (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
     (Cmenustate = 'em_kigb_others') then
     begin
+      if Cmenustate = 'em_kigb_paths' then
+        em_kigb_paths_FreeDynamicComps
+      else if Cmenustate = 'em_kigb_screen' then
+        em_kigb_screen_FreeDynamicComps
+      else if Cmenustate = 'em_kigb_sound' then
+        em_kigb_sound_FreeDynamicComps
+      else if Cmenustate = 'em_kigb_others' then
+        em_kigb_others_FreeDynamicComps;
       ShowPathInCaption(CDirPath,'Kigb',True,True);
       Cmenustate := 'em_handheld_nintendo';
       ShowCurrentMenu(0,True,Cmenustate,18);
       ShowButtonDown(16,'EM_HANDHELDS_NINTENDO');
-    end;
+    end
 end;
 
 procedure MenuButton1;
 begin
-  if (Cmenustate = '') or (Cmenustate = 'weather') or (Cmenustate = 'timedate') then
+  if (Cmenustate = '') then
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn6.Caption,False,False);
       ShowHidePanel(CurrentPanel,'');
@@ -776,19 +876,9 @@ begin
       ShowButtonDown(16,'CONFEDITOR');
     end
   else if (Cmenustate = 'confeditor') or (Cmenustate = 'ce_configuration') or (Cmenustate = 'ce_themes') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
-      Cmenustate := 'startwizard';
-      ShowButtonDown(6,'CONFEDITOR_WIZARD');
-      ShowHidePanel(CurrentPanel,'Pce_wizard');
-    end
+    Show_confEditor_wizardpanel
   else if (Cmenustate = 'extrafe') or (Cmenustate = 'exf_themes') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
-      Cmenustate := 'exf_configuration';
-      ShowButtonDown(6,'EXTRAFE_CONFIG');
-      ShowHidePanel(CurrentPanel,'Pexf_configuration');
-    end
+    Show_ExtraFe_configurationpanel
   else if (Cmenustate = 'emulators') then
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn6.Caption,False,False);
@@ -801,23 +891,12 @@ begin
       Cmenustate := 'em_arcade_mame';
       ShowCurrentMenu(5,True,Cmenustate,6);
     end
-  else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_sound') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
-      Cmenustate := 'em_arcade_zinc_paths';
-      ShowButtonDown(6,'EM_ARCADE_ZINC_DIRS');
-      ShowHidePanel(CurrentPanel,'Pem_zinc_paths');
-    end
+  else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_sound') or
+    (Cmenustate = 'em_arcade_zinc_database') then
+    Show_zinc_pathspanel
   else if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or
      (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database')  then
-    begin
-      CurrentStateSave;
-      ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
-      Cmenustate := 'em_arcade_mame_paths';
-      ShowButtonDown(6,'EM_ARCADE_MAME_DIRS');
-      CheckButtonTopicsConfig_MameDirs;
-      ShowHidePanel(CurrentPanel,'Pem_mame_dirs');
-    end
+    Show_mame_dirspanel
   else if (Cmenustate = 'em_computers') then
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn6.Caption,False,False);
@@ -832,12 +911,7 @@ begin
     end
   else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_screen') or
     (Cmenustate = 'em_computers_hatari_joy') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
-      Cmenustate := 'em_computers_hatari_system';
-      ShowButtonDown(6,'EM_COMPUTERS_ATARI_HATARI_SYSTEM');
-      ShowHidePanel(CurrentPanel,'Pem_hatari_system');
-    end
+    Show_hatari_systempanel
   else if (Cmenustate = 'em_consoles') then
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn6.Caption,False,False);
@@ -852,12 +926,7 @@ begin
     end
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_sound') or
     (Cmenustate = 'em_consoles_psx_others') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
-      Cmenustate := 'em_consoles_psx_paths';
-      ShowButtonDown(6,'EM_CONSOLES_SONY_PSX_DIRS');
-      ShowHidePanel(CurrentPanel,'Pem_psx_paths');
-    end
+    Show_psx_pathspanel
   else if (Cmenustate = 'em_handheld') then
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn6.Caption,False,False);
@@ -872,17 +941,14 @@ begin
     end
   else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
     (Cmenustate = 'em_kigb_others') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
-      Cmenustate := 'em_kigb_paths';
-      ShowButtonDown(6,'EM_HANDHELDS_NINTENDO_KIGB_DIRS');
-      ShowHidePanel(CurrentPanel,'Pem_kigb_paths');
-    end;
+    Show_kigb_pathspanel
+  else if (Cmenustate = 'widgets') or (Cmenustate = 'wg_timedate') then
+    Show_widget_weather;
 end;
 
 procedure MenuButton2;
 begin
-  if (Cmenustate = '') or (Cmenustate = 'weather') or (Cmenustate = 'timedate') then
+  if (Cmenustate = '') then
     begin
       ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,False);
       ShowHidePanel(CurrentPanel,'');
@@ -891,42 +957,21 @@ begin
       ShowButtonDown(16,'EXTRAFE');
     end
   else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or (Cmenustate = 'ce_themes') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,True);
-      Cmenustate := 'ce_configuration';
-      ShowButtonDown(7,'CONFEDITOR_CONFIG');
-      ShowHidePanel(CurrentPanel,'Pce_config');
-    end
+    Show_confEditor_configurationpanel
   else if (Cmenustate = 'extrafe') or (Cmenustate = 'exf_configuration') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,True);
-      Cmenustate := 'exf_themes';
-      ShowButtonDown(7,'EXTRAFE_THEMES');
-      ShowHidePanel(CurrentPanel,'Pexf_themes');
-    end
+    Show_ExtraFe_themespanel
   else if (Cmenustate = 'em_arcade') then
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn7.Caption,False,False);
       Cmenustate := 'em_arcade_zinc';
-      ShowCurrentMenu(2,True,Cmenustate,20);
+      ShowCurrentMenu(3,True,Cmenustate,20);
     end
-  else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_paths') or (Cmenustate = 'em_arcade_zinc_sound') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,True);
-      Cmenustate := 'em_arcade_zinc_graphics';
-      ShowButtonDown(7,'EM_ARCADE_ZINC_GRAPHICS');
-      ShowHidePanel(CurrentPanel,'Pem_zinc_graphics');
-    end
+  else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_paths') or (Cmenustate = 'em_arcade_zinc_sound') or
+    (Cmenustate = 'em_arcade_zinc_database') then
+    Show_zinc_graphicspanel
   else if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_sound') or
      (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database')  then
-    begin
-      CurrentStateSave;
-      ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,True);
-      Cmenustate := 'em_arcade_mame_graphics';
-      ShowButtonDown(7,'EM_ARCADE_MAME_GRAPHICS');
-      CheckButtonTopicsConfig_MameGraphics;
-      ShowHidePanel(CurrentPanel,'Pem_mame_graphics');
-    end
+    Show_mame_graphicspanel
   else if (Cmenustate = 'emulators') then
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn7.Caption,False,False);
@@ -935,33 +980,20 @@ begin
     end
   else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_screen') or
     (Cmenustate = 'em_computers_hatari_joy') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,True);
-      Cmenustate := 'em_computers_hatari_roms';
-      ShowButtonDown(7,'EM_COMPUTERS_ATARI_HATARI_DISKS');
-      ShowHidePanel(CurrentPanel,'Pem_hatari_roms');
-    end
+    Show_hatari_romspanel
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_paths') or (Cmenustate = 'em_consoles_psx_sound') or
     (Cmenustate = 'em_consoles_psx_others') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,True);
-      Cmenustate := 'em_consoles_psx_screen';
-      ShowButtonDown(7,'EM_CONSOLES_SONY_PSX_SCREEN');
-      ShowHidePanel(CurrentPanel,'Pem_psx_screen');
-    end
+    Show_psx_screenpanel
   else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_sound') or
     (Cmenustate = 'em_kigb_others') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,True);
-      Cmenustate := 'em_kigb_screen';
-      ShowButtonDown(7,'EM_HANDHELDS_NINTENDO_KIGB_SCREEN');
-      ShowHidePanel(CurrentPanel,'Pem_kigb_screen');
-    end;
+    Show_kigb_screenpanel
+  else if (Cmenustate = 'widgets') or (Cmenustate = 'wg_weather') then
+    Show_widget_timedate;
 end;
 
 procedure MenuButton3;
 begin
-  if (Cmenustate = '') or (Cmenustate = 'weather') or (Cmenustate = 'timedate') then
+  if (Cmenustate = '') then
     begin
       ShowPathInCaption(CDirPath,Conf.sBitBtn8.Caption,False,False);
       ShowHidePanel(CurrentPanel,'');
@@ -970,37 +1002,16 @@ begin
       ShowButtonDown(16,'EMULATORS');
     end
   else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or (Cmenustate = 'ce_configuration') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn8.Caption,False,True);
-      Cmenustate := 'ce_themes';
-      ShowButtonDown(8,'CONFEDITOR_THEMES');
-      ShowHidePanel(CurrentPanel,'Pce_themes');
-    end
-  else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_paths') then 
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn8.Caption,False,True);
-      Cmenustate := 'em_arcade_zinc_sound';
-      ShowButtonDown(8,'EM_ARCADE_ZINC_SOUND');
-      ShowHidePanel(CurrentPanel,'Pem_zinc_sound');
-    end
+    Show_confEditor_themespanel
+  else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_paths') or
+    (Cmenustate = 'em_arcade_zinc_database') then
+    Show_zinc_soundpanel
   else if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_paths') or
      (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database')  then
-    begin
-      CurrentStateSave;
-      ShowPathInCaption(CDirPath,Conf.sBitBtn8.Caption,False,True);
-      Cmenustate := 'em_arcade_mame_sound';
-      ShowButtonDown(8,'EM_ARCADE_MAME_SOUND');
-      CheckButtonTopicsConfig_MameSound;
-      ShowHidePanel(CurrentPanel,'Pem_mame_sound');
-    end
+    Show_mame_soundpanel
   else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_system') or
     (Cmenustate = 'em_computers_hatari_joy') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn8.Caption,False,True);
-      Cmenustate := 'em_computers_hatari_screen';
-      ShowButtonDown(8,'EM_COMPUTERS_ATARI_HATARI_SCREEN');
-      ShowHidePanel(CurrentPanel,'Pem_hatari_screen');
-    end
+    Show_hatari_screenpanel
   else if (Cmenustate = 'emulators') then
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn8.Caption,False,False);
@@ -1009,57 +1020,34 @@ begin
     end
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_paths') or
     (Cmenustate = 'em_consoles_psx_others') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn8.Caption,False,True);
-      Cmenustate := 'em_consoles_psx_sound';
-      ShowButtonDown(8,'EM_CONSOLES_SONY_PSX_SOUND');
-      ShowHidePanel(CurrentPanel,'Pem_psx_sound');
-    end
+    Show_psx_soundpanel
   else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_paths') or
     (Cmenustate = 'em_kigb_others') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn8.Caption,False,True);
-      Cmenustate := 'em_kigb_sound';
-      ShowButtonDown(8,'EM_HANDHELDS_NINTENDO_KIGB_SOUND');
-      ShowHidePanel(CurrentPanel,'Pem_kigb_sound');
-    end;
+    Show_kigb_soundpanel;
 end;
 
 procedure MenuButton4;
 begin
-  if (Cmenustate = '') or (Cmenustate = 'timedate') then
+  if (Cmenustate = '') then
     begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn9.Caption,False,False);
-      Cmenustate := 'weather';
-      ShowButtonDown(9,'WEATHER');
-      ShowHidePanel(CurrentPanel,'Pweather');
+      ShowPathInCaption(CDirPath,Conf.sBitBtn8.Caption,False,False);
+      ShowHidePanel(CurrentPanel,'');
+      Cmenustate := 'widgets';
+      ShowCurrentMenu(1,True,Cmenustate,1);
+      ShowButtonDown(16,'WIDGETS');
     end
   else if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or
      (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database')  then
-    begin
-      CurrentStateSave;
-      ShowPathInCaption(CDirPath,Conf.sBitBtn9.Caption,False,True);
-      Cmenustate := 'em_arcade_mame_others';
-      ShowButtonDown(9,'EM_ARCADE_MAME_OTHERS');
-      CheckButtonTopicsConfig_MameOthers;
-      ShowHidePanel(CurrentPanel,'Pem_mame_others');
-    end
+    Show_mame_otherspanel
+  else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_paths') or
+   (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_sound') then
+    Show_zinc_databasepanel
   else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_screen') or
     (Cmenustate = 'em_computers_hatari_system') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn9.Caption,False,True);
-      Cmenustate := 'em_computers_hatari_joy';
-      ShowButtonDown(9,'EM_COMPUTERS_ATARI_HATARI_JOY');
-      ShowHidePanel(CurrentPanel,'Pem_hatari_joy');
-    end
+    Show_hatari_joypanel
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_sound') or
     (Cmenustate = 'em_consoles_psx_paths') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn9.Caption,False,True);
-      Cmenustate := 'em_consoles_psx_others';
-      ShowButtonDown(9,'EM_CONSOLES_SONY_PSX_DIRS');
-      ShowHidePanel(CurrentPanel,'Pem_psx_others');
-    end
+    Show_psx_otherspanel
   else if Cmenustate = 'emulators' then
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn9.Caption,False,False);
@@ -1068,45 +1056,21 @@ begin
     end
   else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
     (Cmenustate = 'em_kigb_paths') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn9.Caption,False,True);
-      Cmenustate := 'em_kigb_others';
-      ShowButtonDown(9,'EM_HANDHELDS_NINTENDO_KIGB_OTHERS');
-      ShowHidePanel(CurrentPanel,'Pem_kigb_others');
-    end;
+    Show_kigb_otherspanel;
 end;
 
 procedure MenuButton5;
 begin
-  if (Cmenustate = '') or (Cmenustate = 'weather') then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn10.Caption,False,False);
-      Cmenustate := 'timedate';
-      ShowButtonDown(10,'TIMEDATE');
-      ShowHidePanel(CurrentPanel,'Ptimedate');
-    end
-  else if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or
+  if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or
      (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_database')  then
-    begin
-      CurrentStateSave;
-      ShowPathInCaption(CDirPath,Conf.sBitBtn10.Caption,False,True);
-      Cmenustate := 'em_arcade_mame_builds';
-      ShowButtonDown(10,'EM_ARCADE_MAME_BUILDS');
-      CheckButtonTopicsConfig_MameBuilds;
-      ShowHidePanel(CurrentPanel,'Pem_mame_builds');
-    end;
+    Show_mame_buildspanel;
 end;
 
 procedure MenuButton6;
 begin
   if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or
      (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_paths')  then
-    begin
-      ShowPathInCaption(CDirPath,Conf.sBitBtn11.Caption,False,True);
-      Cmenustate := 'em_arcade_mame_database';
-      ShowButtonDown(11,'Em_ARCADE_MAME_DATABASE');
-      ShowHidePanel(CurrentPanel,'Pem_mame_database');
-    end
+    Show_mame_databasepanel;
 end;
 
 procedure MenuButton7;
@@ -1336,7 +1300,13 @@ begin
   else if Cmenustate = 'em_arcade_mame_others' then
     SaveMame_OthersAtExit
   else if Cmenustate = 'em_arcade_mame_builds' then
-    SaveMame_BuildsAtExit;
+    SaveMame_BuildsAtExit
+  else if Cmenustate = 'em_arcade_zinc_paths' then
+    SaveZinc_PathsAtExit
+  else if Cmenustate = 'em_arcade_zinc_graphics' then
+    SaveZinc_GraphicsAtExit
+  else if Cmenustate = 'em_arcade_zinc_sound' then
+    SaveZinc_SoundAtExit;
 end;
 
 procedure ShowMenuImage(Name: string);
