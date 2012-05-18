@@ -68,7 +68,10 @@ begin
   oldpath := Conf.sEdit54.Text;
   if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
     if oldpath <> newpath  then
-      global_Find_DirsClose;
+      begin
+        gFindDirs := 'AddNewZinc_RomDir';
+        global_Find_DirsClose;
+      end;
 end;
 
 procedure SetTheNewZincRomDirectory;
@@ -88,7 +91,10 @@ begin
   oldpath := Conf.sEdit55.Text;
   if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
     if oldpath <> newpath  then
-      global_Find_DirsClose;
+      begin
+        gFindDirs := 'AddNewZinc_SnapDir';
+        global_Find_DirsClose;
+      end;
 end;
 
 procedure SetTheNewZincSnapsDirectory;

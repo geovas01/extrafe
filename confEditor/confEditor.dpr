@@ -52,7 +52,9 @@ uses
   exf_config in 'code\exf_\exf_config.pas',
   exf_themes in 'code\exf_\exf_themes.pas',
   wg_timedate in 'code\widgets_\wg_timedate.pas',
-  wg_weather in 'code\widgets_\wg_weather.pas';
+  wg_weather in 'code\widgets_\wg_weather.pas',
+  hatari_paths in 'code\hatari_\hatari_paths.pas',
+  hatari_database in 'code\hatari_\hatari_database.pas';
 
 var
   Map : THandle;

@@ -115,7 +115,7 @@ AutoIncBuild=1
 MajorVer=0
 MinorVer=2
 Release=1
-Build=325
+Build=347
 Debug=0
 PreRelease=0
 Special=0
@@ -126,7 +126,7 @@ CodePage=1253
 [Version Info Keys]
 CompanyName=Az Creations
 FileDescription=Configuration Tool for ExtraFe
-FileVersion=0.2.1.325
+FileVersion=0.2.1.347
 InternalName=Mnimi
 LegalCopyright=Freeware
 LegalTrademarks=Azrael11

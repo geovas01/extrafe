@@ -8,6 +8,7 @@ uses
   procedure global_Find_FilesCanClose;
   procedure global_Find_FilesClose;
   procedure global_Find_DirsClose;
+  procedure global_Save_FilesCanClose;
 
   //Configures keys global to Extrafe
   procedure CheckForHittingKey;
@@ -22,7 +23,8 @@ implementation
 uses
   main,menu,FunctionX,
   mame_dirs,mame_graphics,mame_database,mame_builds,
-  zinc_paths;
+  zinc_paths,
+  hatari_paths,hatari_roms,hatari_joy;
 
 procedure global_Find_FilesCanClose;
 begin
@@ -41,7 +43,26 @@ begin
     Conf.sEdit125.Text := Conf.Find_Files.FileName
 // Zinc
   else if gFindFiles = 'zinc' then
-    SetUpTheNewZincExe;
+    SetUpTheNewZincExe
+// Hatari
+  else if gFindFiles = 'hatari_paths' then
+    CreatePathsForFistTime_Hatari
+  else if gFindFiles = 'hatari_tos' then
+    SetUpHatariforFistTime
+  else if gFindFiles = 'hatari_CartridgeImage' then
+    SetUpHatariCartridgeImage
+  else if gFindFiles = 'hatari_DiskImagesDir' then
+    SetUpHatariDiskImagesDir
+  else if gFindFiles = 'hatari_HardDiskImage' then
+    SetUpHatariHardDiskImage
+  else if gFindFiles = 'hatari_MasterIDEImage' then
+    SetUpHatariMasterIDEImage
+  else if gFindFiles = 'hatari_SlaveIDEImage' then
+    SetUpHatariSlaveIDEImage
+  else if gFindFiles = 'hatari_GemDosDrive' then
+    SetUpHatariGemDosDrive
+  else if gFindFiles = 'hatari_mapping' then
+    SetUpHatariMapping;
 
 end;
 
@@ -63,10 +84,15 @@ begin
   else if gFindDirs = 'IPSDir_mamext' then
     SetTheNewIPSDir_MameXT
 // ZInc  
-  else if gFindDirs = '' then
+  else if gFindDirs = 'AddNewZinc_RomDir' then
     SetTheNewZincRomDirectory
-  else if gFindDirs = '' then
+  else if gFindDirs = 'AddNewZinc_SnapDir' then
     SetTheNewZincSnapsDirectory;
+end;
+
+procedure global_Save_FilesCanClose;
+begin
+//
 end;
 
 

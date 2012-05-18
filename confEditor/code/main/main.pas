@@ -19,9 +19,10 @@ uses
   ce_themes,ce_config,
   mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
   zinc_paths,zinc_graphics,zinc_sound,
-  hatari_system,hatari_roms,hatari_screen,hatari_joy, Spin,
+  hatari_system,hatari_roms,hatari_screen,hatari_joy,hatari_paths,hatari_database,
   LMDCustomNImage, LMDNImage,
-  GLKeyboard;
+  GLKeyboard,
+  Spin;
 
 
 const
@@ -93,11 +94,10 @@ type
     sLabel8: TsLabel;sLabel9: TsLabel;sLabel10: TsLabel;
     sLabel46: TsLabel;sLabel47: TsLabel;sLabel3: TsLabel;sLabel4: TsLabel;sLabel5: TsLabel;sLabel2: TsLabel;sLabel48: TsLabel;sLabel49: TsLabel;
     sLabel50: TsLabel;sLabel11: TsLabel;sLabel12: TsLabel;sLabel1: TsLabel;sLabel51: TsLabel;sLabel52: TsLabel;sLabel17: TsLabel;sLabel18: TsLabel;
-    sLabel20: TsLabel;sLabel21: TsLabel;sLabel22: TsLabel;sLabel58: TsLabel;sLabel59: TsLabel;sLabel60: TsLabel;sLabel61: TsLabel;sLabel62: TsLabel;
-    sLabel63: TsLabel;sLabel64: TsLabel;sLabel65: TsLabel;sLabel66: TsLabel;sLabel67: TsLabel;sLabel68: TsLabel;sLabel69: TsLabel;sLabel23: TsLabel;
+    sLabel20: TsLabel;sLabel21: TsLabel;sLabel22: TsLabel;sLabel58: TsLabel;sLabel59: TsLabel;sLabel64: TsLabel;sLabel65: TsLabel;sLabel66: TsLabel;sLabel67: TsLabel;sLabel68: TsLabel;sLabel69: TsLabel;sLabel23: TsLabel;
     sLabel24: TsLabel;sLabel25: TsLabel;sLabel26: TsLabel;sLabel27: TsLabel;sLabel53: TsLabel;sLabel54: TsLabel;sLabel55: TsLabel;sLabel56: TsLabel;
     sLabel57: TsLabel;sLabel70: TsLabel;sLabel71: TsLabel;sLabel72: TsLabel;sLabel73: TsLabel;sLabel74: TsLabel;sLabel75: TsLabel;sLabel76: TsLabel;
-    sLabel77: TsLabel;sLabel78: TsLabel;sLabel79: TsLabel;sLabel80: TsLabel;sLabel81: TsLabel;sLabel82: TsLabel;sLabel83: TsLabel;sLabel84: TsLabel;
+    sLabel77: TsLabel;sLabel78: TsLabel;sLabel80: TsLabel;sLabel81: TsLabel;sLabel82: TsLabel;sLabel83: TsLabel;sLabel84: TsLabel;
     sLabel85: TsLabel;sLabel86: TsLabel;sLabel87: TsLabel;sLabel88: TsLabel;sLabel89: TsLabel;sLabel90: TsLabel;sLabel91: TsLabel;sLabel93: TsLabel;
     sLabel92: TsLabel;sLabel94: TsLabel;sLabel95: TsLabel;sLabel96: TsLabel;sLabel97: TsLabel;sLabel98: TsLabel;sLabel99: TsLabel;sLabel100: TsLabel;
     sLabel101: TsLabel;sLabel32: TsLabel;sLabel33: TsLabel;sLabel34: TsLabel;sLabel35: TsLabel;sLabel36: TsLabel;sLabel37: TsLabel;sLabel38: TsLabel;
@@ -117,7 +117,7 @@ type
     sCheckBox59: TsCheckBox;sCheckBox79: TsCheckBox;sCheckBox80: TsCheckBox;sCheckBox81: TsCheckBox;sCheckBox82: TsCheckBox;
     sCheckBox83: TsCheckBox;sCheckBox84: TsCheckBox;sCheckBox85: TsCheckBox;sCheckBox86: TsCheckBox;sCheckBox87: TsCheckBox;sCheckBox88: TsCheckBox;
     sCheckBox89: TsCheckBox;sCheckBox91: TsCheckBox;sCheckBox95: TsCheckBox;sCheckBox92: TsCheckBox;sCheckBox93: TsCheckBox;sCheckBox94: TsCheckBox;
-    sCheckBox90: TsCheckBox;sCheckBox96: TsCheckBox;sCheckBox97: TsCheckBox;sCheckBox98: TsCheckBox;sCheckBox99: TsCheckBox;sCheckBox101: TsCheckBox;
+    sCheckBox90: TsCheckBox;sCheckBox96: TsCheckBox;sCheckBox98: TsCheckBox;sCheckBox99: TsCheckBox;sCheckBox101: TsCheckBox;
     sCheckBox100: TsCheckBox;sCheckBox102: TsCheckBox;sCheckBox103: TsCheckBox;sCheckBox104: TsCheckBox;sCheckBox105: TsCheckBox;sCheckBox106: TsCheckBox;
     sCheckBox107: TsCheckBox;sCheckBox108: TsCheckBox;sCheckBox109: TsCheckBox;sCheckBox25: TsCheckBox;sCheckBox42: TsCheckBox;sCheckBox45: TsCheckBox;
     sCheckBox46: TsCheckBox;sCheckBox110: TsCheckBox;sCheckBox111: TsCheckBox;sCheckBox112: TsCheckBox;sCheckBox113: TsCheckBox;sCheckBox115: TsCheckBox;
@@ -142,7 +142,7 @@ type
     sEdit15: TsEdit;sEdit56: TsEdit;sEdit57: TsEdit;sEdit2: TsEdit;sEdit4: TsEdit;sEdit3: TsEdit;sEdit8: TsEdit;sEdit10: TsEdit;sEdit6: TsEdit;sEdit9: TsEdit;
     sEdit7: TsEdit;sEdit11: TsEdit;sEdit5: TsEdit;sEdit58: TsEdit;sEdit59: TsEdit;sEdit60: TsEdit;sEdit61: TsEdit;sEdit62: TsEdit;sEdit63: TsEdit;sEdit64: TsEdit;
     sEdit1: TsEdit;sEdit53: TsEdit;sEdit65: TsEdit;sEdit66: TsEdit;sEdit54: TsEdit;sEdit55: TsEdit;sEdit74: TsEdit;
-    sEdit75: TsEdit;sEdit76: TsEdit;sEdit77: TsEdit;sEdit78: TsEdit;sEdit79: TsEdit;sEdit80: TsEdit;sEdit81: TsEdit;sEdit82: TsEdit;sEdit83: TsEdit;sEdit84: TsEdit;
+    sEdit75: TsEdit;sEdit81: TsEdit;sEdit82: TsEdit;sEdit83: TsEdit;sEdit84: TsEdit;
     sEdit85: TsEdit;sEdit86: TsEdit;sEdit87: TsEdit;sEdit88: TsEdit;sEdit89: TsEdit;sEdit90: TsEdit;sEdit91: TsEdit;sEdit92: TsEdit;sEdit93: TsEdit;sEdit94: TsEdit;
     sEdit95: TsEdit;sEdit98: TsEdit;sEdit99: TsEdit;sEdit100: TsEdit;sEdit101: TsEdit;sEdit102: TsEdit;sEdit103: TsEdit;sEdit104: TsEdit;sEdit105: TsEdit;
     sEdit106: TsEdit;sEdit107: TsEdit;sEdit108: TsEdit;sEdit109: TsEdit;sEdit110: TsEdit;sEdit111: TsEdit;sEdit112: TsEdit;sEdit113: TsEdit;sEdit114: TsEdit;
@@ -155,10 +155,10 @@ type
     sBitBtn25: TsBitBtn;sBitBtn26: TsBitBtn;sBitBtn34: TsBitBtn;sBitBtn33: TsBitBtn;sBitBtn32: TsBitBtn;sBitBtn31: TsBitBtn;sBitBtn30: TsBitBtn;sBitBtn29: TsBitBtn;
     sBitBtn28: TsBitBtn;sBitBtn27: TsBitBtn;sBitBtn35: TsBitBtn;sBitBtn36: TsBitBtn;sBitBtn37: TsBitBtn;sBitBtn38: TsBitBtn;sBitBtn39: TsBitBtn;sBitBtn40: TsBitBtn;
     sBitBtn41: TsBitBtn;sBitBtn42: TsBitBtn;sBitBtn43: TsBitBtn;sBitBtn44: TsBitBtn;sBitBtn45: TsBitBtn;sBitBtn46: TsBitBtn;sBitBtn47: TsBitBtn;sBitBtn48: TsBitBtn;
-    sBitBtn49: TsBitBtn;sBitBtn55: TsBitBtn;sBitBtn56: TsBitBtn;sBitBtn57: TsBitBtn;sBitBtn58: TsBitBtn;sBitBtn59: TsBitBtn;sBitBtn60: TsBitBtn;sBitBtn61: TsBitBtn;
-    sBitBtn62: TsBitBtn;sBitBtn63: TsBitBtn;sBitBtn64: TsBitBtn;sBitBtn50: TsBitBtn;sBitBtn51: TsBitBtn;sBitBtn52: TsBitBtn;sBitBtn53: TsBitBtn;sBitBtn54: TsBitBtn;
+    sBitBtn49: TsBitBtn;sBitBtn60: TsBitBtn;sBitBtn61: TsBitBtn;
+    sBitBtn62: TsBitBtn;sBitBtn63: TsBitBtn;sBitBtn64: TsBitBtn;
     sBitBtn65: TsBitBtn;sBitBtn66: TsBitBtn;sBitBtn67: TsBitBtn;sBitBtn68: TsBitBtn;sBitBtn69: TsBitBtn;sBitBtn70: TsBitBtn;sBitBtn71: TsBitBtn;sBitBtn72: TsBitBtn;
-    sBitBtn73: TsBitBtn;sBitBtn74: TsBitBtn;sBitBtn75: TsBitBtn;sBitBtn76: TsBitBtn;sBitBtn77: TsBitBtn;sBitBtn78: TsBitBtn;sBitBtn79: TsBitBtn;sBitBtn80: TsBitBtn;
+    sBitBtn73: TsBitBtn;sBitBtn75: TsBitBtn;sBitBtn76: TsBitBtn;sBitBtn77: TsBitBtn;sBitBtn78: TsBitBtn;sBitBtn79: TsBitBtn;sBitBtn80: TsBitBtn;
     sBitBtn81: TsBitBtn;sBitBtn82: TsBitBtn;sBitBtn83: TsBitBtn;sBitBtn84: TsBitBtn;sBitBtn85: TsBitBtn;sBitBtn86: TsBitBtn;sBitBtn87: TsBitBtn;sBitBtn88: TsBitBtn;
     sBitBtn89: TsBitBtn;sBitBtn90: TsBitBtn;sBitBtn91: TsBitBtn;sBitBtn92: TsBitBtn;sBitBtn93: TsBitBtn;sBitBtn96: TsBitBtn;sBitBtn97: TsBitBtn;sBitBtn94: TsBitBtn;
     sBitBtn95: TsBitBtn;sBitBtn1: TsBitBtn;sBitBtn98: TsBitBtn;sBitBtn99: TsBitBtn;sBitBtn100: TsBitBtn;sBitBtn101: TsBitBtn;sBitBtn103: TsBitBtn;
@@ -206,7 +206,41 @@ type
     LMDFontComboBox1: TLMDFontComboBox;LMDFontSizeComboBox1: TLMDFontSizeComboBox;
 //  UnKnow Panels
     sPanel1: TsPanel;pnl1: TPanel;pnl2: TPanel;pnl3: TPanel;pnl4: TPanel;
+
+/////////////////////////////////    
     sBitBtn102: TsBitBtn;
+    Pem_hatari_paths: TsPanel;
+    Pem_hatari_database: TsPanel;
+    sEdit14: TsEdit;
+    sBitBtn105: TsBitBtn;
+    sEdit18: TsEdit;
+    sBitBtn106: TsBitBtn;
+    sCheckBox60: TsCheckBox;
+    Save_Files: TSaveDialog;
+    sCheckBox61: TsCheckBox;
+    sComboBox38: TsComboBox;
+    sCheckBox97: TsCheckBox;
+    sCheckBox62: TsCheckBox;
+    sComboBox39: TsComboBox;
+    sLabel29: TsLabel;
+    sLabel30: TsLabel;
+    sLabel31: TsLabel;
+    sLabel44: TsLabel;
+    sLabel45: TsLabel;
+    sPanel37: TsPanel;
+    sPanel38: TsPanel;
+    sPanel39: TsPanel;
+    sPanel40: TsPanel;
+    sPanel41: TsPanel;
+    sBitBtn50: TsBitBtn;
+    nxtgrd_hatari: TNextGrid;
+    sButton10: TsButton;
+    sButton11: TsButton;
+    sButton12: TsButton;
+    sButton13: TsButton;
+    sButton14: TsButton;
+    sComboBox40: TsComboBox;
+    sComboBox41: TsComboBox;
 
 
     procedure sButton17Click(Sender: TObject);
@@ -264,6 +298,12 @@ type
     procedure Zinc_ConfigPaths(Sender: TObject);
     procedure Zinc_ClickGraphicsState(Sender: TObject);
     procedure Zinc_SoundChecking(Sender: TObject);
+//  Hatari
+    procedure Hatari_ConfigPaths(Sender: TObject);
+    procedure Hatari_ConfigSystem(Sender: TObject);
+    procedure Hatari_ConfigRoms(Sender: TObject);
+    procedure Hatari_ConfigScreenSound(Sender: TObject);
+    procedure Hatari_ConfigJoy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -274,7 +314,7 @@ var
 //New Version 0.3.0
   Conf: TConf;
   Cmenustate,CurrentPanel,Program_Path,ConfEditor_ImagePath,CDirPath: string;
-  gFindFiles,gFindDirs: string;
+  gFindFiles,gFindDirs,gSaveFiles: string;
   resolutions: TStringList; //List with all avialable graphic card resolutions
   FGa: TGauseStream;
 //Mame Global Vars
@@ -773,6 +813,65 @@ begin
     ResetToDefaultTopic_MameOthers
   else if TsButton(Sender).Hint = 'Mame_save_topic_sound_button' then
     ResetToDefaultTopic_MameSound;
+end;
+
+procedure TConf.Hatari_ConfigPaths(Sender: TObject);
+begin
+  if TsBitBtn(Sender).Hint = 'Zinc_Exe' then
+    Add_hatari_exe_File
+  else if TsBitBtn(Sender).Hint = 'Zinc_Tos' then
+    Add_hatari_tos_File_and_setup_Hatari;
+end;
+
+procedure TConf.Hatari_ConfigSystem(Sender: TObject);
+begin
+  if TsCheckBox(Sender).Hint = 'Auto_memory_state' then
+    CheckUnCheck_AutoSaveMemeoryState;
+end;
+
+procedure TConf.Hatari_ConfigRoms(Sender: TObject);
+begin
+  if TsBitBtn(Sender).Hint = 'Set_cartridge' then
+    SetHatari_CartridgeImage
+  else if TsBitBtn(Sender).Hint = 'Set_diskimagesdir' then
+    SetHatari_DiskImagesDir
+  else if TsBitBtn(Sender).Hint = 'Set_hdimage' then
+    SetHatari_HardDiskImage
+  else if TsBitBtn(Sender).Hint = 'Set_masteride' then
+    SetHatari_MasterIDEImage
+  else if TsBitBtn(Sender).Hint = 'Set_slaveide' then
+    SetHatari_SlaveIDEImage
+  else if TsBitBtn(Sender).Hint = 'Set_gemdos' then
+    SetHatari_GemDosDrive
+  else if TsBitBtn(Sender).Hint = 'Eject_cartridge' then
+    EjectHatari_CartridgeImage
+  else if TsBitBtn(Sender).Hint = 'Eject_hdimage' then
+    EjectHatari_HardDiskImage
+  else if TsBitBtn(Sender).Hint = 'Eject_masteride' then
+    EjectHatari_MasterIDEImage
+  else if TsBitBtn(Sender).Hint = 'Eject_slaveide' then
+    EjectHatari_SlaveIDEImage
+  else if TsBitBtn(Sender).Hint = 'Eject_gemdos' then
+    EjectHatari_GemDosDrive;
+end;
+
+procedure TConf.Hatari_ConfigScreenSound(Sender: TObject);
+begin
+//
+end;
+
+procedure TConf.Hatari_ConfigJoy(Sender: TObject);
+begin
+  if TRadioButton(Sender).Hint = 'Joystick_disable' then
+    PressJoy_Disable
+  else if TRadioButton(Sender).Hint = 'Joystick_keyboard' then
+    PressJoy_Keyboard
+  else if TRadioButton(Sender).Hint = 'Joystick_real' then
+    PressJoy_RealJoystick
+  else if TsBitBtn(Sender).Hint = 'Set_mapping' then
+    SetHatari_Mapping
+  else if TsBitBtn(Sender).Hint = 'Eject_mapping' then
+    EjectHatari_Mapping;
 end;
 
 end.

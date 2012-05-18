@@ -22,10 +22,12 @@ EM_ARCADE_ZINC_DATABASE Bitmap zinc_database.bmp
 EM_COMPUTERS Bitmap computers.bmp
 EM_COMPUTERS_ATARI Bitmap atari.bmp
 EM_COMPUTERS_ATARI_HATARI Bitmap hatari.bmp
+EM_COMPUTERS_ATARI_HATARI_PATHS Bitmap hatari_paths.bmp
 EM_COMPUTERS_ATARI_HATARI_SYSTEM Bitmap hatari_system.bmp
 EM_COMPUTERS_ATARI_HATARI_DISKS Bitmap hatari_disks.bmp
 EM_COMPUTERS_ATARI_HATARI_SCREEN Bitmap hatari_screen.bmp
 EM_COMPUTERS_ATARI_HATARI_JOY Bitmap hatari_joy.bmp
+EM_COMPUTERS_ATARI_HATARI_DATABASE Bitmap hatari_database.bmp
 EM_CONSOLES Bitmap consoles.bmp
 EM_CONSOLES_SONY Bitmap sony.bmp
 EM_CONSOLES_SONY_PSX Bitmap psxemulator.bmp

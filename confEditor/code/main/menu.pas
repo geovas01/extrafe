@@ -9,7 +9,7 @@ uses
   exf_config,exf_themes,
   mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
   zinc_paths,zinc_graphics,zinc_sound,zinc_database,
-  hatari_system,hatari_roms,hatari_screen,hatari_joy,
+  hatari_system,hatari_roms,hatari_screen,hatari_joy,hatari_paths,hatari_database,
   psx_screen,psx_sound,psx_others,psx_paths,
   kigb_screen,kigb_sound,kigb_others,kigb_paths,
   wg_weather,wg_timedate;
@@ -146,11 +146,13 @@ begin
     end
   else if (MenuState = 'em_computers_hatari') then
     begin
-      MenuButtonsNames[0] := 'System';
-      MenuButtonsNames[1] := 'Roms/Disks';
-      MenuButtonsNames[2] := 'Screen/Sound';
-      MenuButtonsNames[3] := 'Joystick/Keyboard';
-      for k := 0 to 3 do
+      MenuButtonsNames[0] := 'Paths';
+      MenuButtonsNames[1] := 'System';
+      MenuButtonsNames[2] := 'Roms/Disks';
+      MenuButtonsNames[3] := 'Screen/Sound';
+      MenuButtonsNames[4] := 'Joystick/Keyboard';
+      MenuButtonsNames[5] := 'Database';
+      for k := 0 to 5 do
         MenuBitBtnIcons[k] := 'GLYF_EM_COMPUTERS_ATARI_HATARI';
     end
   else if MenuState = 'em_consoles' then
@@ -790,16 +792,21 @@ begin
       ShowCurrentMenu(0,True,Cmenustate,15);
     end
   else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_screen') or
-    (Cmenustate = 'em_computers_hatari_joy') or (Cmenustate = 'em_computers_hatari_system') then
+    (Cmenustate = 'em_computers_hatari_joy') or (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_paths') or
+    (Cmenustate = 'em_computers_hatari_database') then
     begin
-      if Cmenustate = 'em_computers_hatari_system' then
+      if (Cmenustate = 'em_computers_hatari_paths') then
+        em_hatari_paths_FreeDynamicComps
+      else if Cmenustate = 'em_computers_hatari_system' then
         em_hatari_system_FreeDynamicComps
       else if Cmenustate = 'em_computers_hatari_roms' then
         em_hatari_roms_FreeDynamicComps
       else if Cmenustate = 'em_computers_hatari_screen' then
         em_hatari_screen_FreeDynamicComps
       else if Cmenustate = 'em_computers_hatari_joy' then
-        em_hatari_joy_FreeDynamicComps;
+        em_hatari_joy_FreeDynamicComps
+      else if (Cmenustate = 'em_computers_hatari_database') then
+        em_hatari_database_FreeDynamicComps;
       ShowPathInCaption(CDirPath,'Hatari',True,True);
       Cmenustate := 'em_computers_atari';
       ShowCurrentMenu(0,True,Cmenustate,14);
@@ -907,11 +914,11 @@ begin
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn6.Caption,False,False);
       Cmenustate := 'em_computers_hatari';
-      ShowCurrentMenu(3,True,Cmenustate,17);
+      ShowCurrentMenu(5,True,Cmenustate,17);
     end
   else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_screen') or
-    (Cmenustate = 'em_computers_hatari_joy') then
-    Show_hatari_systempanel
+    (Cmenustate = 'em_computers_hatari_joy') or (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_database') then
+    Show_hatari_pathspanel
   else if (Cmenustate = 'em_consoles') then
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn6.Caption,False,False);
@@ -978,9 +985,9 @@ begin
       Cmenustate := 'em_computers';
       ShowCurrentMenu(0,True,Cmenustate,15); 
     end
-  else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_screen') or
-    (Cmenustate = 'em_computers_hatari_joy') then
-    Show_hatari_romspanel
+  else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_screen') or
+    (Cmenustate = 'em_computers_hatari_joy') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_database') then
+    Show_hatari_systempanel
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_paths') or (Cmenustate = 'em_consoles_psx_sound') or
     (Cmenustate = 'em_consoles_psx_others') then
     Show_psx_screenpanel
@@ -1009,9 +1016,9 @@ begin
   else if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_paths') or
      (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database')  then
     Show_mame_soundpanel
-  else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_system') or
-    (Cmenustate = 'em_computers_hatari_joy') then
-    Show_hatari_screenpanel
+  else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_screen') or (Cmenustate = 'em_computers_hatari_system') or
+    (Cmenustate = 'em_computers_hatari_joy') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_database') then
+    Show_hatari_romspanel
   else if (Cmenustate = 'emulators') then
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn8.Caption,False,False);
@@ -1042,9 +1049,9 @@ begin
   else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_paths') or
    (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_sound') then
     Show_zinc_databasepanel
-  else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_screen') or
-    (Cmenustate = 'em_computers_hatari_system') then
-    Show_hatari_joypanel
+  else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_joy') or
+    (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_database') then
+    Show_hatari_screenpanel
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_sound') or
     (Cmenustate = 'em_consoles_psx_paths') then
     Show_psx_otherspanel
@@ -1063,14 +1070,21 @@ procedure MenuButton5;
 begin
   if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or
      (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_database')  then
-    Show_mame_buildspanel;
+    Show_mame_buildspanel
+  else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_roms') or
+    (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_screen') or (Cmenustate = 'em_computers_hatari_database') then
+    Show_hatari_joypanel;
 end;
 
 procedure MenuButton6;
 begin
   if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or
      (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_paths')  then
-    Show_mame_databasepanel;
+    Show_mame_databasepanel
+  else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_roms') or
+    (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_screen') or (Cmenustate = 'em_computers_hatari_joy') then
+    Show_hatari_databasepanel;
+
 end;
 
 procedure MenuButton7;
@@ -1291,6 +1305,7 @@ end;
 
 procedure CurrentStateSave;
 begin
+// Mame
   if Cmenustate = 'em_arcade_mame_paths' then
     SaveMame_DirsAtExit
   else if Cmenustate = 'em_arcade_mame_graphics' then
@@ -1301,12 +1316,20 @@ begin
     SaveMame_OthersAtExit
   else if Cmenustate = 'em_arcade_mame_builds' then
     SaveMame_BuildsAtExit
+// ZiNC
   else if Cmenustate = 'em_arcade_zinc_paths' then
     SaveZinc_PathsAtExit
   else if Cmenustate = 'em_arcade_zinc_graphics' then
     SaveZinc_GraphicsAtExit
   else if Cmenustate = 'em_arcade_zinc_sound' then
-    SaveZinc_SoundAtExit;
+    SaveZinc_SoundAtExit
+// Hatari
+  else if Cmenustate = 'em_computers_hatari_system' then
+    SaveHatari_SystemAtExit
+  else if Cmenustate = 'em_computers_hatari_roms' then
+    SaveHatari_RomsAtExit
+  else if Cmenustate = 'em_computers_hatari_screen' then
+    SaveHatari_ScreenAtExit;
 end;
 
 procedure ShowMenuImage(Name: string);

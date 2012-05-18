@@ -338,7 +338,7 @@ object Conf: TConf
       Visible = False
     end
     object Pem_hatari_roms: TsPanel
-      Left = 727
+      Left = 1
       Top = 1
       Width = 727
       Height = 661
@@ -359,60 +359,52 @@ object Conf: TConf
         ParentFont = False
         TabOrder = 0
         object sLabel58: TsLabel
-          Left = 5
-          Top = 25
+          Left = 220
+          Top = 17
           Width = 60
           Height = 13
           Caption = 'Tos Image'
         end
         object sLabel59: TsLabel
           Left = 5
-          Top = 45
-          Width = 46
+          Top = 37
+          Width = 3
           Height = 13
-          Caption = 'c:/progr'
+          Alignment = taCenter
         end
         object sLabel70: TsLabel
           Left = 5
-          Top = 75
+          Top = 67
           Width = 93
           Height = 13
           Caption = 'Cartridge Image'
         end
         object sLabel71: TsLabel
           Left = 5
-          Top = 95
-          Width = 46
+          Top = 88
+          Width = 3
           Height = 13
-          Caption = 'c:/progr'
-        end
-        object sBitBtn55: TsBitBtn
-          Left = 75
-          Top = 22
-          Width = 25
-          Height = 21
-          TabOrder = 0
-          SkinData.SkinSection = 'BUTTON'
-          ImageIndex = 15
-          Images = InBitBtn_Imagelist
         end
         object sBitBtn65: TsBitBtn
           Left = 105
-          Top = 72
+          Top = 64
           Width = 25
           Height = 21
-          TabOrder = 1
+          Hint = 'SetHatari_GemDosDrive'
+          TabOrder = 0
+          OnClick = Hatari_ConfigRoms
           SkinData.SkinSection = 'BUTTON'
           ImageIndex = 15
           Images = InBitBtn_Imagelist
         end
         object sBitBtn66: TsBitBtn
           Left = 135
-          Top = 72
+          Top = 64
           Width = 25
           Height = 21
-          Hint = 'Eject'
-          TabOrder = 2
+          Hint = 'Eject_cartridge'
+          TabOrder = 1
+          OnClick = Hatari_ConfigRoms
           SkinData.SkinSection = 'BUTTON'
           ImageIndex = 10
           Images = InBitBtn_Imagelist
@@ -422,7 +414,7 @@ object Conf: TConf
         Left = 20
         Top = 120
         Width = 500
-        Height = 172
+        Height = 129
         Caption = 'Disks'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -431,96 +423,27 @@ object Conf: TConf
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 1
-        object sLabel60: TsLabel
-          Left = 5
-          Top = 25
-          Width = 44
-          Height = 13
-          Caption = 'Drive A:'
-        end
-        object sLabel61: TsLabel
-          Left = 5
-          Top = 80
-          Width = 43
-          Height = 13
-          Caption = 'Drive B:'
-        end
-        object sLabel62: TsLabel
-          Left = 5
-          Top = 50
-          Width = 46
-          Height = 13
-          Caption = 'c:/progr'
-        end
-        object sLabel63: TsLabel
-          Left = 5
-          Top = 105
-          Width = 46
-          Height = 13
-          Caption = 'c:/progr'
-        end
         object sLabel64: TsLabel
           Left = 5
-          Top = 130
+          Top = 34
           Width = 183
           Height = 13
           Caption = 'Default Floppy Images Directory'
         end
         object sLabel65: TsLabel
           Left = 5
-          Top = 150
-          Width = 46
+          Top = 54
+          Width = 3
           Height = 13
-          Caption = 'c:/progr'
-        end
-        object sBitBtn56: TsBitBtn
-          Left = 60
-          Top = 22
-          Width = 25
-          Height = 21
-          TabOrder = 0
-          SkinData.SkinSection = 'BUTTON'
-          ImageIndex = 15
-          Images = InBitBtn_Imagelist
-        end
-        object sBitBtn57: TsBitBtn
-          Left = 90
-          Top = 22
-          Width = 25
-          Height = 21
-          Hint = 'Eject'
-          TabOrder = 1
-          SkinData.SkinSection = 'BUTTON'
-          ImageIndex = 10
-          Images = InBitBtn_Imagelist
-        end
-        object sBitBtn58: TsBitBtn
-          Left = 60
-          Top = 78
-          Width = 25
-          Height = 21
-          TabOrder = 2
-          SkinData.SkinSection = 'BUTTON'
-          ImageIndex = 15
-          Images = InBitBtn_Imagelist
-        end
-        object sBitBtn59: TsBitBtn
-          Left = 90
-          Top = 78
-          Width = 25
-          Height = 21
-          Hint = 'Eject'
-          TabOrder = 3
-          SkinData.SkinSection = 'BUTTON'
-          ImageIndex = 10
-          Images = InBitBtn_Imagelist
         end
         object sBitBtn60: TsBitBtn
           Left = 195
-          Top = 127
+          Top = 31
           Width = 25
           Height = 21
-          TabOrder = 4
+          Hint = 'Set_diskimagesdir'
+          TabOrder = 0
+          OnClick = Hatari_ConfigRoms
           SkinData.SkinSection = 'BUTTON'
           ImageIndex = 15
           Images = InBitBtn_Imagelist
@@ -545,7 +468,7 @@ object Conf: TConf
           SkinData.SkinSection = 'COMBOBOX'
           ItemHeight = 16
           ItemIndex = 0
-          TabOrder = 5
+          TabOrder = 1
           Text = 'Off'
           Items.Strings = (
             'Off'
@@ -553,12 +476,23 @@ object Conf: TConf
             'Auto')
         end
         object sCheckBox90: TsCheckBox
-          Left = 360
+          Left = 324
           Top = 80
-          Width = 128
+          Width = 122
           Height = 20
-          Caption = 'Slow Floppy Access'
-          TabOrder = 6
+          Caption = 'Auto Insert Disk B'
+          TabOrder = 2
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
+        end
+        object sCheckBox61: TsCheckBox
+          Left = 324
+          Top = 104
+          Width = 126
+          Height = 20
+          Caption = 'Fast Floppy Access'
+          TabOrder = 3
           SkinData.SkinSection = 'CHECKBOX'
           ImgChecked = 0
           ImgUnchecked = 0
@@ -566,7 +500,7 @@ object Conf: TConf
       end
       object grp49: TGroupBox
         Left = 20
-        Top = 292
+        Top = 252
         Width = 500
         Height = 210
         Caption = 'Hard Disks'
@@ -594,16 +528,14 @@ object Conf: TConf
         object sLabel68: TsLabel
           Left = 5
           Top = 47
-          Width = 46
+          Width = 3
           Height = 13
-          Caption = 'c:/progr'
         end
         object sLabel69: TsLabel
           Left = 5
           Top = 184
-          Width = 46
+          Width = 3
           Height = 13
-          Caption = 'c:/progr'
         end
         object sLabel72: TsLabel
           Left = 5
@@ -615,9 +547,8 @@ object Conf: TConf
         object sLabel73: TsLabel
           Left = 5
           Top = 95
-          Width = 46
+          Width = 3
           Height = 13
-          Caption = 'c:/progr'
         end
         object sLabel74: TsLabel
           Left = 5
@@ -629,9 +560,8 @@ object Conf: TConf
         object sLabel75: TsLabel
           Left = 5
           Top = 143
-          Width = 46
+          Width = 3
           Height = 13
-          Caption = 'c:/progr'
         end
         object sCheckBox95: TsCheckBox
           Left = 360
@@ -649,7 +579,9 @@ object Conf: TConf
           Top = 22
           Width = 25
           Height = 21
+          Hint = 'Set_hdimage'
           TabOrder = 1
+          OnClick = Hatari_ConfigRoms
           SkinData.SkinSection = 'BUTTON'
           ImageIndex = 15
           Images = InBitBtn_Imagelist
@@ -659,8 +591,9 @@ object Conf: TConf
           Top = 22
           Width = 25
           Height = 21
-          Hint = 'Eject'
+          Hint = 'Eject_hdimage'
           TabOrder = 2
+          OnClick = Hatari_ConfigRoms
           SkinData.SkinSection = 'BUTTON'
           ImageIndex = 10
           Images = InBitBtn_Imagelist
@@ -670,7 +603,9 @@ object Conf: TConf
           Top = 163
           Width = 25
           Height = 21
+          Hint = 'Set_gemdos'
           TabOrder = 3
+          OnClick = Hatari_ConfigRoms
           SkinData.SkinSection = 'BUTTON'
           ImageIndex = 15
           Images = InBitBtn_Imagelist
@@ -680,8 +615,9 @@ object Conf: TConf
           Top = 163
           Width = 25
           Height = 21
-          Hint = 'Eject'
+          Hint = 'Eject_gemdos'
           TabOrder = 4
+          OnClick = Hatari_ConfigRoms
           SkinData.SkinSection = 'BUTTON'
           ImageIndex = 10
           Images = InBitBtn_Imagelist
@@ -691,7 +627,9 @@ object Conf: TConf
           Top = 70
           Width = 25
           Height = 21
+          Hint = 'Set_masteride'
           TabOrder = 5
+          OnClick = Hatari_ConfigRoms
           SkinData.SkinSection = 'BUTTON'
           ImageIndex = 15
           Images = InBitBtn_Imagelist
@@ -701,8 +639,9 @@ object Conf: TConf
           Top = 70
           Width = 25
           Height = 21
-          Hint = 'Eject'
+          Hint = 'Eject_masteride'
           TabOrder = 6
+          OnClick = Hatari_ConfigRoms
           SkinData.SkinSection = 'BUTTON'
           ImageIndex = 10
           Images = InBitBtn_Imagelist
@@ -712,7 +651,9 @@ object Conf: TConf
           Top = 118
           Width = 25
           Height = 21
+          Hint = 'Set_slaveide'
           TabOrder = 7
+          OnClick = Hatari_ConfigRoms
           SkinData.SkinSection = 'BUTTON'
           ImageIndex = 15
           Images = InBitBtn_Imagelist
@@ -722,8 +663,9 @@ object Conf: TConf
           Top = 118
           Width = 25
           Height = 21
-          Hint = 'Eject'
+          Hint = 'Eject_slaveide'
           TabOrder = 8
+          OnClick = Hatari_ConfigRoms
           SkinData.SkinSection = 'BUTTON'
           ImageIndex = 10
           Images = InBitBtn_Imagelist
@@ -769,7 +711,7 @@ object Conf: TConf
         Left = 20
         Top = 20
         Width = 480
-        Height = 107
+        Height = 133
         Caption = 'Hatari Screen'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -779,8 +721,8 @@ object Conf: TConf
         ParentFont = False
         TabOrder = 0
         object sCheckBox96: TsCheckBox
-          Left = 5
-          Top = 20
+          Left = 101
+          Top = 15
           Width = 77
           Height = 20
           Caption = 'Fullscreen'
@@ -795,27 +737,10 @@ object Conf: TConf
           ImgChecked = 0
           ImgUnchecked = 0
         end
-        object sCheckBox97: TsCheckBox
-          Left = 5
-          Top = 40
-          Width = 76
-          Height = 20
-          Caption = 'Statusbar'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 1
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
         object sComboBox47: TsComboBox
-          Left = 5
-          Top = 76
-          Width = 75
+          Left = 94
+          Top = 41
+          Width = 90
           Height = 22
           Alignment = taLeftJustify
           BoundLabel.Active = True
@@ -826,7 +751,7 @@ object Conf: TConf
           BoundLabel.Font.Height = -11
           BoundLabel.Font.Name = 'Tahoma'
           BoundLabel.Font.Style = [fsBold]
-          BoundLabel.Layout = sclTopCenter
+          BoundLabel.Layout = sclLeft
           BoundLabel.MaxWidth = 0
           BoundLabel.UseSkinColor = True
           SkinData.SkinSection = 'COMBOBOX'
@@ -838,7 +763,7 @@ object Conf: TConf
           ItemHeight = 16
           ItemIndex = 0
           ParentFont = False
-          TabOrder = 2
+          TabOrder = 1
           Text = 'Off'
           Items.Strings = (
             'Off'
@@ -848,21 +773,21 @@ object Conf: TConf
             'Auto')
         end
         object grp53: TGroupBox
-          Left = 85
+          Left = 189
           Top = 10
-          Width = 185
+          Width = 156
           Height = 87
-          Caption = 'Max Zoomed'
-          TabOrder = 3
+          Caption = 'Max Zoomed Window'
+          TabOrder = 2
           object sLabel76: TsLabel
-            Left = 86
+            Left = 70
             Top = 39
             Width = 7
             Height = 13
             Caption = 'X'
           end
           object sComboBox49: TsComboBox
-            Left = 21
+            Left = 5
             Top = 36
             Width = 60
             Height = 22
@@ -882,7 +807,7 @@ object Conf: TConf
             TabOrder = 0
           end
           object sComboBox48: TsComboBox
-            Left = 103
+            Left = 87
             Top = 36
             Width = 60
             Height = 22
@@ -903,26 +828,88 @@ object Conf: TConf
           end
         end
         object grp54: TGroupBox
-          Left = 273
-          Top = 10
-          Width = 185
-          Height = 87
+          Left = 352
+          Top = 16
+          Width = 121
+          Height = 81
           Caption = 'Avi'
-          TabOrder = 4
+          TabOrder = 3
           object sBitBtn71: TsBitBtn
-            Left = 52
-            Top = 33
+            Left = 20
+            Top = 49
             Width = 75
             Height = 25
             Caption = 'Record Avi'
+            Enabled = False
             TabOrder = 0
             SkinData.SkinSection = 'BUTTON'
           end
+          object sCheckBox97: TsCheckBox
+            Left = 5
+            Top = 19
+            Width = 105
+            Height = 20
+            Caption = 'Crop Statusbar'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 1
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+        end
+        object sComboBox38: TsComboBox
+          Left = 94
+          Top = 70
+          Width = 90
+          Height = 22
+          Alignment = taLeftJustify
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Indicators'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+          SkinData.SkinSection = 'COMBOBOX'
+          ItemHeight = 16
+          ItemIndex = 0
+          TabOrder = 4
+          Text = 'Status bar'
+          Items.Strings = (
+            'Status bar'
+            'Drive Led'
+            'None')
+        end
+        object sCheckBox62: TsCheckBox
+          Left = 188
+          Top = 107
+          Width = 284
+          Height = 20
+          Caption = 'Atari Falcon/TT only : Keep Desktop Resolution'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 5
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
         end
       end
       object grp51: TGroupBox
         Left = 20
-        Top = 127
+        Top = 159
         Width = 480
         Height = 130
         Caption = 'Atari Screen'
@@ -942,7 +929,7 @@ object Conf: TConf
           TabOrder = 0
           object sCheckBox98: TsCheckBox
             Left = 5
-            Top = 58
+            Top = 61
             Width = 140
             Height = 20
             Caption = 'Show ST/STE Borders'
@@ -970,9 +957,9 @@ object Conf: TConf
             BoundLabel.UseSkinColor = True
             SkinData.SkinSection = 'COMBOBOX'
             ItemHeight = 16
-            ItemIndex = 1
+            ItemIndex = 0
             TabOrder = 1
-            Text = 'RGB'
+            Text = 'Mono'
             Items.Strings = (
               'Mono'
               'RGB'
@@ -988,7 +975,7 @@ object Conf: TConf
           Caption = 'VDI'
           TabOrder = 1
           object sComboBox51: TsComboBox
-            Left = 55
+            Left = 47
             Top = 51
             Width = 60
             Height = 22
@@ -1011,13 +998,13 @@ object Conf: TConf
             Text = '2040'
           end
           object sComboBox52: TsComboBox
-            Left = 128
+            Left = 139
             Top = 51
             Width = 60
             Height = 22
             Alignment = taLeftJustify
             BoundLabel.Active = True
-            BoundLabel.Caption = 'X'
+            BoundLabel.Caption = 'X   '
             BoundLabel.Indent = 0
             BoundLabel.Font.Charset = DEFAULT_CHARSET
             BoundLabel.Font.Color = clWindowText
@@ -1035,7 +1022,7 @@ object Conf: TConf
           end
           object sComboBox53: TsComboBox
             Left = 99
-            Top = 75
+            Top = 78
             Width = 45
             Height = 22
             Alignment = taLeftJustify
@@ -1061,7 +1048,7 @@ object Conf: TConf
               '16')
           end
           object sCheckBox99: TsCheckBox
-            Left = 65
+            Left = 39
             Top = 14
             Width = 162
             Height = 20
@@ -1075,7 +1062,7 @@ object Conf: TConf
       end
       object grp52: TGroupBox
         Left = 20
-        Top = 257
+        Top = 289
         Width = 480
         Height = 130
         Caption = 'Sound Options'
@@ -1105,13 +1092,13 @@ object Conf: TConf
             ImgUnchecked = 0
           end
           object sComboBox54: TsComboBox
-            Left = 143
-            Top = 58
-            Width = 85
+            Left = 128
+            Top = 46
+            Width = 100
             Height = 22
             Alignment = taLeftJustify
             BoundLabel.Active = True
-            BoundLabel.Caption = 'Quality'
+            BoundLabel.Caption = 'Playback Quality'
             BoundLabel.Indent = 0
             BoundLabel.Font.Charset = DEFAULT_CHARSET
             BoundLabel.Font.Color = clWindowText
@@ -1137,6 +1124,33 @@ object Conf: TConf
               '48000 Hz'
               '50066 Hz')
           end
+          object sComboBox39: TsComboBox
+            Left = 128
+            Top = 74
+            Width = 100
+            Height = 22
+            Alignment = taLeftJustify
+            BoundLabel.Active = True
+            BoundLabel.Caption = 'YM Voices Mixing'
+            BoundLabel.Indent = 0
+            BoundLabel.Font.Charset = DEFAULT_CHARSET
+            BoundLabel.Font.Color = clWindowText
+            BoundLabel.Font.Height = -11
+            BoundLabel.Font.Name = 'Tahoma'
+            BoundLabel.Font.Style = [fsBold]
+            BoundLabel.Layout = sclLeft
+            BoundLabel.MaxWidth = 0
+            BoundLabel.UseSkinColor = True
+            SkinData.SkinSection = 'COMBOBOX'
+            ItemHeight = 16
+            ItemIndex = 0
+            TabOrder = 2
+            Text = 'Math Model'
+            Items.Strings = (
+              'Math Model'
+              'ST Table'
+              'Linear')
+          end
         end
         object grp58: TGroupBox
           Left = 242
@@ -1154,7 +1168,7 @@ object Conf: TConf
           end
           object sLabel78: TsLabel
             Left = 5
-            Top = 59
+            Top = 43
             Width = 46
             Height = 13
             Caption = 'c:/progr'
@@ -1164,6 +1178,7 @@ object Conf: TConf
             Top = 17
             Width = 25
             Height = 21
+            Enabled = False
             TabOrder = 0
             SkinData.SkinSection = 'BUTTON'
             ImageIndex = 15
@@ -1175,6 +1190,7 @@ object Conf: TConf
             Width = 85
             Height = 25
             Caption = 'Record Sound'
+            Enabled = False
             TabOrder = 1
             SkinData.SkinSection = 'BUTTON'
           end
@@ -1221,7 +1237,7 @@ object Conf: TConf
           BoundLabel.UseSkinColor = True
           SkinData.SkinSection = 'COMBOBOX'
           ItemHeight = 16
-          ItemIndex = 0
+          ItemIndex = -1
           TabOrder = 0
           Text = 'ST Joystick 0'
           Items.Strings = (
@@ -1238,12 +1254,44 @@ object Conf: TConf
           Width = 390
           Height = 183
           TabOrder = 1
-          object sLabel79: TsLabel
-            Left = 300
-            Top = 127
-            Width = 43
+          object sLabel29: TsLabel
+            Left = 266
+            Top = 27
+            Width = 15
             Height = 13
-            Caption = 'For Left'
+            Caption = 'Up'
+            Enabled = False
+          end
+          object sLabel30: TsLabel
+            Left = 266
+            Top = 51
+            Width = 31
+            Height = 13
+            Caption = 'Down'
+            Enabled = False
+          end
+          object sLabel31: TsLabel
+            Left = 266
+            Top = 75
+            Width = 22
+            Height = 13
+            Caption = 'Left'
+            Enabled = False
+          end
+          object sLabel44: TsLabel
+            Left = 266
+            Top = 99
+            Width = 30
+            Height = 13
+            Caption = 'Right'
+            Enabled = False
+          end
+          object sLabel45: TsLabel
+            Left = 266
+            Top = 123
+            Width = 21
+            Height = 13
+            Caption = 'Fire'
             Enabled = False
           end
           object rb28: TRadioButton
@@ -1251,133 +1299,34 @@ object Conf: TConf
             Top = 20
             Width = 113
             Height = 17
+            Hint = 'Joystick_disable'
             Caption = 'Disable'
             TabOrder = 0
+            OnClick = Hatari_ConfigJoy
           end
           object rb29: TRadioButton
             Left = 5
             Top = 40
             Width = 113
             Height = 17
+            Hint = 'Joystick_keyboard'
             Caption = 'Use Keyboard'
             TabOrder = 1
+            OnClick = Hatari_ConfigJoy
           end
           object rb30: TRadioButton
             Left = 5
             Top = 60
             Width = 113
             Height = 17
+            Hint = 'Joystick_real'
             Caption = 'Real Joystick'
             TabOrder = 2
-          end
-          object sEdit76: TsEdit
-            Left = 300
-            Top = 20
-            Width = 70
-            Height = 21
-            Enabled = False
-            ReadOnly = True
-            TabOrder = 3
-            SkinData.SkinSection = 'EDIT'
-            BoundLabel.Indent = 0
-            BoundLabel.Font.Charset = DEFAULT_CHARSET
-            BoundLabel.Font.Color = clWindowText
-            BoundLabel.Font.Height = -11
-            BoundLabel.Font.Name = 'MS Sans Serif'
-            BoundLabel.Font.Style = []
-            BoundLabel.Layout = sclLeft
-            BoundLabel.MaxWidth = 0
-            BoundLabel.UseSkinColor = True
-          end
-          object sEdit77: TsEdit
-            Left = 300
-            Top = 40
-            Width = 70
-            Height = 21
-            Enabled = False
-            ReadOnly = True
-            TabOrder = 4
-            SkinData.SkinSection = 'EDIT'
-            BoundLabel.Indent = 0
-            BoundLabel.Font.Charset = DEFAULT_CHARSET
-            BoundLabel.Font.Color = clWindowText
-            BoundLabel.Font.Height = -11
-            BoundLabel.Font.Name = 'MS Sans Serif'
-            BoundLabel.Font.Style = []
-            BoundLabel.Layout = sclLeft
-            BoundLabel.MaxWidth = 0
-            BoundLabel.UseSkinColor = True
-          end
-          object sEdit78: TsEdit
-            Left = 300
-            Top = 60
-            Width = 70
-            Height = 21
-            Enabled = False
-            ReadOnly = True
-            TabOrder = 5
-            SkinData.SkinSection = 'EDIT'
-            BoundLabel.Indent = 0
-            BoundLabel.Font.Charset = DEFAULT_CHARSET
-            BoundLabel.Font.Color = clWindowText
-            BoundLabel.Font.Height = -11
-            BoundLabel.Font.Name = 'MS Sans Serif'
-            BoundLabel.Font.Style = []
-            BoundLabel.Layout = sclLeft
-            BoundLabel.MaxWidth = 0
-            BoundLabel.UseSkinColor = True
-          end
-          object sEdit79: TsEdit
-            Left = 300
-            Top = 80
-            Width = 70
-            Height = 21
-            Enabled = False
-            ReadOnly = True
-            TabOrder = 6
-            SkinData.SkinSection = 'EDIT'
-            BoundLabel.Indent = 0
-            BoundLabel.Font.Charset = DEFAULT_CHARSET
-            BoundLabel.Font.Color = clWindowText
-            BoundLabel.Font.Height = -11
-            BoundLabel.Font.Name = 'MS Sans Serif'
-            BoundLabel.Font.Style = []
-            BoundLabel.Layout = sclLeft
-            BoundLabel.MaxWidth = 0
-            BoundLabel.UseSkinColor = True
-          end
-          object sEdit80: TsEdit
-            Left = 300
-            Top = 100
-            Width = 70
-            Height = 21
-            Enabled = False
-            ReadOnly = True
-            TabOrder = 7
-            SkinData.SkinSection = 'EDIT'
-            BoundLabel.Indent = 0
-            BoundLabel.Font.Charset = DEFAULT_CHARSET
-            BoundLabel.Font.Color = clWindowText
-            BoundLabel.Font.Height = -11
-            BoundLabel.Font.Name = 'MS Sans Serif'
-            BoundLabel.Font.Style = []
-            BoundLabel.Layout = sclLeft
-            BoundLabel.MaxWidth = 0
-            BoundLabel.UseSkinColor = True
-          end
-          object sBitBtn74: TsBitBtn
-            Left = 220
-            Top = 37
-            Width = 75
-            Height = 25
-            Caption = 'Define'
-            Enabled = False
-            TabOrder = 8
-            SkinData.SkinSection = 'BUTTON'
+            OnClick = Hatari_ConfigJoy
           end
           object sComboBox56: TsComboBox
-            Left = 9
-            Top = 105
+            Left = 10
+            Top = 129
             Width = 145
             Height = 22
             Alignment = taLeftJustify
@@ -1389,25 +1338,66 @@ object Conf: TConf
             BoundLabel.Font.Height = -11
             BoundLabel.Font.Name = 'Tahoma'
             BoundLabel.Font.Style = [fsBold]
-            BoundLabel.Layout = sclTopRight
+            BoundLabel.Layout = sclTopCenter
             BoundLabel.MaxWidth = 0
             BoundLabel.UseSkinColor = True
             SkinData.SkinSection = 'COMBOBOX'
             Enabled = False
             ItemHeight = 16
             ItemIndex = -1
-            TabOrder = 9
+            TabOrder = 3
           end
           object sCheckBox101: TsCheckBox
-            Left = 5
+            Left = 10
             Top = 159
             Width = 106
             Height = 20
             Caption = 'Enable Autofire'
-            TabOrder = 10
+            Enabled = False
+            TabOrder = 4
             SkinData.SkinSection = 'CHECKBOX'
             ImgChecked = 0
             ImgUnchecked = 0
+          end
+          object sPanel37: TsPanel
+            Left = 304
+            Top = 20
+            Width = 78
+            Height = 20
+            TabOrder = 5
+            SkinData.SkinSection = 'PANEL'
+          end
+          object sPanel38: TsPanel
+            Left = 304
+            Top = 44
+            Width = 78
+            Height = 20
+            TabOrder = 6
+            SkinData.SkinSection = 'PANEL'
+          end
+          object sPanel39: TsPanel
+            Left = 304
+            Top = 68
+            Width = 78
+            Height = 20
+            TabOrder = 7
+            SkinData.SkinSection = 'PANEL'
+          end
+          object sPanel40: TsPanel
+            Left = 304
+            Top = 92
+            Width = 78
+            Height = 20
+            TabOrder = 8
+            SkinData.SkinSection = 'PANEL'
+          end
+          object sPanel41: TsPanel
+            Left = 304
+            Top = 116
+            Width = 78
+            Height = 20
+            TabOrder = 9
+            SkinData.SkinSection = 'PANEL'
           end
         end
       end
@@ -1434,9 +1424,8 @@ object Conf: TConf
         object sLabel81: TsLabel
           Left = 5
           Top = 75
-          Width = 46
+          Width = 3
           Height = 13
-          Caption = 'c:/progr'
         end
         object sComboBox57: TsComboBox
           Left = 251
@@ -1470,7 +1459,9 @@ object Conf: TConf
           Top = 47
           Width = 25
           Height = 21
+          Hint = 'Set_mapping'
           TabOrder = 1
+          OnClick = Hatari_ConfigJoy
           SkinData.SkinSection = 'BUTTON'
           ImageIndex = 15
           Images = InBitBtn_Imagelist
@@ -1485,6 +1476,18 @@ object Conf: TConf
           SkinData.SkinSection = 'CHECKBOX'
           ImgChecked = 0
           ImgUnchecked = 0
+        end
+        object sBitBtn50: TsBitBtn
+          Left = 112
+          Top = 47
+          Width = 25
+          Height = 21
+          Hint = 'Eject_mapping'
+          TabOrder = 3
+          OnClick = Hatari_ConfigJoy
+          SkinData.SkinSection = 'BUTTON'
+          ImageIndex = 10
+          Images = InBitBtn_Imagelist
         end
       end
     end
@@ -10323,7 +10326,7 @@ object Conf: TConf
       SkinData.SkinSection = 'PANEL'
     end
     object Pem_zinc_paths: TsPanel
-      Left = 1
+      Left = 727
       Top = 1
       Width = 727
       Height = 661
@@ -11151,7 +11154,7 @@ object Conf: TConf
         Left = 19
         Top = 1
         Width = 580
-        Height = 180
+        Height = 192
         Caption = 'System'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -11236,7 +11239,7 @@ object Conf: TConf
             Top = 100
             Width = 113
             Height = 17
-            Caption = '680200+ FPU'
+            Caption = '68EC030 + FPU'
             TabOrder = 3
           end
           object rb21: TRadioButton
@@ -11252,7 +11255,7 @@ object Conf: TConf
           Left = 293
           Top = 20
           Width = 250
-          Height = 125
+          Height = 149
           Caption = 'Emulator Cpu Configs'
           TabOrder = 2
           object sCheckBox86: TsCheckBox
@@ -11299,10 +11302,21 @@ object Conf: TConf
             ImgChecked = 0
             ImgUnchecked = 0
           end
+          object sCheckBox60: TsCheckBox
+            Left = 5
+            Top = 124
+            Width = 166
+            Height = 20
+            Caption = 'Patch TOS For Faster Boot'
+            TabOrder = 4
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
         end
         object sComboBox43: TsComboBox
           Left = 102
-          Top = 150
+          Top = 168
           Width = 45
           Height = 22
           Alignment = taLeftJustify
@@ -11328,8 +11342,8 @@ object Conf: TConf
             '32')
         end
         object sComboBox45: TsComboBox
-          Left = 360
-          Top = 152
+          Left = 469
+          Top = 168
           Width = 75
           Height = 22
           Alignment = taLeftJustify
@@ -11346,9 +11360,9 @@ object Conf: TConf
           BoundLabel.UseSkinColor = True
           SkinData.SkinSection = 'COMBOBOX'
           ItemHeight = 16
-          ItemIndex = 1
+          ItemIndex = 0
           TabOrder = 4
-          Text = 'Dummy'
+          Text = 'Off'
           Items.Strings = (
             'Off'
             'Dummy'
@@ -11357,9 +11371,9 @@ object Conf: TConf
       end
       object grp37: TGroupBox
         Left = 20
-        Top = 181
+        Top = 192
         Width = 580
-        Height = 125
+        Height = 113
         Caption = 'Memory'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -11372,12 +11386,12 @@ object Conf: TConf
           Left = 5
           Top = 20
           Width = 185
-          Height = 100
+          Height = 93
           Caption = 'Ram - Size'
           TabOrder = 0
           object rb22: TRadioButton
             Left = 5
-            Top = 25
+            Top = 20
             Width = 70
             Height = 17
             Caption = '512 (Kb)'
@@ -11385,7 +11399,7 @@ object Conf: TConf
           end
           object rb23: TRadioButton
             Left = 5
-            Top = 50
+            Top = 45
             Width = 70
             Height = 17
             Caption = '1 (Mb)'
@@ -11393,7 +11407,7 @@ object Conf: TConf
           end
           object rb24: TRadioButton
             Left = 5
-            Top = 75
+            Top = 70
             Width = 70
             Height = 17
             Caption = '2 (Mb)'
@@ -11401,7 +11415,7 @@ object Conf: TConf
           end
           object rb25: TRadioButton
             Left = 90
-            Top = 25
+            Top = 20
             Width = 70
             Height = 17
             Caption = '4 (Mb)'
@@ -11409,7 +11423,7 @@ object Conf: TConf
           end
           object rb26: TRadioButton
             Left = 90
-            Top = 50
+            Top = 45
             Width = 70
             Height = 17
             Caption = '8(Mb)'
@@ -11417,7 +11431,7 @@ object Conf: TConf
           end
           object rb27: TRadioButton
             Left = 90
-            Top = 75
+            Top = 70
             Width = 70
             Height = 17
             Caption = '14(Mb)'
@@ -11428,24 +11442,26 @@ object Conf: TConf
           Left = 195
           Top = 20
           Width = 378
-          Height = 100
+          Height = 93
           Caption = 'Memory State Save'
           TabOrder = 1
           object sLabel22: TsLabel
             Left = 10
-            Top = 25
+            Top = 20
             Width = 360
-            Height = 13
+            Height = 20
             AutoSize = False
             Caption = 'c:/progr'
           end
           object sCheckBox91: TsCheckBox
-            Left = 11
-            Top = 58
+            Left = 155
+            Top = 61
             Width = 217
             Height = 20
+            Hint = 'Auto_memory_state'
             Caption = 'Load / Save State At StartUp / Exit'
             TabOrder = 0
+            OnClick = Hatari_ConfigSystem
             SkinData.SkinSection = 'CHECKBOX'
             ImgChecked = 0
             ImgUnchecked = 0
@@ -11497,16 +11513,6 @@ object Conf: TConf
             ImgChecked = 0
             ImgUnchecked = 0
           end
-          object sBitBtn50: TsBitBtn
-            Left = 76
-            Top = 23
-            Width = 25
-            Height = 21
-            TabOrder = 1
-            SkinData.SkinSection = 'BUTTON'
-            ImageIndex = 15
-            Images = InBitBtn_Imagelist
-          end
         end
         object grp47: TGroupBox
           Left = 5
@@ -11554,40 +11560,20 @@ object Conf: TConf
             ImgChecked = 0
             ImgUnchecked = 0
           end
-          object sBitBtn51: TsBitBtn
-            Left = 118
-            Top = 23
-            Width = 25
-            Height = 21
-            TabOrder = 1
-            SkinData.SkinSection = 'BUTTON'
-            ImageIndex = 15
-            Images = InBitBtn_Imagelist
-          end
-          object sBitBtn52: TsBitBtn
-            Left = 118
-            Top = 63
-            Width = 25
-            Height = 21
-            TabOrder = 2
-            SkinData.SkinSection = 'BUTTON'
-            ImageIndex = 15
-            Images = InBitBtn_Imagelist
-          end
         end
         object grp48: TGroupBox
           Left = 5
           Top = 184
           Width = 470
           Height = 101
-          Caption = 'RS232'
+          Caption = 'Midi'
           TabOrder = 2
           object sLabel54: TsLabel
             Left = 5
             Top = 26
-            Width = 109
+            Width = 96
             Height = 13
-            Caption = 'Write RS232 To File'
+            Caption = 'Write Midi To File'
           end
           object sLabel55: TsLabel
             Left = 5
@@ -11599,9 +11585,9 @@ object Conf: TConf
           object sLabel56: TsLabel
             Left = 5
             Top = 66
-            Width = 107
+            Width = 94
             Height = 13
-            Caption = 'Read RS232 To File'
+            Caption = 'Read Midi To File'
           end
           object sLabel57: TsLabel
             Left = 5
@@ -11613,33 +11599,13 @@ object Conf: TConf
           object sCheckBox94: TsCheckBox
             Left = 300
             Top = 10
-            Width = 155
+            Width = 142
             Height = 20
-            Caption = 'Enable RS232 Emulation'
+            Caption = 'Enable Midi Emulation'
             TabOrder = 0
             SkinData.SkinSection = 'CHECKBOX'
             ImgChecked = 0
             ImgUnchecked = 0
-          end
-          object sBitBtn53: TsBitBtn
-            Left = 118
-            Top = 23
-            Width = 25
-            Height = 21
-            TabOrder = 1
-            SkinData.SkinSection = 'BUTTON'
-            ImageIndex = 15
-            Images = InBitBtn_Imagelist
-          end
-          object sBitBtn54: TsBitBtn
-            Left = 118
-            Top = 63
-            Width = 25
-            Height = 21
-            TabOrder = 2
-            SkinData.SkinSection = 'BUTTON'
-            ImageIndex = 15
-            Images = InBitBtn_Imagelist
           end
         end
       end
@@ -32189,6 +32155,235 @@ object Conf: TConf
         TabStop = True
       end
     end
+    object Pem_hatari_paths: TsPanel
+      Left = 727
+      Top = 1
+      Width = 727
+      Height = 661
+      TabOrder = 30
+      SkinData.SkinSection = 'PANEL'
+      object sEdit14: TsEdit
+        Left = 20
+        Top = 50
+        Width = 265
+        Height = 21
+        ReadOnly = True
+        TabOrder = 0
+        SkinData.SkinSection = 'EDIT'
+        BoundLabel.Active = True
+        BoundLabel.Caption = 'Path To Hatari Execution File'
+        BoundLabel.Indent = 0
+        BoundLabel.Font.Charset = DEFAULT_CHARSET
+        BoundLabel.Font.Color = clWindowText
+        BoundLabel.Font.Height = -11
+        BoundLabel.Font.Name = 'Tahoma'
+        BoundLabel.Font.Style = [fsBold]
+        BoundLabel.Layout = sclTopLeft
+        BoundLabel.MaxWidth = 0
+        BoundLabel.UseSkinColor = True
+      end
+      object sBitBtn105: TsBitBtn
+        Left = 286
+        Top = 50
+        Width = 25
+        Height = 21
+        Hint = 'Zinc_Exe'
+        TabOrder = 1
+        OnClick = Hatari_ConfigPaths
+        SkinData.SkinSection = 'BUTTON'
+        ImageIndex = 15
+        Images = InBitBtn_Imagelist
+      end
+      object sEdit18: TsEdit
+        Left = 20
+        Top = 90
+        Width = 265
+        Height = 21
+        Enabled = False
+        ReadOnly = True
+        TabOrder = 2
+        SkinData.SkinSection = 'EDIT'
+        BoundLabel.Active = True
+        BoundLabel.Caption = 'Path To Hatari Tos File'
+        BoundLabel.Indent = 0
+        BoundLabel.Font.Charset = DEFAULT_CHARSET
+        BoundLabel.Font.Color = clWindowText
+        BoundLabel.Font.Height = -11
+        BoundLabel.Font.Name = 'Tahoma'
+        BoundLabel.Font.Style = [fsBold]
+        BoundLabel.Layout = sclTopLeft
+        BoundLabel.MaxWidth = 0
+        BoundLabel.UseSkinColor = True
+      end
+      object sBitBtn106: TsBitBtn
+        Left = 286
+        Top = 90
+        Width = 25
+        Height = 21
+        Hint = 'Zinc_Tos'
+        Enabled = False
+        TabOrder = 3
+        OnClick = Hatari_ConfigPaths
+        SkinData.SkinSection = 'BUTTON'
+        ImageIndex = 15
+        Images = InBitBtn_Imagelist
+      end
+    end
+    object Pem_hatari_database: TsPanel
+      Left = 727
+      Top = 1
+      Width = 727
+      Height = 661
+      TabOrder = 31
+      SkinData.SkinSection = 'PANEL'
+      object nxtgrd_hatari: TNextGrid
+        Left = 20
+        Top = 132
+        Width = 540
+        Height = 407
+        Caption = 'I have no data to show'
+        Options = [goGrid, goHeader, goSelectFullRow]
+        TabOrder = 0
+        TabStop = True
+      end
+      object sButton10: TsButton
+        Left = 20
+        Top = 24
+        Width = 100
+        Height = 25
+        Caption = 'Single Games'
+        TabOrder = 1
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sButton11: TsButton
+        Left = 130
+        Top = 24
+        Width = 100
+        Height = 25
+        Caption = 'Big Collections'
+        TabOrder = 2
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sButton12: TsButton
+        Left = 239
+        Top = 24
+        Width = 100
+        Height = 25
+        Caption = 'Small Collections'
+        TabOrder = 3
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sButton13: TsButton
+        Left = 350
+        Top = 24
+        Width = 100
+        Height = 25
+        Caption = 'Demos'
+        TabOrder = 4
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sButton14: TsButton
+        Left = 459
+        Top = 24
+        Width = 100
+        Height = 25
+        Caption = 'Applications'
+        TabOrder = 5
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sComboBox40: TsComboBox
+        Left = 64
+        Top = 64
+        Width = 169
+        Height = 22
+        Alignment = taLeftJustify
+        BoundLabel.Indent = 0
+        BoundLabel.Font.Charset = DEFAULT_CHARSET
+        BoundLabel.Font.Color = clWindowText
+        BoundLabel.Font.Height = -11
+        BoundLabel.Font.Name = 'MS Sans Serif'
+        BoundLabel.Font.Style = []
+        BoundLabel.Layout = sclLeft
+        BoundLabel.MaxWidth = 0
+        BoundLabel.UseSkinColor = True
+        SkinData.SkinSection = 'COMBOBOX'
+        ItemHeight = 16
+        ItemIndex = 0
+        TabOrder = 6
+        Text = 'Choose Team...'
+        Items.Strings = (
+          'Choose Team...'
+          'Adrenalyn'
+          'Automation'
+          'Bad Brew Crew'
+          'Blue Software'
+          'D-Bug'
+          'Delicious'
+          'Enigma'
+          'Flame Of Filand'
+          'Fusion'
+          'Medway Pirates'
+          'Pompey Pirates'
+          'Special FX'
+          'Supergau'
+          'Superior'
+          'Vetronix'
+          'Zuul')
+      end
+      object sComboBox41: TsComboBox
+        Left = 328
+        Top = 64
+        Width = 169
+        Height = 22
+        Alignment = taLeftJustify
+        BoundLabel.Indent = 0
+        BoundLabel.Font.Charset = DEFAULT_CHARSET
+        BoundLabel.Font.Color = clWindowText
+        BoundLabel.Font.Height = -11
+        BoundLabel.Font.Name = 'MS Sans Serif'
+        BoundLabel.Font.Style = []
+        BoundLabel.Layout = sclLeft
+        BoundLabel.MaxWidth = 0
+        BoundLabel.UseSkinColor = True
+        SkinData.SkinSection = 'COMBOBOX'
+        ItemHeight = 16
+        ItemIndex = 0
+        TabOrder = 7
+        Text = 'Choose Team...'
+        Items.Strings = (
+          'Choose Team...'
+          'Atari Force'
+          'Awesome'
+          'Blues Bros'
+          'Compil'
+          'Conceptors'
+          'Construct'
+          'Crazy Boy'
+          'Cynix'
+          'Delight'
+          'F.O.F.T'
+          'Games Compil'
+          'Gravatics'
+          'Guardian Soft Ogik'
+          'Impact'
+          'Infocom'
+          'Klapauzius'
+          'Lemmings'
+          'Mad Vision'
+          'New Order'
+          'Nothing Personal'
+          'Pulsion'
+          'Pure Enegry'
+          'Reanimators'
+          'Revolution'
+          'Section One'
+          'Shaolin Masters'
+          'Supremacy'
+          'Syndicaty'
+          'Timelords'
+          'Tumult')
+      end
+    end
   end
   object Menu_Panel: TsPanel
     Left = 0
@@ -36420,5 +36615,9 @@ object Conf: TConf
     OnTimer = tmr_presskeyTimer
     Left = 71
     Top = 11
+  end
+  object Save_Files: TSaveDialog
+    Left = 40
+    Top = 72
   end
 end
