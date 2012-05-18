@@ -10,6 +10,7 @@ uses
   ce_themes,ce_config,
   mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
   zinc_paths,zinc_graphics,zinc_sound,zinc_database,
+  hatari_paths,hatari_system,hatari_roms,hatari_screen,hatari_joy,hatari_database,
   OmniXML,OmniXMLUtils,mame_xmlext,ce_xmlext;
 
 
@@ -27,6 +28,8 @@ uses
   procedure ShowZincProgress(progress: Integer; Comment: string);
 
   procedure StartEmuHatari;
+  procedure ShowHatariProgress(progress: Integer; Comment: string);
+  
   procedure StartEmupSX;
   procedure StartEmuKigb;
   procedure StartProgWeather;
@@ -66,6 +69,8 @@ var
   Zinc_Exe,FullPathZinc_Exe,Zinc_RomsPath,ZincDatabaseFile,Zinc_ini: String;
   Zinc_Config: TIniFile;
 //Hatari Vars
+  Hatari_Exe,FullPathHatari_Exe,Hatari_confeditor_ini,Hatari_Tos,Hatari_FullPathTos: string;
+  Hatari_Config,Hatari_ini: TIniFile;
 //pSX Vars
 //Kigb Vars
 //Weather Vars
@@ -563,11 +568,6 @@ begin
   Conf.grp46.Cursor := Arrow;
   Conf.grp47.Cursor := Arrow;
   Conf.grp48.Cursor := Arrow;
-  Conf.sBitBtn50.Cursor := Arrow;
-  Conf.sBitBtn51.Cursor := Arrow;
-  Conf.sBitBtn52.Cursor := Arrow;
-  Conf.sBitBtn53.Cursor := Arrow;
-  Conf.sBitBtn54.Cursor := Arrow;
   Conf.sCheckBox92.Cursor := Arrow;
   Conf.sCheckBox93.Cursor := Arrow;
   Conf.sCheckBox94.Cursor := Arrow;
@@ -599,11 +599,6 @@ begin
   Conf.grp43.Cursor := Arrow;
   Conf.grp44.Cursor := Arrow;
   Conf.grp49.Cursor := Arrow;
-  Conf.sBitBtn55.Cursor := Arrow;
-  Conf.sBitBtn56.Cursor := Arrow;
-  Conf.sBitBtn57.Cursor := Arrow;
-  Conf.sBitBtn58.Cursor := Arrow;
-  Conf.sBitBtn59.Cursor := Arrow;
   Conf.sBitBtn60.Cursor := Arrow;
   Conf.sBitBtn61.Cursor := Arrow;
   Conf.sBitBtn62.Cursor := Arrow;
@@ -658,15 +653,9 @@ begin
   Conf.rb28.Cursor := Arrow;
   Conf.rb29.Cursor := Arrow;
   Conf.rb30.Cursor := Arrow;
-  Conf.sBitBtn74.Cursor := Arrow;
   Conf.sBitBtn75.Cursor := Arrow;
   Conf.sCheckBox101.Cursor := Arrow;
   Conf.sCheckBox102.Cursor := Arrow;
-  Conf.sEdit76.Cursor := Precision;
-  Conf.sEdit77.Cursor := Precision;
-  Conf.sEdit78.Cursor := Precision;
-  Conf.sEdit79.Cursor := Precision;
-  Conf.sEdit80.Cursor := Precision;
 
   //{pSX Emulator}
   //Panel pSX_Paths
@@ -981,10 +970,12 @@ begin
   Conf.Pem_zinc_graphics.Left := 727;
   Conf.Pem_zinc_sound.Left := 727;
   Conf.Pem_zinc_database.Left := 727;
+  Conf.Pem_hatari_paths.Left := 727;
   Conf.Pem_hatari_system.Left := 727;
   Conf.Pem_hatari_roms.Left := 727;
   Conf.Pem_hatari_screen.Left := 727;
   Conf.Pem_hatari_joy.Left := 727;
+  Conf.Pem_hatari_database.Left := 727;
   Conf.Pem_psx_paths.Left := 727;
   Conf.Pem_psx_screen.Left := 727;
   Conf.Pem_psx_sound.Left := 727;
@@ -1236,7 +1227,25 @@ end;
 
 procedure StartEmuHatari;
 begin
-
+  Hatari_confeditor_ini := ExtractFilePath(Application.ExeName)+'media\emulators\computers\atari\hatari\config\config.ini';
+  if FileExists(Hatari_confeditor_ini) then
+    begin
+      Hatari_Config := TIniFile.Create(Hatari_confeditor_ini);
+      Started := True;
+      SetHatari_PathsfromHatariIni;
+      ShowHatariProgress(10,'Hatari Paths Ready');
+      SetHatari_SystemfromHatariIni;
+      ShowHatariProgress(25,'Hatari System Ready');
+      SetHatari_RomsfromHatariIni;
+      ShowHatariProgress(40,'Hatari Roms Ready');
+      SetHatari_ScreenfromHatariIni;
+      ShowHatariProgress(55,'Hatari Screen/Sound Ready');
+      SetHatari_JoyfromHatariIni;
+      ShowHatariProgress(70,'Hatari Joystics/Keyboard Ready');
+//      ShowHatari_DatabaseFromHatariIni;
+      ShowHatariProgress(100,'Hatari Database Ready');
+      Started := False;
+    end;
 end;
 
 procedure StartEmupSX;
@@ -1307,6 +1316,13 @@ begin
 end;
 
 procedure ShowZincProgress(progress: Integer; Comment: string);
+begin
+  Splash_Screen.Progress_Label(progress,Comment);
+  Application.ProcessMessages;
+  Sleep(50);
+end;
+
+procedure ShowHatariProgress(progress: Integer; Comment: string);
 begin
   Splash_Screen.Progress_Label(progress,Comment);
   Application.ProcessMessages;
