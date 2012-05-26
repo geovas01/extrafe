@@ -24,7 +24,8 @@ uses
   main,menu,FunctionX,
   mame_dirs,mame_graphics,mame_database,mame_builds,
   zinc_paths,
-  hatari_paths,hatari_roms,hatari_joy;
+  hatari_paths,hatari_roms,hatari_joy,
+  psx_paths;
 
 procedure global_Find_FilesCanClose;
 begin
@@ -62,8 +63,24 @@ begin
   else if gFindFiles = 'hatari_GemDosDrive' then
     SetUpHatariGemDosDrive
   else if gFindFiles = 'hatari_mapping' then
-    SetUpHatariMapping;
-
+    SetUpHatariMapping
+// pSX
+  else if gFindFiles = 'pSX_exe' then
+    CreatepSX_paths_firstTime
+  else if gFindFiles = 'pSX_bios' then
+    CreatepSX_configuration_forfirstTime
+  else if gFindFiles = 'pSX_screenshots' then
+    SetUPpSXScreenShotsDir
+  else if gFindFiles = 'pSX_cdimages' then
+    SetUPpSXCDImagesDir
+  else if gFindFiles = 'pSX_savestates' then
+    SetUPpSXSaveStatesDir
+  else if gFindFiles = 'pSX_memorycards' then  
+    SetUPpSXMemoryCardsDir
+  else if gFindFiles = 'pSX_card1' then
+    SetUPpSXCard1
+  else if gFindFiles = 'pSX_card2' then
+    SetUPpSXCard2;
 end;
 
 procedure global_Find_FilesClose;

@@ -10,8 +10,8 @@ uses
   mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
   zinc_paths,zinc_graphics,zinc_sound,zinc_database,
   hatari_system,hatari_roms,hatari_screen,hatari_joy,hatari_paths,hatari_database,
-  psx_screen,psx_sound,psx_others,psx_paths,
-  kigb_screen,kigb_sound,kigb_others,kigb_paths,
+  psx_screen,psx_sound,psx_others,psx_paths,psx_database,
+  kigb_screen,kigb_sound,kigb_others,kigb_paths,kigb_database,
   wg_weather,wg_timedate;
 
   procedure runMenuJustOpen;
@@ -171,7 +171,8 @@ begin
       MenuButtonsNames[1] := 'Screen';
       MenuButtonsNames[2] := 'Controllers/Sound';
       MenuButtonsNames[3] := 'Others';
-      for k:= 0 to 3 do
+      MenuButtonsNames[4] := 'Database';
+      for k:= 0 to 4 do
         MenuBitBtnIcons[k] := 'GLYF_EM_CONSOLES_SONY_PSX';
     end
   else if MenuState = 'em_handheld' then
@@ -190,7 +191,8 @@ begin
       MenuButtonsNames[1] := 'Screen';
       MenuButtonsNames[2] := 'Controllers/Sound';
       MenuButtonsNames[3] := 'Others';
-      for k := 0 to 3 do
+      MenuButtonsNames[4] := 'Database';
+      for k := 0 to 4 do
         MenuBitBtnIcons[k] := 'GLYF_EM_HANDHELDS_NINTENDO_KIGB';
     end
   else if MenuState = 'widgets' then
@@ -278,21 +280,21 @@ begin
           else if (Cmenustate = 'em_computers_atari') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI')
           else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_screen') or
-            (Cmenustate = 'em_computers_hatari_joy') then
-            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SYSTEM')
+            (Cmenustate = 'em_computers_hatari_joy') or (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_database') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_PATHS')
           else if (Cmenustate = 'em_consoles') then
             ShowMenuImage('EM_CONSOLES_SONY')
           else if (Cmenustate = 'em_consoles_sony') then
             ShowMenuImage('EM_CONSOLES_SONY_PSX')
           else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_sound') or
-            (Cmenustate = 'em_consoles_psx_others') then
+            (Cmenustate = 'em_consoles_psx_others') or (Cmenustate = 'em_consoles_psx_database') then
             ShowMenuImage('EM_CONSOLES_SONY_PSX_DIRS')
           else if Cmenustate = 'em_handheld' then
             ShowMenuImage('EM_HANDHELDS_NINTENDO')
           else if Cmenustate = 'em_handheld_nintendo' then
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB')
           else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
-            (Cmenustate = 'em_kigb_others') then
+            (Cmenustate = 'em_kigb_others') or (Cmenustate = 'em_kigb_database') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_DIRS')
           else if (Cmenustate = 'widgets') or (Cmenustate = 'wg_timedate') then
             ShowMenuImage('WG_WEATHER');
@@ -314,14 +316,14 @@ begin
             ShowMenuImage('EM_ARCADE_MAME_GRAPHICS')
           else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_paths') or (Cmenustate = 'em_arcade_zinc_sound') or (Cmenustate = 'em_arcade_zinc_database') then
             ShowMenuImage('EM_ARCADE_ZINC_GRAPHICS')
-          else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_screen') or
-            (Cmenustate = 'em_computers_hatari_joy') then
-            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DISKS')
+          else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_screen') or
+            (Cmenustate = 'em_computers_hatari_joy') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_database') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SYSTEM')
           else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_paths') or (Cmenustate = 'em_consoles_psx_sound') or
-            (Cmenustate = 'em_consoles_psx_others') then
+            (Cmenustate = 'em_consoles_psx_others') or (Cmenustate = 'em_consoles_psx_database') then
             ShowMenuImage('EM_CONSOLES_SONY_PSX_SCREEN')
           else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_sound') or
-            (Cmenustate = 'em_kigb_others') then
+            (Cmenustate = 'em_kigb_others') or (Cmenustate = 'em_kigb_database') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_SCREEN')
           else if (Cmenustate = 'widgets') or (Cmenustate = 'wg_weather') then
             ShowMenuImage('WG_TIMEDATE');
@@ -339,14 +341,14 @@ begin
             ShowMenuImage('EM_ARCADE_MAME_SOUND')
           else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_paths') or (Cmenustate = 'em_arcade_zinc_database') then
             ShowMenuImage('EM_ARCADE_ZINC_SOUND')
-          else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_system') or
-            (Cmenustate = 'em_computers_hatari_joy') then
-            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SCREEN')
+          else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_screen') or (Cmenustate = 'em_computers_hatari_system') or
+            (Cmenustate = 'em_computers_hatari_joy') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_database') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DISKS')
           else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_paths') or
-            (Cmenustate = 'em_consoles_psx_others') then
+            (Cmenustate = 'em_consoles_psx_others') or (Cmenustate = 'em_consoles_psx_database') then
             ShowMenuImage('EM_CONSOLES_SONY_PSX_SOUND')
           else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_paths') or
-            (Cmenustate = 'em_kigb_others') then
+            (Cmenustate = 'em_kigb_others') or (Cmenustate = 'em_kigb_database') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_SOUND');
         end;
     9 : begin
@@ -359,25 +361,37 @@ begin
             ShowMenuImage('EM_ARCADE_MAME_OTHERS')
           else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_paths') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_sound') then
             ShowMenuImage('EM_ARCADE_ZINC_DATABASE')
-          else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_screen') or
-            (Cmenustate = 'em_computers_hatari_system') then
-            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_JOY')
+          else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_joy') or
+            (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_database') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SCREEN')
           else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_sound') or
-            (Cmenustate = 'em_consoles_psx_paths') then
+            (Cmenustate = 'em_consoles_psx_paths') or (Cmenustate = 'em_consoles_psx_database') then
             ShowMenuImage('EM_CONSOLES_SONY_PSX_OTHERS')
           else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
-            (Cmenustate = 'em_kigb_paths') then
+            (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_database') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_OTHERS');
         end;
     10 :  begin
             if (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or (Cmenustate = 'em_arcade_mame_others') or
-            (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_database') or (Cmenustate = 'em_arcade_mame') then
-              ShowMenuImage('EM_ARCADE_MAME_BUILDS');
+              (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_database') or (Cmenustate = 'em_arcade_mame') then
+              ShowMenuImage('EM_ARCADE_MAME_BUILDS')
+            else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_screen') or
+            (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_database') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_JOY')
+            else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_sound') or
+            (Cmenustate = 'em_consoles_psx_paths') or (Cmenustate = 'em_consoles_psx_others') then
+              ShowMenuImage('EM_CONSOLES_SONY_PSX_DATABASE')
+            else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
+            (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_others') then
+            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_DATABASE');
           end;
     11 :  begin
             if (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or (Cmenustate = 'em_arcade_mame_others') or
             (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame') then
-              ShowMenuImage('EM_ARCADE_MAME_DATABASE');
+              ShowMenuImage('EM_ARCADE_MAME_DATABASE')
+            else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_roms') or (Cmenustate = 'em_computers_hatari_joy') or
+            (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_screen') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DATABASE')
            end;
     12 :  begin
 
@@ -442,12 +456,16 @@ begin
             ShowMenuImage('EM_COMPUTERS_ATARI')
           else if (Cmenustate = 'em_computers_hatari') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI')
+          else if (Cmenustate = 'em_computers_hatari_system') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SYSTEM')
           else if (Cmenustate = 'em_computers_hatari_roms') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DISKS')
           else if (Cmenustate = 'em_computers_hatari_screen') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SCREEN')
           else if (Cmenustate = 'em_computers_hatari_joy') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_JOY')
+          else if (Cmenustate = 'em_computers_hatari_database') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DATABASE')
           else if (Cmenustate = 'em_consoles') then
             ShowMenuImage('EM_CONSOLES')
           else if (Cmenustate = 'em_consoles_sony') then
@@ -460,6 +478,8 @@ begin
             ShowMenuImage('EM_CONSOLES_SONY_PSX_SOUND')
           else if (Cmenustate = 'em_consoles_psx_others') then
             ShowMenuImage('EM_CONSOLES_SONY_PSX_OTHERS')
+          else if (Cmenustate = 'em_consoles_psx_database') then
+            ShowMenuImage('EM_CONSOLES_SONY_PSX_DATABASE')
           else if (Cmenustate = 'em_handheld') then
             ShowMenuImage('EM_HANDHELDS')
           else if (Cmenustate = 'em_handheld_nintendo') then
@@ -471,7 +491,9 @@ begin
           else if (Cmenustate = 'em_kigb_sound') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_SOUND')
           else if (Cmenustate = 'em_kigb_others') then
-            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_OTHERS');
+            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_OTHERS')
+          else if (Cmenustate = 'em_kigb_database') then
+            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_DATABASE');
           HideHelpFromMainPanel;
         end;
     7 : begin
@@ -517,12 +539,16 @@ begin
             ShowMenuImage('EM_COMPUTERS_ATARI')
           else if (Cmenustate = 'em_computers_hatari') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI')
-          else if (Cmenustate = 'em_computers_hatari_system') then
-            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SYSTEM')
+          else if (Cmenustate = 'em_computers_hatari_paths') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_PATHS')
+          else if (Cmenustate = 'em_computers_hatari_roms') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DISKS')
           else if (Cmenustate = 'em_computers_hatari_screen') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SCREEN')
           else if (Cmenustate = 'em_computers_hatari_joy') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_JOY')
+          else if (Cmenustate = 'em_computers_hatari_database') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DATABASE')
           else if (Cmenustate = 'em_consoles_sony_psx') then
             ShowMenuImage('EM_CONSOLES_SONY_PSX')
           else if (Cmenustate = 'em_consoles_psx_paths') then
@@ -531,6 +557,8 @@ begin
             ShowMenuImage('EM_CONSOLES_SONY_PSX_SOUND')
           else if (Cmenustate = 'em_consoles_psx_others') then
             ShowMenuImage('EM_CONSOLES_SONY_PSX_OTHERS')
+          else if (Cmenustate = 'em_consoles_psx_database') then
+            ShowMenuImage('EM_CONSOLES_SONY_PSX_DATABASE')
           else if (Cmenustate = 'em_handheld_nintendo') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO')
           else if (Cmenustate = 'em_handheld_kigb') then
@@ -540,7 +568,9 @@ begin
           else if (Cmenustate = 'em_kigb_sound') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_SOUND')
           else if (Cmenustate = 'em_kigb_others') then
-            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_OTHERS');
+            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_OTHERS')
+          else if (Cmenustate = 'em_kigb_database') then
+            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_DATABASE');
         end;
     8 : begin
           if Cmenustate = 'weather' then
@@ -579,12 +609,16 @@ begin
             ShowMenuImage('EM_COMPUTERS_ATARI')
           else if (Cmenustate = 'em_computers_hatari') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI')
-          else if (Cmenustate = 'em_computers_hatari_roms') then
-            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DISKS')
+          else if (Cmenustate = 'em_computers_hatari_paths') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_PATHS')
           else if (Cmenustate = 'em_computers_hatari_system') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SYSTEM')
+          else if (Cmenustate = 'em_computers_hatari_screen') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SCREEN')
           else if (Cmenustate = 'em_computers_hatari_joy') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_JOY')
+          else if (Cmenustate = 'em_computers_hatari_database') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DATABASE')
           else if (Cmenustate = 'em_consoles_sony_psx') then
             ShowMenuImage('EM_CONSOLES_SONY_PSX')
           else if (Cmenustate = 'em_consoles_psx_screen') then
@@ -593,6 +627,8 @@ begin
             ShowMenuImage('EM_CONSOLES_SONY_PSX_DIRS')
           else if (Cmenustate = 'em_consoles_psx_others') then
             ShowMenuImage('EM_CONSOLES_SONY_PSX_OTHERS')
+          else if (Cmenustate = 'em_consoles_psx_database') then
+            ShowMenuImage('EM_CONSOLES_SONY_PSX_DATABASE')
           else if (Cmenustate = 'em_handheld_nintendo') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO')
           else if (Cmenustate = 'em_handheld_kigb') then
@@ -602,7 +638,9 @@ begin
           else if (Cmenustate = 'em_kigb_paths') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_DIRS')
           else if (Cmenustate = 'em_kigb_others') then
-            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_OTHERS');
+            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_OTHERS')
+          else if (Cmenustate = 'em_kigb_database') then
+            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_DATABASE');
         end;
     9 : begin
           if Cmenustate = 'timedate' then
@@ -635,12 +673,16 @@ begin
             ShowMenuImage('EM_COMPUTERS_ATARI')
           else if (Cmenustate = 'em_computers_hatari') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI')
+          else if (Cmenustate = 'em_computers_hatari_paths') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_PATHS')
           else if (Cmenustate = 'em_computers_hatari_roms') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DISKS')
-          else if (Cmenustate = 'em_computers_hatari_screen') then
-            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SCREEN')
+          else if (Cmenustate = 'em_computers_hatari_joy') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_JOY')
           else if (Cmenustate = 'em_computers_hatari_system') then
             ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SYSTEM')
+          else if (Cmenustate = 'em_computers_hatari_database') then
+            ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DATABASE')
           else if (Cmenustate = 'em_consoles_sony_psx') then
             ShowMenuImage('EM_CONSOLES_SONY_PSX')
           else if (Cmenustate = 'em_consoles_psx_screen') then
@@ -649,6 +691,8 @@ begin
             ShowMenuImage('EM_CONSOLES_SONY_PSX_SOUND')
           else if (Cmenustate = 'em_consoles_psx_paths') then
             ShowMenuImage('EM_CONSOLES_SONY_PSX_DIRS')
+          else if (Cmenustate = 'em_consoles_psx_database') then
+            ShowMenuImage('EM_CONSOLES_SONY_PSX_DATABASE')
           else if (Cmenustate = 'em_handheld_kigb') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB')
           else if (Cmenustate = 'em_kigb_screen') then
@@ -656,7 +700,9 @@ begin
           else if (Cmenustate = 'em_kigb_sound') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_SOUND')
           else if (Cmenustate = 'em_kigb_paths') then
-            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_DIRS');
+            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_DIRS')
+          else if (Cmenustate = 'em_kigb_database') then
+            ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_DATABASE');
         end;
     10 :  begin
             if Cmenustate = 'weather' then
@@ -674,7 +720,39 @@ begin
             else if Cmenustate = 'em_arcade_mame_paths' then
               ShowMenuImage('EM_ARCADE_MAME_DIRS')
             else if Cmenustate = 'em_arcade_mame_database' then
-              ShowMenuImage('EM_ARCADE_MAME_DATABASE');
+              ShowMenuImage('EM_ARCADE_MAME_DATABASE')
+            else if (Cmenustate = 'em_computers_hatari') then
+              ShowMenuImage('EM_COMPUTERS_ATARI_HATARI')
+            else if (Cmenustate = 'em_computers_hatari_paths') then
+              ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_PATHS')
+            else if (Cmenustate = 'em_computers_hatari_roms') then
+              ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DISKS')
+            else if (Cmenustate = 'em_computers_hatari_screen') then
+              ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SCREEN')
+            else if (Cmenustate = 'em_computers_hatari_system') then
+              ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SYSTEM')
+            else if (Cmenustate = 'em_computers_hatari_database') then
+              ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DATABASE')
+            else if (Cmenustate = 'em_consoles_sony_psx') then
+              ShowMenuImage('EM_CONSOLES_SONY_PSX')
+            else if (Cmenustate = 'em_consoles_psx_screen') then
+              ShowMenuImage('EM_CONSOLES_SONY_PSX_SCREEN')
+            else if (Cmenustate = 'em_consoles_psx_sound') then
+              ShowMenuImage('EM_CONSOLES_SONY_PSX_SOUND')
+            else if (Cmenustate = 'em_consoles_psx_paths') then
+              ShowMenuImage('EM_CONSOLES_SONY_PSX_DIRS')
+            else if (Cmenustate = 'em_consoles_psx_others') then
+              ShowMenuImage('EM_CONSOLES_SONY_PSX_OTHERS')
+            else if (Cmenustate = 'em_handheld_kigb') then
+              ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB')
+            else if (Cmenustate = 'em_kigb_screen') then
+              ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_SCREEN')
+            else if (Cmenustate = 'em_kigb_sound') then
+              ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_SOUND')
+            else if (Cmenustate = 'em_kigb_paths') then
+              ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_DIRS')
+            else if (Cmenustate = 'em_kigb_others') then
+              ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_OTHERS');
           end;
     11 :  begin
             if Cmenustate = 'em_arcade_mame' then
@@ -688,7 +766,19 @@ begin
             else if Cmenustate = 'em_arcade_mame_builds' then
               ShowMenuImage('EM_ARCADE_MAME_BUILDS')
             else if Cmenustate = 'em_arcade_mame_paths' then
-              ShowMenuImage('EM_ARCADE_MAME_DIRS');
+              ShowMenuImage('EM_ARCADE_MAME_DIRS')
+            else if (Cmenustate = 'em_computers_hatari') then
+              ShowMenuImage('EM_COMPUTERS_ATARI_HATARI')
+            else if (Cmenustate = 'em_computers_hatari_paths') then
+              ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_PATHS')
+            else if (Cmenustate = 'em_computers_hatari_roms') then
+              ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_DISKS')
+            else if (Cmenustate = 'em_computers_hatari_joy') then
+              ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_JOY')
+            else if (Cmenustate = 'em_computers_hatari_system') then
+              ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SYSTEM')
+            else if (Cmenustate = 'em_computers_hatari_screen') then
+              ShowMenuImage('EM_COMPUTERS_ATARI_HATARI_SCREEN')
           end;
     12 :  begin
 
@@ -826,7 +916,7 @@ begin
       ShowButtonDown(16,'EM_CONSOLES_SONY');    
     end
   else if (Cmenustate = 'em_consoles_psx_paths') or (Cmenustate = 'em_consoles_psx_screen') or
-    (Cmenustate = 'em_consoles_psx_sound') or (Cmenustate = 'em_consoles_psx_others' )then
+    (Cmenustate = 'em_consoles_psx_sound') or (Cmenustate = 'em_consoles_psx_others' ) or (Cmenustate = 'em_consoles_psx_database') then
     begin
       if Cmenustate = 'em_consoles_psx_paths' then
         em_psx_paths_FreeDynamicComps
@@ -835,7 +925,9 @@ begin
       else if Cmenustate = 'em_consoles_psx_sound' then
         em_psx_sound_FreeDynamicComps
       else if Cmenustate = 'em_consoles_psx_others' then
-        em_psx_others_FreeDynamicComps;
+        em_psx_others_FreeDynamicComps
+      else if Cmenustate = 'em_consoles_psx_database' then
+        em_psx_database_FreeDynamicComps;
       ShowPathInCaption(CDirPath,'pSXEmulator',True,True);
       Cmenustate := 'em_consoles_sony';
       ShowCurrentMenu(0,True,Cmenustate,19);
@@ -855,7 +947,7 @@ begin
       ShowButtonDown(16,'EM_HANDHELDS_NINTENDO');
     end
   else if (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
-    (Cmenustate = 'em_kigb_others') then
+    (Cmenustate = 'em_kigb_others') or (Cmenustate = 'em_kigb_database') then
     begin
       if Cmenustate = 'em_kigb_paths' then
         em_kigb_paths_FreeDynamicComps
@@ -864,7 +956,9 @@ begin
       else if Cmenustate = 'em_kigb_sound' then
         em_kigb_sound_FreeDynamicComps
       else if Cmenustate = 'em_kigb_others' then
-        em_kigb_others_FreeDynamicComps;
+        em_kigb_others_FreeDynamicComps
+      else if Cmenustate = 'em_kigb_database' then
+        em_kigb_database_FreeDynamicComps;
       ShowPathInCaption(CDirPath,'Kigb',True,True);
       Cmenustate := 'em_handheld_nintendo';
       ShowCurrentMenu(0,True,Cmenustate,18);
@@ -929,10 +1023,10 @@ begin
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn6.Caption,False,False);
       Cmenustate := 'em_consoles_sony_psx';
-      ShowCurrentMenu(3,True,Cmenustate,7);
+      ShowCurrentMenu(4,True,Cmenustate,7);
     end
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_sound') or
-    (Cmenustate = 'em_consoles_psx_others') then
+    (Cmenustate = 'em_consoles_psx_others') or (Cmenustate = 'em_consoles_psx_database') then
     Show_psx_pathspanel
   else if (Cmenustate = 'em_handheld') then
     begin
@@ -944,10 +1038,10 @@ begin
     begin
       ShowPathInCaption(CDirPath,conf.sBitBtn6.Caption,False,False);
       Cmenustate := 'em_handheld_kigb';
-      ShowCurrentMenu(3,True,Cmenustate,21);
+      ShowCurrentMenu(4,True,Cmenustate,21);
     end
   else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
-    (Cmenustate = 'em_kigb_others') then
+    (Cmenustate = 'em_kigb_others') or (Cmenustate = 'em_kigb_database') then
     Show_kigb_pathspanel
   else if (Cmenustate = 'widgets') or (Cmenustate = 'wg_timedate') then
     Show_widget_weather;
@@ -989,10 +1083,10 @@ begin
     (Cmenustate = 'em_computers_hatari_joy') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_database') then
     Show_hatari_systempanel
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_paths') or (Cmenustate = 'em_consoles_psx_sound') or
-    (Cmenustate = 'em_consoles_psx_others') then
+    (Cmenustate = 'em_consoles_psx_others') or (Cmenustate = 'em_consoles_psx_database') then
     Show_psx_screenpanel
   else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_sound') or
-    (Cmenustate = 'em_kigb_others') then
+    (Cmenustate = 'em_kigb_others') or (Cmenustate = 'em_kigb_database') then
     Show_kigb_screenpanel
   else if (Cmenustate = 'widgets') or (Cmenustate = 'wg_weather') then
     Show_widget_timedate;
@@ -1026,10 +1120,10 @@ begin
       ShowCurrentMenu(0,True,Cmenustate,4);
     end
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_paths') or
-    (Cmenustate = 'em_consoles_psx_others') then
+    (Cmenustate = 'em_consoles_psx_others') or (Cmenustate = 'em_consoles_psx_database') then
     Show_psx_soundpanel
   else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_paths') or
-    (Cmenustate = 'em_kigb_others') then
+    (Cmenustate = 'em_kigb_others') or (Cmenustate = 'em_kigb_database') then
     Show_kigb_soundpanel;
 end;
 
@@ -1053,7 +1147,7 @@ begin
     (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_database') then
     Show_hatari_screenpanel
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_sound') or
-    (Cmenustate = 'em_consoles_psx_paths') then
+    (Cmenustate = 'em_consoles_psx_paths') or (Cmenustate = 'em_consoles_psx_database') then
     Show_psx_otherspanel
   else if Cmenustate = 'emulators' then
     begin
@@ -1062,7 +1156,7 @@ begin
       ShowCurrentMenu(0,True,Cmenustate,16);
     end
   else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
-    (Cmenustate = 'em_kigb_paths') then
+    (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_database') then
     Show_kigb_otherspanel;
 end;
 
@@ -1073,7 +1167,14 @@ begin
     Show_mame_buildspanel
   else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_roms') or
     (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_screen') or (Cmenustate = 'em_computers_hatari_database') then
-    Show_hatari_joypanel;
+    Show_hatari_joypanel
+  else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_sound') or
+    (Cmenustate = 'em_consoles_psx_paths') or (Cmenustate = 'em_consoles_psx_others') then
+    Show_psx_databasepanel
+  else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
+    (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_others') then
+    Show_kigb_databasespanel;
+
 end;
 
 procedure MenuButton6;

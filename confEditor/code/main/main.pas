@@ -14,15 +14,16 @@ uses
   OmniXML,OmniXMLUtils, // XML Functions And Units
   form_color, //forms
   FunctionX,global, // functions units
+  LMDCustomNImage, LMDNImage,
+  GLKeyboard,
+  Spin,
   //my units
   menu,
   ce_themes,ce_config,
   mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
   zinc_paths,zinc_graphics,zinc_sound,
   hatari_system,hatari_roms,hatari_screen,hatari_joy,hatari_paths,hatari_database,
-  LMDCustomNImage, LMDNImage,
-  GLKeyboard,
-  Spin;
+  psx_paths,psx_screen,psx_sound,psx_others,psx_database;
 
 
 const
@@ -36,10 +37,12 @@ type
 //  StringGrid Components
     nxtgrd_mame: TNextGrid;nxtgrd_ips_mameplus: TNextGrid;nxtgrd_ips_mamext: TNextGrid;
     nxtgrd_zinc: TNextGrid;
+    nxtgrd_hatari: TNextGrid;
+    nxtgrd_pSX: TNextGrid;
 //  Skin Components
     SkinM: TsSkinManager;SkinP: TsSkinProvider;
 //  Dialogs Components
-    Find_Files: TOpenDialog;
+    Find_Files: TOpenDialog;Save_Files: TSaveDialog;
 //  Machine Info Components
     SDI1: TSoundDeviceInfo;
     DMI1: TDesktopMonitorInfo;
@@ -65,17 +68,20 @@ type
     Pem_zinc_paths: TsPanel;Pem_zinc_graphics: TsPanel;Pem_zinc_sound: TsPanel; Pem_zinc_database: TsPanel;
 //  Hatari Panels
     Pem_hatari_system: TsPanel;Pem_hatari_roms: TsPanel;Pem_hatari_screen: TsPanel;Pem_hatari_joy: TsPanel;
+    Pem_hatari_paths: TsPanel;Pem_hatari_database: TsPanel;
 //  pSX Panels
-    Pem_psx_paths: TsPanel;Pem_psx_screen: TsPanel;Pem_psx_sound: TsPanel;Pem_psx_others: TsPanel;
+    Pem_psx_paths: TsPanel;Pem_psx_screen: TsPanel;Pem_psx_sound: TsPanel;Pem_psx_others: TsPanel;Pem_psx_database: TsPanel;
 //  Kigb Panels
-    Pem_kigb_paths: TsPanel;Pem_kigb_screen: TsPanel;Pem_kigb_sound: TsPanel;Pem_kigb_others: TsPanel;
+    Pem_kigb_paths: TsPanel;Pem_kigb_screen: TsPanel;Pem_kigb_sound: TsPanel;Pem_kigb_others: TsPanel;Pem_kigb_database: TsPanel;
+//  Widgets
     Pwg_weather: TsPanel;
     Pwg_timedate: TsPanel;
 //  other panels
     sPanel: TsPanel;sPanel2: TsPanel;sPanel3: TsPanel;sPanel4: TsPanel;sPanel5: TsPanel;sPanel6: TsPanel;sPanel7: TsPanel;sPanel8: TsPanel;sPanel9: TsPanel;sPanel10: TsPanel;
     sPanel11: TsPanel;sPanel12: TsPanel;sPanel13: TsPanel;sPanel14: TsPanel;sPanel15: TsPanel;sPanel16: TsPanel;sPanel17: TsPanel;sPanel18: TsPanel;sPanel19: TsPanel;sPanel20: TsPanel;
     sPanel21: TsPanel;sPanel22: TsPanel;sPanel23: TsPanel;sPanel24: TsPanel;sPanel25: TsPanel;sPanel26: TsPanel;sPanel27: TsPanel;sPanel28: TsPanel;sPanel29: TsPanel;sPanel30: TsPanel;
-    sPanel31: TsPanel;sPanel32: TsPanel;sPanel33: TsPanel;sPanel34: TsPanel;sPanel35: TsPanel;sPanel36: TsPanel;
+    sPanel31: TsPanel;sPanel32: TsPanel;sPanel33: TsPanel;sPanel34: TsPanel;sPanel35: TsPanel;sPanel36: TsPanel;sPanel37: TsPanel;sPanel38: TsPanel;sPanel39: TsPanel;sPanel40: TsPanel;
+    sPanel41: TsPanel;
 //  grp Components
     grp105: TGroupBox;grp106: TGroupBox;grp107: TGroupBox;grp108: TGroupBox;grp109: TGroupBox;grp110: TGroupBox;grp111: TGroupBox;grp112: TGroupBox;
     grp113: TGroupBox;grp114: TGroupBox;grp97: TGroupBox;grp98: TGroupBox;grp99: TGroupBox;grp100: TGroupBox;grp101: TGroupBox;grp103: TGroupBox;
@@ -91,7 +97,7 @@ type
     grp116: TGroupBox;grp117: TGroupBox;grp118: TGroupBox;grp119: TGroupBox;grp120: TGroupBox;grp121: TGroupBox;grp122: TGroupBox;
 //  sLabel Components
     sLabel13: TsLabel;sLabel14: TsLabel;sLabel15: TsLabel;sLabel16: TsLabel;sLabel19: TsLabel;sLabel28: TsLabel;sLabel6: TsLabel;sLabel7: TsLabel;
-    sLabel8: TsLabel;sLabel9: TsLabel;sLabel10: TsLabel;
+    sLabel8: TsLabel;sLabel9: TsLabel;sLabel10: TsLabel;sLabel29: TsLabel;sLabel30: TsLabel;sLabel31: TsLabel;sLabel44: TsLabel;sLabel45: TsLabel;
     sLabel46: TsLabel;sLabel47: TsLabel;sLabel3: TsLabel;sLabel4: TsLabel;sLabel5: TsLabel;sLabel2: TsLabel;sLabel48: TsLabel;sLabel49: TsLabel;
     sLabel50: TsLabel;sLabel11: TsLabel;sLabel12: TsLabel;sLabel1: TsLabel;sLabel51: TsLabel;sLabel52: TsLabel;sLabel17: TsLabel;sLabel18: TsLabel;
     sLabel20: TsLabel;sLabel21: TsLabel;sLabel22: TsLabel;sLabel58: TsLabel;sLabel59: TsLabel;sLabel64: TsLabel;sLabel65: TsLabel;sLabel66: TsLabel;sLabel67: TsLabel;sLabel68: TsLabel;sLabel69: TsLabel;sLabel23: TsLabel;
@@ -117,14 +123,14 @@ type
     sCheckBox59: TsCheckBox;sCheckBox79: TsCheckBox;sCheckBox80: TsCheckBox;sCheckBox81: TsCheckBox;sCheckBox82: TsCheckBox;
     sCheckBox83: TsCheckBox;sCheckBox84: TsCheckBox;sCheckBox85: TsCheckBox;sCheckBox86: TsCheckBox;sCheckBox87: TsCheckBox;sCheckBox88: TsCheckBox;
     sCheckBox89: TsCheckBox;sCheckBox91: TsCheckBox;sCheckBox95: TsCheckBox;sCheckBox92: TsCheckBox;sCheckBox93: TsCheckBox;sCheckBox94: TsCheckBox;
-    sCheckBox90: TsCheckBox;sCheckBox96: TsCheckBox;sCheckBox98: TsCheckBox;sCheckBox99: TsCheckBox;sCheckBox101: TsCheckBox;
+    sCheckBox90: TsCheckBox;sCheckBox96: TsCheckBox;sCheckBox98: TsCheckBox;sCheckBox99: TsCheckBox;sCheckBox101: TsCheckBox;    sCheckBox62: TsCheckBox;
     sCheckBox100: TsCheckBox;sCheckBox102: TsCheckBox;sCheckBox103: TsCheckBox;sCheckBox104: TsCheckBox;sCheckBox105: TsCheckBox;sCheckBox106: TsCheckBox;
     sCheckBox107: TsCheckBox;sCheckBox108: TsCheckBox;sCheckBox109: TsCheckBox;sCheckBox25: TsCheckBox;sCheckBox42: TsCheckBox;sCheckBox45: TsCheckBox;
     sCheckBox46: TsCheckBox;sCheckBox110: TsCheckBox;sCheckBox111: TsCheckBox;sCheckBox112: TsCheckBox;sCheckBox113: TsCheckBox;sCheckBox115: TsCheckBox;
     sCheckBox116: TsCheckBox;sCheckBox117: TsCheckBox;sCheckBox118: TsCheckBox;sCheckBox119: TsCheckBox;sCheckBox120: TsCheckBox;sCheckBox121: TsCheckBox;
     sCheckBox122: TsCheckBox;sCheckBox123: TsCheckBox;sCheckBox124: TsCheckBox;sCheckBox125: TsCheckBox;sCheckBox126: TsCheckBox;sCheckBox114: TsCheckBox;
     sCheckBox127: TsCheckBox;sCheckBox9: TsCheckBox;sCheckBox10: TsCheckBox;sCheckBox29: TsCheckBox;sCheckBox32: TsCheckBox;sCheckBox33: TsCheckBox;
-    sCheckBox34: TsCheckBox;sCheckBox44: TsCheckBox;sCheckBox128: TsCheckBox;sCheckBox129: TsCheckBox;sCheckBox130: TsCheckBox;
+    sCheckBox34: TsCheckBox;sCheckBox44: TsCheckBox;sCheckBox128: TsCheckBox;sCheckBox129: TsCheckBox;sCheckBox130: TsCheckBox;sCheckBox60: TsCheckBox;sCheckBox61: TsCheckBox;sCheckBox97: TsCheckBox;
 //  sComboBox Components
     sComboBox18: TsComboBox;sComboBox10: TsComboBox;sComboBox11: TsComboBox;sComboBox12: TsComboBox;sComboBox13: TsComboBox;sComboBox14: TsComboBox;
     sComboBox15: TsComboBox;sComboBox16: TsComboBox;sComboBox17: TsComboBox;sComboBox19: TsComboBox;sComboBox2: TsComboBox;sComboBox3: TsComboBox;
@@ -137,17 +143,16 @@ type
     sComboBox58: TsComboBox;sComboBox59: TsComboBox;sComboBox60: TsComboBox;sComboBox61: TsComboBox;sComboBox62: TsComboBox;sComboBox63: TsComboBox;
     sComboBox64: TsComboBox;sComboBox65: TsComboBox;sComboBox66: TsComboBox;sComboBox67: TsComboBox;sComboBox68: TsComboBox;sComboBox69: TsComboBox;
     sComboBox70: TsComboBox;sComboBox71: TsComboBox;sComboBox72: TsComboBox;sComboBox6: TsComboBox;sComboBox7: TsComboBox;sComboBox8: TsComboBox;
-    sComboBox73: TsComboBox;sComboBox74: TsComboBox;sComboBox75: TsComboBox;sComboBox76: TsComboBox;
+    sComboBox73: TsComboBox;sComboBox74: TsComboBox;sComboBox75: TsComboBox;sComboBox76: TsComboBox;sComboBox38: TsComboBox;sComboBox39: TsComboBox;sComboBox40: TsComboBox;sComboBox41: TsComboBox;
 //  sEdit Components
     sEdit15: TsEdit;sEdit56: TsEdit;sEdit57: TsEdit;sEdit2: TsEdit;sEdit4: TsEdit;sEdit3: TsEdit;sEdit8: TsEdit;sEdit10: TsEdit;sEdit6: TsEdit;sEdit9: TsEdit;
     sEdit7: TsEdit;sEdit11: TsEdit;sEdit5: TsEdit;sEdit58: TsEdit;sEdit59: TsEdit;sEdit60: TsEdit;sEdit61: TsEdit;sEdit62: TsEdit;sEdit63: TsEdit;sEdit64: TsEdit;
-    sEdit1: TsEdit;sEdit53: TsEdit;sEdit65: TsEdit;sEdit66: TsEdit;sEdit54: TsEdit;sEdit55: TsEdit;sEdit74: TsEdit;
-    sEdit75: TsEdit;sEdit81: TsEdit;sEdit82: TsEdit;sEdit83: TsEdit;sEdit84: TsEdit;
-    sEdit85: TsEdit;sEdit86: TsEdit;sEdit87: TsEdit;sEdit88: TsEdit;sEdit89: TsEdit;sEdit90: TsEdit;sEdit91: TsEdit;sEdit92: TsEdit;sEdit93: TsEdit;sEdit94: TsEdit;
-    sEdit95: TsEdit;sEdit98: TsEdit;sEdit99: TsEdit;sEdit100: TsEdit;sEdit101: TsEdit;sEdit102: TsEdit;sEdit103: TsEdit;sEdit104: TsEdit;sEdit105: TsEdit;
-    sEdit106: TsEdit;sEdit107: TsEdit;sEdit108: TsEdit;sEdit109: TsEdit;sEdit110: TsEdit;sEdit111: TsEdit;sEdit112: TsEdit;sEdit113: TsEdit;sEdit114: TsEdit;
+    sEdit1: TsEdit;sEdit53: TsEdit;sEdit65: TsEdit;sEdit66: TsEdit;sEdit54: TsEdit;sEdit55: TsEdit;sEdit74: TsEdit;sEdit75: TsEdit;sEdit81: TsEdit;sEdit82: TsEdit;
+    sEdit83: TsEdit;sEdit84: TsEdit;sEdit85: TsEdit;sEdit86: TsEdit;sEdit87: TsEdit;sEdit88: TsEdit;sEdit89: TsEdit;sEdit90: TsEdit;sEdit91: TsEdit;sEdit92: TsEdit;
+    sEdit93: TsEdit;sEdit94: TsEdit;sEdit95: TsEdit;sEdit98: TsEdit;sEdit99: TsEdit;sEdit100: TsEdit;sEdit101: TsEdit;sEdit102: TsEdit;sEdit103: TsEdit;sEdit104: TsEdit;
+    sEdit105: TsEdit;sEdit106: TsEdit;sEdit107: TsEdit;sEdit108: TsEdit;sEdit109: TsEdit;sEdit110: TsEdit;sEdit111: TsEdit;sEdit112: TsEdit;sEdit113: TsEdit;sEdit114: TsEdit;
     sEdit115: TsEdit;sEdit116: TsEdit;sEdit117: TsEdit;sEdit118: TsEdit;sEdit119: TsEdit;sEdit120: TsEdit;sEdit121: TsEdit;sEdit122: TsEdit;sEdit123: TsEdit;
-    sEdit124: TsEdit;sEdit96: TsEdit;sEdit97: TsEdit;sEdit12: TsEdit;sEdit13: TsEdit;sEdit16: TsEdit;sEdit17: TsEdit;sEdit125: TsEdit;
+    sEdit124: TsEdit;sEdit96: TsEdit;sEdit97: TsEdit;sEdit12: TsEdit;sEdit13: TsEdit;sEdit16: TsEdit;sEdit17: TsEdit;sEdit125: TsEdit;sEdit14: TsEdit;sEdit18: TsEdit;
 //  sBitBtn Components
     sBitBtn3: TsBitBtn;sBitBtn4: TsBitBtn;sBitBtn5: TsBitBtn;sBitBtn2: TsBitBtn;sBitBtn6: TsBitBtn;sBitBtn7: TsBitBtn;sBitBtn8: TsBitBtn;sBitBtn9: TsBitBtn;
     sBitBtn10: TsBitBtn;sBitBtn11: TsBitBtn;sBitBtn12: TsBitBtn;sBitBtn13: TsBitBtn;sBitBtn14: TsBitBtn;sBitBtn15: TsBitBtn;sBitBtn16: TsBitBtn;sBB_apply_ce_themes: TsBitBtn;
@@ -155,16 +160,15 @@ type
     sBitBtn25: TsBitBtn;sBitBtn26: TsBitBtn;sBitBtn34: TsBitBtn;sBitBtn33: TsBitBtn;sBitBtn32: TsBitBtn;sBitBtn31: TsBitBtn;sBitBtn30: TsBitBtn;sBitBtn29: TsBitBtn;
     sBitBtn28: TsBitBtn;sBitBtn27: TsBitBtn;sBitBtn35: TsBitBtn;sBitBtn36: TsBitBtn;sBitBtn37: TsBitBtn;sBitBtn38: TsBitBtn;sBitBtn39: TsBitBtn;sBitBtn40: TsBitBtn;
     sBitBtn41: TsBitBtn;sBitBtn42: TsBitBtn;sBitBtn43: TsBitBtn;sBitBtn44: TsBitBtn;sBitBtn45: TsBitBtn;sBitBtn46: TsBitBtn;sBitBtn47: TsBitBtn;sBitBtn48: TsBitBtn;
-    sBitBtn49: TsBitBtn;sBitBtn60: TsBitBtn;sBitBtn61: TsBitBtn;
-    sBitBtn62: TsBitBtn;sBitBtn63: TsBitBtn;sBitBtn64: TsBitBtn;
-    sBitBtn65: TsBitBtn;sBitBtn66: TsBitBtn;sBitBtn67: TsBitBtn;sBitBtn68: TsBitBtn;sBitBtn69: TsBitBtn;sBitBtn70: TsBitBtn;sBitBtn71: TsBitBtn;sBitBtn72: TsBitBtn;
-    sBitBtn73: TsBitBtn;sBitBtn75: TsBitBtn;sBitBtn76: TsBitBtn;sBitBtn77: TsBitBtn;sBitBtn78: TsBitBtn;sBitBtn79: TsBitBtn;sBitBtn80: TsBitBtn;
-    sBitBtn81: TsBitBtn;sBitBtn82: TsBitBtn;sBitBtn83: TsBitBtn;sBitBtn84: TsBitBtn;sBitBtn85: TsBitBtn;sBitBtn86: TsBitBtn;sBitBtn87: TsBitBtn;sBitBtn88: TsBitBtn;
-    sBitBtn89: TsBitBtn;sBitBtn90: TsBitBtn;sBitBtn91: TsBitBtn;sBitBtn92: TsBitBtn;sBitBtn93: TsBitBtn;sBitBtn96: TsBitBtn;sBitBtn97: TsBitBtn;sBitBtn94: TsBitBtn;
-    sBitBtn95: TsBitBtn;sBitBtn1: TsBitBtn;sBitBtn98: TsBitBtn;sBitBtn99: TsBitBtn;sBitBtn100: TsBitBtn;sBitBtn101: TsBitBtn;sBitBtn103: TsBitBtn;
-    sBitBtn104: TsBitBtn;
+    sBitBtn49: TsBitBtn;sBitBtn60: TsBitBtn;sBitBtn61: TsBitBtn;sBitBtn62: TsBitBtn;sBitBtn63: TsBitBtn;sBitBtn64: TsBitBtn;sBitBtn65: TsBitBtn;sBitBtn66: TsBitBtn;
+    sBitBtn67: TsBitBtn;sBitBtn68: TsBitBtn;sBitBtn69: TsBitBtn;sBitBtn70: TsBitBtn;sBitBtn71: TsBitBtn;sBitBtn72: TsBitBtn;sBitBtn73: TsBitBtn;sBitBtn75: TsBitBtn;
+    sBitBtn76: TsBitBtn;sBitBtn77: TsBitBtn;sBitBtn78: TsBitBtn;sBitBtn79: TsBitBtn;sBitBtn80: TsBitBtn;sBitBtn81: TsBitBtn;sBitBtn82: TsBitBtn;sBitBtn83: TsBitBtn;
+    sBitBtn84: TsBitBtn;sBitBtn85: TsBitBtn;sBitBtn86: TsBitBtn;sBitBtn87: TsBitBtn;sBitBtn88: TsBitBtn;sBitBtn89: TsBitBtn;sBitBtn90: TsBitBtn;sBitBtn91: TsBitBtn;
+    sBitBtn92: TsBitBtn;sBitBtn93: TsBitBtn;sBitBtn96: TsBitBtn;sBitBtn97: TsBitBtn;sBitBtn94: TsBitBtn;sBitBtn95: TsBitBtn;sBitBtn1: TsBitBtn;sBitBtn98: TsBitBtn;
+    sBitBtn99: TsBitBtn;sBitBtn100: TsBitBtn;sBitBtn101: TsBitBtn;sBitBtn103: TsBitBtn;sBitBtn104: TsBitBtn;sBitBtn102: TsBitBtn;sBitBtn105: TsBitBtn;sBitBtn106: TsBitBtn;
+    sBitBtn50: TsBitBtn;
 //  image Components
-    img1: TImage;img2: TImage;img_ce_theme: TImage;img85: TImage;img86: TImage;img87: TImage;img88: TImage;
+    img1: TImage;img2: TImage;img_ce_theme: TImage;img86: TImage;img87: TImage;img88: TImage;
     Menu_Image: TLMDNImage;
 //  Radio Button Components
     rb3: TRadioButton;rb4: TRadioButton;rb5: TRadioButton;rb6: TRadioButton;rb9: TRadioButton;rb10: TRadioButton;rb13: TRadioButton;rb14: TRadioButton;rb15: TRadioButton;rb16: TRadioButton;rb17: TRadioButton;rb18: TRadioButton;
@@ -184,7 +188,7 @@ type
     sbar_Mame_UITransparent_MamePlus: TsScrollBar;sbar_Mame_UITransparent_MameXT: TsScrollBar;
 //  TsButton Components
     sButton22: TsButton;sButton1: TsButton;sButton2: TsButton;sButton3: TsButton;sButton4: TsButton;sButton5: TsButton;sButton6: TsButton;sButton7: TsButton;
-    sButton8: TsButton;sButton9: TsButton;
+    sButton8: TsButton;sButton9: TsButton;sButton10: TsButton;sButton11: TsButton;sButton12: TsButton;sButton13: TsButton;sButton14: TsButton;
 //  TsAlphaImageList Components
     InBitBtn_Imagelist: TsAlphaImageList;
 //  TsLabelFX Components
@@ -206,58 +210,14 @@ type
     LMDFontComboBox1: TLMDFontComboBox;LMDFontSizeComboBox1: TLMDFontSizeComboBox;
 //  UnKnow Panels
     sPanel1: TsPanel;pnl1: TPanel;pnl2: TPanel;pnl3: TPanel;pnl4: TPanel;
+    nxtgrd_kigb: TNextGrid;
+    sButton15: TsButton;
+    sButton16: TsButton;
+    sButton17: TsButton;
 
-/////////////////////////////////    
-    sBitBtn102: TsBitBtn;
-    Pem_hatari_paths: TsPanel;
-    Pem_hatari_database: TsPanel;
-    sEdit14: TsEdit;
-    sBitBtn105: TsBitBtn;
-    sEdit18: TsEdit;
-    sBitBtn106: TsBitBtn;
-    sCheckBox60: TsCheckBox;
-    Save_Files: TSaveDialog;
-    sCheckBox61: TsCheckBox;
-    sComboBox38: TsComboBox;
-    sCheckBox97: TsCheckBox;
-    sCheckBox62: TsCheckBox;
-    sComboBox39: TsComboBox;
-    sLabel29: TsLabel;
-    sLabel30: TsLabel;
-    sLabel31: TsLabel;
-    sLabel44: TsLabel;
-    sLabel45: TsLabel;
-    sPanel37: TsPanel;
-    sPanel38: TsPanel;
-    sPanel39: TsPanel;
-    sPanel40: TsPanel;
-    sPanel41: TsPanel;
-    sBitBtn50: TsBitBtn;
-    nxtgrd_hatari: TNextGrid;
-    sButton10: TsButton;
-    sButton11: TsButton;
-    sButton12: TsButton;
-    sButton13: TsButton;
-    sButton14: TsButton;
-    sComboBox40: TsComboBox;
-    sComboBox41: TsComboBox;
+/////////////////////////////////
 
-
-    procedure sButton17Click(Sender: TObject);
-    procedure sComboBox22Change(Sender: TObject);
-    procedure sComboBox23Change(Sender: TObject);
-    procedure sComboBox24Change(Sender: TObject);
-    procedure sComboBox25Change(Sender: TObject);
-    procedure sBitBtn4Click(Sender: TObject);
-    procedure sBitBtn5Click(Sender: TObject);
     procedure pnl1Click(Sender: TObject);
-    procedure sCheckBox127Click(Sender: TObject);
-    procedure sBitBtn44Click(Sender: TObject);
-    procedure sBitBtn43Click(Sender: TObject);
-    procedure sBitBtn45Click(Sender: TObject);
-    procedure sBitBtn46Click(Sender: TObject);
-    procedure rb56Click(Sender: TObject);
-    procedure rb57Click(Sender: TObject);
 //  Main form actions
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -304,6 +264,11 @@ type
     procedure Hatari_ConfigRoms(Sender: TObject);
     procedure Hatari_ConfigScreenSound(Sender: TObject);
     procedure Hatari_ConfigJoy(Sender: TObject);
+//  pSX
+    procedure pSX_ConfigPaths(Sender: TObject);
+    procedure pSX_ConfigScreen(Sender: TObject);
+    procedure pSX_ConfigSound(Sender: TObject);
+
   private
     { Private declarations }
   public
@@ -322,9 +287,8 @@ var
 
 implementation
 
-Uses
-  Mame,psx,psx2,mainconf;
-
+uses
+  mainconf;
 
 {$R *.dfm}
 {$R resfiles/mycursors.res}
@@ -349,47 +313,13 @@ begin
   global_Find_FilesCanClose;
 end;
 
-procedure TConf.sButton17Click(Sender: TObject);
-begin
-  pSXStats;
-end;
-
 procedure TConf.FormDestroy(Sender: TObject);
 begin
-  RealpSXIni.Free;
   Mame_Global_MemoIni.Free;
   GamePlayTime_Memo.Free;
 end;
 
-procedure TConf.sComboBox22Change(Sender: TObject);
-begin
-    pSXsoundDeviceCheck;
-end;
-
-procedure TConf.sComboBox23Change(Sender: TObject);
-begin
-    pSXcdromDriverCheck;
-end;
-
-procedure TConf.sComboBox24Change(Sender: TObject);
-begin
-    pSXsubcodeCheck;
-end;
-
-procedure TConf.sComboBox25Change(Sender: TObject);
-begin
-    pSXscreenshotFormatCheck;
-end;
-
-procedure TConf.sBitBtn4Click(Sender: TObject);
-begin
-    HistoryButtonFindClick;
-end;
-
-procedure TConf.sBitBtn5Click(Sender: TObject);
-begin
-    MameInfoButtonFindClick;
-end;
+////////////////////////////////////////
 
 procedure TConf.tmr1Timer(Sender: TObject);
 begin
@@ -404,62 +334,6 @@ begin
   frm_color.ShowModal;
 end;
 
-procedure TConf.sCheckBox127Click(Sender: TObject);
-begin
-  ShowOnlySetupedMameBuilds;
-end;
-
-procedure TConf.sBitBtn44Click(Sender: TObject);
-begin
-  BuildsClick;
-end;
-
-procedure TConf.sBitBtn43Click(Sender: TObject);
-begin
-  ToolsClick;
-end;
-
-procedure TConf.sBitBtn45Click(Sender: TObject);
-begin
-  Builds_MamePlus;
-end;
-
-procedure TConf.sBitBtn46Click(Sender: TObject);
-begin
-  Builds_MameXT;
-end;
-
-procedure TConf.rb56Click(Sender: TObject);
-begin
-  Tools_SystemFont_RadioButtonClick;
-end;
-
-procedure TConf.rb57Click(Sender: TObject);
-begin
-  Tools_DirectoryFont_RadioButtonClick;
-end;
-
-procedure TConf.nxtgrd_ips_mameplusCellClick(Sender: TObject; ACol,
-  ARow: Integer);
-begin
-  IpsMamePlus_CellClick(Acol,Arow);
-end;
-
-procedure TConf.nxtgrd_ips_mameplusExpand(Sender: TObject; ARow: Integer);
-begin
-  IpsMamePlus_Expand(ARow);
-end;
-
-procedure TConf.nxtgrd_ips_mamextCellClick(Sender: TObject; ACol,
-  ARow: Integer);
-begin
-  IpsMameXT_CellClick(Acol,Arow);
-end;
-
-procedure TConf.nxtgrd_ips_mamextExpand(Sender: TObject; ARow: Integer);
-begin
-  IpsMameXT_Expand(ARow);
-end;
 
 procedure TConf.CheckUpKey(Sender: TObject);
 var
@@ -638,6 +512,8 @@ begin
     SelectMameUp
   else if TsBitBtn(sender).Hint = 'Select_mame_button_down' then
     SelectMameDown
+  else if TsCheckBox(Sender).Hint = 'Show Setuped Mame' then
+    ShowOnlySetupedMameBuilds
   else if TsBitBtn(sender).Hint = 'Show_results_from_rom_paths' then
     ShowRomPathResults
   else if TsComboBox(sender).Hint = 'Add_or_Choose_rom_directories' then
@@ -691,8 +567,8 @@ procedure TConf.Mame_ManageGraphics(Sender: TObject);
 begin
   if TsScrollBar(Sender).Hint = 'Change_emulation_speed' then
     MameEmulationSpeedChange
-  else if TsComboBox(Sender).Hint = 'Change_rotation' then
-    MameRotationChange
+//  else if TsComboBox(Sender).Hint = 'Change_rotation' then
+//    MameRotationChange
   else if TsScrollBar(Sender).Hint = 'Change_pause_brightness' then
     MamePauseChange
   else if TsScrollBar(Sender).Hint = 'Change_gamma' then
@@ -757,7 +633,15 @@ end;
 
 procedure TConf.Mame_ManageBuilds(Sender: TObject);
 begin
-  if TsCheckBox(Sender).Hint = 'Mplus_check_hiscore' then
+  if TsBitBtn(Sender).Hint = 'Builds' then
+    BuildsClick
+  else if TsBitBtn(Sender).Hint = 'Tools' then
+    ToolsClick
+  else if TsBitBtn(Sender).Hint = 'MamePlus' then
+    Builds_MamePlus
+  else if TsBitBtn(Sender).Hint = 'MameXT' then
+    Builds_MameXT
+  else if TsCheckBox(Sender).Hint = 'Mplus_check_hiscore' then
     HiScorePath_MamePlus
   else if TsBitBtn(Sender).Hint = 'Mplus_find_hiscore' then
     FindHiScoreDat_MamePlus
@@ -781,6 +665,10 @@ begin
     GetMameXT_Game_CountTime
   else if TsBitBtn(Sender).Hint = 'Mxt_zero_games_count_times' then
     ZeroPlayTime_Count(sComboBox76.Text)
+  else if TRadioButton(Sender).Hint = 'System font' then
+    Tools_SystemFont_RadioButtonClick
+  else if TRadioButton(Sender).Hint = 'Directory font' then
+    Tools_DirectoryFont_RadioButtonClick
   else if TLMDFontComboBox(Sender).Hint = 'Tools_change_font' then
     Tools_FontComboBoxChange
   else if TsBitBtn(Sender).Hint = 'Tools_find_font' then
@@ -789,6 +677,28 @@ begin
     Tools_FontSizeComboBoxChange
   else if TsBitBtn(Sender).Hint = 'Tools_create_font' then
     Tools_CreateFont;
+end;
+
+procedure TConf.nxtgrd_ips_mameplusCellClick(Sender: TObject; ACol,
+  ARow: Integer);
+begin
+  IpsMamePlus_CellClick(Acol,Arow);
+end;
+
+procedure TConf.nxtgrd_ips_mameplusExpand(Sender: TObject; ARow: Integer);
+begin
+  IpsMamePlus_Expand(ARow);
+end;
+
+procedure TConf.nxtgrd_ips_mamextCellClick(Sender: TObject; ACol,
+  ARow: Integer);
+begin
+  IpsMameXT_CellClick(Acol,Arow);
+end;
+
+procedure TConf.nxtgrd_ips_mamextExpand(Sender: TObject; ARow: Integer);
+begin
+  IpsMameXT_Expand(ARow);
 end;
 
 procedure TConf.Mame_ManageDatabase(Sender: TObject);
@@ -872,6 +782,52 @@ begin
     SetHatari_Mapping
   else if TsBitBtn(Sender).Hint = 'Eject_mapping' then
     EjectHatari_Mapping;
+end;
+
+procedure TConf.pSX_ConfigPaths(Sender: TObject);
+begin
+  if TsBitBtn(Sender).Hint = 'pSX_exe' then
+    Add_pSX_exe_file
+  else if TsBitBtn(Sender).Hint = 'pSX_bios' then
+    Add_pSX_bios_file
+  else if TsBitBtn(Sender).Hint = 'pSX_screenshotsdir' then
+    SetpSX_ScreenShotsDir
+  else if TsBitBtn(Sender).Hint = 'pSX_cdimagesdir' then
+    SetpSX_CDImagesDir
+  else if TsBitBtn(Sender).Hint = 'pSX_savestatesdir' then
+    SetpSX_SaveStatesDir
+  else if TsBitBtn(Sender).Hint = 'pSX_memorycardsdir' then
+    SetpSX_MemoryCardsDir
+  else if TsBitBtn(Sender).Hint = 'pSX_mcard1' then
+    SetpSX_Card1
+  else if TsBitBtn(Sender).Hint = 'pSX_mcard2' then
+    SetpSX_Card2
+  else if TsBitBtn(Sender).Hint = 'pSX_ejectmcard1' then
+    EjectpSX_Card1
+  else if TsBitBtn(Sender).Hint = 'pSX_ejectmcard2' then
+    EjectpSX_Card2;  
+end;
+
+procedure TConf.pSX_ConfigScreen(Sender: TObject);
+begin
+  if TsScrollBar(Sender).Hint = 'pSX_gamma' then
+    pSX_gammaChange
+  else if TsScrollBar(Sender).Hint = 'pSX_brightness' then
+    pSX_brightnessChange
+  else if TsScrollBar(Sender).Hint = 'pSX_contrast' then
+    pSX_contrastChange
+  else if TsBitBtn(Sender).Hint = 'pSX_resetgraphics_to_default' then
+    pSX_ResetGraphs;
+end;
+
+procedure TConf.pSX_ConfigSound(Sender: TObject);
+begin
+  if TsCheckBox(Sender).Hint = 'pSX_same' then
+    pSX_sameAsEmulatedMachine
+  else if TsScrollBar(Sender).Hint = 'pSX_latancy' then
+    pSX_latancyChange
+  else if TsScrollBar(Sender).Hint = 'pSX_xalatancy' then
+    pSX_XAlatancyChange;
 end;
 
 end.

@@ -8,11 +8,9 @@ uses
   Windows,
   Dialogs,
   main in 'code\main\main.pas' {Conf},
-  mame in 'code\emulators\arcade\mame\mame.pas',
   mainconf in 'code\main\mainconf.pas',
   FunctionX in 'code\others\FunctionX.pas',
   psx in 'code\emulators\playstation\psxemulator\psx.pas',
-  psx2 in 'code\emulators\playstation\psxemulator\psx2.pas',
   psxdata in 'code\emulators\playstation\psxemulator\psxdata.pas',
   wizard in 'code\others\wizard.pas' {FormWizard},
   menu in 'code\main\menu.pas',
@@ -54,7 +52,9 @@ uses
   wg_timedate in 'code\widgets_\wg_timedate.pas',
   wg_weather in 'code\widgets_\wg_weather.pas',
   hatari_paths in 'code\hatari_\hatari_paths.pas',
-  hatari_database in 'code\hatari_\hatari_database.pas';
+  hatari_database in 'code\hatari_\hatari_database.pas',
+  psx_database in 'code\psx_\psx_database.pas',
+  kigb_database in 'code\kigb_\kigb_database.pas';
 
 var
   Map : THandle;

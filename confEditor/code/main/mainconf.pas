@@ -3,14 +3,14 @@ unit mainconf;
 interface
 uses
   Windows,Variants,Classes,SysUtils,Forms,StdCtrls,ComCtrls,IniFiles,ExtCtrls,
-  Graphics,FunctionX,
-  main,
+  Graphics,FunctionX,sPanel,
   form_splash,
   menu,
   ce_themes,ce_config,
   mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
   zinc_paths,zinc_graphics,zinc_sound,zinc_database,
   hatari_paths,hatari_system,hatari_roms,hatari_screen,hatari_joy,hatari_database,
+  psx_paths,psx_screen,psx_sound,psx_others,psx_database,
   OmniXML,OmniXMLUtils,mame_xmlext,ce_xmlext;
 
 
@@ -31,6 +31,8 @@ uses
   procedure ShowHatariProgress(progress: Integer; Comment: string);
   
   procedure StartEmupSX;
+  procedure ShowpSXProgress(progress: Integer; Comment: string);
+
   procedure StartEmuKigb;
   procedure StartProgWeather;
   procedure StartProTimeDate;
@@ -48,6 +50,7 @@ uses
 var
 //Application Vars
   ExtraFePath: string;
+  run: Integer;
 //Cursors
   Arrow,TArrow,Link,Busy,Horizontal,Vertical,Precision : Byte;
 //ConfEditor Vars
@@ -72,12 +75,16 @@ var
   Hatari_Exe,FullPathHatari_Exe,Hatari_confeditor_ini,Hatari_Tos,Hatari_FullPathTos: string;
   Hatari_Config,Hatari_ini: TIniFile;
 //pSX Vars
+  pSX_Exe,FullPathpSX_Exe,pSX_confEditor_ini: string;
+  pSX_Config,pSX_Ini: TIniFile;
 //Kigb Vars
 //Weather Vars
 //TimeDate Vars
 
 implementation
 
+uses
+  main;
 Procedure StartSkinEngine;
 var
   skinnames: TStringList;
@@ -738,7 +745,6 @@ begin
   Conf.sPanel18.Cursor := Precision;
   Conf.sPanel19.Cursor := Precision;
   Conf.sPanel20.Cursor := Precision;
-  Conf.img85.Cursor := Arrow;
   Conf.sbar_psx_latency.Cursor := Horizontal;
   Conf.sbar_psx_xalatency.Cursor := Horizontal;
   //Panel pSX_Others
@@ -952,38 +958,58 @@ begin
 end;
 
 procedure HideAllPanels;
+const
+  ConfEditorPanels: array [0..2] of string = ('themes','config','wizard');
+  ExtraFePanels: array [0..1] of string = ('configuration','themes');
+  MamePanels: array [0..5] of string = ('dirs','graphics','sound','others','builds','database');
+  ZincPanels: array [0..3] of string = ('paths','graphics','sound','database');
+  HatariPanels: array [0..5] of string = ('paths','system','roms','screen','joy','database');
+  pSXPanels: array [0..4] of string = ('paths','screen','sound','others','database');
+  KiGBPanels: array [0..4] of string = ('paths','screen','sound','others','database');
+  WidgetsPanels: array [0..1] of string = ('weather','timedate');
+var
+  comp : TComponent;
 begin
-  Conf.Pce_themes.Left := 727;
-  Conf.Pce_config.Left := 727;
-  Conf.Pce_wizard.Left := 727;
-  Conf.Pem_mame_dirs.Left := 727;
-  Conf.Pem_mame_graphics.Left := 727;
-  Conf.Pem_mame_sound.Left := 727;
-  Conf.Pem_mame_others.Left := 727;
-  Conf.Pem_mame_builds.Left := 727;
-  Conf.Pem_mame_database.Left := 727;
-  Conf.Pwg_weather.Left := 727;
-  Conf.Pwg_timedate.Left := 727;
-  Conf.Pexf_configuration.Left := 727;
-  Conf.Pexf_themes.Left := 727;
-  Conf.Pem_zinc_paths.Left := 727;
-  Conf.Pem_zinc_graphics.Left := 727;
-  Conf.Pem_zinc_sound.Left := 727;
-  Conf.Pem_zinc_database.Left := 727;
-  Conf.Pem_hatari_paths.Left := 727;
-  Conf.Pem_hatari_system.Left := 727;
-  Conf.Pem_hatari_roms.Left := 727;
-  Conf.Pem_hatari_screen.Left := 727;
-  Conf.Pem_hatari_joy.Left := 727;
-  Conf.Pem_hatari_database.Left := 727;
-  Conf.Pem_psx_paths.Left := 727;
-  Conf.Pem_psx_screen.Left := 727;
-  Conf.Pem_psx_sound.Left := 727;
-  Conf.Pem_psx_others.Left := 727;
-  Conf.Pem_kigb_paths.Left := 727;
-  Conf.Pem_kigb_screen.Left := 727;
-  Conf.Pem_kigb_sound.Left := 727;
-  Conf.Pem_kigb_others.Left := 727;
+  for run := 0 to 2 do
+    begin
+      Comp := FindComponentEx('Conf.Pce_' + ConfEditorPanels[run]);
+      TsPanel(comp).Left := 727;
+    end;
+  for run := 0 to 1 do
+    begin
+      Comp := FindComponentEx('Conf.Pexf_' + ExtraFePanels[run]);
+      TsPanel(comp).Left := 727;
+    end;
+  for run := 0 to 5 do
+    begin
+      Comp := FindComponentEx('Conf.Pem_mame_' + MamePanels[run]);
+      TsPanel(comp).Left := 727;
+    end;
+  for run := 0 to 3 do
+    begin
+      Comp := FindComponentEx('Conf.Pem_zinc_' + ZincPanels[run]);
+      TsPanel(comp).Left := 727;
+    end;
+  for run := 0 to 5 do
+    begin
+      Comp := FindComponentEx('Conf.Pem_hatari_' + HatariPanels[run]);
+      TsPanel(comp).Left := 727;
+    end;
+  for run := 0 to 4 do
+    begin
+      Comp := FindComponentEx('Conf.Pem_psx_' + pSXPanels[run]);
+      TsPanel(comp).Left := 727;
+    end;
+  for run := 0 to 4 do
+    begin
+      Comp := FindComponentEx('Conf.Pem_kigb_' + KiGBPanels[run]);
+      TsPanel(comp).Left := 727;
+    end;
+  for run := 0 to 1 do
+    begin
+      Comp := FindComponentEx('Conf.Pwg_' + WidgetsPanels[run]);
+      TsPanel(comp).Left := 727;
+    end;
 end;
 
 procedure StartConfEditor;
@@ -1250,7 +1276,23 @@ end;
 
 procedure StartEmupSX;
 begin
-
+  pSX_confEditor_ini := ExtractFilePath(Application.ExeName) + 'media\emulators\consoles\playstation\psxemulator\config.in';
+  if FileExists(pSX_confEditor_ini) then
+    begin
+      pSX_Config := TIniFile.Create(pSX_confEditor_ini);
+      Started := True;
+      SetpSX_PathsfrompSXIni;
+      ShowpSXProgress(20,'pSX Paths Ready');
+      SetpSX_ScreenfrompSXIni;
+      ShowpSXProgress(100,'pSX Screen Ready');
+      SetpSX_SoundfrompSXIni;
+      ShowpSXProgress(10,'');
+      SetpSX_OthersfrompSXIni;
+//      ShowpSXProgress(10,'');
+//      SetpSX_DatabasefrompSXIni;
+//      ShowpSXProgress(10,'');
+      Started := False;
+    end;
 end;
 
 procedure StartEmuKigb;
@@ -1323,6 +1365,13 @@ begin
 end;
 
 procedure ShowHatariProgress(progress: Integer; Comment: string);
+begin
+  Splash_Screen.Progress_Label(progress,Comment);
+  Application.ProcessMessages;
+  Sleep(50);
+end;
+
+procedure ShowpSXProgress(progress: Integer; Comment: string);
 begin
   Splash_Screen.Progress_Label(progress,Comment);
   Application.ProcessMessages;
