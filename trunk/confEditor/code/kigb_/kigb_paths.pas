@@ -13,7 +13,7 @@ implementation
 
 uses
   main,mainconf,menu,FunctionX,onflycomponents,
-  kigb_screen,kigb_sound,kigb_others;
+  kigb_screen,kigb_sound,kigb_others,kigb_database;
 
 procedure Show_kigb_pathspanel;
 begin
@@ -22,7 +22,9 @@ begin
   else if (Cmenustate = 'em_kigb_sound') then
     em_kigb_sound_FreeDynamicComps
   else if (Cmenustate = 'em_kigb_others') then
-    em_kigb_others_FreeDynamicComps;
+    em_kigb_others_FreeDynamicComps
+  else if (Cmenustate = 'em_kigb_database') then
+    em_kigb_database_FreeDynamicComps;
   ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
   Cmenustate := 'em_kigb_paths';
   em_kigb_paths_ShowDynamicComps;
