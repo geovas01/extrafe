@@ -12,9 +12,11 @@
   * ~~<font color=red>Master Config settings for Zinc.</font>~~ (100% Done)
   * ~~<font color=red>Creating, manipulating, setting zinc database in XML. </font>~~ (100% Done)
   * <font color='Blue'>Master Config settings for Hatari.</font> (85% Done)
-  * Creating, manipulating, setting Hatari database in xml (10% Done)
-  * Master Config settings for pSX. (20% Done)
+  * Creating, manipulating, setting "Atari ST" database in xml (10% Done)
+  * <font color='Blue'>Master Config settings for pSX.</font> (50% Done)
+  * Creating, manipulating, setting "Playstation" database in xml (5% Done)
   * Master Config settings for Kigb. (20% Done)
+  * Creating, manipulating, setting "GameBoy" database in xml (5% Done)
   * GUID, and Master Settings for Weather widget. (0% Done)
   * Time and Date, local and global settings widget. (0% Done)
 
