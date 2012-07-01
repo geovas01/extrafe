@@ -3,15 +3,18 @@ unit onflycomponents;
 interface
 
 uses
-  Graphics,Windows,SysUtils,ExtCtrls,Controls,Forms,
+  Graphics,Windows,SysUtils,ExtCtrls,Controls,Forms,StdCtrls,
   pngimage,sLabel;
 
   procedure Image_Comp(Location: TWinControl; Picture_path: string; Pic_Left,Pic_Top,Pic_Width,Pic_Height,Numofcomp: Integer; Pic_Trans: Boolean);
   procedure Label_Comp(Location: TWinControl; Text: String; Label_Left,Label_Top,Numofcomp: Integer; Label_Autosize,Label_FontBold,Label_Trans: Boolean);
+  procedure Memo_Comp(Location: TWinControl; NumOfComp: Integer; Aling:string; Memo_Left, Memo_Top, Memo_Width, Memo_Height: Integer; Memo_Visible: Boolean);
+  procedure MemoEmu_Comp(Location: TWinControl; NumOfComp: Integer);
 
 var
   MyImage: TImage;
   MyLabel: TsLabel;
+  MyMemoEmu,MyMemo: TMemo;
 
 implementation
 
@@ -48,5 +51,21 @@ begin
   MyLabel.Transparent := Label_Trans;
   MyLabel.Visible := True;
 end;
+
+procedure Memo_Comp(Location: TWinControl; NumOfComp: Integer; Aling:string; Memo_Left, Memo_Top, Memo_Width, Memo_Height: Integer; Memo_Visible: Boolean);
+begin
+//
+end;
+
+procedure MemoEmu_Comp(Location: TWinControl; NumOfComp: Integer);
+begin
+  MyMemoEmu := TMemo.Create(Conf);
+  MyMemoEmu.Name := 'MemoEmu'+IntToStr(NumOfComp);
+  MyMemoEmu.Parent := Location;
+  MyMemoEmu.Visible := False;
+  MyMemoEmu.Align := alClient;
+  MyMemoEmu.WordWrap := False;
+end;
+
 
 end.

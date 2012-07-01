@@ -7,7 +7,7 @@ uses
   Dialogs,StdCtrls,
   GLCrossPlatform, BaseClasses, GLScene, GLWin32Viewer,GLCoordinates,
   GLObjects, GLHUDObjects, GLMaterial, GLTexture, GLCadencer, GLBitmapFont,
-  GLWindowsFont;
+  GLWindowsFont,uBaseButton;
 
   type
   TMainForm = class(TForm)

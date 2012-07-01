@@ -206,6 +206,7 @@ begin
   Cmenustate := 'em_computers_hatari_system';
   em_hatari_system_ShowDynamicComps;
   ShowButtonDown(7,'EM_COMPUTERS_ATARI_HATARI_SYSTEM');
+  Conf.Pem_hatari_joy.Tag := 0;
   ShowHidePanel(CurrentPanel,'Pem_hatari_system');
 end;
 

@@ -2,17 +2,44 @@ unit hatari_paths;
 
 interface
 uses
-  SysUtils,Classes,ExtCtrls,Forms,IniFiles;
+  SysUtils,Classes,ExtCtrls,Forms,IniFiles,global,FileCtrl;
 
   procedure SetHatari_PathsfromHatariIni;
+  procedure SaveHatari_PathsAtExit;
 
   procedure Add_hatari_exe_File;
   procedure CreatePathsForFistTime_Hatari;
   procedure Add_hatari_tos_File_and_setup_Hatari;
   procedure CreateFilesForFirstTime_Hatari;
-  procedure CreateDiskImagesDirs;
+  procedure CreateHatari_MediaAndGame_Paths;
   procedure Check_Tos_Images;
   procedure SetUpHatariforFistTime;
+
+  procedure SetHatari_ScreenshotsPath;
+  procedure SetHatari_MusicPath;
+  procedure SetHatari_BoxscansPath;
+  procedure SetHatari_DiskscansPath;
+  procedure SetHatari_AdvertsPath;
+  procedure SetHatari_CheatsPath;
+  procedure SetHatari_HintsPath;
+  procedure SetHatari_InstructionsPath;
+  procedure SetHatari_MapsPath;
+  procedure SetHatari_SolutionsPath;
+  procedure SetHatari_ReviewsPath;
+  procedure SetHatari_OtherPath;
+  procedure SetUpHatariScreenshotsPath;
+  procedure SetUpHatariMusicPath;
+  procedure SetUpHatariBoxscansPath;
+  procedure SetUpHatariDiskscansPath;
+  procedure SetUpHatariAdvertsPath;
+  procedure SetUpHatariCheatsPath;
+  procedure SetUpHatariHintsPath;
+  procedure SetUpHatariInstructionsPath;
+  procedure SetUpHatariMapsPath;
+  procedure SetUpHatariSolutionsPath;
+  procedure SetUpHatariReviewsPath;
+  procedure SetUpHatariOtherPath;
+
 
 
 // Menu actions
@@ -27,7 +54,7 @@ uses
   hatari_roms,hatari_screen,hatari_joy,hatari_database,hatari_system;
 
 var
-  OldHatari_Exe,OldHatari_Tos: string;  
+  OldHatari_Exe,oldPath,newPath: string;  
 
 procedure SetHatari_PathsfromHatariIni;
 begin
@@ -41,11 +68,43 @@ begin
       Conf.sEdit18.Enabled := True;
       Conf.sBitBtn106.Enabled := True;
       Conf.sEdit18.Text := Hatari_ini.ReadString('ROM','szTosImageFileName',Conf.sEdit18.Text);
+
+      Conf.sEdit19.Text := Hatari_Config.ReadString('DisksPath','Media_Snapshots',Conf.sEdit19.Text);
+      Conf.sEdit20.Text := Hatari_Config.ReadString('DisksPath','Media_Music',Conf.sEdit20.Text);
+      Conf.sEdit22.Text := Hatari_Config.ReadString('DisksPath','Media_Boxscans',Conf.sEdit22.Text);
+      Conf.sEdit24.Text := Hatari_Config.ReadString('DisksPath','Media_Diskscans',Conf.sEdit24.Text);
+      Conf.sEdit21.Text := Hatari_Config.ReadString('DisksPath','Media_Adverts',Conf.sEdit21.Text);
+      Conf.sEdit23.Text := Hatari_Config.ReadString('DisksPath','Media_Cheats',Conf.sEdit23.Text);
+      Conf.sEdit25.Text := Hatari_Config.ReadString('DisksPath','Media_Hints_Tips',Conf.sEdit25.Text);
+      Conf.sEdit26.Text := Hatari_Config.ReadString('DisksPath','Media_Instructions',Conf.sEdit26.Text);
+      Conf.sEdit27.Text := Hatari_Config.ReadString('DisksPath','Media_Maps',Conf.sEdit27.Text);
+      Conf.sEdit30.Text := Hatari_Config.ReadString('DisksPath','Media_Solutions',Conf.sEdit30.Text);
+      Conf.sEdit29.Text := Hatari_Config.ReadString('DisksPath','Media_Reviews',Conf.sEdit29.Text);
+      Conf.sEdit28.Text := Hatari_Config.ReadString('DisksPath','Media_Other',Conf.sEdit28.Text);
     end
   else
     begin
       Conf.sEdit18.Enabled := True;
       Conf.sBitBtn106.Enabled := True;
+    end;
+end;
+
+procedure SaveHatari_PathsAtExit;
+begin
+  if Hatari_Exe <> '' then
+    begin
+      Hatari_Config.WriteString('DisksPath','Media_Snapshots',Conf.sEdit19.Text);
+      Hatari_Config.WriteString('DisksPath','Media_Music',Conf.sEdit20.Text);
+      Hatari_Config.WriteString('DisksPath','Media_Boxscans',Conf.sEdit22.Text);
+      Hatari_Config.WriteString('DisksPath','Media_Diskscans',Conf.sEdit24.Text);
+      Hatari_Config.WriteString('DisksPath','Media_Adverts',Conf.sEdit21.Text);
+      Hatari_Config.WriteString('DisksPath','Media_Cheats',Conf.sEdit23.Text);
+      Hatari_Config.WriteString('DisksPath','Media_Hints_Tips',Conf.sEdit25.Text);
+      Hatari_Config.WriteString('DisksPath','Media_Instructions',Conf.sEdit26.Text);
+      Hatari_Config.WriteString('DisksPath','Media_Maps',Conf.sEdit27.Text);
+      Hatari_Config.WriteString('DisksPath','Media_Solutions',Conf.sEdit30.Text);
+      Hatari_Config.WriteString('DisksPath','Media_Reviews',Conf.sEdit29.Text);
+      Hatari_Config.WriteString('DisksPath','Media_Other',Conf.sEdit28.Text);
     end;
 end;
 
@@ -99,6 +158,7 @@ begin
   Conf.sEdit18.Text := Hatari_FullPathTos + Hatari_Tos;
   CreateFilesForFirstTime_Hatari;
   Check_Tos_Images;
+  CreateHatari_MediaAndGame_Paths;
   SetHatari_SystemfromHatariIni;
   SetHatari_RomsfromHatariIni;
   SetHatari_ScreenfromHatariIni;
@@ -374,12 +434,304 @@ begin
   Hatari_ini := TIniFile.Create(FullPathHatari_Exe + '\hatari.cfg');
 end;
 
-procedure CreateDiskImagesDirs;
+procedure CreateHatari_MediaAndGame_Paths;
+var
+  i: Integer;
+  mediapath: string;
 begin
-// Na sinexiso apo edo.
+// Create Games dir
+  CreateDir(FullPathHatari_Exe + 'disks');
+  Hatari_Config.WriteString('DisksPaths','RootPath',FullPathHatari_Exe + 'disks');
+  CreateDir(FullPathHatari_Exe + 'disks\games');
+  Hatari_Config.WriteString('DisksPath','RootGames',FullPathHatari_Exe + 'disks\games');
+  CreateDir(FullPathHatari_Exe + 'disks\games\bigcollections');
+  for i:= 0 to Conf.sComboBox40.Items.Count - 1 do
+    begin
+      if i <> 0 then
+        CreateDir(FullPathHatari_Exe + 'disks\games\bigcollections\' + Conf.sComboBox40.Items.Strings[i]);
+    end;
+  CreateDir(FullPathHatari_Exe + 'disks\games\smallcollections');
+  for i:= 0 to Conf.sComboBox41.Items.Count - 1 do
+    begin
+      if i <> 0 then
+        CreateDir(FullPathHatari_Exe + 'disks\games\smallcollections\' + Conf.sComboBox41.Items.Strings[i]);
+    end;
+  CreateDir(FullPathHatari_Exe + 'disks\games\single');
+  CreateDir(FullPathHatari_Exe + 'disks\games\single\hd');
+  CreateDir(FullPathHatari_Exe + 'disks\games\single\st');
+  CreateDir(FullPathHatari_Exe + 'disks\games\single\stx');
+  CreateDir(FullPathHatari_Exe + 'disks\demo');
+  CreateDir(FullPathHatari_Exe + 'disks\applications');
+  mediapath := FullPathHatari_Exe + 'disks\media\';
+  CreateDir(mediapath);
+  Hatari_Config.WriteString('DisksPath','RootMedia',mediapath);
+//
+  CreateDir(mediapath + 'snap');
+  Hatari_Config.WriteString('DisksPath','Media_Snapshots',mediapath + 'snap');
+  Conf.sEdit19.Text := mediapath + 'snap';
+
+  CreateDir(mediapath + 'music');
+  Hatari_Config.WriteString('DisksPath','Media_Music',mediapath + 'music');
+  Conf.sEdit20.Text := mediapath + 'music';
+  
+  CreateDir(mediapath + 'boxscans');
+  Hatari_Config.WriteString('DisksPath','Media_Boxscans',mediapath + 'boxscans');
+  Conf.sEdit22.Text := mediapath + 'boxscans';
+
+  CreateDir(mediapath + 'diskscans');
+  Hatari_Config.WriteString('DisksPath','Media_Diskscans',mediapath + 'diskscans');
+  Conf.sEdit24.Text := mediapath + 'diskscans';
+
+  CreateDir(mediapath + 'adverts');
+  Hatari_Config.WriteString('DisksPath','Media_Adverts',mediapath + 'adverts');
+  Conf.sEdit21.Text := mediapath + 'adverts';
+
+  CreateDir(mediapath + 'cheats');
+  Hatari_Config.WriteString('DisksPath','Media_Cheats',mediapath + 'cheats');
+  Conf.sEdit23.Text := mediapath + 'cheats';
+
+  CreateDir(mediapath + 'hints_tips');
+  Hatari_Config.WriteString('DisksPath','Media_Hints_Tips',mediapath + 'hints_tips');
+  Conf.sEdit25.Text := mediapath + 'hints_tips';
+
+  CreateDir(mediapath + 'instructions');
+  Hatari_Config.WriteString('DisksPath','Media_Instructions',mediapath + 'instructions');
+  Conf.sEdit26.Text := mediapath + 'instructions';
+
+  CreateDir(mediapath + 'maps');
+  Hatari_Config.WriteString('DisksPath','Media_Maps',mediapath + 'maps');
+  Conf.sEdit27.Text := mediapath + 'maps';
+
+  CreateDir(mediapath + 'solutions');
+  Hatari_Config.WriteString('DisksPath','Media_Solutions',mediapath + 'solutions');
+  Conf.sEdit30.Text := mediapath + 'solutions';
+
+  CreateDir(mediapath + 'reviews');
+  Hatari_Config.WriteString('DisksPath','Media_Reviews',mediapath + 'reviews');
+  Conf.sEdit29.Text := mediapath + 'reviews';
+
+  CreateDir(mediapath + 'other');
+  Hatari_Config.WriteString('DisksPath','Media_Other',mediapath + 'other');
+  Conf.sEdit28.Text := mediapath + 'other';
 end;
 
-//////////////////////////////////
+procedure SetHatari_ScreenshotsPath;
+begin
+  oldpath := Conf.sEdit19.Text;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_Screenshots';
+        global_Find_DirsClose;
+      end;
+  oldPath := '';
+end;
+
+procedure SetHatari_MusicPath;
+begin
+  oldpath := Conf.sEdit20.Text;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_Music';
+        global_Find_DirsClose;
+      end;
+  oldPath := '';
+end;
+
+procedure SetHatari_BoxscansPath;
+begin
+  oldpath := Conf.sEdit22.Text;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_Boxscans';
+        global_Find_DirsClose;
+      end;
+  oldPath := '';
+end;
+
+procedure SetHatari_DiskscansPath;
+begin
+  oldpath := Conf.sEdit24.Text;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_Diskscans';
+        global_Find_DirsClose;
+      end;
+  oldPath := '';
+end;
+
+procedure SetHatari_AdvertsPath;
+begin
+  oldpath := Conf.sEdit21.Text;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_Adverts';
+        global_Find_DirsClose;
+      end;
+  oldPath := '';
+end;
+
+procedure SetHatari_CheatsPath;
+begin
+  oldpath := Conf.sEdit23.Text;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_Cheats';
+        global_Find_DirsClose;
+      end;
+  oldPath := '';
+end;
+
+procedure SetHatari_HintsPath;
+begin
+  oldpath := Conf.sEdit25.Text;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_Hints';
+        global_Find_DirsClose;
+      end;
+  oldPath := '';
+end;
+
+procedure SetHatari_InstructionsPath;
+begin
+  oldpath := Conf.sEdit26.Text;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_Instructions';
+        global_Find_DirsClose;
+      end;
+  oldPath := '';
+end;
+
+procedure SetHatari_MapsPath;
+begin
+  oldpath := Conf.sEdit27.Text;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_Maps';
+        global_Find_DirsClose;
+      end;
+  oldPath := '';
+end;
+
+procedure SetHatari_SolutionsPath;
+begin
+  oldpath := Conf.sEdit30.Text;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_Solutions';
+        global_Find_DirsClose;
+      end;
+  oldPath := '';
+end;
+
+procedure SetHatari_ReviewsPath;
+begin
+  oldpath := Conf.sEdit29.Text;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_Reviews';
+        global_Find_DirsClose;
+      end;
+  oldPath := '';
+end;
+
+procedure SetHatari_OtherPath;
+begin
+  oldpath := Conf.sEdit28.Text;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_Other';
+        global_Find_DirsClose;
+      end;
+  oldPath := '';
+end;
+
+procedure SetUpHatariScreenshotsPath;
+begin
+  Conf.sEdit19.Text := newPath;
+  newPath := '';
+end;
+
+procedure SetUpHatariMusicPath;
+begin
+  Conf.sEdit20.Text := newPath;
+  newPath := '';
+end;
+
+procedure SetUpHatariBoxscansPath;
+begin
+  Conf.sEdit22.Text := newPath;
+  newPath := '';
+end;
+
+procedure SetUpHatariDiskscansPath;
+begin
+  Conf.sEdit24.Text := newPath;
+  newPath := '';
+end;
+
+procedure SetUpHatariAdvertsPath;
+begin
+  Conf.sEdit21.Text := newPath;
+  newPath := '';
+end;
+
+procedure SetUpHatariCheatsPath;
+begin
+  Conf.sEdit23.Text := newPath;
+  newPath := '';
+end;
+
+procedure SetUpHatariHintsPath;
+begin
+  Conf.sEdit25.Text := newPath;
+  newPath := '';
+end;
+
+procedure SetUpHatariInstructionsPath;
+begin
+  Conf.sEdit26.Text := newPath;
+  newPath := '';
+end;
+
+procedure SetUpHatariMapsPath;
+begin
+  Conf.sEdit27.Text := newPath;
+  newPath := '';
+end;
+
+procedure SetUpHatariSolutionsPath;
+begin
+  Conf.sEdit30.Text := newPath;
+  newPath := '';
+end;
+
+procedure SetUpHatariReviewsPath;
+begin
+  Conf.sEdit29.Text := newPath;
+  newPath := '';
+end;
+
+procedure SetUpHatariOtherPath;
+begin
+  Conf.sEdit28.Text := newPath;
+  newPath := '';
+end;
+
+//////////////////////////////////////////////////////////////////////////////
 procedure Show_hatari_pathspanel;
 begin
   if (Cmenustate = 'em_computers_hatari_system') then
@@ -396,6 +748,7 @@ begin
   Cmenustate := 'em_computers_hatari_paths';
   em_hatari_paths_ShowDynamicComps;
   ShowButtonDown(6,'EM_COMPUTERS_ATARI_HATARI_PATHS');
+  Conf.Pem_hatari_joy.Tag := 0;
   ShowHidePanel(CurrentPanel,'Pem_hatari_paths');
 end;
 

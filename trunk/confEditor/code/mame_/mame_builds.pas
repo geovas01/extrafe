@@ -337,57 +337,59 @@ var
   k,x: Integer;
   value,t1,t2: string;
   FoundHiScoreDir: Boolean;
+  Comp: TComponent;
 begin
   if (Mame_Exe = 'mamep.exe') or (Mame_Exe = 'mamepuiXT_x86.exe') or (Mame_Exe = 'mamepuiXT_x64.exe') then
     begin
       FoundHiScoreDir := False;
-      for k := 0 to Mame_Global_MemoIni.Lines.Count - 1 do
+      Comp := FindComponentEx('Conf.MemoEmu1');
+      for k := 0 to TMemo(Comp).Lines.Count - 1 do
         begin
-          value := Mame_Global_MemoIni.Lines.Strings[k];
+          value := TMemo(Comp).Lines.Strings[k];
           x := Pos(' ',value);
           t1 := Trim(Copy(value,0,x));
           t2 := Trim(Copy(value,x,100));
           if t1 = 'confirm_quit' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if (Conf.sCheckBox32.Checked = True) or (Conf.sCheckBox44.Checked = True) then
-                Mame_Global_MemoIni.Lines.Insert(k,'confirm_quit          1')
+                TMemo(Comp).Lines.Insert(k,'confirm_quit          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'confirm_quit          0');
+                TMemo(Comp).Lines.Insert(k,'confirm_quit          0');
             end
           else if t1 = 'audio_sync' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if (Conf.sCheckBox10.Checked = True) or (Conf.sCheckBox28.Checked = True) then
-                Mame_Global_MemoIni.Lines.Insert(k,'audio_sync          1')
+                TMemo(Comp).Lines.Insert(k,'audio_sync          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'audio_sync          0');
+                TMemo(Comp).Lines.Insert(k,'audio_sync          0');
             end
           else if t1 = 'hiscore_directory' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if (Conf.sCheckBox33.Checked = True) or (Conf.sCheckBox129.Checked = True) then
                 if Mame_Exe = 'mamep.exe' then
-                  Mame_Global_MemoIni.Lines.Insert(k,'hiscore_directory          '+Trim(Copy(Conf.sEdit12.Text,0,Length(Conf.sEdit12.Text)-11)))
+                  TMemo(Comp).Lines.Insert(k,'hiscore_directory          '+Trim(Copy(Conf.sEdit12.Text,0,Length(Conf.sEdit12.Text)-11)))
                 else
-                  Mame_Global_MemoIni.Lines.Insert(k,'hiscore_directory          '+Trim(Copy(Conf.sEdit16.Text,0,Length(Conf.sEdit16.Text)-11)));
+                  TMemo(Comp).Lines.Insert(k,'hiscore_directory          '+Trim(Copy(Conf.sEdit16.Text,0,Length(Conf.sEdit16.Text)-11)));
               FoundHiScoreDir := True;
             end
           else if t1 = 'ui_transparency' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Mame_Exe = 'mamep.exe' then
-                Mame_Global_MemoIni.Lines.Insert(k,'ui_transparency          '+Conf.sLabel34.Caption)
+                TMemo(Comp).Lines.Insert(k,'ui_transparency          '+Conf.sLabel34.Caption)
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'ui_transparency          '+Conf.sLabel37.Caption);
+                TMemo(Comp).Lines.Insert(k,'ui_transparency          '+Conf.sLabel37.Caption);
             end
           else if t1 = 'ipspath' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Mame_Exe = 'mamep.exe' then
-                Mame_Global_MemoIni.Lines.Insert(k,'ipspath          '+Conf.sEdit13.Text)
+                TMemo(Comp).Lines.Insert(k,'ipspath          '+Conf.sEdit13.Text)
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'ipspath          '+Conf.sEdit17.Text);
+                TMemo(Comp).Lines.Insert(k,'ipspath          '+Conf.sEdit17.Text);
             end;
         end;
       if IsApplyChecked = True then
@@ -397,16 +399,16 @@ begin
         end;
       if FoundHiScoreDir = False then
         begin
-          Mame_Global_MemoIni.Lines.Add('');
-          Mame_Global_MemoIni.Lines.Add('#');
-          Mame_Global_MemoIni.Lines.Add('# EXTRAFE EXTRA OPTIONS');
-          Mame_Global_MemoIni.Lines.Add('#');
-          Mame_Global_MemoIni.Lines.Add('hiscore_directory          hi');
-          Mame_Global_MemoIni.Lines.Add('hiscore_file          hiscore.dat');
-          Mame_Global_MemoIni.Lines.Add('ipspath                   ips');
-          Mame_Global_MemoIni.Lines.Add('ips');
+          TMemo(Comp).Lines.Add('');
+          TMemo(Comp).Lines.Add('#');
+          TMemo(Comp).Lines.Add('# EXTRAFE EXTRA OPTIONS');
+          TMemo(Comp).Lines.Add('#');
+          TMemo(Comp).Lines.Add('hiscore_directory          hi');
+          TMemo(Comp).Lines.Add('hiscore_file          hiscore.dat');
+          TMemo(Comp).Lines.Add('ipspath                   ips');
+          TMemo(Comp).Lines.Add('ips');
         end;
-      Mame_Global_MemoIni.Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
+      TMemo(Comp).Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
       FromMame_BuildsToFindBuilds:= False;
     end;
 end;

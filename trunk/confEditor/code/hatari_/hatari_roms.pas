@@ -2,7 +2,7 @@ unit hatari_roms;
 
 interface
 uses
-  SysUtils,Classes,ExtCtrls;
+  SysUtils,Classes,ExtCtrls,global,FileCtrl;
 
   procedure SetHatari_RomsfromHatariIni;
   procedure SaveHatari_RomsAtExit;
@@ -36,6 +36,9 @@ implementation
 uses
   main,mainconf,menu,FunctionX,onflycomponents,
   hatari_system,hatari_screen,hatari_joy,hatari_paths,hatari_database;
+
+var
+  oldPath,newPath: string;
 
 
 procedure SetHatari_RomsfromHatariIni;
@@ -135,8 +138,13 @@ end;
 
 procedure SetHatari_DiskImagesDir;
 begin
-  gFindFiles := 'hatari_DiskImagesDir';
-  Conf.Find_Files.Execute;
+  oldpath := Conf.sLabel65.Caption;
+  if FileCtrl.SelectDirectory(newpath,[sdAllowCreate,sdPerformCreate],0) then
+    if oldpath <> newpath  then
+      begin
+        gFindDirs := 'hatari_DiskImagesDir';
+        global_Find_DirsClose;
+      end;
 end;
 
 procedure SetHatari_HardDiskImage;
@@ -170,7 +178,7 @@ end;
 
 procedure SetUpHatariDiskImagesDir;
 begin
-  Conf.sLabel65.Caption := Conf.Find_Files.FileName;
+  Conf.sLabel65.Caption := newPath;
 end;
 
 procedure SetUpHatariHardDiskImage;
@@ -237,6 +245,7 @@ begin
   Cmenustate := 'em_computers_hatari_roms';
   em_hatari_roms_ShowDynamicComps;
   ShowButtonDown(8,'EM_COMPUTERS_ATARI_HATARI_DISKS');
+  Conf.Pem_hatari_joy.Tag := 0;
   ShowHidePanel(CurrentPanel,'Pem_hatari_roms');
 end;
 

@@ -25,7 +25,8 @@ uses
   mame_dirs,mame_graphics,mame_database,mame_builds,
   zinc_paths,
   hatari_paths,hatari_roms,hatari_joy,
-  psx_paths;
+  psx_paths,
+  kigb_paths;
 
 procedure global_Find_FilesCanClose;
 begin
@@ -80,7 +81,22 @@ begin
   else if gFindFiles = 'pSX_card1' then
     SetUPpSXCard1
   else if gFindFiles = 'pSX_card2' then
-    SetUPpSXCard2;
+    SetUPpSXCard2
+// Kigb
+  else if gFindFiles = 'Kigb_exe' then
+    CreateKigb_settings_firstTime
+  else if gFindFiles = 'Kigb_rom' then
+    SetUpKigbRomPath
+  else if gFindFiles = 'Kigb_snap' then
+    SetUpKigbSnapshotPath
+  else if gFindFiles = 'Kigb_save' then
+    SetUpKigbSavePath
+  else if gFindFiles = 'Kigb_savestate' then
+    SetUpKigbSaveStatePath
+  else if gFindFiles = 'Kigb_input' then
+    SetUpKigbInputPath
+  else if gFindFiles = 'Kigb_configure' then
+    SetUPKigbConfigurePath;
 end;
 
 procedure global_Find_FilesClose;
@@ -137,6 +153,14 @@ begin
           CheckPanel(TsPanel(component));
         end;
     end
+  else if (Conf.Pem_hatari_joy.Tag = 1) then
+    begin
+      for i := 37 to 41 do
+        begin
+          component := FindComponentEx('Conf.sPanel' + IntToStr(i));
+          CheckPanel(TsPanel(component));
+        end;
+    end;
 end;
 
 procedure RestoreTheOriginalColor;

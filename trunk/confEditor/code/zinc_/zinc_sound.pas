@@ -91,84 +91,83 @@ var
   sound_path,t1,t2,t3,TFile: string;
   SoundSave: TStringList;
   r: Integer;
-  ok: Boolean;
 begin
   if Zinc_Exe <> '' then
     begin
-  sound_path := Zinc_Config.ReadString('Zinc_Paths','Zinc_Sound',sound_path);
-  SoundSave := TStringList.Create;
-  AssignFile(sound_textfile,sound_path);
-  Reset(sound_textfile);
-  while not Eof(sound_textfile) do
-    begin
-      Readln(sound_textfile,Tfile);
-      r := Pos('=',TFile);
-      if r > 0 then
+      sound_path := Zinc_Config.ReadString('Zinc_Paths','Zinc_Sound',sound_path);
+      SoundSave := TStringList.Create;
+      AssignFile(sound_textfile,sound_path);
+      Reset(sound_textfile);
+      while not Eof(sound_textfile) do
         begin
-          t1 := Trim(Copy(TFile,0,r-1));
-          if t1 = '--use-sound' then
+          Readln(sound_textfile,Tfile);
+          r := Pos('=',TFile);
+          if r > 0 then
             begin
-              if Conf.sCheckBox79.Checked = True then
-                t2 := 'yes'
-              else
-                t2 := 'no';
+              t1 := Trim(Copy(TFile,0,r-1));
+              if t1 = '--use-sound' then
+                begin
+                  if Conf.sCheckBox79.Checked = True then
+                    t2 := 'yes'
+                  else
+                    t2 := 'no';
+                end
+              else if t1 = '--sound-filter-enable' then
+                begin
+                  if Conf.sCheckBox84.Checked = True then
+                    t2 := 'yes'
+                  else
+                    t2 := 'no';
+                end
+              else if t1 = '--sound-filter-cutoff' then
+                t2 := Conf.sEdit74.Text
+              else if t1 = '--sound-surround-lite-enable' then
+                begin
+                  if Conf.sCheckBox85.Checked = True then
+                    t2 := 'yes'
+                  else
+                    t2 := 'no';
+                end
+              else if t1 = '--sound-surround-lite-multiplier' then
+                t2 := Conf.sEdit75.Text
+              else if t1 = '--sound-stereo-exciter' then
+                begin
+                  if Conf.sCheckBox80.Checked = True then
+                    t2 := 'yes'
+                  else
+                    t2 := 'no';
+                end
+              else if t1 = '--use-slow-geometry' then
+                begin
+                  if Conf.sCheckBox81.Checked = True then
+                    t2 := 'yes'
+                  else
+                    t2 := 'no';
+                end
+              else if t1 = '--use-stackinram-hack' then
+                begin
+                  if Conf.sCheckBox82.Checked = True then
+                    t2 := 'yes'
+                  else
+                    t2 := 'no';
+                end
+              else if t1 = '--use-mem-predict' then
+                begin
+                  if Conf.sCheckBox83.Checked = True then
+                    t2 := 'yes'
+                  else
+                    t2 := 'no';
+                end;
+              t3 := t1 + '=' + t2;
             end
-          else if t1 = '--sound-filter-enable' then
-            begin
-              if Conf.sCheckBox84.Checked = True then
-                t2 := 'yes'
-              else
-                t2 := 'no';
-            end
-          else if t1 = '--sound-filter-cutoff' then
-            t2 := Conf.sEdit74.Text
-          else if t1 = '--sound-surround-lite-enable' then
-            begin
-              if Conf.sCheckBox85.Checked = True then
-                t2 := 'yes'
-              else
-                t2 := 'no';
-            end
-          else if t1 = '--sound-surround-lite-multiplier' then
-            t2 := Conf.sEdit75.Text
-          else if t1 = '--sound-stereo-exciter' then
-            begin
-              if Conf.sCheckBox80.Checked = True then
-                t2 := 'yes'
-              else
-                t2 := 'no';
-            end
-          else if t1 = '--use-slow-geometry' then
-            begin
-              if Conf.sCheckBox81.Checked = True then
-                t2 := 'yes'
-              else
-                t2 := 'no';
-            end
-          else if t1 = '--use-stackinram-hack' then
-            begin
-              if Conf.sCheckBox82.Checked = True then
-                t2 := 'yes'
-              else
-                t2 := 'no';
-            end
-          else if t1 = '--use-mem-predict' then
-            begin
-              if Conf.sCheckBox83.Checked = True then
-                t2 := 'yes'
-              else
-                t2 := 'no';
-            end;
-          t3 := t1 + '=' + t2;
-        end
-      else
-        t3 := TFile;
-      SoundSave.Add(t3);
+          else
+            t3 := TFile;
+          SoundSave.Add(t3);
+        end;
+      CloseFile(sound_textfile);
+      SoundSave.SaveToFile(sound_path);
+      SoundSave.Free;
     end;
-  CloseFile(sound_textfile);
-  SoundSave.SaveToFile(sound_path);
-  SoundSave.Free;
-  end;
 end;
 
 procedure Show_zinc_soundpanel;

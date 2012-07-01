@@ -22,9 +22,6 @@ uses
   procedure DisableMenuButtons(What: Boolean);
   procedure ShowHidePanel(hidePanel,showPanel: string);
   procedure ShowPathInCaption(OldText,NewText:string;Back,trimw: Boolean);
-  procedure ShowHelpInMainPanel(Button:Integer);
-  procedure TextForMainPanel(CButton: String);
-  procedure HideHelpFromMainPanel;
   procedure ChangeStatusInfo;
   procedure CurrentStateSave;
   procedure ShowMenuImage(Name: string);
@@ -256,11 +253,7 @@ begin
   Case Button of
     6 : begin
           if (Cmenustate = '') then
-            begin
-              ShowMenuImage('CONFEDITOR');
-              if (Cmenustate <> 'weather') and (Cmenustate <> 'timedate') then
-                ShowHelpInMainPanel(1);
-            end
+            ShowMenuImage('CONFEDITOR')
           else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or (Cmenustate = 'ce_configuration') or
             (Cmenustate = 'ce_themes') then
             ShowMenuImage('CONFEDITOR_WIZARD')
@@ -494,7 +487,6 @@ begin
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_OTHERS')
           else if (Cmenustate = 'em_kigb_database') then
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_DATABASE');
-          HideHelpFromMainPanel;
         end;
     7 : begin
           if Cmenustate = 'widgets' then
@@ -1085,8 +1077,8 @@ begin
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_paths') or (Cmenustate = 'em_consoles_psx_sound') or
     (Cmenustate = 'em_consoles_psx_others') or (Cmenustate = 'em_consoles_psx_database') then
     Show_psx_screenpanel
-  else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_sound') or
-    (Cmenustate = 'em_kigb_others') or (Cmenustate = 'em_kigb_database') then
+  else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_handheld_kigb_paths') or (Cmenustate = 'em_handheld_kigb_sound') or
+    (Cmenustate = 'em_handheld_kigb_others') or (Cmenustate = 'em_handheld_kigb_database') then
     Show_kigb_screenpanel
   else if (Cmenustate = 'widgets') or (Cmenustate = 'wg_weather') then
     Show_widget_timedate;
@@ -1122,8 +1114,8 @@ begin
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_paths') or
     (Cmenustate = 'em_consoles_psx_others') or (Cmenustate = 'em_consoles_psx_database') then
     Show_psx_soundpanel
-  else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_paths') or
-    (Cmenustate = 'em_kigb_others') or (Cmenustate = 'em_kigb_database') then
+  else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_handheld_kigb_screen') or (Cmenustate = 'em_handheld_kigb_paths') or
+    (Cmenustate = 'em_handheld_kigb_others') or (Cmenustate = 'em_handheld_kigb_database') then
     Show_kigb_soundpanel;
 end;
 
@@ -1155,8 +1147,8 @@ begin
       Cmenustate := 'em_handheld';
       ShowCurrentMenu(0,True,Cmenustate,16);
     end
-  else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
-    (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_database') then
+  else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_handheld_kigb_screen') or (Cmenustate = 'em_handheld_kigb_sound') or
+    (Cmenustate = 'em_handheld_kigb_paths') or (Cmenustate = 'em_handheld_kigb_database') then
     Show_kigb_otherspanel;
 end;
 
@@ -1171,8 +1163,8 @@ begin
   else if (Cmenustate = 'em_consoles_sony_psx') or (Cmenustate = 'em_consoles_psx_screen') or (Cmenustate = 'em_consoles_psx_sound') or
     (Cmenustate = 'em_consoles_psx_paths') or (Cmenustate = 'em_consoles_psx_others') then
     Show_psx_databasepanel
-  else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
-    (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_others') then
+  else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_handheld_kigb_screen') or (Cmenustate = 'em_handheld_kigb_sound') or
+    (Cmenustate = 'em_handheld_kigb_paths') or (Cmenustate = 'em_handheld_kigb_others') then
     Show_kigb_databasespanel;
 
 end;
@@ -1323,61 +1315,6 @@ begin
     end;
 end;
 
-procedure ShowHelpInMainPanel(Button:Integer);
-begin
-  if CE_SHelpInMain = True then
-    begin
-      case Button of
-        1 : begin
-              Conf.sLabelFX10.Visible := True;
-              Conf.sLabelFX10.Caption := Conf.sBitBtn6.Caption;
-              Conf.mmo2.Visible := True;
-              TextForMainPanel(Conf.sBitBtn6.Caption);
-            end;
-        2 : begin
-            end;
-        3 : begin
-            end;
-        4 : begin
-            end;
-        5 : begin
-            end;
-        6 : begin
-            end;
-        7 : begin
-            end;
-        8 : begin
-            end;
-        9 : begin
-            end;
-        10 : begin
-             end;
-      end;
-    end;
-end;
-
-procedure TextForMainPanel(CButton: String);
-begin
-  Conf.mmo2.Clear;
-  if CButton = 'ConfEditor' then
-    begin
-      conf.mmo2.Lines.Add('Welcome to the ConfEditor');
-      conf.mmo2.Lines.Add('');
-      conf.mmo2.Lines.Add('From this program you can configutate all the settings for the ExtraFE.');
-      conf.mmo2.Lines.Add('Just click to the buttons of the left to drive yo in the current menu settings.');
-      conf.mmo2.Lines.Add('');
-      conf.mmo2.Lines.Add('If you want to this help not showing just go to ConfEditor->Configuration and uncheck the checkbox that says "Help In Main Panel"');
-      conf.mmo2.Lines.Add('');
-      conf.mmo2.Lines.Add('Have Fun...');
-    end;
-end;
-
-procedure HideHelpFromMainPanel;
-begin
-  Conf.sLabelFX10.Visible := False;
-  Conf.mmo2.Visible := False;
-end;
-
 procedure ChangeStatusInfo;
 begin
   case STBarMessages of
@@ -1430,7 +1367,22 @@ begin
   else if Cmenustate = 'em_computers_hatari_roms' then
     SaveHatari_RomsAtExit
   else if Cmenustate = 'em_computers_hatari_screen' then
-    SaveHatari_ScreenAtExit;
+    SaveHatari_ScreenAtExit
+// pSX
+  else if Cmenustate = 'em_consoles_psx_paths' then
+    SavepSX_PathsAtExit
+  else if Cmenustate = 'em_consoles_psx_screen' then
+    SavepSX_ScreenAtExit
+  else if Cmenustate = 'em_consoles_psx_sound' then
+    SavepSX_SoundAtExit
+  else if Cmenustate = 'em_consoles_psx_others' then
+    SavepSX_OthersAtExit
+// KiGB
+  else if Cmenustate = 'em_handheld_kigb_paths' then
+    SaveKigb_PathsAtExit
+  else if Cmenustate = 'em_handheld_kigb_screen' then
+    SaveKigb_ScreenAtExit;
+      
 end;
 
 procedure ShowMenuImage(Name: string);

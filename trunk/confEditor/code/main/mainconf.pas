@@ -34,8 +34,10 @@ uses
   procedure ShowpSXProgress(progress: Integer; Comment: string);
 
   procedure StartEmuKigb;
-  procedure StartProgWeather;
-  procedure StartProTimeDate;
+  procedure ShowKigbProgress(progress: Integer; Comment: string);
+
+  procedure StartWidget_Weather;
+  procedure StartWidget_TimeDate;
   procedure CreateSTBarInfo;
   procedure HideAllPanels;
   procedure StartSkinEngine;
@@ -78,6 +80,8 @@ var
   pSX_Exe,FullPathpSX_Exe,pSX_confEditor_ini: string;
   pSX_Config,pSX_Ini: TIniFile;
 //Kigb Vars
+  Kigb_Exe,FullPathKigb_Exe,Kigb_confEditor_ini,KigbCfg_File: string;
+  Kigb_Config: TIniFile;
 //Weather Vars
 //TimeDate Vars
 
@@ -131,7 +135,6 @@ Begin
               component := FindComponentEx('Conf.grp'+inttostr(k));
               TGroupBox(component).Color := $00e4eaed;
             end;
-          Conf.mmo2.Color := $00e4eaed;
           Conf.PBuilds_MamePlus.Color := $00e4eaed;
           Conf.PBuilds_MameXT.Color := $00e4eaed;
         end;
@@ -141,7 +144,6 @@ Begin
               component := FindComponentEx('Conf.grp'+inttostr(k));
               TGroupBox(component).Color := $00bae5e8;
             end;
-          Conf.mmo2.Color := $00bae5e8;
           Conf.PBuilds_MamePlus.Color := $00bae5e8;
           Conf.PBuilds_MameXT.Color := $00bae5e8;
         end;
@@ -156,7 +158,6 @@ Begin
                   TGroupBox(component).Color := $00e7e7e7;
                 end;
             end;
-          Conf.mmo2.Color := $00e7e7e7;
           Conf.PBuilds_MamePlus.Color := $00e7e7e7;
           Conf.PBuilds_MameXT.Color := $00e7e7e7;
         end;
@@ -235,8 +236,6 @@ begin
   Conf.stat1.Cursor := TArrow;
   //Panel Main
   Conf.Main_Panel.Cursor := Arrow;
-  Conf.sLabelFX10.Cursor := Arrow;
-  Conf.mmo2.Cursor := TArrow;
 
   //{ConfEditor}
   //Panel CE_StartWizard
@@ -814,8 +813,6 @@ begin
   Conf.rb31.Cursor := Arrow;
   Conf.rb32.Cursor := Arrow;
   Conf.rb33.Cursor := Arrow;
-  Conf.rb34.Cursor := Arrow;
-  Conf.rb35.Cursor := Arrow;
   Conf.rb36.Cursor := Arrow;
   Conf.rb37.Cursor := Arrow;
   Conf.rb38.Cursor := Arrow;
@@ -895,9 +892,6 @@ begin
   Conf.sEdit111.Cursor := Precision;
   Conf.sEdit112.Cursor := Precision;
   Conf.sEdit113.Cursor := Precision;
-  Conf.sEdit114.Cursor := Precision;
-  Conf.sEdit115.Cursor := Precision;
-  Conf.sEdit116.Cursor := Precision;
   Conf.sEdit117.Cursor := Precision;
   Conf.sEdit118.Cursor := Precision;
   Conf.sEdit119.Cursor := Precision;
@@ -1177,8 +1171,7 @@ begin
           FGa.Free;
         end;
       Conf.sEdit64.Text := FullPathMame_Exe+Mame_Exe;
-      if not Assigned(Mame_Global_MemoIni) then
-        InitGlobal_MameMemo_ForMameIni;
+      InitGlobal_MameMemo_ForMameIni;
       SetMame_DirsFromMameIni;
       ShowMameProgress(20,'Mame Directories Ready');
       SetMame_GraphicsFromMameIni;
@@ -1268,7 +1261,7 @@ begin
       ShowHatariProgress(55,'Hatari Screen/Sound Ready');
       SetHatari_JoyfromHatariIni;
       ShowHatariProgress(70,'Hatari Joystics/Keyboard Ready');
-//      ShowHatari_DatabaseFromHatariIni;
+      SetHatari_DatabaseFromHatariIni;
       ShowHatariProgress(100,'Hatari Database Ready');
       Started := False;
     end;
@@ -1276,38 +1269,60 @@ end;
 
 procedure StartEmupSX;
 begin
-  pSX_confEditor_ini := ExtractFilePath(Application.ExeName) + 'media\emulators\consoles\playstation\psxemulator\config.in';
+  pSX_confEditor_ini := ExtractFilePath(Application.ExeName) + 'media\emulators\consoles\playstation\psxemulator\config\config.ini';
   if FileExists(pSX_confEditor_ini) then
     begin
       pSX_Config := TIniFile.Create(pSX_confEditor_ini);
-      Started := True;
-      SetpSX_PathsfrompSXIni;
-      ShowpSXProgress(20,'pSX Paths Ready');
-      SetpSX_ScreenfrompSXIni;
-      ShowpSXProgress(100,'pSX Screen Ready');
-      SetpSX_SoundfrompSXIni;
-      ShowpSXProgress(10,'');
-      SetpSX_OthersfrompSXIni;
-//      ShowpSXProgress(10,'');
-//      SetpSX_DatabasefrompSXIni;
-//      ShowpSXProgress(10,'');
-      Started := False;
+      pSX_Exe := pSX_Config.ReadString('Paths','ExeName',pSX_Exe);
+      if pSX_Config.ValueExists('Paths','FoundBIOS') then
+        begin
+          FullPathpSX_Exe := pSX_Config.ReadString('Paths','FullPathExe',FullPathpSX_Exe);
+          pSX_Ini := TIniFile.Create(FullPathpSX_Exe + 'psx.ini');
+          Started := True;
+          SetpSX_PathsfrompSXIni;
+          ShowpSXProgress(20,'pSX Paths Ready');
+          SetpSX_ScreenfrompSXIni;
+          ShowpSXProgress(40,'pSX Screen Ready');
+          SetpSX_SoundfrompSXIni;
+          ShowpSXProgress(60,'pSX Sound and Controllers Ready');
+          SetpSX_OthersfrompSXIni;
+          ShowpSXProgress(80,'pSX Others Ready');
+//          SetpSX_DatabasefrompSXIni;
+          ShowpSXProgress(100,'pSX Database Ready');
+          Started := False;
+        end;
     end;
 end;
 
 procedure StartEmuKigb;
 begin
-
+  Kigb_confEditor_ini := ExtractFilePath(Application.ExeName) + 'media\emulators\handheld\nintendo\kigb\config\config.ini';
+  if FileExists(Kigb_confEditor_ini) then
+    begin
+      Started := True;
+      KigbCfg_File := FullPathKigb_Exe + 'kigb.cfg';
+//      SetKigb_PathsfromKigbIni;
+//      ShowKigbProgress(20,'Kigb Paths Ready');
+//      SetKigb_ScreenfromKigbIni;
+//      ShowKigbProgress(40,'Kigb Screen Ready');
+//      SetKigb_SoundfromKigbIni;
+//      ShowKigbProgress(60,'Kigb Sound and Controllers Ready');
+//      SetKigb_OthersfromKigbIni;
+//      ShowKigbProgress(80,'Kigb Others Ready');
+//      SetKigb_DatabasefromKigbIni;
+//      ShowKigbProgress(100,'Kigb Database Ready');
+      Started := False;
+    end;
 end;
 
-procedure StartProgWeather;
+procedure StartWidget_Weather;
 begin
-
+//
 end;
 
-procedure StartProTimeDate;
+procedure StartWidget_TimeDate;
 begin
-
+//
 end;
 
 procedure CreateSTBarInfo;
@@ -1372,6 +1387,13 @@ begin
 end;
 
 procedure ShowpSXProgress(progress: Integer; Comment: string);
+begin
+  Splash_Screen.Progress_Label(progress,Comment);
+  Application.ProcessMessages;
+  Sleep(50);
+end;
+
+procedure ShowKigbProgress(progress: Integer; Comment: string);
 begin
   Splash_Screen.Progress_Label(progress,Comment);
   Application.ProcessMessages;

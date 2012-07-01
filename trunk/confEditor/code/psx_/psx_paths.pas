@@ -2,7 +2,7 @@ unit psx_paths;
 
 interface
 uses
-  SysUtils,Classes,ExtCtrls,IniFiles;
+  SysUtils,Classes,ExtCtrls,IniFiles,Forms;
 
   procedure SetpSX_PathsfrompSXIni;
   procedure SavepSX_PathsAtExit;
@@ -48,24 +48,31 @@ var
 begin
   if pSX_Exe <> '' then
     begin
+      if Started = True then
+        begin
+          Conf.sEdit81.Text := FullPathpSX_Exe + pSX_Exe;
+          Conf.sEdit82.Enabled := True;
+          Conf.sBitBtn77.Enabled := True;
+          Conf.sEdit82.Text := pSX_Config.ReadString('Paths','BiosName',Conf.sEdit82.Text)
+        end;
       paths_str := pSX_Ini.ReadString('Paths','ScreenShotsPath',paths_str);
       if paths_str = 'screenshots' then
-        Conf.sEdit83.Text := FullPathpSX_Exe + '\screenshots'
+        Conf.sEdit83.Text := FullPathpSX_Exe + 'screenshots'
       else
         Conf.sEdit83.Text := paths_str;
       paths_str := pSX_Ini.ReadString('Paths','CDImagePath',paths_str);
       if paths_str = 'cdimages' then
-        Conf.sEdit84.Text := FullPathpSX_Exe + '\cdimages'
+        Conf.sEdit84.Text := FullPathpSX_Exe + 'cdimages'
       else
         Conf.sEdit84.Text := paths_str;
       paths_str := pSX_Ini.ReadString('Paths','SaveStatePath',paths_str);
       if paths_str = 'saves' then
-        Conf.sEdit85.Text := FullPathpSX_Exe + '\saves'
+        Conf.sEdit85.Text := FullPathpSX_Exe + 'saves'
       else
         Conf.sEdit85.Text := paths_str;
       paths_str := pSX_Ini.ReadString('Paths','MemoryCardPath',paths_str);
       if paths_str = 'cards' then
-        conf.sEdit86.Text := FullPathpSX_Exe + '\cards'
+        conf.sEdit86.Text := FullPathpSX_Exe + 'cards'
       else
         Conf.sEdit86.Text := paths_str;
       Conf.sEdit87.Text := pSX_Ini.ReadString('Cards','Card1',Conf.sEdit87.Text);
@@ -102,13 +109,17 @@ begin
       pSX_Exe := ExtractFileName(Conf.Find_Files.FileName);
       FullPathpSX_Exe := ExtractFilePath(Conf.Find_Files.FileName);
       Conf.sEdit81.Text := FullPathpSX_Exe + pSX_Exe;
+      pSX_confEditor_ini := ExtractFilePath(Application.ExeName) + 'media\emulators\consoles\playstation\psxemulator\config\config.ini';
+      pSX_Config := TIniFile.Create(pSX_confEditor_ini);
+      pSX_Config.WriteString('Paths','ExeName',pSX_Exe);
+      pSX_Config.WriteString('Paths','FullPathExe',FullPathpSX_Exe);
       Conf.sEdit82.Enabled := True;
       Conf.sBitBtn77.Enabled := True;
       if FileExists(FullPathpSX_Exe + '\bios\scph1001.bin') then
         begin
-          CreatepSX_configuration_forfirstTime;
           BiosFindFromStart := True;
-        end;
+          CreatepSX_configuration_forfirstTime;
+        end
     end;
 end;
 
@@ -125,14 +136,16 @@ begin
   if pSX_Exe <> '' then
     begin
       if BiosFindFromStart = True then
-        Conf.sEdit82.Text := FullPathpSX_Exe + '\bios\scph1001.bin'
+        Conf.sEdit82.Text := FullPathpSX_Exe + 'bios\scph1001.bin'
       else
         Conf.sEdit82.Text := Conf.Find_Files.FileName;
+      pSX_Config.WriteString('Paths','FoundBIOS','ok');
+      pSX_Config.WriteString('Paths','BiosName',Conf.sEdit82.Text);
       CreateDefault_pSXIni;
       SetpSX_PathsfrompSXIni;
       SetpSX_ScreenfrompSXIni;
-//      SetpSX_SoundfrompSXIni;
-//      SetpSX_OthersfrompSXIni;
+      SetpSX_SoundfrompSXIni;
+      SetpSX_OthersfrompSXIni;
 //      SetpSX_DatabasefrompSXIni;
     end;
 end;
@@ -370,8 +383,8 @@ begin
   rf.Add('KeyDecContrast=79');
   rf.Add('KeyScreenShot=88');
   rf.Add('EscapeMode=0');
-  rf.Add('JoystickDevice1=00000000000000000000000000000000');
-  rf.Add('JoystickDevice2=00000000000000000000000000000000');
+  rf.Add('JoystickDevice1=NULL');
+  rf.Add('JoystickDevice2=NULL');
   rf.Add(' ');
   rf.Add('[Controllers]');
   rf.Add('Controller1Type=-1');
@@ -437,6 +450,7 @@ begin
     em_psx_others_FreeDynamicComps
   else if (Cmenustate = 'em_consoles_psx_database') then
     em_psx_database_FreeDynamicComps;
+  CurrentStateSave;
   ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
   Cmenustate := 'em_consoles_psx_paths';
   em_psx_paths_ShowDynamicComps;
