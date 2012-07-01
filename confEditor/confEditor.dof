@@ -114,19 +114,19 @@ IncludeVerInfo=1
 AutoIncBuild=1
 MajorVer=0
 MinorVer=2
-Release=1
-Build=357
+Release=2
+Build=24
 Debug=0
 PreRelease=0
 Special=0
-Private=0
+Private=1
 DLL=0
 Locale=1032
 CodePage=1253
 [Version Info Keys]
 CompanyName=Az Creations
 FileDescription=Configuration Tool for ExtraFe
-FileVersion=0.2.1.357
+FileVersion=0.2.2.24
 InternalName=Mnimi
 LegalCopyright=Freeware
 LegalTrademarks=Azrael11
@@ -134,6 +134,7 @@ OriginalFilename=confEditor
 ProductName=ExtraFe
 ProductVersion=0.3 Beta
 Comments=
+PrivateBuild=
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;

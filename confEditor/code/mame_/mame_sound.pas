@@ -3,7 +3,7 @@ unit mame_sound;
 interface
 
 uses
-  SysUtils,Classes,ExtCtrls;
+  SysUtils,Classes,ExtCtrls,StdCtrls;
 
   procedure SetMame_SoundFromMameIni;
   procedure SaveMame_SoundAtExit;
@@ -178,167 +178,169 @@ procedure SaveMame_SoundAtExit;
 var
   k,x: Integer;
   value,t1,t2: string;
+  Comp: TComponent;
 begin
   if Mame_Exe <> '' then
     begin
-      for k := 0 to Mame_Global_MemoIni.Lines.Count - 1 do
+      Comp := FindComponentEx('Conf.MemoEmu1');
+      for k := 0 to TMemo(Comp).Lines.Count - 1 do
         begin
-          value := Mame_Global_MemoIni.Lines.Strings[k];
+          value := TMemo(Comp).Lines.Strings[k];
           x := Pos(' ',value);
           t1 := Trim(Copy(value,0,x));
           t2 := Trim(Copy(value,x,100));
           if t1 = 'joystick' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox23.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'joystick          1')
+                TMemo(Comp).Lines.Insert(k,'joystick          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'joystick          0');
+                TMemo(Comp).Lines.Insert(k,'joystick          0');
             end
           else if t1 = 'mouse' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox16.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'mouse          1')
+                TMemo(Comp).Lines.Insert(k,'mouse          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'mouse          0');
+                TMemo(Comp).Lines.Insert(k,'mouse          0');
             end
           else if t1 = 'multimouse' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox22.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'multimouse          1')
+                TMemo(Comp).Lines.Insert(k,'multimouse          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'multimouse          0');
+                TMemo(Comp).Lines.Insert(k,'multimouse          0');
             end
           else if t1 = 'multikeyboard' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox21.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'multikeyboard          1')
+                TMemo(Comp).Lines.Insert(k,'multikeyboard          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'multikeyboard          0');
+                TMemo(Comp).Lines.Insert(k,'multikeyboard          0');
             end
           else if t1 = 'steadykey' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox17.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'steadykey          1')
+                TMemo(Comp).Lines.Insert(k,'steadykey          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'steadykey          0');
+                TMemo(Comp).Lines.Insert(k,'steadykey          0');
             end
           else if t1 = 'lightgun' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox18.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'lightgun          1')
+                TMemo(Comp).Lines.Insert(k,'lightgun          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'lightgun          0');
+                TMemo(Comp).Lines.Insert(k,'lightgun          0');
             end
           else if t1 = 'offscreen_reload' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox19.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'offscreen_reload          1')
+                TMemo(Comp).Lines.Insert(k,'offscreen_reload          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'offscreen_reload          0');
+                TMemo(Comp).Lines.Insert(k,'offscreen_reload          0');
             end
           else if t1 = 'dual_lightgun' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox20.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'dual_lightgun          1')
+                TMemo(Comp).Lines.Insert(k,'dual_lightgun          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'dual_lightgun          0');
+                TMemo(Comp).Lines.Insert(k,'dual_lightgun          0');
             end
           else if t1 = 'joystick_deadzone' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'joystick_deadzone          '+Conf.sLabel19.Caption);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'joystick_deadzone          '+Conf.sLabel19.Caption);
             end
           else if t1 = 'joystick_saturation' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'joystick_saturation          '+Conf.sLabel17.Caption);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'joystick_saturation          '+Conf.sLabel17.Caption);
             end
           else if t1 = 'joystick_map' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'joystick_map          '+Conf.sEdit15.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'joystick_map          '+Conf.sEdit15.Text);
             end
           else if t1 = 'sound' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox26.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'sound          1')
+                TMemo(Comp).Lines.Insert(k,'sound          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'sound          0');
+                TMemo(Comp).Lines.Insert(k,'sound          0');
             end
           else if t1 = 'samples' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox43.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'samples          1')
+                TMemo(Comp).Lines.Insert(k,'samples          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'samples          0');
+                TMemo(Comp).Lines.Insert(k,'samples          0');
             end
           else if t1 = 'samplerate' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'samplerate          '+Conf.sComboBox18.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'samplerate          '+Conf.sComboBox18.Text);
             end
           else if t1 = 'volume' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'volume          '+IntToStr(Conf.sbar_mame_valumeattenuation.Position));
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'volume          '+IntToStr(Conf.sbar_mame_valumeattenuation.Position));
             end
           else if t1 = 'audio_latency' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'audio_latency          '+IntToStr(Conf.sbar_mame_audiolatency.Position));
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'audio_latency          '+IntToStr(Conf.sbar_mame_audiolatency.Position));
             end
           else if t1 = 'paddle_device' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'paddle_device          '+Conf.sComboBox10.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'paddle_device          '+Conf.sComboBox10.Text);
             end
           else if t1 = 'pedal_device' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'pedal_device          '+Conf.sComboBox11.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'pedal_device          '+Conf.sComboBox11.Text);
             end
           else if t1 = 'dial_device' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'dial_device          '+Conf.sComboBox12.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'dial_device          '+Conf.sComboBox12.Text);
             end
           else if t1 = 'lightgun_device' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'lightgun_device          '+Conf.sComboBox13.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'lightgun_device          '+Conf.sComboBox13.Text);
             end
           else if t1 = 'adstick_device' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'adstick_device          '+Conf.sComboBox14.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'adstick_device          '+Conf.sComboBox14.Text);
             end
           else if t1 = 'mouse_device' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'mouse_device          '+Conf.sComboBox15.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'mouse_device          '+Conf.sComboBox15.Text);
             end
           else if t1 = 'trackball_device' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'trackball_device          '+Conf.sComboBox16.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'trackball_device          '+Conf.sComboBox16.Text);
             end
           else if t1 = 'positional_device' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'positional_device          '+Conf.sComboBox17.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'positional_device          '+Conf.sComboBox17.Text);
             end;
         end;
-      Mame_Global_MemoIni.Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
+      TMemo(Comp).Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
       FromMame_SoundToFindSound := False;
     end;
 end;

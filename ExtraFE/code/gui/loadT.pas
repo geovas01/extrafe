@@ -131,38 +131,20 @@ end;
 
 procedure LoadTheMenuTexturesandSounds;
 const
-  MenuMats : array [1..3] of string = ('main_background','left_w','right_w');
+  MenuMats : array [1..1] of string = ('back');
   EarthMats: array [1..6] of String = ('back', 'mame', 'emulators', 'arcade', 'zinc','exit');
   PlanetMats: array [1..4] of String = ('planet_1', 'planet_2', 'planet_3','planet_4');
 begin
   AddMaterials(MatLib, 'media\extrafe\main_menu\', MenuMats, MenuMats);
   // Set The Background
-  MainForm.BackGround.Material.Assign(MatLib.Materials.GetLibMaterialByName('main_background').Material);
+  MainForm.BackGround.Material.Assign(MatLib.Materials.GetLibMaterialByName('back').Material);
   MainForm.BackGround.Height := MainForm.GLSceneViewer.Height;
   MainForm.BackGround.Width := MainForm.GLSceneViewer.Width;
   MainForm.BackGround.Position.X := CenterX;
   MainForm.BackGround.Position.Y := CenterY;
-  MainForm.BackGround.Material.FrontProperties.Diffuse.Alpha := 0;
-  MainForm.BackGround.Material.FrontProperties.Ambient.Red := 255;
-  MainForm.BackGround.Material.FrontProperties.Ambient.Green := 255;
-  MainForm.BackGround.Material.FrontProperties.Ambient.Blue := 255;
-  // Set The Left Wing
-  MainForm.Left_Wing.Material.Assign(MatLib.Materials.GetLibMaterialByName('left_w').Material);
-  MainForm.Left_Wing.Height := 768;
-  MainForm.Left_Wing.Width := 389;
-  MainForm.Left_Wing.Position.X := 186;
-  MainForm.Left_Wing.Position.Y := CenterY;
-  // Set The Right Wing
-  MainForm.Right_Wing.Material.Assign(MatLib.Materials.GetLibMaterialByName('right_w').Material);
-  MainForm.Right_Wing.Height := 768;
-  MainForm.Right_Wing.Width := 389;
-  MainForm.Right_Wing.Position.X := 1100;
-  MainForm.Right_Wing.Position.Y := CenterY;
   MainForm.GLHUDText_Progress_Info.Text := 'Load Menu Materials';
   Progress_Bar_Intro(50);
-  AddMaterials(MatLib, 'media\extrafe\main_menu\', EarthMats, EarthMats);
   Progress_Bar_Intro(70);
-  AddMaterials(MatLib, 'media\extrafe\main_menu\',PlanetMats, PlanetMats);
   Progress_Bar_Intro(99);
 end;
 

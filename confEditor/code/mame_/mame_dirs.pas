@@ -161,7 +161,6 @@ end;
 
 procedure SearchForSelectedMame(num: Integer);
 var
-  k: Integer;
   MameName,MamePath: string;
   FindMame: Boolean;
 begin
@@ -569,12 +568,9 @@ begin
                   end;
             end;
           MameXMLConfig.SaveToFile(PathXmlMamePath+'config.xml',ofIndent);
-          Mame_Global_MemoIni.Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
           FromMame_DirsToFindDirs := False;
         end;
     end
-  else
-    Mame_Global_MemoIni.Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
 end;
 
 procedure OldDirIs(name: string);
@@ -665,7 +661,9 @@ procedure ChangeMemoForMame_Dirs(find: string);
 var
   k,x: Integer;
   text,t1,value: string;
+  Comp: TComponent;
 begin
+  Comp := FindComponentEx('Conf.MemoEmu1');
   if find = 'mamesnapshots' then
     begin
       find := 'snapshot_directory';
@@ -696,15 +694,15 @@ begin
       find := 'state_directory';
       value := Conf.sEdit63.Text;
     end;
-  for k := 0 to Mame_Global_MemoIni.Lines.Count do
+  for k := 0 to TMemo(Comp).Lines.Count do
     begin
-      text := Mame_Global_MemoIni.Lines.Strings[k];
+      text := TMemo(Comp).Lines.Strings[k];
       x := Pos(' ',text);
       t1 := Trim(Copy(text,0,x));
       if t1 = find then
         begin
-          Mame_Global_MemoIni.Lines.Delete(k);
-          Mame_Global_MemoIni.Lines.Insert(k,find +'          '+value);
+          TMemo(Comp).Lines.Delete(k);
+          TMemo(Comp).Lines.Insert(k,find +'          '+value);
         end;
     end;
 end;
@@ -964,20 +962,17 @@ procedure InitGlobal_MameMemo_ForMameIni;
 var
   MameIniFile: TextFile;
   text,value: string;
+  Comp: TComponent;
 begin
-  Mame_Global_MemoIni.Free;
-  Mame_Global_MemoIni := TMemo.Create(Conf);
-  Mame_Global_MemoIni.Parent := Conf;
-  Mame_Global_MemoIni.Visible := False;
-  Mame_Global_MemoIni.Align := alClient;
-  Mame_Global_MemoIni.WordWrap := False;
+  MemoEmu_Comp(Conf,1);
+  Comp := FindComponentEx('Conf.MemoEmu1');
   value := FullPathMame_Exe + 'mame.ini';
   AssignFile(MameIniFile,value);
   Reset(MameIniFile);
     while not Eof(MameIniFile) do
       begin
         Readln(MameIniFile,text);
-        Mame_Global_MemoIni.Lines.Add(text);
+        TMemo(Comp).Lines.Add(text);
       end;
   CloseFile(MameIniFile);
 end;

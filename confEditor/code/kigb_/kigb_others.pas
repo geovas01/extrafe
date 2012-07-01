@@ -4,6 +4,9 @@ interface
 uses
   SysUtils,Classes,ExtCtrls;
 
+  procedure SetKigb_OthersfromKigbIni;
+  procedure SaveKigb_OthersAtExit;
+
 // Menu actions
   procedure Show_kigb_otherspanel;
   procedure em_kigb_others_ShowDynamicComps;
@@ -15,18 +18,30 @@ uses
   main,mainconf,menu,FunctionX,onflycomponents,
   kigb_screen,kigb_sound,kigb_paths,kigb_database;
 
+procedure SetKigb_OthersfromKigbIni;
+begin
+//
+end;
+
+procedure SaveKigb_OthersAtExit;
+begin
+//
+end;
+
+//////////////////////////////////////////////////////////////////////////////
 procedure Show_kigb_otherspanel;
 begin
-  if (Cmenustate = 'em_kigb_screen') then
+  if (Cmenustate = 'em_handheld_kigb_screen') then
     em_kigb_screen_FreeDynamicComps
-  else if (Cmenustate = 'em_kigb_sound') then
+  else if (Cmenustate = 'em_handheld_kigb_sound') then
     em_kigb_sound_FreeDynamicComps
-  else if (Cmenustate = 'em_kigb_paths') then
+  else if (Cmenustate = 'em_handheld_kigb_paths') then
     em_kigb_paths_FreeDynamicComps
-  else if (Cmenustate = 'em_kigb_database') then
+  else if (Cmenustate = 'em_handheld_kigb_database') then
     em_kigb_database_FreeDynamicComps;
+  CurrentStateSave;
   ShowPathInCaption(CDirPath,Conf.sBitBtn9.Caption,False,True);
-  Cmenustate := 'em_kigb_others';
+  Cmenustate := 'em_handheld_kigb_others';
   em_kigb_others_ShowDynamicComps;
   ShowButtonDown(9,'EM_HANDHELDS_NINTENDO_KIGB_OTHERS');
   ShowHidePanel(CurrentPanel,'Pem_kigb_others');

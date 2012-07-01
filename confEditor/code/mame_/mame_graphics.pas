@@ -507,6 +507,7 @@ var
   k,x: Integer;
   value,t1,t2: string;
   scr,asp,res,vie: string;
+  Comp: TComponent;
 begin
   if Mame_Exe <> '' then
     begin
@@ -545,109 +546,110 @@ begin
           res := 'resolution3';
           vie := 'view3';
         end;
-      for k := 0 to Mame_Global_MemoIni.Lines.Count - 1 do
+      Comp := FindComponentEx('Conf.MemoEmu1');
+      for k := 0 to TMemo(Comp).Lines.Count - 1 do
         begin
-          value := Mame_Global_MemoIni.Lines.Strings[k];
+          value := TMemo(Comp).Lines.Strings[k];
           x := Pos(' ',value);
           t1 := Trim(Copy(value,0,x));
           t2 := Trim(Copy(value,x,100));
           if t1 = 'window' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox3.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'window       1')
+                TMemo(Comp).Lines.Insert(k,'window       1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'window       0');
+                TMemo(Comp).Lines.Insert(k,'window       0');
             end
           else if t1 = 'maximize' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox4.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'maximize        1')
+                TMemo(Comp).Lines.Insert(k,'maximize        1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'maximize        0');
+                TMemo(Comp).Lines.Insert(k,'maximize        0');
             end
           else if t1 = 'keepaspect' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox5.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'keepaspect        1')
+                TMemo(Comp).Lines.Insert(k,'keepaspect        1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'keepaspect        0');
+                TMemo(Comp).Lines.Insert(k,'keepaspect        0');
             end
           else if t1 = 'throttle' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox6.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'throttle        1')
+                TMemo(Comp).Lines.Insert(k,'throttle        1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'throttle        0');
+                TMemo(Comp).Lines.Insert(k,'throttle        0');
             end
           else if t1 = 'speed' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'speed        '+Conf.sLabel11.Caption);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'speed        '+Conf.sLabel11.Caption);
             end
           else if t1 = 'rotate' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sComboBox20.ItemIndex = 0 then
-                Mame_Global_MemoIni.Lines.Insert(k,'rotate        1');
+                TMemo(Comp).Lines.Insert(k,'rotate        1');
               if Conf.sComboBox20.ItemIndex = 3 then
-                Mame_Global_MemoIni.Lines.Insert(k,'rotate        0');
+                TMemo(Comp).Lines.Insert(k,'rotate        0');
             end
           else if t1 = 'flipx' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox40.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'flipx        1')
+                TMemo(Comp).Lines.Insert(k,'flipx        1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'flipx        0');
+                TMemo(Comp).Lines.Insert(k,'flipx        0');
             end
           else if t1 = 'flipy' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox41.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'flipy        1')
+                TMemo(Comp).Lines.Insert(k,'flipy        1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'flipy        0');
+                TMemo(Comp).Lines.Insert(k,'flipy        0');
             end
           else if t1 = 'pause_brightness' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'pause_brightness        '+Conf.sLabel3.Caption);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'pause_brightness        '+Conf.sLabel3.Caption);
             end
           else if t1 = 'gamma' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'gamma          '+Conf.sLabel4.Caption);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'gamma          '+Conf.sLabel4.Caption);
             end
           else if t1 = 'brightness' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'brightness          '+Conf.sLabel5.Caption);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'brightness          '+Conf.sLabel5.Caption);
             end
           else if t1 = 'contrast' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'contrast          '+Conf.sLabel2.Caption);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'contrast          '+Conf.sLabel2.Caption);
             end
           else if t1 = 'autoframeskip' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox15.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'autoframeskip          1')
+                TMemo(Comp).Lines.Insert(k,'autoframeskip          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'autoframeskip          0');
+                TMemo(Comp).Lines.Insert(k,'autoframeskip          0');
             end
           else if t1 = 'frameskip' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'frameskip          '+IntToStr(Conf.sComboBox9.ItemIndex));
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'frameskip          '+IntToStr(Conf.sComboBox9.ItemIndex));
             end
           else if t1 = 'video' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sComboBox2.Text = 'None' then
                 t2 := 'none'
               else if Conf.sComboBox2.Text = 'GDI' then
@@ -656,116 +658,116 @@ begin
                 t2 := 'ddraw'
               else if Conf.sComboBox2.Text = 'Direct 3D' then
                 t2 := 'd3d';
-              Mame_Global_MemoIni.Lines.Insert(k,'video          '+t2);
+              TMemo(Comp).Lines.Insert(k,'video          '+t2);
             end
           else if t1 = 'filter' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox7.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'filter          1')
+                TMemo(Comp).Lines.Insert(k,'filter          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'filter          0');
+                TMemo(Comp).Lines.Insert(k,'filter          0');
             end
           else if t1 = 'd3dversion' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sComboBox3.ItemIndex = 0 then
-                Mame_Global_MemoIni.Lines.Insert(k,'d3dversion          9')
+                TMemo(Comp).Lines.Insert(k,'d3dversion          9')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'d3dversion          8');
+                TMemo(Comp).Lines.Insert(k,'d3dversion          8');
             end
           else if t1 = 'hwstretch' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              Tmemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox8.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'hwstretch          1')
+                Tmemo(Comp).Lines.Insert(k,'hwstretch          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'hwstretch          0');
+                Tmemo(Comp).Lines.Insert(k,'hwstretch          0');
             end
           else if t1 = 'full_screen_gamma' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'full_screen_gamma          '+Conf.sLabel8.Caption);
+              Tmemo(Comp).Lines.Delete(k);
+              Tmemo(Comp).Lines.Insert(k,'full_screen_gamma          '+Conf.sLabel8.Caption);
             end
           else if t1 = 'full_screen_brightness' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'full_screen_brightness          '+Conf.sLabel7.Caption);
+              Tmemo(Comp).Lines.Delete(k);
+              Tmemo(Comp).Lines.Insert(k,'full_screen_brightness          '+Conf.sLabel7.Caption);
             end
           else if t1 = 'full_screen_contrast' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'full_screen_contrast          '+Conf.sLabel6.Caption);
+              Tmemo(Comp).Lines.Delete(k);
+              Tmemo(Comp).Lines.Insert(k,'full_screen_contrast          '+Conf.sLabel6.Caption);
             end
           else if t1 = 'triplebuffer' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              Tmemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox11.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'triplebuffer          1')
+                Tmemo(Comp).Lines.Insert(k,'triplebuffer          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'triplebuffer          0');
+                Tmemo(Comp).Lines.Insert(k,'triplebuffer          0');
             end
           else if t1 = 'waitvsync' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              Tmemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox13.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'waitvsync          1')
+                Tmemo(Comp).Lines.Insert(k,'waitvsync          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'waitvsync          0');
+                Tmemo(Comp).Lines.Insert(k,'waitvsync          0');
             end
           else if t1 ='syncrefresh' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              Tmemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox12.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'syncrefresh          1')
+                Tmemo(Comp).Lines.Insert(k,'syncrefresh          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'syncrefresh          0');
+                Tmemo(Comp).Lines.Insert(k,'syncrefresh          0');
             end
           else if t1 ='refreshspeed' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              Tmemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox14.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'refreshspeed          1')
+                Tmemo(Comp).Lines.Insert(k,'refreshspeed          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'refreshspeed          0');
+                Tmemo(Comp).Lines.Insert(k,'refreshspeed          0');
             end
           else if t1 = 'seconds_to_run' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'seconds_to_run          '+Conf.sLabel12.Caption);
+              Tmemo(Comp).Lines.Delete(k);
+              Tmemo(Comp).Lines.Insert(k,'seconds_to_run          '+Conf.sLabel12.Caption);
             end
           else if t1 = 'prescale' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'prescale          '+Conf.sLabel1.Caption);
+              Tmemo(Comp).Lines.Delete(k);
+              Tmemo(Comp).Lines.Insert(k,'prescale          '+Conf.sLabel1.Caption);
             end
           else if t1 = 'effect' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'effect          '+Conf.sEdit1.Text);
+              Tmemo(Comp).Lines.Delete(k);
+              Tmemo(Comp).Lines.Insert(k,'effect          '+Conf.sEdit1.Text);
             end
           else if t1 = scr then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,scr+'          '+Conf.sComboBox5.Text);
+              Tmemo(Comp).Lines.Delete(k);
+              Tmemo(Comp).Lines.Insert(k,scr+'          '+Conf.sComboBox5.Text);
             end
           else if t1 = asp then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,asp+'          '+Conf.sComboBox6.Text);
+              Tmemo(Comp).Lines.Delete(k);
+              Tmemo(Comp).Lines.Insert(k,asp+'          '+Conf.sComboBox6.Text);
             end
           else if t1 = res then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,res+'          '+Conf.sComboBox7.Text);
+              Tmemo(Comp).Lines.Delete(k);
+              Tmemo(Comp).Lines.Insert(k,res+'          '+Conf.sComboBox7.Text);
             end
           else if t1 = vie then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,vie+'          '+Conf.sComboBox8.Text);
+              Tmemo(Comp).Lines.Delete(k);
+              Tmemo(Comp).Lines.Insert(k,vie+'          '+Conf.sComboBox8.Text);
             end;
         end;
-      Mame_Global_MemoIni.Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
+      Tmemo(Comp).Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
       FromMame_GrpaphicsToFindGraphics := False;
     end;
 end;

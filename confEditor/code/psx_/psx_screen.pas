@@ -104,7 +104,7 @@ begin
         end;
       Conf.DMI1.Active := False;
       Screen_Int := pSX_Ini.ReadInteger('Graphics','FullscreenAdapter',Screen_Int);
-      Conf.sComboBox60.ItemIndex := Screen_Int + 1;      
+      Conf.sComboBox60.ItemIndex := Screen_Int + 1;
       Screen_Str := pSX_Ini.ReadString('Graphics','FullscreenVSync',Screen_Str);
       if Screen_Str = '0' then
         Conf.sCheckBox107.Checked := False
@@ -139,6 +139,9 @@ begin
 end;
 
 procedure SavepSX_ScreenAtExit;
+var
+  text1,text2: string;
+  k: integer;
 begin
   if pSX_Exe <> '' then
     begin
@@ -166,8 +169,63 @@ begin
         end
       else
         begin
-//        synexeia apo edo kai kato          
+          text1 := Conf.sComboBox58.Text;
+          k := Pos('x',text1);
+          text2 := Trim(Copy(text1,0,k - 1));
+          pSX_Ini.WriteInteger('Graphics','PALWidth',StrToInt(text2));
+          text2 := Trim(Copy(text1,k + 1,Length(text1) - k));
+          k := Pos(' ',text2);
+          text1 := Trim(Copy(text2,0,k - 1));
+          pSX_Ini.WriteInteger('Graphics','PALHeight',StrToInt(text1));
+          text1 := Trim(Copy(text2,k + 1,Length(text2) - k));
+          k := Pos('Hz',text1);
+          text2 := Trim(Copy(text1,0,k - 1));
+          pSX_Ini.WriteInteger('Graphics','PALRefresh',StrToInt(text2));
         end;
+      if Conf.sComboBox59.ItemIndex = 0 then
+        begin
+          pSX_Ini.WriteInteger('Graphics','NTSCWidth',-1);
+          pSX_Ini.WriteInteger('Graphics','NTSCHeight',-1);
+          pSX_Ini.WriteInteger('Graphics','NTSCRefresh',-1);
+        end
+      else
+        begin
+          text1 := Conf.sComboBox58.Text;
+          k := Pos('x',text1);
+          text2 := Trim(Copy(text1,0,k - 1));
+          pSX_Ini.WriteInteger('Graphics','NTSCWidth',StrToInt(text2));
+          text2 := Trim(Copy(text1,k + 1,Length(text1) - k));
+          k := Pos(' ',text2);
+          text1 := Trim(Copy(text2,0,k - 1));
+          pSX_Ini.WriteInteger('Graphics','NTSCHeight',StrToInt(text1));
+          text1 := Trim(Copy(text2,k + 1,Length(text2) - k));
+          k := Pos('Hz',text1);
+          text2 := Trim(Copy(text1,0,k - 1));
+          pSX_Ini.WriteInteger('Graphics','NTSCRefresh',StrToInt(text2));
+        end;
+      pSX_Ini.WriteInteger('Graphics','FullscreenAspectRatio',Conf.sComboBox61.ItemIndex - 1);
+      pSX_Ini.WriteInteger('Graphics','FullscreenAdapter',Conf.sComboBox60.ItemIndex - 1);
+      if Conf.sCheckBox107.Checked = False then
+        pSX_Ini.WriteInteger('Graphics','FullscreenVSync',0)
+      else
+        pSX_Ini.WriteInteger('Graphics','FullscreenVSync',1);
+      if Conf.sCheckBox108.Checked = False then
+        pSX_Ini.WriteInteger('Graphics','SleepWhenIdle',0)
+      else
+        pSX_Ini.WriteInteger('Graphics','SleepWhenIdle',1);
+      if Conf.sCheckBox109.Checked = False then
+        pSX_Ini.WriteInteger('Graphics','WindowedSync',0)
+      else
+        pSX_Ini.WriteInteger('Graphics','WindowedSync',1);
+      text1 := Conf.sLabel87.Caption;
+      text1 := text1 + '0000';
+      pSX_Ini.WriteString('Graphics','Gamma',text1);
+      text1 := Conf.sLabel88.Caption;
+      text1 := text1 + '0000';
+      pSX_Ini.WriteString('Graphics','Brightness',text1);
+      text1 := Conf.sLabel89.Caption;
+      text1 := text1 + '0000';
+      pSX_Ini.WriteString('Graphics','Contrast',text1);
     end;
 end;
 
@@ -216,6 +274,7 @@ begin
     em_psx_others_FreeDynamicComps
   else if (Cmenustate = 'em_consoles_psx_database') then
     em_psx_database_FreeDynamicComps;
+  CurrentStateSave;
   ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,True);
   Cmenustate := 'em_consoles_psx_screen';
   em_psx_screen_ShowDynamicComps;

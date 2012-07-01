@@ -787,19 +787,21 @@ procedure AddNewDirTo_MameDirs;
 var
   x,l,k: Integer;
   t1,value,totalRomPathString: string;
+  Comp: TComponent;
 begin
   totalRomPathString := '';
-  for k := 0 to Mame_Global_MemoIni.Lines.Count - 1 do
+  Comp := FindComponentEx('Conf.MemoEmu1');
+  for k := 0 to TMemo(Comp).Lines.Count - 1 do
     begin
-      value := Mame_Global_MemoIni.Lines.Strings[k];
+      value := TMemo(Comp).Lines.Strings[k];
       x := Pos(' ',value);
       t1 := Trim(Copy(value,0,x));
       if t1 = 'rompath' then
         begin
-          Mame_Global_MemoIni.Lines.Delete(k);
+          TMemo(Comp).Lines.Delete(k);
           for l := 3 to Conf.sComboBox72.Items.Count do
             totalRomPathString := totalRomPathString+Conf.sComboBox72.Items.Strings[l-1]+';';
-          Mame_Global_MemoIni.Lines.Insert(k,'rompath          '+totalRomPathString);
+          TMemo(Comp).Lines.Insert(k,'rompath          '+totalRomPathString);
           Break;
         end;
     end;

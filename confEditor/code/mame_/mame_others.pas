@@ -2,7 +2,7 @@ unit mame_others;
 
 interface
 uses
-  SysUtils,Classes,ExtCtrls;
+  SysUtils,Classes,ExtCtrls,StdCtrls;
 
   procedure SetMame_OthersFromMameIni;
   procedure SaveMame_OthersAtExit;
@@ -142,135 +142,137 @@ procedure SaveMame_OthersAtExit;
 var
   k,x: Integer;
   value,t1,t2: string;
+  Comp: TComponent;
 begin
   if Mame_Exe <> '' then
     begin
-      for k := 0 to Mame_Global_MemoIni.Lines.Count - 1 do
+      Comp := FindComponentEx('Conf.MemoEmu1');
+      for k := 0 to TMemo(Comp).Lines.Count - 1 do
         begin
-          value := Mame_Global_MemoIni.Lines.Strings[k];
+          value := TMemo(Comp).Lines.Strings[k];
           x := Pos(' ',value);
           t1 := Trim(Copy(value,0,x));
           t2 := Trim(Copy(value,x,100));
           if t1 = 'cheat' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox24.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'cheat          1')
+                TMemo(Comp).Lines.Insert(k,'cheat          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'cheat          0');
+                TMemo(Comp).Lines.Insert(k,'cheat          0');
             end
           else if t1 = 'sleep' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox27.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'sleep          1')
+                TMemo(Comp).Lines.Insert(k,'sleep          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'sleep          0');                
+                TMemo(Comp).Lines.Insert(k,'sleep          0');                
             end
           else if t1 = 'skip_gameinfo' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox28.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'skip_gameinfo          1')
+                TMemo(Comp).Lines.Insert(k,'skip_gameinfo          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'skip_gameinfo          0');
+                TMemo(Comp).Lines.Insert(k,'skip_gameinfo          0');
             end
           else if t1 = 'autosave' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox29.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'autosave          1')
+                TMemo(Comp).Lines.Insert(k,'autosave          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'autosave          0');
+                TMemo(Comp).Lines.Insert(k,'autosave          0');
             end
           else if t1 = 'multithreading' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox30.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'multithreading          1')
+                TMemo(Comp).Lines.Insert(k,'multithreading          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'multithreading          0');
+                TMemo(Comp).Lines.Insert(k,'multithreading          0');
             end
           else if t1 = 'coin_lockout' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox31.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'coin_lockout          1')
+                TMemo(Comp).Lines.Insert(k,'coin_lockout          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'coin_lockout          0');
+                TMemo(Comp).Lines.Insert(k,'coin_lockout          0');
             end
           else if t1 = 'priority' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'priority          '+IntToStr(Conf.sbar_mame_threadpriority.Position));
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'priority          '+IntToStr(Conf.sbar_mame_threadpriority.Position));
             end
           else if t1 = 'antialias' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox39.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'antialias          1')
+                TMemo(Comp).Lines.Insert(k,'antialias          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'antialias          0');
+                TMemo(Comp).Lines.Insert(k,'antialias          0');
             end
           else if t1 = 'beam' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'beam          '+Conf.sLabel18.Caption);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'beam          '+Conf.sLabel18.Caption);
             end
           else if t1 = 'flicker' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'flicker          '+IntToStr(Conf.sbar_mame_flicker.Position));
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'flicker          '+IntToStr(Conf.sbar_mame_flicker.Position));
             end
           else if t1 = 'snapsize' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'snapsize          '+Conf.sComboBox73.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'snapsize          '+Conf.sComboBox73.Text);
             end
           else if t1 = 'snapview' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'snapview          '+Conf.sComboBox19.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'snapview          '+Conf.sComboBox19.Text);
             end
           else if t1 = 'use_backdrops' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox35.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'use_backdrops          1')
+                TMemo(Comp).Lines.Insert(k,'use_backdrops          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'use_backdrops          0');
+                TMemo(Comp).Lines.Insert(k,'use_backdrops          0');
             end
           else if t1 = 'use_bezels' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox36.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'use_bezels          1')
+                TMemo(Comp).Lines.Insert(k,'use_bezels          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'use_bezels          0');
+                TMemo(Comp).Lines.Insert(k,'use_bezels          0');
             end
           else if t1 = 'use_overlays' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox37.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'use_overlays          1')
+                TMemo(Comp).Lines.Insert(k,'use_overlays          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'use_overlays          0');
+                TMemo(Comp).Lines.Insert(k,'use_overlays          0');
             end
           else if t1 = 'artwork_crop' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
+              TMemo(Comp).Lines.Delete(k);
               if Conf.sCheckBox38.Checked = True then
-                Mame_Global_MemoIni.Lines.Insert(k,'artwork_crop          1')
+                TMemo(Comp).Lines.Insert(k,'artwork_crop          1')
               else
-                Mame_Global_MemoIni.Lines.Insert(k,'artwork_crop          0');
+                TMemo(Comp).Lines.Insert(k,'artwork_crop          0');
             end
           else if t1 = 'uifont' then
             begin
-              Mame_Global_MemoIni.Lines.Delete(k);
-              Mame_Global_MemoIni.Lines.Insert(k,'uifont          '+Conf.sComboBox75.Text);
+              TMemo(Comp).Lines.Delete(k);
+              TMemo(Comp).Lines.Insert(k,'uifont          '+Conf.sComboBox75.Text);
             end;
         end;
-      Mame_Global_MemoIni.Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
+      TMemo(Comp).Lines.SaveToFile(FullPathMame_Exe+'mame.ini');
       FromMame_OthersToFindOthers := False;
     end;
 end;

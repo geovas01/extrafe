@@ -10,7 +10,6 @@ uses
   main in 'code\main\main.pas' {Conf},
   mainconf in 'code\main\mainconf.pas',
   FunctionX in 'code\others\FunctionX.pas',
-  psx in 'code\emulators\playstation\psxemulator\psx.pas',
   psxdata in 'code\emulators\playstation\psxemulator\psxdata.pas',
   wizard in 'code\others\wizard.pas' {FormWizard},
   menu in 'code\main\menu.pas',
@@ -37,7 +36,6 @@ uses
   psx_screen in 'code\psx_\psx_screen.pas',
   psx_sound in 'code\psx_\psx_sound.pas',
   psx_others in 'code\psx_\psx_others.pas',
-  form_color in 'code\other_forms_\form_color.pas' {frm_color},
   global in 'code\others\global.pas',
   form_splash in 'code\other_forms_\form_splash.pas' {Splash_Screen},
   form_general in 'code\other_forms_\form_general.pas' {FGeneral},
@@ -54,7 +52,8 @@ uses
   hatari_paths in 'code\hatari_\hatari_paths.pas',
   hatari_database in 'code\hatari_\hatari_database.pas',
   psx_database in 'code\psx_\psx_database.pas',
-  kigb_database in 'code\kigb_\kigb_database.pas';
+  kigb_database in 'code\kigb_\kigb_database.pas',
+  hatari_xmlext in 'code\hatari_\hatari_xmlext.pas';
 
 var
   Map : THandle;
@@ -81,7 +80,6 @@ begin
   Application.Title := 'confEditor - Configuration tool for ExtraFE';
   Application.CreateForm(TConf, Conf);
   Application.CreateForm(TFormWizard, FormWizard);
-  Application.CreateForm(Tfrm_color, frm_color);
   Application.CreateForm(TFGeneral, FGeneral);
   Splash_Screen.JvBmpAnimator1.Active := False;
   Splash_Screen.Progress_Label(100,'ConfEditor Ready To Run');
