@@ -47,6 +47,8 @@ var
 begin
   if Kigb_Exe <> '' then
     begin
+      if Started then
+        Conf.sEdit89.Text := FullPathKigb_Exe + Kigb_Exe;
       AssignFile(KigbCfgFile,KigbCfg_File);
       Reset(KigbCfgFile);
       while not Eof(KigbCfgFile) do
@@ -158,6 +160,8 @@ begin
             end;
         end;
       CloseFile(KigbCfgFile);
+      if Started then
+        Create_KigbMemoIni;
     end;
 end;
 
@@ -306,10 +310,10 @@ begin
       Kigb_Config.WriteString('Paths','FullPathKigbExe',FullPathKigb_Exe);
       CreateDefaultKigb_Ini;
       SetKigb_PathsfromKigbIni;
-//      SetKigb_ScreenfromKigbIni;
-//      SetKigb_SoundfromKigbIni;
-//      SetKigb_OthersfromKigbIni;
-//      SetKigb_DatabasefromKigbIni;
+      SetKigb_ScreenfromKigbIni;
+      SetKigb_SoundfromKigbIni;
+      SetKigb_OthersfromKigbIni;
+      SetKigb_DatabasefromKigbIni;
     end;
 end;
 
@@ -702,6 +706,7 @@ begin
   Cmenustate := 'em_handheld_kigb_paths';
   em_kigb_paths_ShowDynamicComps;
   ShowButtonDown(6,'EM_HANDHELDS_NINTENDO_KIGB_DIRS');
+  Conf.Pem_kigb_sound.Tag := 0;
   ShowHidePanel(CurrentPanel,'Pem_kigb_paths');
 end;
 

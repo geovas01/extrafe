@@ -33,7 +33,7 @@ begin
   CE_SHelpInCaption := Conf.sCheckBox2.Checked;
   Row_Config.HelpInCaption := CE_SHelpInCaption;
   CeXML.SaveToFile(Ce_XMLPath,ofIndent);
-  if CE_SHelpInCaption = true then
+  if CE_SHelpInCaption then
     Conf.Caption := '"confEditor"    Path: ConfEditor>Configuration'
   else
     Conf.Caption := '"confEditor"';
@@ -81,6 +81,7 @@ begin
   CeXML.SaveToFile(Ce_XMLPath,ofIndent);
 end;
 
+/////////////////////////////////////////////////////////////////////////////////
 procedure ce_config_ShowDynamicComps;
 var
   i: Integer;

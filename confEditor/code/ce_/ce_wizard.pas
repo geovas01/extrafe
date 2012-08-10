@@ -15,6 +15,8 @@ uses
   main,mainconf,onflycomponents,FunctionX,menu,
   ce_config,ce_themes;
 
+
+/////////////////////////////////////////////////////////////////////////////////
 procedure Show_confEditor_wizardpanel;
 begin
   if Cmenustate = 'ce_configuration' then

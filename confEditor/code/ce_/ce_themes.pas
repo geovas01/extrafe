@@ -75,6 +75,7 @@ begin
   end;
 end;
 
+/////////////////////////////////////////////////////////////////////////////////
 procedure Show_confEditor_themespanel;
 begin
   if Cmenustate = 'ce_configuration' then

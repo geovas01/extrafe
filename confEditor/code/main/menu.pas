@@ -938,18 +938,18 @@ begin
       ShowCurrentMenu(0,True,Cmenustate,18);
       ShowButtonDown(16,'EM_HANDHELDS_NINTENDO');
     end
-  else if (Cmenustate = 'em_kigb_paths') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
-    (Cmenustate = 'em_kigb_others') or (Cmenustate = 'em_kigb_database') then
+  else if (Cmenustate = 'em_handheld_kigb_paths') or (Cmenustate = 'em_handheld_kigb_screen') or (Cmenustate = 'em_handheld_kigb_sound') or
+    (Cmenustate = 'em_handheld_kigb_others') or (Cmenustate = 'em_handheld_kigb_database') then
     begin
-      if Cmenustate = 'em_kigb_paths' then
+      if Cmenustate = 'em_handheld_kigb_paths' then
         em_kigb_paths_FreeDynamicComps
-      else if Cmenustate = 'em_kigb_screen' then
+      else if Cmenustate = 'em_handheld_kigb_screen' then
         em_kigb_screen_FreeDynamicComps
-      else if Cmenustate = 'em_kigb_sound' then
+      else if Cmenustate = 'em_handheld_kigb_sound' then
         em_kigb_sound_FreeDynamicComps
-      else if Cmenustate = 'em_kigb_others' then
+      else if Cmenustate = 'em_handheld_kigb_others' then
         em_kigb_others_FreeDynamicComps
-      else if Cmenustate = 'em_kigb_database' then
+      else if Cmenustate = 'em_handheld_kigb_database' then
         em_kigb_database_FreeDynamicComps;
       ShowPathInCaption(CDirPath,'Kigb',True,True);
       Cmenustate := 'em_handheld_nintendo';
@@ -1032,8 +1032,8 @@ begin
       Cmenustate := 'em_handheld_kigb';
       ShowCurrentMenu(4,True,Cmenustate,21);
     end
-  else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_kigb_screen') or (Cmenustate = 'em_kigb_sound') or
-    (Cmenustate = 'em_kigb_others') or (Cmenustate = 'em_kigb_database') then
+  else if (Cmenustate = 'em_handheld_kigb') or (Cmenustate = 'em_handheld_kigb_screen') or (Cmenustate = 'em_handheld_kigb_sound') or
+    (Cmenustate = 'em_handheld_kigb_others') or (Cmenustate = 'em_handheld_kigb_database') then
     Show_kigb_pathspanel
   else if (Cmenustate = 'widgets') or (Cmenustate = 'wg_timedate') then
     Show_widget_weather;
@@ -1368,6 +1368,8 @@ begin
     SaveHatari_RomsAtExit
   else if Cmenustate = 'em_computers_hatari_screen' then
     SaveHatari_ScreenAtExit
+  else if Cmenustate = 'em_computers_hatari_joy' then
+    SaveHatari_JoyAtExit
 // pSX
   else if Cmenustate = 'em_consoles_psx_paths' then
     SavepSX_PathsAtExit

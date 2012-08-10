@@ -3,23 +3,27 @@ unit onflycomponents;
 interface
 
 uses
-  Graphics,Windows,SysUtils,ExtCtrls,Controls,Forms,StdCtrls,
-  pngimage,sLabel;
+  Graphics,Windows,SysUtils,ExtCtrls,Controls,Forms,StdCtrls,Classes,
+  pngimage,sLabel,sPanel,sBitBtn;
 
   procedure Image_Comp(Location: TWinControl; Picture_path: string; Pic_Left,Pic_Top,Pic_Width,Pic_Height,Numofcomp: Integer; Pic_Trans: Boolean);
   procedure Label_Comp(Location: TWinControl; Text: String; Label_Left,Label_Top,Numofcomp: Integer; Label_Autosize,Label_FontBold,Label_Trans: Boolean);
   procedure Memo_Comp(Location: TWinControl; NumOfComp: Integer; Aling:string; Memo_Left, Memo_Top, Memo_Width, Memo_Height: Integer; Memo_Visible: Boolean);
   procedure MemoEmu_Comp(Location: TWinControl; NumOfComp: Integer);
+  procedure Panel_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width: Integer);
+  procedure BitBtn_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width,ImageNum: Integer);
 
 var
   MyImage: TImage;
   MyLabel: TsLabel;
   MyMemoEmu,MyMemo: TMemo;
+  MyPanel: TsPanel;
+  MyBitBtn: TsBitBtn;
 
 implementation
 
 uses
-  main;
+  main,wg_weather;
 
 procedure Image_Comp(Location: TWinControl; Picture_path: string; Pic_Left,Pic_Top,Pic_Width,Pic_Height,Numofcomp: Integer; Pic_Trans: Boolean);
 begin
@@ -32,6 +36,7 @@ begin
   MyImage.Width := Pic_Width;
   MyImage.Height := Pic_Height;
   MyImage.Transparent := Pic_Trans;
+  MyImage.Stretch := True;
 end;
 
 procedure Label_Comp(Location: TWinControl; Text: String; Label_Left,Label_Top,Numofcomp: Integer; Label_Autosize,Label_FontBold,Label_Trans: Boolean);
@@ -67,5 +72,32 @@ begin
   MyMemoEmu.WordWrap := False;
 end;
 
+procedure Panel_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,width:Integer);
+begin
+  MyPanel := TsPanel.Create(Conf);
+  MyPanel.Name := 'MyPanel' + IntToStr(NumOfComp);
+  MyPanel.Parent := Location;
+  MyPanel.Left := Left;
+  MyPanel.Top := Top;
+  MyPanel.Height := Height;
+  MyPanel.Width := width;
+  MyPanel.Caption := '';
+end;
+
+procedure BitBtn_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width,ImageNum: Integer);
+begin
+  MyBitBtn := TsBitBtn.Create(Conf);
+  MyBitBtn.Name := 'MyBitBtn' + IntToStr(NumOfComp);
+  MyBitBtn.Parent := Location;
+  MyBitBtn.Left := Left;
+  MyBitBtn.Top := Top;
+  MyBitBtn.Height := Height;
+  MyBitBtn.Width := Width;
+  MyBitBtn.Caption := '';
+  MyBitBtn.Images := Conf.InBitBtn_Imagelist;
+  MyBitBtn.ImageIndex := ImageNum;
+  MyBitBtn.Tag := NumOfComp;
+  MyBitBtn.OnClick := Conf.ClosePanel; 
+end;
 
 end.

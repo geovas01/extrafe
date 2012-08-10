@@ -232,6 +232,7 @@ begin
   Cmenustate := 'em_handheld_kigb_screen';
   em_kigb_screen_ShowDynamicComps;
   ShowButtonDown(7,'EM_HANDHELDS_NINTENDO_KIGB_SCREEN');
+  Conf.Pem_kigb_sound.Tag := 0;
   ShowHidePanel(CurrentPanel,'Pem_kigb_screen');
 end;
 
