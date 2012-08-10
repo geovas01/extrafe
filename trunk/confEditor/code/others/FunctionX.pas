@@ -33,6 +33,7 @@ function GetVersion(sFileName:string): string;
 function ShellExecAndWait(const FileName, Parameters, dir: string;
   CmdShow: Integer): Boolean;
 //function PortUDP_IsOpen(dwPort : Word; ipAddressStr: AnsiString) : boolean;
+function GetCharFromVirtualKey(Key: Word): string;
 
 
 const
@@ -442,5 +443,23 @@ begin
   FGause.MaxValue := 100;
   FGause.Progress := Self.Position;
 end;
+
+function GetCharFromVirtualKey(Key: Word): string;
+ var
+    keyboardState: TKeyboardState;
+    asciiResult: Integer;
+ begin
+    GetKeyboardState(keyboardState) ;
+ 
+    SetLength(Result, 2) ;
+    asciiResult := ToAscii(key, MapVirtualKey(key, 0), keyboardState, @Result[1], 0) ;
+    case asciiResult of
+      0: Result := '';
+      1: SetLength(Result, 1) ;
+      2:;
+      else
+        Result := '';
+    end;
+ end;
 
 end.

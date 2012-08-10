@@ -960,21 +960,13 @@ end;
 
 procedure InitGlobal_MameMemo_ForMameIni;
 var
-  MameIniFile: TextFile;
-  text,value: string;
+  value: string;
   Comp: TComponent;
 begin
   MemoEmu_Comp(Conf,1);
   Comp := FindComponentEx('Conf.MemoEmu1');
   value := FullPathMame_Exe + 'mame.ini';
-  AssignFile(MameIniFile,value);
-  Reset(MameIniFile);
-    while not Eof(MameIniFile) do
-      begin
-        Readln(MameIniFile,text);
-        TMemo(Comp).Lines.Add(text);
-      end;
-  CloseFile(MameIniFile);
+  TMemo(Comp).Lines.LoadFromFile(value);
 end;
 
 procedure GetSelectedMameNum(MameName: string);

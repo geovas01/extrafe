@@ -1526,56 +1526,31 @@ end;
 
 procedure RunGameCount_PlayTime_MameXT_Memo;
 var
-  GamePath,Game: string;
-  GameCount: TextFile;
-  Lines,Count: Integer;
+  Comp: TComponent;
 begin
-  lines := 0;
-  Count := 0;
-  GamePlayTime_Memo := TMemo.Create(Conf);
-  GamePlayTime_Memo.Parent := Conf;
-  GamePlayTime_Memo.Visible := False;
-  GamePlayTime_Memo.Align := alClient;
-  GamePlayTime_Memo.WordWrap := False;
-  GamePath := FullPathMame_Exe+'ini\mameui.ini';
-  AssignFile(GameCount,GamePath);
-  Reset(GameCount);
-    while not Eof(GameCount) do
-      begin
-        Readln(GameCount,Game);
-        Lines := Lines + 1;
-      end;
-  CloseFile(GameCount);
-  AssignFile(GameCount,GamePath);
-  Reset(GameCount);
-    while not Eof(GameCount) do
-      begin
-        Readln(GameCount,Game);
-        Count := Count + 1;
-        GamePlayTime_Memo.Lines.Add(Game);
-        if FromArrows_Mamedirs = False then
-          begin
-            if FromDatabase = False then
-              begin
-                Splash_Screen.Progress_Label(((100 * Count) div (Lines-1)),'Loading MameXT Play/Time Count List');
-                Splash_Screen.sGauge_Splash.Suffix := '%';
-              end
-            else
-              begin
-                Conf.sGauge_MameData.Progress := (100 * Count) div (Lines-1);
-                Conf.sGauge_MameData.Suffix := '%';
-                Conf.sLabel109.Caption := 'Loading MameXT Play/Time Count List';
-              end;
-          end
-        else
-          begin
-            Conf.sGauge_MameChange.Progress := (100 * Count) div (Lines-1);
-            Conf.sGauge_MameChange.Suffix := '%';
-            Conf.sLabel112.Caption := 'Loading MameXT Play/Time Count List';
-          end;
-        Application.ProcessMessages;
-      end;
-  CloseFile(GameCount);
+  MemoEmu_Comp(Conf,2);
+  if FromArrows_Mamedirs = False then
+    begin
+      if FromDatabase = False then
+        begin
+          Splash_Screen.Progress_Label(0,'Loading MameXT Play/Time Count List');
+          Splash_Screen.sGauge_Splash.Suffix := '%';
+        end
+      else
+        begin
+          Conf.sGauge_MameData.Progress := 0;
+          Conf.sGauge_MameData.Suffix := '%';
+          Conf.sLabel109.Caption := 'Loading MameXT Play/Time Count List';
+        end;
+    end
+  else
+    begin
+      Conf.sGauge_MameChange.Progress := 0;
+      Conf.sGauge_MameChange.Suffix := '%';
+      Conf.sLabel112.Caption := 'Loading MameXT Play/Time Count List';
+    end;
+  Application.ProcessMessages;
+  TMemo(Comp).Lines.LoadFromFile(FullPathMame_Exe+'ini\mameui.ini');
 end;
 
 procedure SetTheNewIPSDir_MamePlus;

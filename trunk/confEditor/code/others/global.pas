@@ -3,20 +3,22 @@ unit global;
 interface
 
 uses
-  SysUtils,Forms,GLKeyboard,StdCtrls,sPanel,Graphics,Classes;
+  SysUtils,Forms,GLKeyboard,StdCtrls,sPanel,Graphics,Classes,MMSystem;
 
   procedure global_Find_FilesCanClose;
   procedure global_Find_FilesClose;
   procedure global_Find_DirsClose;
   procedure global_Save_FilesCanClose;
 
+  //
+  procedure global_FindJoyInfo;
   //Configures keys global to Extrafe
   procedure CheckForHittingKey;
-
   procedure RestoreTheOriginalColor;
 
 var
   CheckedTimes: Integer;
+  Joysticks : array [0..7] of string;
 
 implementation
 
@@ -160,6 +162,14 @@ begin
           component := FindComponentEx('Conf.sPanel' + IntToStr(i));
           CheckPanel(TsPanel(component));
         end;
+    end
+  else if (Conf.Pem_kigb_sound.Tag = 1) then
+    begin
+      for i := 42 to 68 do
+        begin
+          component := FindComponentEx('Conf.sPanel' + IntToStr(i));
+          CheckPanel(TsPanel(component));
+        end;
     end;
 end;
 
@@ -177,24 +187,41 @@ begin
           component := FindComponentEx('Conf.sPanel'+inttostr(i));
           TsPanel(component).Color := clBtnFace;
         end;
+    end
+  else if Conf.Pem_hatari_joy.Tag = 1 then
+    begin
+      for i := 37 to 41 do
+        begin
+          component := FindComponentEx('Conf.sPanel' + IntToStr(i));
+          TsPanel(component).Color := clBtnFace;
+        end;
+    end
+  else if Conf.Pem_kigb_sound.Tag = 1 then
+    begin
+      for i := 41 to 68 do
+        begin
+          component := FindComponentEx('Conf.sPanel' + IntToStr(i));
+          TsPanel(component).Color := clBtnFace;
+        end;
     end;
 end;
 
-{ The procedure to put png image from resource to tsbitbtn
+procedure global_FindJoyInfo;
 var
-//  PngImage: TPNGObject;
-//  rs: TResourceStream;
+  Joystick : TJoyInfo;
+  JoystickCaps: TJoyCaps;
+  k: Integer;
 begin
-//      PngImage := TPNGObject.Create;
-//      rs := TResourceStream.Create(HInstance,MenuBitBtnIcons[i],RT_RCDATA);
-//      PngImage.LoadFromStream(rs);
-//      rs.Free;
-//      TsBitBtn(component).Glyph.Assign(PngImage);
-//      PngImage.LoadFromResourceName(HInstance,MenuBitBtnIcons[i]);
-//      TsBitBtn(component).Glyph.LoadFromResourceName(HInstance,MenuBitBtnIcons[i]);
-//      TsBitBtn(component).Glyph
-//      PngImage.Free;
-//      TsBitBtn(component).ImageIndex := MenuBitBtnIcons[i];
+  k := 0;
+  repeat
+    if joyGetDevCaps(JOYSTICKID2,@JoystickCaps,SizeOf(JoystickCaps)) <> 0 then
+      begin
+        Joysticks[0] := JoystickCaps.szPname;
+        k := k + 1;
+      end
+    else
+      k := 0;
+  until (k > 8) or (k = 0);
 end;
-}
+
 end.

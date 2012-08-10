@@ -15,6 +15,7 @@ uses
   main,mainconf,onflycomponents,FunctionX,menu,
   exf_config;
 
+////////////////////////////////////////////////////////////////////////////////
 procedure Show_ExtraFe_themespanel;
 begin
   if Cmenustate = 'exf_configuration' then

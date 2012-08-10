@@ -2,7 +2,7 @@ unit hatari_joy;
 
 interface
 uses
-  SysUtils,Classes,ExtCtrls;
+  SysUtils,Classes,ExtCtrls,global;
 
   procedure SetHatari_JoyfromHatariIni;
   procedure SaveHatari_JoyAtExit;
@@ -13,6 +13,8 @@ uses
   procedure SetHatari_Mapping;
   procedure SetUpHatariMapping;
   procedure EjectHatari_Mapping;
+  procedure Change_JoystickType(num: Integer);
+  procedure SaveCurrentState_Joy(joyType: Integer);
 
   function Hatari_GetNumAndShowString(num: Integer) : string;
   function Hatari_GetStringAndSetNum(text: string) : Integer;
@@ -50,12 +52,27 @@ begin
       Conf.sLabel81.Caption := Joy_Str;
       Joy_Str :=  Hatari_ini.ReadString('Keyboard','bDisableKeyRepeat',Joy_Str);
       Conf.sCheckBox102.Checked := StrToBool(Joy_Str);
+      Change_JoystickType(0);
+      Joy_Int := 0;
+      repeat
+        Joy_Str := joysticks[joy_int];
+        Conf.sComboBox56.Items.Add(Joy_Str);
+      until Joy_Str = '';
     end;
 end;
 
 procedure SaveHatari_JoyAtExit;
 begin
-//
+  if Hatari_Exe <> '' then
+    begin
+      SaveCurrentState_Joy(Conf.sComboBox55.ItemIndex);
+      Hatari_ini.WriteInteger('Keyboard','nKeymapType',Conf.sComboBox57.ItemIndex);
+      Hatari_ini.WriteString('Keyboard','szMappingFileName',Conf.sLabel81.Caption);
+      if Conf.sCheckBox102.Checked = True then
+        Hatari_ini.WriteString('Keyboard','bDisableKeyRepeat','TRUE')
+      else
+        Hatari_ini.WriteString('Keyboard','bDisableKeyRepeat','FALSE');
+    end;
 end;
 
 procedure PressJoy_Disable;
@@ -70,11 +87,6 @@ begin
   Conf.sPanel39.Enabled := False;
   Conf.sPanel40.Enabled := False;
   Conf.sPanel41.Enabled := False;
-  Conf.sPanel37.Caption := '';
-  Conf.sPanel38.Caption := '';
-  Conf.sPanel39.Caption := '';
-  Conf.sPanel40.Caption := '';
-  Conf.sPanel41.Caption := '';
   Conf.sComboBox56.Enabled := False;
   Conf.sCheckBox101.Enabled := False;
 end;
@@ -91,9 +103,10 @@ begin
   Conf.sPanel39.Enabled := True;
   Conf.sPanel40.Enabled := True;
   Conf.sPanel41.Enabled := True;
-  Conf.grp20.SetFocus;
+  if Started = False then
+    Conf.grp20.SetFocus;
   Conf.sComboBox56.Enabled := False;
-  Conf.sCheckBox101.Enabled := False;
+  Conf.sCheckBox101.Enabled := True;
 end;
 
 procedure PressJoy_RealJoystick;
@@ -108,11 +121,6 @@ begin
   Conf.sPanel39.Enabled := False;
   Conf.sPanel40.Enabled := False;
   Conf.sPanel41.Enabled := False;
-  Conf.sPanel37.Caption := '';
-  Conf.sPanel38.Caption := '';
-  Conf.sPanel39.Caption := '';
-  Conf.sPanel40.Caption := '';
-  Conf.sPanel41.Caption := '';
   Conf.sComboBox56.Enabled := True;
   Conf.sCheckBox101.Enabled := True;
 end;
@@ -137,7 +145,7 @@ end;
 function Hatari_GetNumAndShowString(num: Integer) : string;
 begin
   case num of
-    27 : Result := 'ESC';
+    27 : Result := 'Esc';
     282: Result := 'F1';
     283: Result := 'F2';
     284: Result := 'F3';
@@ -150,7 +158,7 @@ begin
     291: Result := 'F10';
     292: Result := 'F11';
     293: Result := 'F12';
-    96 : Result := '`';
+    96 : Result := '~';
     49 : Result := '1';
     50 : Result := '2';
     51 : Result := '3';
@@ -163,8 +171,8 @@ begin
     48 : Result := '0';
     45 : Result := '-';
     61 : Result := '=';
-    8  : Result := 'BSPACE';
-    9  : Result := 'TAB';
+    8  : Result := 'Backspace';
+    9  : Result := 'Tab';
     113: Result := 'Q';
     119: Result := 'W';
     101: Result := 'E';
@@ -177,8 +185,8 @@ begin
     112: Result := 'P';
     91 : Result := '[';
     93 : Result := ']';
-    13 : Result := 'ENTER';
-    301: Result := 'CLOCK';
+    13 : Result := 'Enter';
+    301: Result := 'Caps Lock';
     97 : Result := 'A';
     115: Result := 'S';
     100: Result := 'D';
@@ -189,9 +197,9 @@ begin
     107: Result := 'K';
     108: Result := 'L';
     59 : Result := ';';
-    39 : Result := '"';
+    39 : Result := '''';
     92 : Result := '\';
-    304: Result := 'LSHIFT';
+    304: Result := 'Shift'; // Left shift
     122: Result := 'Z';
     120: Result := 'X';
     99 : Result := 'C';
@@ -199,54 +207,54 @@ begin
     98 : Result := 'B';
     110: Result := 'N';
     109: Result := 'M';
-    44 : Result := ',';
-    46 : Result := '.';
+    44 : Result := '<';
+    46 : Result := '>';
     47 : Result := '/';
-    303: Result := 'RSHIFT';
-    306: Result := 'LCTRL';
-    311: Result := 'LWIN';
-    308: Result := 'LALT';
-    32 : Result := 'SPACE';
-    307: Result := 'RALT';
-    312: Result := 'RWIN';
-    319: Result := 'SPECIAL';
-    305: Result := 'RCTRL';
-    316: Result := 'PRNTSCR';
-    302: Result := 'SCRLOCK';
-    19 : Result := 'PAUSE';
-    277: Result := 'INSERT';
-    278: Result := 'HOME';
-    280: Result := 'PAGEUP';
-    127: Result := 'DELETE';
-    279: Result := 'END';
-    281: Result := 'PAGEDOWN';
-    273: Result := 'UP';
-    276: Result := 'LEFT';
-    274: Result := 'DOWN';
-    275: Result := 'RIGHT';
-//    281: Result := 'NUMLOCK';
-    267: Result := 'NUM_/';
-    268: Result := 'NUM_*';
-    269: Result := 'NUM_-';
-    263: Result := 'NUM_7';
-    264: Result := 'NUM_8';
-    265: Result := 'NUM_9';
-    270: Result := 'NUM_+';
-    260: Result := 'NUM_4';
-    261: Result := 'NUM_5';
-    262: Result := 'NUM_6';
-    257: Result := 'NUM_1';
-    258: Result := 'NUM_2';
-    259: Result := 'NUM_3';
-    256: Result := 'NUM_0';
-    266: Result := 'NUM_.';
-    271: Result := 'NUM_ENTER';
+    303: Result := 'Shift';
+    306: Result := 'Ctrl';
+    311: Result := 'Left Win';
+    308: Result := 'Alt';
+    32 : Result := 'Space';
+    307: Result := 'Alt';
+    312: Result := 'Right Win';
+    319: Result := 'Application Key';
+    305: Result := 'Ctrl';
+    316: Result := 'Print Screen';
+    302: Result := 'Scroll Lock';
+    19 : Result := 'Pause';
+    277: Result := 'Insert';
+    278: Result := 'Home';
+    280: Result := 'Page up';
+    127: Result := 'Delete';
+    279: Result := 'End';
+    281: Result := 'Page down';
+    273: Result := 'Up';
+    276: Result := 'Left';
+    274: Result := 'Down';
+    275: Result := 'Right';
+//    281: Result := 'Num Lock';
+    267: Result := 'Num /';
+    268: Result := 'Num *';
+    269: Result := 'Num -';
+    263: Result := 'Num 7';
+    264: Result := 'Num 8';
+    265: Result := 'Num 9';
+    270: Result := 'Num +';
+    260: Result := 'Num 4';
+    261: Result := 'Num 5';
+    262: Result := 'Num 6';
+    257: Result := 'Num 1';
+    258: Result := 'Num 2';
+    259: Result := 'Num 3';
+    256: Result := 'Num 0';
+    266: Result := 'Num Del';
+    271: Result := 'Enter';
   end;
 end;
 
 function Hatari_GetStringAndSetNum(text: string) : Integer;
 begin
-  if text = 'ESC' then
+  if text = 'Esc' then
     Result := 27
   else if text = 'F1' then
     Result := 282
@@ -272,7 +280,7 @@ begin
     Result := 292
   else if text = 'F12' then
     Result := 293
-  else if text = '`' then
+  else if text = '~' then
     Result := 96
   else if text = '1' then
     Result := 49
@@ -298,9 +306,9 @@ begin
     Result := 45
   else if text = '=' then
     Result := 61
-  else if text = 'BSPACE' then
+  else if text = 'Backspace' then
     Result := 8
-  else if text = 'TAB' then
+  else if text = 'Tab' then
     Result := 9
   else if text = 'Q' then
     Result := 113
@@ -326,9 +334,9 @@ begin
     Result := 91
   else if text = ']' then
     Result := 93
-  else if text = 'ENTER' then
+  else if text = 'Enter' then
     Result := 13
-  else if text = 'CLOCK' then
+  else if text = 'Caps Lock' then
     Result := 301
   else if text = 'A' then
     Result := 97
@@ -350,11 +358,11 @@ begin
     Result := 108
   else if text = ';' then
     Result := 59
-  else if text = '"' then
+  else if text = '''' then
     Result := 39
   else if text = '\' then
     Result := 92
-  else if text = 'LSHIFT' then
+  else if text = 'Shift' then
     Result := 304
   else if text = 'Z' then
     Result := 122
@@ -370,90 +378,171 @@ begin
     Result := 110
   else if text = 'M' then
     Result := 109
-  else if text = ',' then
+  else if text = '<' then
     Result := 44
-  else if text = '.' then
+  else if text = '>' then
     Result := 46
   else if text = '/' then
     Result := 47
-  else if text = 'RSHIFT' then
+  else if text = 'Shift' then
     Result := 303
-  else if text = 'LCTRL' then
+  else if text = 'Ctrl' then
     Result := 306
-  else if text = 'LWIN' then
+  else if text = 'Left Win' then
     Result := 311
-  else if text = 'LALT' then
+  else if text = 'Alt' then
     Result := 308
-  else if text = 'SPACE' then
+  else if text = 'Space' then
     Result := 32
-  else if text = 'RALT' then
+  else if text = 'Alt' then
     Result := 307
-  else if text = 'RWIN' then
+  else if text = 'Right Win' then
     Result := 312
-  else if text = 'SPECIAL' then
+  else if text = 'Application Key' then
     Result := 319
-  else if text = 'RCTRL' then
+  else if text = 'Ctrl' then
     Result := 305
-  else if text = 'PRNTSCR' then
+  else if text = 'Print Screen' then
     Result := 316
-  else if text = 'SCRLOCK' then
+  else if text = 'Scroll Lock' then
     Result := 302
-  else if text = 'PAUSE' then
+  else if text = 'Pause' then
     Result := 19
-  else if text = 'INSERT' then
+  else if text = 'Insert' then
     Result := 277
-  else if text = 'HOME' then
+  else if text = 'Home' then
     Result := 278
-  else if text = 'PAGEUP' then
+  else if text = 'Page up' then
     Result := 280
-  else if text = 'DELETE' then
+  else if text = 'Delete' then
     Result := 127
-  else if text = 'END' then
+  else if text = 'End' then
     Result := 279
-  else if text = 'PAGEDOWN' then
+  else if text = 'Page down' then
     Result := 281
-  else if text = 'UP' then
+  else if text = 'Up' then
     Result := 273
-  else if text = 'LEFT' then
+  else if text = 'Left' then
     Result := 276
-  else if text = 'DOWN' then
+  else if text = 'Down' then
     Result := 274
-  else if text = 'RIGHT' then
+  else if text = 'Right' then
     Result := 275
-  else if text = 'NUMLOCK' then
+  else if text = 'Num Lock' then
     Result := 281
-  else if text = 'NUM_/' then
+  else if text = 'Num /' then
     Result := 267
-  else if text = 'NUM_*' then
+  else if text = 'Num *' then
     Result := 268
-  else if text = 'NUM_-' then
+  else if text = 'Num -' then
     Result := 269
-  else if text = 'NUM_7' then
+  else if text = 'Num 7' then
     Result := 263
-  else if text = 'NUM_8' then
+  else if text = 'Num 8' then
     Result := 264
-  else if text = 'NUM_9' then
+  else if text = 'Num 9' then
     Result := 265
-  else if text = 'NUM_+' then
+  else if text = 'Num +' then
     Result := 270
-  else if text = 'NUM_4' then
+  else if text = 'Num 4' then
     Result := 260
-  else if text = 'NUM_5' then
+  else if text = 'Num 5' then
     Result := 261
-  else if text = 'NUM_6' then
+  else if text = 'Num 6' then
     Result := 262
-  else if text = 'NUM_1' then
+  else if text = 'Num 1' then
     Result := 257
-  else if text = 'NUM_2' then
+  else if text = 'Num 2' then
     Result := 258
-  else if text = 'NUM_3' then
+  else if text = 'Num 3' then
     Result := 259
-  else if text = 'NUM_0' then
+  else if text = 'Num 0' then
     Result := 256
-  else if text = 'NUM_.' then
+  else if text = 'Num Del' then
     Result := 266
-  else if text = 'NUM_ENTER' then
+  else if text = 'Enter' then
     Result := 271;
+end;
+
+procedure Change_JoystickType(num: Integer);
+  procedure set_radio_checked(numof_Joy: Integer);
+    var
+      Joy_Int: Integer;
+      AutoFire: string;
+    begin
+      Joy_Int := Hatari_ini.ReadInteger('Joystick' + IntToStr(numof_Joy),'nJoystickMode',Joy_Int);
+      case Joy_Int of
+        0 : Conf.rb28.Checked := True;
+        1 : Conf.rb30.Checked := True;
+        2 : Conf.rb29.Checked := True;
+      end;
+      AutoFire := Hatari_ini.ReadString('Joystick' + IntToStr(numof_Joy),'bEnableAutoFire',AutoFire);
+      Conf.sCheckBox101.Checked := StrToBool(AutoFire);
+    end;
+  procedure show_keys_inpanel(numof_Joy: Integer);
+    var
+      CharKey:  string;
+      IntKey: Integer;
+    begin
+      IntKey := Hatari_ini.ReadInteger('Joystick' + IntToStr(numof_Joy),'nKeyCodeUp',IntKey);
+      CharKey := Hatari_GetNumAndShowString(IntKey);
+      Conf.sPanel37.Caption := CharKey;
+      IntKey := Hatari_ini.ReadInteger('Joystick' + IntToStr(numof_Joy),'nKeyCodeDown',IntKey);
+      CharKey := Hatari_GetNumAndShowString(IntKey);
+      Conf.sPanel38.Caption := CharKey;
+      IntKey := Hatari_ini.ReadInteger('Joystick' + IntToStr(numof_Joy),'nKeyCodeLeft',IntKey);
+      CharKey := Hatari_GetNumAndShowString(IntKey);
+      Conf.sPanel39.Caption := CharKey;
+      IntKey := Hatari_ini.ReadInteger('Joystick' + IntToStr(numof_Joy),'nKeyCodeRight',IntKey);
+      CharKey := Hatari_GetNumAndShowString(IntKey);
+      Conf.sPanel40.Caption := CharKey;
+      IntKey := Hatari_ini.ReadInteger('Joystick' + IntToStr(numof_Joy),'nKeyCodeFire',IntKey);
+      CharKey := Hatari_GetNumAndShowString(IntKey);
+      Conf.sPanel41.Caption := CharKey;
+    end;
+begin
+  set_radio_checked(num);
+  show_keys_inpanel(num);
+end;
+
+procedure SaveCurrentState_Joy(joyType: Integer);
+  procedure joymode(numof_Joy: Integer);
+    begin
+      if Conf.rb28.Checked = True then
+        Hatari_ini.WriteInteger('Joystick' + IntToStr(numof_Joy) ,'nJoystickMode',0)
+      else if Conf.rb30.Checked = True then
+        Hatari_ini.WriteInteger('Joystick' + IntToStr(numof_Joy) ,'nJoystickMode',1)
+      else if Conf.rb29.Checked = True then
+        Hatari_ini.WriteInteger('Joystick' + IntToStr(numof_Joy) ,'nJoystickMode',2);
+      if Conf.sCheckBox101.Checked = True then
+        Hatari_ini.WriteString('Joystick' + IntToStr(numof_Joy) ,'bEnableAutoFire','TRUE')
+      else
+        Hatari_ini.WriteString('Joystick' + IntToStr(numof_Joy) ,'bEnableAutoFire','FALSE');
+    end;
+
+  procedure SaveJoyKeys(numof_Joy: Integer);
+    var
+      keyCode: Integer;
+    begin
+      if Conf.sPanel37.Caption <> '' then
+        keyCode := Hatari_GetStringAndSetNum(Conf.sPanel37.Caption);
+      Hatari_ini.WriteInteger('Joystick' + IntToStr(numof_Joy) ,'nKeyCodeUp',keyCode);
+      if Conf.sPanel37.Caption <> '' then
+        keyCode := Hatari_GetStringAndSetNum(Conf.sPanel38.Caption);
+      Hatari_ini.WriteInteger('Joystick' + IntToStr(numof_Joy) ,'nKeyCodeDown',keyCode);
+      if Conf.sPanel37.Caption <> '' then
+        keyCode := Hatari_GetStringAndSetNum(Conf.sPanel39.Caption);
+      Hatari_ini.WriteInteger('Joystick' + IntToStr(numof_Joy) ,'nKeyCodeLeft',keyCode);
+      if Conf.sPanel37.Caption <> '' then
+        keyCode := Hatari_GetStringAndSetNum(Conf.sPanel40.Caption);
+      Hatari_ini.WriteInteger('Joystick' + IntToStr(numof_Joy) ,'nKeyCodeRight',keyCode);
+      if Conf.sPanel37.Caption <> '' then
+        keyCode := Hatari_GetStringAndSetNum(Conf.sPanel41.Caption);
+      Hatari_ini.WriteInteger('Joystick' + IntToStr(numof_Joy) ,'nKeyCodeFire',keyCode);
+    end;
+begin
+  joymode(joyType);
+  SaveJoyKeys(joyType);
 end;
 
 //////////////////////////////////////////////////////////////////////////////

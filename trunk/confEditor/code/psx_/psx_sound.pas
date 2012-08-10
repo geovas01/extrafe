@@ -2,7 +2,7 @@ unit psx_sound;
 
 interface
 uses
-  SysUtils,Classes,ExtCtrls,MMSystem;
+  SysUtils,Classes,ExtCtrls,global;
 
   procedure SetpSX_SoundfrompSXIni;
   procedure SavepSX_SoundAtExit;
@@ -28,7 +28,6 @@ procedure SetpSX_SoundfrompSXIni;
 var
   Sound_Str: string;
   Sound_Int: Integer;
-  JoyStick: TJoyCaps;
 begin
   if pSX_Exe <> '' then
     begin
@@ -73,7 +72,11 @@ begin
         Conf.sComboBox22.ItemIndex := Sound_Int;
       Conf.sComboBox21.Items.Clear;
       Conf.sComboBox21.Items.Add('None');
-      Conf.sComboBox21.Items.Add(JoyStick.szPname);
+      Sound_Int := 0;
+      repeat
+        Sound_Str := joysticks[Sound_Int];
+        Conf.sComboBox56.Items.Add(Sound_Str);
+      until Sound_Str = '';
       Sound_Str := pSX_Ini.ReadString('Input','JoystickDevice1',Sound_Str);
       if Sound_Str = 'NULL' then
         begin
@@ -289,7 +292,6 @@ procedure pSX_JoystickPortChange;
 var
   Sound_Int: Integer;
   Sound_Str: string;
-  JoyStick: TJoyCaps;
 begin
   if Conf.sComboBox62.ItemIndex = 0 then
     begin
@@ -301,7 +303,11 @@ begin
         Conf.sComboBox22.ItemIndex := Sound_Int;
       Conf.sComboBox21.Items.Clear;
       Conf.sComboBox21.Items.Add('None');
-      Conf.sComboBox21.Items.Add(JoyStick.szPname);
+      Sound_Int := 0;
+      repeat
+        Sound_Str := joysticks[Sound_Int];
+        Conf.sComboBox56.Items.Add(Sound_Str);
+      until Sound_Str = '';
       Sound_Str := pSX_Ini.ReadString('Input','JoystickDevice1',Sound_Str);
       if Sound_Str = 'NULL' then
         begin
@@ -357,7 +363,11 @@ begin
         Conf.sComboBox22.ItemIndex := Sound_Int;
       Conf.sComboBox21.Items.Clear;
       Conf.sComboBox21.Items.Add('None');
-      Conf.sComboBox21.Items.Add(JoyStick.szPname);
+      Sound_Int := 0;
+      repeat
+        Sound_Str := joysticks[Sound_Int];
+        Conf.sComboBox56.Items.Add(Sound_Str);
+      until Sound_Str = '';
       Sound_Str := pSX_Ini.ReadString('Input','JoystickDevice2',Sound_Str);
       if Sound_Str = 'NULL' then
         begin
