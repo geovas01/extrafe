@@ -10,10 +10,10 @@ uses
   uTweener in 'code\gui\uTweener.pas',
   uGlSceneProfiler in 'code\gui\uGlSceneProfiler.pas',
   mame in 'code\arcade\mame.pas',
-  uSimpleListBox in 'code\arcade\uSimpleListBox.pas',
   uSimplePanel in 'code\arcade\uSimplePanel.pas',
   uSimpleButton in 'code\gui\uSimpleButton.pas',
-  uBaseButton in 'code\gui\uBaseButton.pas';
+  uBaseButton in 'code\gui\uBaseButton.pas',
+  uMain_ListBox in 'code\arcade\uMain_ListBox.pas';
 
 {$R *.res}
 

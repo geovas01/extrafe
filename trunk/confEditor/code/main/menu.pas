@@ -41,7 +41,7 @@ uses
 
 var
   STBarMessages: Byte;
-  STBarInfo1,STBarInfo2: String;
+  StBarInfo : array [0..2] of string;
 
 implementation
 uses
@@ -1319,12 +1319,16 @@ procedure ChangeStatusInfo;
 begin
   case STBarMessages of
     0 : begin
-          Conf.stat1.Panels[0].Text := STBarInfo2;
+          Conf.stat1.Panels[0].Text := StBarInfo[0];
           STBarMessages := 1;
         end;
     1 : Begin
-          Conf.stat1.Panels[0].Text := STBarInfo1;
-          STBarMessages := 0;
+          Conf.stat1.Panels[0].Text := StBarInfo[1];
+          STBarMessages := 2;
+        end;
+    2 : begin
+          Conf.stat1.Panels[0].Text := StBarInfo[2];
+          STBarMessages := 0; 
         end;
   end;
 end;

@@ -227,6 +227,8 @@ begin
     end;
 end;
 
+////////////////////////////////////////////////////////////////////
+
 procedure Show_zinc_pathspanel;
 begin
   if (Cmenustate = 'em_arcade_zinc_graphics') then
@@ -251,11 +253,11 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pem_zinc_paths,'media\confeditor\images\zinc\zinc.png',
-              3,590,97,75,i,True);
+              3,590,97,75,i,'',True,False);
         2 : Image_Comp(Conf.Pem_zinc_paths,'media\confeditor\images\zinc\zinc_image.png',
-              580,483,150,175,i,True);
+              580,483,150,175,i,'',True,False);
         3 : Image_Comp(Conf.Pem_zinc_paths,'media\confeditor\images\zinc\paths.png',
-              612,2,125,71,i,True);
+              612,2,125,71,i,'',True,False);
       end;
     end;
 end;

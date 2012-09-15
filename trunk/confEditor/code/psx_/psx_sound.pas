@@ -445,17 +445,13 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pem_psx_sound,'media\confeditor\images\psx\psx.png',
-              3,590,100,71,i,True);
+              3,590,100,71,i,'',True,False);
         2 : Image_Comp(Conf.Pem_psx_sound,'media\confeditor\images\psx\psx_image.png',
-              587,381,150,280,i,True);
+              587,381,150,280,i,'',True,False);
         3 : Image_Comp(Conf.Pem_psx_sound,'media\confeditor\images\psx\sound.png',
-              451,2,291,71,i,True);
-        4 : begin
-              Image_Comp(Conf.grp12,'media\confeditor\images\psx\joystick.png',
-              85,48,402,272,i,True);
-              Comp := FindComponentEx('Conf.Pic4');
-              TImage(Comp).Stretch := True;
-            end;
+              451,2,291,71,i,'',True,False);
+        4 : Image_Comp(Conf.grp12,'media\confeditor\images\psx\joystick.png',
+              85,48,402,272,i,'',True,True);
       end;
     end;
 end;

@@ -166,7 +166,7 @@ begin
         Hatari_ini.WriteString('Sound','bEnableSound','TRUE')
       else
         Hatari_ini.WriteString('Sound','bEnableSound','FALSE');
-      Hatari_ini.WriteInteger('Sound','nPlaybackFreq',StrToInt(Conf.sComboBox54.Text));
+      Hatari_ini.WriteInteger('Sound','nPlaybackFreq',StrToInt(Trim(Copy(Conf.sComboBox54.Text,0,Length(Conf.sComboBox54.Text)-2))));
       if Conf.sComboBox39.ItemIndex = 0 then
         Hatari_ini.WriteInteger('Sound','YmVolumeMixing',3)
       else if Conf.sComboBox39.ItemIndex = 1 then
@@ -207,11 +207,11 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pem_hatari_screen,'media\confeditor\images\hatari\hatari.png',
-              3,586,106,70,i,True);
+              3,586,106,70,i,'',True,False);
         2 : Image_Comp(Conf.Pem_hatari_screen,'media\confeditor\images\hatari\hatari_image.png',
-              559,565,169,97,i,True);
+              559,565,169,97,i,'',True,False);
         3 : Image_Comp(Conf.Pem_hatari_screen,'media\confeditor\images\hatari\sound.png',
-              507,2,227,71,i,True);
+              507,2,227,71,i,'',True,False);
       end;
     end;
 end;

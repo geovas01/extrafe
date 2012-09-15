@@ -526,11 +526,12 @@ object Conf: TConf
           Height = 13
         end
         object sCheckBox95: TsCheckBox
-          Left = 360
+          Left = 356
           Top = 10
           Width = 135
           Height = 20
           Caption = 'Boot From Hard Disk'
+          AutoSize = False
           TabOrder = 0
           SkinData.SkinSection = 'CHECKBOX'
           ImgChecked = 0
@@ -857,6 +858,7 @@ object Conf: TConf
           Width = 284
           Height = 20
           Caption = 'Atari Falcon/TT only : Keep Desktop Resolution'
+          AutoSize = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -1131,8 +1133,9 @@ object Conf: TConf
           object sLabel78: TsLabel
             Left = 5
             Top = 43
-            Width = 46
+            Width = 214
             Height = 13
+            AutoSize = False
             Caption = 'c:/progr'
           end
           object sBitBtn72: TsBitBtn
@@ -1497,7 +1500,7 @@ object Conf: TConf
           Images = InBitBtn_Imagelist
         end
         object sCheckBox102: TsCheckBox
-          Left = 142
+          Left = 138
           Top = 110
           Width = 254
           Height = 20
@@ -1828,9 +1831,9 @@ object Conf: TConf
             '48000')
         end
         object sbar_mame_valumeattenuation: TsScrollBar
-          Left = 3
+          Left = 4
           Top = 130
-          Width = 190
+          Width = 186
           Height = 13
           Hint = 'Change_volume_attenuation'
           Max = 0
@@ -1841,9 +1844,9 @@ object Conf: TConf
           SkinManager = SkinM
         end
         object sbar_mame_audiolatency: TsScrollBar
-          Left = 3
+          Left = 4
           Top = 168
-          Width = 190
+          Width = 186
           Height = 13
           Max = 5
           Min = 1
@@ -1900,9 +1903,9 @@ object Conf: TConf
             Font.Style = [fsBold]
           end
           object sbar_mame_joysdeadzone: TsScrollBar
-            Left = 3
+            Left = 4
             Top = 20
-            Width = 190
+            Width = 186
             Height = 13
             Hint = 'Change_joystick_deadzone'
             Min = 10
@@ -2418,9 +2421,9 @@ object Conf: TConf
             Font.Style = [fsBold]
           end
           object sbar_mame_joysaturation: TsScrollBar
-            Left = 3
+            Left = 4
             Top = 20
-            Width = 190
+            Width = 186
             Height = 13
             Hint = 'Change_joystick_saturation'
             Min = 10
@@ -2612,6 +2615,17 @@ object Conf: TConf
           Value = 100
           OnChange = confEditor_Config_Set
         end
+      end
+      object Button1: TButton
+        Left = 24
+        Top = 232
+        Width = 209
+        Height = 25
+        Hint = 'Make_Log'
+        Caption = 'Find All components in log.txt file'
+        TabOrder = 3
+        Visible = False
+        OnClick = confEditor_Config_Set
       end
     end
     object Pem_mame_dirs: TsPanel
@@ -3253,6 +3267,7 @@ object Conf: TConf
             ParentFont = False
             ReadOnly = True
             TabOrder = 7
+            Visible = False
             SkinData.SkinSection = 'EDIT'
             BoundLabel.Active = True
             BoundLabel.Caption = 'State'
@@ -3690,9 +3705,9 @@ object Conf: TConf
           Caption = 'Contrast'
         end
         object sbar_mame_Fgamma: TsScrollBar
-          Left = 3
+          Left = 4
           Top = 40
-          Width = 190
+          Width = 186
           Height = 13
           Hint = 'Change_fullscreen_gamma'
           Ctl3D = True
@@ -3706,9 +3721,9 @@ object Conf: TConf
           SkinManager = SkinM
         end
         object sbar_mame_Fbrightness: TsScrollBar
-          Left = 2
+          Left = 4
           Top = 71
-          Width = 190
+          Width = 186
           Height = 13
           Hint = 'Change_fullscreen_brightness'
           Ctl3D = True
@@ -3722,9 +3737,9 @@ object Conf: TConf
           SkinManager = SkinM
         end
         object sbar_mame_Fcontrast: TsScrollBar
-          Left = 2
+          Left = 4
           Top = 104
-          Width = 190
+          Width = 186
           Height = 13
           Hint = 'Change_fullscreen_contrast'
           Ctl3D = True
@@ -3823,7 +3838,7 @@ object Conf: TConf
             ImgUnchecked = 0
           end
           object sComboBox3: TsComboBox
-            Left = 79
+            Left = 76
             Top = 53
             Width = 110
             Height = 21
@@ -4154,9 +4169,9 @@ object Conf: TConf
             Font.Style = [fsBold]
           end
           object sbar_mame_secondstorun: TsScrollBar
-            Left = 3
+            Left = 4
             Top = 20
-            Width = 184
+            Width = 180
             Height = 13
             Hint = 'Change_seconds_to_run'
             Max = 60
@@ -4188,9 +4203,9 @@ object Conf: TConf
             Font.Style = [fsBold]
           end
           object sbar_mame_scalescreen: TsScrollBar
-            Left = 3
+            Left = 4
             Top = 20
-            Width = 184
+            Width = 180
             Height = 13
             Hint = 'Change_scale_screen'
             Ctl3D = True
@@ -4277,7 +4292,7 @@ object Conf: TConf
         ParentFont = False
         TabOrder = 9
         object sCheckBox15: TsCheckBox
-          Left = 140
+          Left = 138
           Top = 8
           Width = 47
           Height = 20
@@ -4428,9 +4443,9 @@ object Conf: TConf
           Font.Style = [fsBold]
         end
         object sbar_mame_gammacorrection: TsScrollBar
-          Left = 3
+          Left = 4
           Top = 20
-          Width = 190
+          Width = 186
           Height = 13
           Hint = 'Change_gamma'
           Ctl3D = True
@@ -4474,7 +4489,7 @@ object Conf: TConf
         object sbar_mame_pausebrightness: TsScrollBar
           Left = 4
           Top = 20
-          Width = 190
+          Width = 186
           Height = 13
           Hint = 'Change_pause_brightness'
           Ctl3D = True
@@ -4513,9 +4528,9 @@ object Conf: TConf
           Font.Style = [fsBold]
         end
         object sbar_mame_brightnesscorrection: TsScrollBar
-          Left = 3
+          Left = 4
           Top = 20
-          Width = 190
+          Width = 186
           Height = 13
           Hint = 'Change_brightness'
           Ctl3D = True
@@ -4557,9 +4572,9 @@ object Conf: TConf
           Font.Style = [fsBold]
         end
         object sbar_mame_contrastcorrection: TsScrollBar
-          Left = 3
+          Left = 4
           Top = 19
-          Width = 190
+          Width = 186
           Height = 13
           Hint = 'Change_contrast'
           Ctl3D = True
@@ -4601,9 +4616,9 @@ object Conf: TConf
           Font.Style = [fsBold]
         end
         object sbar_mame_emulatrionspeed: TsScrollBar
-          Left = 3
+          Left = 4
           Top = 20
-          Width = 190
+          Width = 186
           Height = 13
           Hint = 'Change_emulation_speed'
           Max = 10000
@@ -4698,9 +4713,9 @@ object Conf: TConf
           Font.Style = [fsBold]
         end
         object sbar_mame_threadpriority: TsScrollBar
-          Left = 3
+          Left = 4
           Top = 20
-          Width = 190
+          Width = 186
           Height = 13
           Hint = 'Change_thread_priority'
           Max = 1
@@ -4912,7 +4927,7 @@ object Conf: TConf
             Font.Style = [fsBold]
           end
           object sbar_mame_beamwidth: TsScrollBar
-            Left = 5
+            Left = 4
             Top = 20
             Width = 180
             Height = 13
@@ -4948,7 +4963,7 @@ object Conf: TConf
             Font.Style = [fsBold]
           end
           object sbar_mame_flicker: TsScrollBar
-            Left = 5
+            Left = 4
             Top = 20
             Width = 180
             Height = 13
@@ -9727,7 +9742,7 @@ object Conf: TConf
               OnExpand = nxtgrd_ips_mamextExpand
             end
             object sCheckBox130: TsCheckBox
-              Left = 373
+              Left = 370
               Top = 11
               Width = 137
               Height = 20
@@ -9916,7 +9931,7 @@ object Conf: TConf
               OnExpand = nxtgrd_ips_mameplusExpand
             end
             object sCheckBox34: TsCheckBox
-              Left = 373
+              Left = 370
               Top = 11
               Width = 137
               Height = 20
@@ -10337,7 +10352,7 @@ object Conf: TConf
       end
     end
     object Pwg_weather: TsPanel
-      Left = 1
+      Left = 727
       Top = 1
       Width = 727
       Height = 661
@@ -10354,6 +10369,20 @@ object Conf: TConf
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+      end
+      object sLabel62: TsLabel
+        Left = 208
+        Top = 12
+        Width = 252
+        Height = 19
+        Caption = 'Internet Connection Not Found'
+        ParentFont = False
+        Visible = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
       end
@@ -10480,6 +10509,12 @@ object Conf: TConf
         Height = 20
         Hint = 'Weather_CancelAdd'
         Caption = 'Cancel'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
         TabOrder = 2
         Visible = False
         OnClick = Weather_Config
@@ -10487,13 +10522,1122 @@ object Conf: TConf
       end
     end
     object Pwg_timedate: TsPanel
-      Left = 727
+      Left = 1
       Top = 1
       Width = 727
       Height = 661
       Align = alCustom
       TabOrder = 10
       SkinData.SkinSection = 'PANEL'
+      object ScrollBox2: TScrollBox
+        Left = 16
+        Top = 56
+        Width = 350
+        Height = 329
+        BorderStyle = bsNone
+        TabOrder = 0
+      end
+      object grp32: TGroupBox
+        Left = 368
+        Top = 48
+        Width = 353
+        Height = 336
+        TabOrder = 1
+        Visible = False
+        object sComboBox42: TsComboBox
+          Left = 25
+          Top = 32
+          Width = 305
+          Height = 21
+          Hint = 'DateTime_CountryChoosed'
+          Alignment = taLeftJustify
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Select or Write a country...'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+          SkinData.SkinSection = 'COMBOBOX'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ItemHeight = 15
+          ItemIndex = -1
+          ParentFont = False
+          TabOrder = 0
+          Text = 'Countries...'
+          Visible = False
+          OnChange = DateTime_Config
+          Items.Strings = (
+            'Afghanistan'
+            'Albania'
+            'Algeria'
+            'Andorra'
+            'Angola'
+            'Antigua & Deps'
+            'Argentina'
+            'Armenia'
+            'Australia'
+            'Austria'
+            'Azerbaijan'
+            'Bahamas'
+            'Bahrain'
+            'Bangladesh'
+            'Barbados'
+            'Belarus'
+            'Belgium'
+            'Belize'
+            'Benin'
+            'Bhutan'
+            'Bolivia'
+            'Bosnia Herzegovina'
+            'Botswana'
+            'Brazil'
+            'Brunei'
+            'Bulgaria'
+            'Burkina'
+            'Burundi'
+            'Cambodia'
+            'Cameroon'
+            'Canada'
+            'Cape Verde'
+            'Central African Republic'
+            'Chad'
+            'Chile'
+            'China'
+            'Colombia'
+            'Comoros'
+            'Congo'
+            'Congo {Democratic Rep}'
+            'Costa Rica'
+            'Croatia'
+            'Cuba'
+            'Cyprus'
+            'Czech Republic'
+            'Denmark'
+            'Djibouti'
+            'Dominica'
+            'Dominican Republic'
+            'East Timor'
+            'Ecuador'
+            'Egypt'
+            'El Salvador'
+            'Equatorial Guinea'
+            'Eritrea'
+            'Estonia'
+            'Ethiopia'
+            'Fiji'
+            'Finland'
+            'France'
+            'Gabon'
+            'Gambia'
+            'Georgia'
+            'Germany'
+            'Ghana'
+            'Greece'
+            'Grenada'
+            'Guatemala'
+            'Guinea'
+            'Guinea-Bissau'
+            'Guyana'
+            'Haiti'
+            'Honduras'
+            'Hungary'
+            'Iceland'
+            'India'
+            'Indonesia'
+            'Iran'
+            'Iraq'
+            'Ireland {Republic}'
+            'Israel'
+            'Italy'
+            'Ivory Coast'
+            'Jamaica'
+            'Japan'
+            'Jordan'
+            'Kazakhstan'
+            'Kenya'
+            'Kiribati'
+            'Korea North'
+            'Korea South'
+            'Kosovo'
+            'Kuwait'
+            'Kyrgyzstan'
+            'Laos'
+            'Latvia'
+            'Lebanon'
+            'Lesotho'
+            'Liberia'
+            'Libya'
+            'Liechtenstein'
+            'Lithuania'
+            'Luxembourg'
+            'Madagascar'
+            'Malawi'
+            'Malaysia'
+            'Maldives'
+            'Mali'
+            'Malta'
+            'Marshall Islands'
+            'Mauritania'
+            'Mauritius'
+            'Mexico'
+            'Micronesia'
+            'Moldova'
+            'Monaco'
+            'Mongolia'
+            'Montenegro'
+            'Morocco'
+            'Mozambique'
+            'Myanmar {Burma}'
+            'Namibia'
+            'Nauru'
+            'Nepal'
+            'Netherlands'
+            'New Zealand'
+            'Nicaragua'
+            'Niger'
+            'Nigeria'
+            'Norway'
+            'Oman'
+            'Pakistan'
+            'Palau'
+            'Panama'
+            'Papua New Guinea'
+            'Paraguay'
+            'Peru'
+            'Philippines'
+            'Poland'
+            'Portugal'
+            'Qatar'
+            'Romania'
+            'Russian Federation'
+            'Rwanda'
+            'St Kitts & Nevis'
+            'St Lucia'
+            'Saint Vincent & the Grenadines'
+            'Samoa'
+            'San Marino'
+            'Sao Tome & Principe'
+            'Saudi Arabia'
+            'Skopje'
+            'Senegal'
+            'Serbia'
+            'Seychelles'
+            'Sierra Leone'
+            'Singapore'
+            'Slovakia'
+            'Slovenia'
+            'Solomon Islands'
+            'Somalia'
+            'South Africa'
+            'Spain'
+            'Sri Lanka'
+            'Sudan'
+            'Suriname'
+            'Swaziland'
+            'Sweden'
+            'Switzerland'
+            'Syria'
+            'Taiwan'
+            'Tajikistan'
+            'Tanzania'
+            'Thailand'
+            'Togo'
+            'Tonga'
+            'Trinidad & Tobago'
+            'Tunisia'
+            'Turkey'
+            'Turkmenistan'
+            'Tuvalu'
+            'Uganda'
+            'Ukraine'
+            'United Arab Emirates'
+            'United Kingdom'
+            'United States'
+            'Uruguay'
+            'Uzbekistan'
+            'Vanuatu'
+            'Vatican City'
+            'Venezuela'
+            'Vietnam'
+            'Yemen'
+            'Zambia'
+            'Zimbabwe')
+        end
+        object sButton24: TsButton
+          Left = 25
+          Top = 232
+          Width = 305
+          Height = 89
+          Hint = 'DateTime_CreateSelection'
+          Caption = '22:15:36 '#956#956
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -43
+          Font.Name = 'Arial Black'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 1
+          Visible = False
+          OnClick = DateTime_Config
+          SkinData.SkinSection = 'BUTTON'
+        end
+      end
+      object sButton21: TsButton
+        Left = 632
+        Top = 24
+        Width = 50
+        Height = 20
+        Hint = 'DateTime_Cancel'
+        Caption = 'Cancel'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 2
+        Visible = False
+        OnClick = DateTime_Config
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sButton23: TsButton
+        Left = 688
+        Top = 24
+        Width = 20
+        Height = 20
+        Hint = 'DateTime_AddSelection'
+        Caption = '+'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 3
+        OnClick = DateTime_Config
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object grp33: TGroupBox
+        Left = 160
+        Top = 392
+        Width = 369
+        Height = 193
+        Caption = 'Internet Time'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 4
+        object sLabel79: TsLabel
+          Left = 110
+          Top = 56
+          Width = 136
+          Height = 13
+          Caption = 'Internet Date and Time '
+        end
+        object sLabel130: TsLabel
+          Left = 8
+          Top = 72
+          Width = 3
+          Height = 13
+        end
+        object sLabel131: TsLabel
+          Left = 8
+          Top = 88
+          Width = 3
+          Height = 13
+        end
+        object sLabel132: TsLabel
+          Left = 104
+          Top = 112
+          Width = 152
+          Height = 13
+          Caption = 'Yours Computer Date Time'
+        end
+        object sLabel133: TsLabel
+          Left = 8
+          Top = 132
+          Width = 3
+          Height = 13
+        end
+        object sComboBox77: TsComboBox
+          Left = 8
+          Top = 24
+          Width = 257
+          Height = 21
+          Alignment = taLeftJustify
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = []
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+          SkinData.SkinSection = 'COMBOBOX'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ItemHeight = 15
+          ItemIndex = -1
+          ParentFont = False
+          TabOrder = 0
+          Text = 'Time Servers...'
+          Items.Strings = (
+            'ntp.amnic.net'
+            'ntp.tbpl.com.au'
+            'ts1.aco.net'
+            'asynchronos.iiss.at'
+            'ts2.aco.net'
+            'ntp.melbourne.nmi.gov.au'
+            'ntp.perth.nmi.gov.au'
+            'ntp.brisbane.nmi.gov.au'
+            'ntp.sydney.nmi.gov.au'
+            'ntp2.oma.be'
+            'ntp1.oma.be'
+            'ntp.bsdbg.net'
+            'ntp1.rnp.br'
+            'gps.ntp.br'
+            'ntps1.pads.ufrj.br'
+            'b.st1.ntp.br'
+            'd.st1.ntp.br'
+            'a.st1.ntp.br'
+            'c.st1.ntp.br'
+            'fergus.myftp.org'
+            'subitaneous.cpsc.ucalgary.ca'
+            'ntp.cm.nu'
+            'ntp1.servman.ca'
+            'tick.usask.ca'
+            'tock.usask.ca'
+            'clock.uregina.ca'
+            'ntpstm.netbone-digital.com'
+            'ntp1.as34288.net'
+            'ntp0.as34288.net'
+            'ntp.dgf.uchile.cl'
+            'ntp.shoa.cl'
+            'ntp.synet.edu.cn'
+            'ntp.zyhyt.org'
+            'time.ufe.cz'
+            'ntp.nic.cz'
+            'ntp.cesnet.cz'
+            'ntp.stairweb.de'
+            'time.fu-berlin.de'
+            'ntps1-1.cs.tu-berlin.de'
+            'ntp0.fau.de'
+            'zeit.fu-berlin.de'
+            'ntp3.fau.de'
+            'ptbtime1.ptb.de'
+            'ntps1-0.cs.tu-berlin.de'
+            'ntps1-0.fh-mainz.de'
+            'ntp1.fau.de'
+            'atom.uhr.de'
+            'ptbtime2.ptb.de'
+            'time1.one4vision.de'
+            'rustime01.rus.uni-stuttgart.de'
+            'ntp.probe-networks.de'
+            'ntp2.fau.de'
+            'gps.dix.dk'
+            'gps-01.sonnit.dk'
+            'gps.freebsd.dk'
+            'ntp.i2t.ehu.es'
+            'hora.roa.es'
+            'chronos.cru.fr'
+            'ntp-sop.inria.fr'
+            'ntp-p1.obspm.fr'
+            'canon.inria.fr'
+            'chronos.asda.gr'
+            'stdtime.gov.hk'
+            'clock.cuhk.edu.hk'
+            'ntp-galway.hea.net'
+            'ntp1.iqnet.com'
+            'ntp2.iqnet.com'
+            'ntp2.inrim.it'
+            'ntp1.inrim.it'
+            'clock.tl.fukuoka-u.ac.jp'
+            'ntp.nict.jp'
+            'clock.nc.fukuoka-u.ac.jp'
+            'ntp.xbsd.kr'
+            'ntp.idsi.md'
+            'sesku.planeacion.net'
+            'tiempo.promomedios.com'
+            'cronos.cenam.mx'
+            'ntp0.nl.uu.net'
+            'ntp4.linocomm.net'
+            'ntp.evertje.net'
+            'ntp6.remco.org'
+            'ntp1.nl.uu.net'
+            'ntp.remco.org'
+            'ntp1.nl.net'
+            'ntp2.nl.net'
+            'ntp0.nl.net'
+            'ntp.redfoxie.nl'
+            'ntp.eisvogel.nl'
+            'ntp2.nl.uu.net'
+            'time.service.uit.no'
+            'ntp.uit.no'
+            'ntp.certum.pl'
+            'vega.cbk.poznan.pl'
+            'ntp1.tp.pl'
+            'time.coi.pw.edu.pl'
+            'ntp.ntp-servers.com'
+            'ntp1.net.icm.edu.pl'
+            'ntp2.tp.pl'
+            'tick.miguelgoncalves.com'
+            'tock.miguelgoncalves.com'
+            'ntp3.usv.ro'
+            'ntp2.usv.ro'
+            'ntp0.dooh.ro'
+            'ntp1.usv.ro'
+            'ntp2.ntp-servers.net'
+            'ntp1.vniiftri.ru'
+            'ntp.sonur.ru'
+            'ntp2.vniiftri.ru'
+            'ntp4.vniiftri.ru'
+            'ntp0.ntp-servers.net'
+            'ntp1.ntp-servers.net'
+            'ntp.aas.ru'
+            'ntp.ab2b.ru'
+            'time.bakulev.ru'
+            'ntp.ix.ru'
+            'ntp.scx.ru'
+            'ntp3.vniiftri.ru'
+            'time1.isu.net.sa'
+            'time2.isu.net.sa'
+            'ntp1.mmo.netnod.se'
+            'ntp2.gbg.netnod.se'
+            'ntp1.openbsd.se'
+            'ntp1.sth.netnod.se'
+            'time1.stupi.se'
+            'ntp2.mmo.netnod.se'
+            'ntp1.gbg.netnod.se'
+            'ntp2.sth.netnod.se'
+            'ntp2.openbsd.se'
+            'ntp2.sp.se'
+            'time2.stupi.se'
+            'ntp1.sp.se'
+            'jamtepat.singnet.com.sg'
+            'nets.org.sg'
+            'goodtime.ijs.si'
+            'ntp.bozoncek.si.eu.org'
+            'ntp.mostovna.com'
+            'ntp0.mao.kiev.ua'
+            'ntp.exact-time.org'
+            'ntp.time.in.ua'
+            'ntp0.jonatkins.com'
+            'time.lavendercam.net'
+            'ntp.asql.co.uk'
+            'chronos.csr.net'
+            'ntp.shr.ug'
+            'ntp2.ja.net'
+            'nist1.uccaribe.edu'
+            'nist1-la.WiTime.net'
+            'ntp-a.boulder.nist.gov'
+            'utcnist2.colorado.edu'
+            'ntp.alaska.edu'
+            'father-time.t-bird.edu'
+            'tick.ucla.edu'
+            'montpelier.ilan.caltech.edu'
+            'timekeeper.isi.edu'
+            'clock.sjc.he.net'
+            'nist1.symmetricom.com'
+            'gpstime.trimble.com'
+            'gpstime.la-archdiocese.net'
+            'ntp-cup.external.hp.com'
+            't2.timegps.net'
+            'clock.via.net'
+            'tock.gpsclock.com'
+            'tick.gpsclock.com'
+            'nist1.aol-ca.truetime.com'
+            'clock.isc.org'
+            'clepsydra.dec.com'
+            'usno.pa-x.dec.com'
+            't1.timegps.net'
+            'gps.layer42.net'
+            'time.no-such-agency.net'
+            'andromeda.ziaspace.com'
+            'nist1-sj.WiTime.net'
+            'clock.fmt.he.net'
+            'gauss.kenyonralph.com'
+            'ntp.nasa.gov'
+            'time-b.timefreq.bldrdoc.gov'
+            'time-a.timefreq.bldrdoc.gov'
+            'tock.usnogps.navy.mil'
+            'time.nist.gov'
+            'time-d.timefreq.bldrdoc.gov'
+            'utcnist.colorado.edu'
+            'time-c.timefreq.bldrdoc.gov'
+            'tick.usnogps.navy.mil'
+            'tick.usno.navy.mil'
+            'tock.usno.navy.mil'
+            'ntp2.usno.navy.mil'
+            'rackety.udel.edu'
+            'mizbeaver.udel.edu'
+            'pogo.udel.edu'
+            'ntp1.conectiv.com'
+            'ntp1.nss.udel.edu'
+            'ntp.myfloridacity.us'
+            'ntp-s1.cise.ufl.edu'
+            'nist1.columbiacountyga.gov'
+            'navobs1.gatech.edu'
+            'tick.mhpcc.hpc.mil'
+            'truechimer.cso.uiuc.edu'
+            'ntp.your.org'
+            'tack.cerias.purdue.edu'
+            'ntp1.indylib.org'
+            'tick.cerias.purdue.edu'
+            'tock.cerias.purdue.edu'
+            'bonehed.lcs.mit.edu'
+            'time.falk.us'
+            'time.keneli.org'
+            'time-a.nist.gov'
+            'umd1.umd.edu'
+            'time-b.nist.gov'
+            'ntp.colby.edu'
+            'atlas.digitalenigma.net'
+            'pbody.digitalenigma.net'
+            'nist.expertsmi.com'
+            'nist.netservicesgroup.com'
+            'navobs1.wustl.edu'
+            'terrapin.csc.ncsu.edu'
+            'ncnoc.ncren.net'
+            'ntp0.jrc.us'
+            'nist1-ny.WiTime.net'
+            'gnomon.cc.columbia.edu'
+            'clock.nyc.he.net'
+            'now.okstate.edu'
+            'clock.danplanet.com'
+            'wwv.tns.its.psu.edu'
+            'gps1.otc.psu.edu'
+            'otc1.psu.edu'
+            'tick.uh.edu'
+            'time.xmission.com'
+            'nist1-dc.WiTime.net'
+            'nist1.aol-va.truetime.com'
+            'ntp.lucier.us'
+            'bigben.cac.washington.edu'
+            'time-nw.nist.gov'
+            'ntp2.netwrx1.com'
+            'ben.cs.wisc.edu'
+            'ntp1.netwrx1.com'
+            'time.hko.hk'
+            'timehost.lysator.liu.se'
+            'ntp.grid.am'
+            'ntp.adc.am'
+            'tock.nap.com.ar'
+            'time.sinectis.com.ar'
+            'tick.nap.com.ar'
+            'ntp.inode.at'
+            'ntp.ragingfist.net'
+            'maroochydore.time.flexi4site.net'
+            'ntp1.tpg.com.au'
+            'time.shortcircuit.net.au'
+            'ntp4.riverwillow.net.au'
+            'ntp.au.zoidial.com'
+            'qbert.enlartenment.com'
+            'ntp.any.ovee.net.au'
+            'brisbane.time.flexi4site.net'
+            'ntp.mazzanet.id.au'
+            'ntp2.tpg.com.au'
+            'ntp1.belbone.be'
+            'ntp.verbert.be'
+            'ntp2.belbone.be'
+            'ntp.vik.bg'
+            'ntp.host.bg'
+            'ntp.spbrasil.com.br'
+            'ntp1.pucpr.br'
+            'b.ntp.br'
+            'ntp.ufes.br'
+            'ntp.hiway.com.br'
+            'time.spbrasil.com.br'
+            'c.ntp.br'
+            'ntp.pop-pr.rnp.br'
+            'ntp.pads.ufrj.br'
+            'ntp.cais.rnp.br'
+            'ntp.massayonet.com.br'
+            'a.ntp.br'
+            'ntp2.servman.ca'#9'OpenAccess'
+            'tick.utoronto.ca'
+            'ntp3.servman.ca'
+            'ntp.cpsc.ucalgary.ca'
+            'time.nrc.ca'
+            'tock.utoronto.ca'
+            'time.chu.nrc.ca'
+            'timelord.uregina.ca'
+            'ns.cbc.ca'
+            'ntp1.cmc.ec.gc.ca'
+            'time.digibase.ca'
+            'ntp.kisikew.org'
+            'ntp2.cmc.ec.gc.ca'
+            'ntp.favey.ch'
+            'ntp12.metas.ch'
+            'ntp.exion.tillo.ch'
+            'clock.tix.ch'
+            'b.ntp.madduck.net'
+            'c.ntp.madduck.net'
+            'ntp11.metas.ch'
+            'ntp.metas.ch'
+            'tick.meteonews.ch'
+            'fisica.ciencias.uchile.cl'
+            'ntp.neu6.edu.cn'
+            't3.hshh.org'
+            'ntp.tuna.tsinghua.edu.cn'
+            'hshh.org'
+            't1.hshh.org'
+            't2.hshh.org'
+            'ntp2.contactel.cz'
+            'ntp.ujf.cas.cz'
+            'time.web-systems.ws'
+            'ntp1.contactel.cz'
+            'ntp.cgi.cz'
+            'ntp.karpo.cz'
+            'ntp.globe.cz'
+            'stratum2-4.NTP.TechFak.Uni-Bielefeld.DE'
+            'ntp.jedamzik.net'
+            'ntp1.theremailer.net / ntp1v6.theremailer.net'
+            'zeus.limescope.net'
+            'ntp.alks.org'
+            'ntp.illdefined.org'
+            'ntp1.de'
+            'a.ntp.madduck.net'
+            'time6.ostseehaie.de'
+            'stratum2-3.NTP.TechFak.Uni-Bielefeld.DE'
+            'tock.fh-augsburg.de'
+            'ntp1.time.bendig.name'
+            'hera.limescope.net'
+            'ntp.netzwerkteufel.net'
+            'ntp3.time.bendig.name'
+            'ntp2.rueckgr.at'
+            'ntp.malbolge.de'
+            'time.edv-froehlich.de'
+            'ntp.derhil.de'
+            'ntp1.time.bendig.name'
+            'ntp2.madavi.de'
+            'de.ntp.f-box.org'
+            'ntp3.madavi.de'
+            'ntp5.time.bendig.name'
+            'tack.fh-augsburg.de'
+            'ntp1.madavi.de'
+            'stratum2-3.NTP.TechFak.Uni-Bielefeld.DE'
+            'time.ostseehaie.de'
+            'ntp.reinig-it.de'
+            'tack.meteonews.net'
+            'ntp0.hochstaetter.de'
+            'tick.fh-augsburg.de'
+            'ntp2.de'
+            'ntp1.rueckgr.at'
+            'gwyn.kn-bremen.de'
+            'ntp.dianacht.de'
+            'ntp.icestarirc.org'
+            'ntp4.time.bendig.name'
+            'time2.one4vision.de'
+            'localh0rst.de'
+            'ntp2.linuxhosted.ca'
+            'ntp.zsuatt.com'
+            'ntp.dvconsulting.dk'
+            'ntp.vlh.dk'
+            'ntp.gal.dk'
+            'ntp2v6.unixnet.dk'
+            'ntp.snotboble.net'
+            'hora.gui.uva.es'
+            'hora.oxixares.com'
+            'slug.ctv.es'
+            'ntp.lekksi.com'
+            'ntp.killeri.net'
+            'tock.keso.fi'
+            'ntp.a-lab.fi'
+            'tick.keso.fi'
+            'ntp1.kamino.fr'
+            'chronos2.univ-montp3.fr'
+            'chronos.univ-montp3.fr'
+            'ntp.pbox.org'
+            'ntp.crifo.org'
+            'ntp2.linocomm.net'
+            'ntp.obspm.fr'
+            'ntp.demongeot.biz'
+            'ntp.giteafuntana.com'
+            'ntp.fryxell.info'
+            'ntp1.doowan.net'
+            'ntp.duckcorp.org'
+            'ntp.hds-tech.fr'
+            'ntp.syari.net'
+            'itsuki.fkraiem.org'
+            'time.zeroloop.net'
+            'ntp.home-dn.net'
+            'ntp.ilianum.com'
+            'ntp.hoffie.info'
+            'ntp.via.ecp.fr'
+            'ntp.sceen.net'
+            'ntp.carlfletcher.org'
+            'ntp0.luns.net.uk'
+            'ntp.mfa.gr'
+            'ntp.databank.com.gr'
+            'ntp.asda.gr'
+            'ntp.cuhk.edu.hk'
+            'zg2.ntp.carnet.hr'
+            'zg1.ntp.carnet.hr'
+            'ri.ntp.carnet.hr'
+            'os.ntp.carnet.hr'
+            'st.ntp.carnet.hr'
+            'ntp.mandrivalinux.hu'
+            'time.kfki.hu'
+            'suro.ubaya.ac.id'
+            'buaya.klas.or.id'
+            'ntp.incaf.net'
+            'ntp.mattrudge.net'
+            'ntp.amber.org.uk'
+            'ntp.maths.tcd.ie'
+            'ntp.vrlsoftwaresolutions.in'
+            'ntp1.vrlsoftwaresolutions.in'
+            'time.iqnet.com'
+            'ntps.net4u.it'
+            'ntp.ionn.net'
+            'ntp.prato.linux.it'
+            'quassia.associazione-tp.it'
+            'rafi.inha.ac.kr'
+            'cse.inha.ac.kr'
+            'ntp.ewha.net'
+            'ticktock.ewha.net'
+            'ntp.hosting-skills.org'
+            'ntp2.idsi.md'
+            'ntp.fedoramd.org'
+            'ntp.impactotec.com'
+            'ntp.supernet300.com'
+            'ntp2.roethof.net'
+            'ntp.grafix.nl'
+            'ntp.wsrs.net'
+            'ntp.terwan.nl'
+            'ntp3.theinternetone.net'
+            'ntp3.remco.org'
+            'ntp2.theinternetone.net'
+            'ntp2.remco.org'
+            'ntp.proserve.nl'
+            'ntp.minian.org'
+            'ntp0.mtsgrit.nl'
+            'serv01.richs.nl'
+            'ntp.edge.tillo.ch'
+            'ntp.baseip.com'
+            'ntp1.theinternetone.net'
+            'ntp3.linocomm.net'
+            'time.la4rha.net'
+            'ntp-public.uit.no'
+            'fartein.ifi.uio.no'
+            'tk3.ihug.co.nz'
+            'tk2.ihug.co.nz'
+            'ntp.public.otago.ac.nz'
+            'ntp.iprolink.co.nz'
+            'ntp.massey.ac.nz'
+            'tk1.ihug.co.nz'
+            'b.ntp.setilabs.net'
+            'ntp2.net.icm.edu.pl'
+            'ntp.kos.wsiz.rzeszow.pl'
+            'ntp2.radioalfa.pl'
+            'a.ntp.setilabs.net'
+            'ntp.stream.pl'
+            'ntp2.cnetside.net'
+            'ntp1.cnetside.net'
+            'ntp04.oal.ul.pt'
+            'bug.fe.up.pt'
+            'ntp2.upcbiz.ro'
+            'ntp1.bluepink.ro'
+            'ntp3.bluepink.ro'
+            'ntp3.upcbiz.ro'
+            'ntp2.dooh.ro'
+            'ntp5.bluepink.ro'
+            'ntp.gazduire.ro'
+            'ntp1.dooh.ro'
+            'ntp0.alterox.ro'
+            'ntp4.bluepink.ro'
+            'ntp2.bluepink.ro'
+            'ntp1.upcbiz.ro'
+            'ntp1.kangran.su'
+            'ntp21.vniiftri.ru'
+            'ticktock.net.ru'
+            'ntp2.aas.ru'
+            'ntp.xland.ru'
+            'ntp.sirius-p.ru'
+            'ntp.psn.ru'
+            'ntp3.ntp-servers.net'
+            'ntp.vld.ru'
+            'ntp2.fryxell.info'
+            'ntp4.ntp-servers.net'
+            'd0012.colocat.ru'
+            'ntp5.ntp-servers.net'
+            'rtr.firmacem.ru'
+            'ntp6.ntp-servers.net'
+            'ntp2.kangran.su'
+            'ntp1.aas.ru'
+            'ntp.letinet.ru'
+            'ntp7.ntp-servers.net'
+            'ntp.hws.ru'
+            'ntp.systemtid.se'
+            'time.flygplats.net'
+            'ntp.cyberinfo.se'
+            'www.millnet.se'
+            'nn.sg'
+            'time.ijs.si'
+            'ntp2.arnes.si'
+            'ntp1.arnes.si'
+            'ntp.initipi.sk'
+            'ntp.blava.net'
+            'clock.cimat.ues.edu.sv'
+            'ntp1.sibernet.com.tr'
+            'time.deu.edu.tr'
+            'ntp.ramtek.net.tr'
+            'ntp2.sibernet.com.tr'
+            'ntp2.sibernet.com.tr'
+            'ntp1.sibernet.com.tr'
+            'ntp.vc.ukrtel.net'
+            'ntp.campus-rv.net'
+            'ntp2b.mcc.ac.uk'
+            'ntp1.comgw.net'
+            'ntp2.sandvika.net'
+            'clock02.mnuk01.burstnet.eu'
+            'ntp2d.mcc.ac.uk'
+            'ntp.markyate.net'
+            'ntp2.nonanet.net.uk'
+            'ntp2c.mcc.ac.uk'
+            'ntppub.le.ac.uk'
+            'ntp0.uk.uu.net'
+            'ntp.exnet.com'
+            'clock01.mnuk01.burstnet.eu'
+            'ntp1.sandvika.net'
+            'weevil.pwns.ms'
+            'time-server.ndo.com'
+            'ntp.cis.strath.ac.uk'
+            'ntp0.sandvika.net'
+            'time.sys.mywn.co.uk'
+            'weta.pwns.ms'
+            'saladfingerz.co.uk'
+            'uk.ntp.f-box.org'
+            'ntp0.borg-collective.org.uk'
+            'ntp1.tcpd.net'
+            'ntp3.tcpd.net'
+            'ntp2b.mcc.ac.uk'
+            'ntp.pinklemon.net'
+            'ntp2.tcpd.net'
+            'ntp2.uk.uu.net'
+            'ntp2.comgw.net'
+            'ntp1.luns.net.uk'
+            'tick.myodn.ch'
+            'tick.tanac.net'
+            'extntp0.inf.ed.ac.uk'
+            'extntp1.inf.ed.ac.uk'
+            'ntp1.uk.uu.net'
+            'ntp01.packetscan.com'
+            'ntp.qays.net'
+            'time.awyeah.net'
+            'dmzs.com'
+            'ntp0.sjbcom.com'
+            'thecraag.com'
+            'Tor-1.Auvz.Com'
+            'thecavemanslan.com'
+            'ac-ntp1.net.cmu.edu'
+            'ntp.miknight.com'
+            'Auvz.com'
+            'blade.avnf.com'
+            'time.desynched.net'
+            'time.it2.net'
+            'ntp.datasuppliesuk.net'
+            'saman-gh.co.uk'
+            'ac-ntp0.net.cmu.edu'
+            'timelord.darkvoip.net'
+            'timekeeper.delphij.net'
+            'clock.fihn.net'
+            'ac-ntp2.net.cmu.edu'
+            'ntp.quintex.com'
+            'ntp.billn.net'
+            'time.cachenetworks.com'
+            'us.ntp.f-box.org'
+            'ntp1.inflammable.ws'
+            'time.al-it.com'
+            'dewey.lib.ci.phoenix.az.us'
+            'ntp2.phoenixpubliclibrary.org'
+            'decimal.lib.ci.phoenix.az.us'
+            'ntp1.phoenixpubliclibrary.org'
+            'ntp1.linocomm.net'
+            'ntp1.sf-bay.org'
+            'clock01.laca02.burst.net'
+            'dmz0.la-archdiocese.net'
+            'darwin.kenyonralph.com'
+            'reloj.kjsl.com'
+            'ntp2.sf-bay.org'
+            'chronus.carlso.net'
+            'pubts2-sj.witime.net'
+            'time.envirahost.com'
+            'reva.ziaspace.com'
+            'dmz2.la-archdiocese.net'
+            'ntp1.linuxhosted.ca'
+            'PubTS0-sj.Certichron.COM'
+            'pubts1-sj.witime.net'
+            'ntp1.mainecoon.com'
+            'clock02.laca02.burst.net'
+            'clock.develooper.com'
+            'ntp.nblug.org'
+            'time.berkeley.netdot.net'
+            'ntp.ucsd.edu'
+            'stratum2.sjc1.publicntp.net'
+            'ntp1.stsn.net'
+            'ntp.drydog.com'
+            'time.five-ten-sg.com'
+            'ntp2.mainecoon.com'
+            'ntp1.linuxmedialabs.com'
+            'ntp.skoglundtech.com'
+            'louie.udel.edu'
+            'clock02.mifl01.burst.net'
+            'clock01.mifl01.burst.net'
+            'rolex.usg.edu'
+            'time.intersecur.net'
+            'ntp2.stsn.net'
+            'ntp-1.cso.uiuc.edu'
+            'ntp-2.cso.uiuc.edu'
+            'ntp2.jentfoo.com'
+            'ntp.mya.org'
+            'clock01.chil01.burst.net'
+            'stratum2.ord2.publicntp.net'
+            'clock02.chil01.burst.net'
+            'horologe.cerias.purdue.edu'
+            'time.slackadelic.com'
+            'ntp.strifler.name'
+            'ntp1.kansas.net'
+            'ntp2.kansas.net'
+            'openbrick.kicks-ass.net'
+            'castor.digitalenigma.net'
+            'pollux.digitalenigma.net'
+            'nss.nts.umn.edu'
+            'ns.nts.umn.edu'
+            'time.sntp.us'
+            'time.chipsnet.org'
+            'ntp1.yellowcheese.com'
+            'time-ext.missouri.edu'
+            'chronos1.umt.edu'
+            'chronos3.umt.edu'
+            'chronos2.umt.edu'
+            'clock1.unc.edu'
+            'tock.ellipse.net'
+            'tick.binary.net'
+            'tick.ellipse.net'
+            'tock.binary.net'
+            'ntp.uhfradio.com'
+            'ntp.undeadarmy.com'
+            'ntp.melancthon.net'
+            'timelord.w1nr.net'
+            'tick.jrc.us'
+            'tock.jrc.us'
+            'tock.cs.unlv.edu'
+            'abyss.simplysam.us'
+            'tick.cs.unlv.edu'
+            'ntp0.cornell.edu'
+            'alice.ziaspace.com'
+            'clock.linuxshell.net'
+            'OptimusPrime.64bitVPS.com'
+            'Optimussupreme.64bitVPS.com'
+            'sundial.columbia.edu'
+            'Optimusprimal.64bitVPS.com'
+            'ntp.glorb.com'
+            'tock.eoni.com'
+            'tick.eoni.com'
+            'clock.psu.edu'
+            'clock02.sctn01.burst.net'
+            'clock-1.cs.cmu.edu'
+            'ntp-1.cede.psu.edu'
+            'clock01.sctn01.burst.net'
+            'fuzz.psc.edu'
+            'ntp-2.cede.psu.edu'
+            'clock-2.cs.cmu.edu'
+            'ntp1.jtsage.com'
+            'ntp1.chrisjohnston.org'
+            'ntp.jentfoo.com'
+            'ntp2.jtsage.com'
+            'ntp.bytestacker.com'
+            'ticker.cis.sac.accd.edu'
+            'ntp2.inflammable.ws'
+            'ntp.fnbhs.com'
+            'sundial.cis.sac.accd.edu'
+            'ntppub.tamu.edu'
+            'chrono.cis.sac.accd.edu'
+            'tick.jpunix.net'
+            'tick.mattnordhoff.com'
+            'ntp.squirrels.us'
+            'tick.greyware.com'
+            'ntp.fwwds.com'
+            'tock.greyware.com'
+            'ntp2.chrisjohnston.org'
+            'ntp.tmc.edu'
+            'timelordzero.shado.dyndns.info'
+            'ntp-2.vt.edu'
+            'ntp-4.vt.edu'
+            'ntp-3.vt.edu'
+            'ntp.theforest.us'
+            'ntp-1.vt.edu'
+            'ntp3.stsn.net'
+            'ntp0.state.vt.us'
+            'ntp1.state.vt.us'
+            'ntp2.state.vt.us'
+            'ntp1.innoscale.net'
+            'tick.mtnlion.com'
+            'iori.fkraiem.org'
+            'ntp.knowledge.or.id'
+            'UltiMeth Systems'
+            'ntp1.cs.wisc.edu'
+            'ntp3.sf-bay.org'
+            'ntp3.cs.wisc.edu'
+            'ntp3.netwrx1.com'
+            'ntp.ishikawa.sne.jp'
+            'ntp.linux.org.ve'
+            'ntp.baragwanath.co.za'
+            'ntp.cs.unp.ac.za'
+            'tock.nml.csir.co.za')
+        end
+        object sBitBtn109: TsBitBtn
+          Left = 272
+          Top = 24
+          Width = 21
+          Height = 21
+          Hint = 'DateTime_InternetTime'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 1
+          OnClick = DateTime_Config
+          SkinData.SkinSection = 'BUTTON'
+          ImageIndex = 34
+          Images = InBitBtn_Imagelist
+        end
+        object sButton25: TsButton
+          Left = 8
+          Top = 160
+          Width = 353
+          Height = 25
+          Caption = 'Set internet time to my computer'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 2
+          Visible = False
+          WordWrap = False
+          SkinData.SkinSection = 'BUTTON'
+        end
+      end
     end
     object Pexf_configuration: TsPanel
       Left = 727
@@ -11651,7 +12795,7 @@ object Conf: TConf
             Caption = 'c:/progr'
           end
           object sCheckBox91: TsCheckBox
-            Left = 155
+            Left = 152
             Top = 61
             Width = 217
             Height = 20
@@ -11688,8 +12832,9 @@ object Conf: TConf
           object sLabel23: TsLabel
             Left = 5
             Top = 45
-            Width = 46
+            Width = 454
             Height = 13
+            AutoSize = False
             Caption = 'c:/progr'
           end
           object sLabel24: TsLabel
@@ -11728,8 +12873,9 @@ object Conf: TConf
           object sLabel26: TsLabel
             Left = 5
             Top = 45
-            Width = 46
+            Width = 454
             Height = 13
+            AutoSize = False
             Caption = 'c:/progr'
           end
           object sLabel27: TsLabel
@@ -11742,8 +12888,9 @@ object Conf: TConf
           object sLabel53: TsLabel
             Left = 5
             Top = 85
-            Width = 46
+            Width = 454
             Height = 13
+            AutoSize = False
             Caption = 'c:/progr'
           end
           object sCheckBox93: TsCheckBox
@@ -11775,8 +12922,9 @@ object Conf: TConf
           object sLabel55: TsLabel
             Left = 5
             Top = 45
-            Width = 46
+            Width = 454
             Height = 13
+            AutoSize = False
             Caption = 'c:/progr'
           end
           object sLabel56: TsLabel
@@ -11789,8 +12937,9 @@ object Conf: TConf
           object sLabel57: TsLabel
             Left = 5
             Top = 85
-            Width = 46
+            Width = 454
             Height = 13
+            AutoSize = False
             Caption = 'c:/progr'
           end
           object sCheckBox94: TsCheckBox
@@ -12398,7 +13547,7 @@ object Conf: TConf
             '16:10')
         end
         object sCheckBox107: TsCheckBox
-          Left = 298
+          Left = 294
           Top = 140
           Width = 93
           Height = 20
@@ -20457,6 +21606,36 @@ object Conf: TConf
           73F783073780BFDEDEC0D3C35FEE659E07F1421A2081ECB58B3BFE39FCF18BA1
           E6E69B1B3ABBDE09471A26B868C3230D8630303DFA673C3538B09F027F79CBCE
           3D7D4D0F6DF916650FFF0E0091FCAF0858BD2EBC0000000049454E44AE426082}
+      end
+      item
+        ImageFormat = ifPNG
+        ImgData = {
+          89504E470D0A1A0A0000000D4948445200000010000000100802000000909168
+          36000000097048597300000B1300000B1301009A9C18000000206348524D0000
+          7A25000080830000F9FF000080E9000075300000EA6000003A980000176F925F
+          C546000002C54944415478DA04C15D6853671807F0FFF3BE6F4E9A26CD496ADA
+          D4746D99DD4A6BECBA3A8D9F43A1C8AE6482370AA24390C1EEBC7752A5C2180C
+          BCF3CE1B071B5E095A267E506F14955A365A3FD26D646B9BA66DDA644D724E3E
+          CE7BDE67BF1FB1CF0C1FE4192826250DC883AF60249461320008121EB1604890
+          D26041201202E4B12B4893D546806045445AD50D848421588215084A118305C0
+          0E1756FCD785CA52A8F1F178EA9845B15577F1E9F2CFC9EE1DE9D8789246C9C4
+          2048818D1166BDF521AF66FE745E3F78F61CA58E5399B3210EE7CAD95F5EDDDE
+          B377A09E39396CD77AD5171174CBC96BD70BEEDFCF37EFBC587AF8E0E18CACC4
+          BFDA7DA62F92A1A6DD69277D83B9B7B3D9C2FB5AC81124526D7D8A0148B1F061
+          FEB7372F8E0F7DFDDDC48D8897E888D88070EADB23BD078FA64FDC9CBE32FD74
+          7AD7C4E7B233202727AFB6AB7047AC231A0D9C1CBDECFCABEEDFBF373A9A0E87
+          C36459D1502C6EF5936525BBBB4E8F5D8A8A94000830BA613E4B1D4E057B8787
+          06E371FB871F7F2A6C9585504D5FFA5E343D302165AB545901A0983553AB585A
+          536D9166B0998885BEB970F1EEAF77A7BE9F1A191B73DDFAFECCA1D047C1A25B
+          DCA81577C7A10C19826ABA9E8C5611545BDB3A6AABB103998D9A73EEC279A7AE
+          CB4E794B2F6904202C00C2202811E989EF5CDEC8E6FE5BDB6E194763CB41AD25
+          AB1E6ABE2A361BEFD65F2568E760E7200021E00318E91FAF36F562E3E506D6FE
+          C8E611684F8F1FFC67B59C5B5B76542EEFCCEEEB39DC17FA04D04A42804D2238
+          60E9C493B95B9BFD6F87BA8E4483FDB24B5602B982FB7EE1F7C72BA5C5B323DF
+          02ED80510644004155F3A55AAEDCD567E7737F659D79294C8B1A894432ACEDE5
+          6CBE71CC030008D26C0846002FE7676480F60F4F54BD8ADB2C116BC880DDDEE3
+          69E7D9DCA37D9F7ED913EF050C1936065AB02048067C18222D11001308CC9A98
+          2024B3EF1B4F0AEBFF0100A31E438651E8C3020000000049454E44AE426082}
       end>
     Left = 11
     Top = 10
@@ -20532,5 +21711,10 @@ object Conf: TConf
     HTTPOptions = [hoForceEncodeParams]
     Left = 71
     Top = 10
+  end
+  object NLDJoystick1: TNLDJoystick
+    Active = True
+    Left = 72
+    Top = 40
   end
 end

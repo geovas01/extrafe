@@ -3,7 +3,7 @@ unit mame;
 interface
 uses
   SysUtils,Windows,used_pro,loadT,
-  uSimplePanel,
+  uMain_ListBox,
   VectorGeometry;
 
   procedure MameMenu(aTime: Double);
@@ -13,13 +13,6 @@ const
 
 var
   fMousePressed: Boolean;
-
-  {Panels}
-  fPanel: TSimplePanel;
-  fSizing: TNCSizing;
-  fStartPosSizing: TVector;
-  fDoSizing: Boolean;
-
 
 implementation
 
@@ -36,23 +29,26 @@ begin
 // Init objects
       if MainForm.Mame_Background.Tag = 0 then
         begin
+          MainForm.GLCadencer.Scene := MainForm.GLS_mame;
+          MainForm.GLSceneViewer.Camera := MainForm.GlCamera_mame;
           AddMaterials(MatLib,'media\emulators\arcade\mame\extrafe\',SkinsNames,SkinsNames);
-          fPanel := TSimplePanel.CreateAsChild(MainForm.Dummy_mame);
-          fPanel.Material.MaterialLibrary := MatLib;
-          fPanel.Position.SetPoint(CenterX, CenterY, 0);
-          fPanel.Width := 100;
-          fPanel.Height := 100;
-          fPanel.Material.LibMaterialName := 'blue';
           MainForm.Mame_Background.Tag := 1;
+          sItem := 6;
         end;
 // Start the loop
       if MainForm.Mame_Background.Tag = 1 then
         begin
           MainForm.GLSceneViewer.Invalidate;
-          GetCursorPos(MPos);
-          MPos := MainForm.GLSceneViewer.ScreenToClient(MPos);
-          fListBox.SetMousePosition(MPos.x, MPos.y);
-          fMousePressed := IsKeyDown(vk_LButton);
+          if IsKeyDown(VK_DOWN) then
+            fListBox.DoClickDown
+          else if IsKeyDown(VK_UP ) then
+            fListBox.DOClickUp
+          else if IsKeyDown(VK_LEFT) then
+            fListBox.DOClickLeft
+          else if IsKeyDown(VK_RIGHT) then
+            fListBox.DOClickRight
+          else
+            fListBox.CancelClick;
         end;
 
     end;

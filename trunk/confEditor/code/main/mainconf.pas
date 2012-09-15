@@ -3,7 +3,7 @@ unit mainconf;
 interface
 uses
   Windows,Variants,Classes,SysUtils,Forms,StdCtrls,ComCtrls,IniFiles,ExtCtrls,
-  Graphics,FunctionX,sPanel,sComboBox,sCheckBox,sEdit,sBitBtn,
+  Graphics,FunctionX,sPanel,sComboBox,sCheckBox,sEdit,sBitBtn,sButton,
   form_splash,
   menu,global,
   ce_themes,ce_config,
@@ -24,22 +24,14 @@ uses
   procedure StartProgExtraFE;
 
   procedure StartEmuMame;
-  procedure ShowMameProgress(progress: Integer; Comment: string);
-
   procedure StartEmuZinc;
-  procedure ShowZincProgress(progress: Integer; Comment: string);
-
   procedure StartEmuHatari;
-  procedure ShowHatariProgress(progress: Integer; Comment: string);
-  
   procedure StartEmupSX;
-  procedure ShowpSXProgress(progress: Integer; Comment: string);
-
   procedure StartEmuKigb;
-  procedure ShowKigbProgress(progress: Integer; Comment: string);
-
   procedure StartWidget_Weather;
   procedure StartWidget_TimeDate;
+
+  procedure ShowProgressBar(progress: Integer; Comment,Emu: string);
   procedure CreateSTBarInfo;
   procedure HideAllPanels;
   procedure StartSkinEngine;
@@ -54,7 +46,6 @@ uses
 var
 //Application Vars
   ExtraFePath: string;
-  run: Integer;
 //Cursors
   Arrow,TArrow,Link,Busy,Horizontal,Vertical,Precision : Byte;
 //ConfEditor Vars
@@ -135,32 +126,42 @@ Begin
     0 : begin
           for k := 1 to 122 do
             begin
-              component := FindComponentEx('Conf.grp'+inttostr(k));
-              TGroupBox(component).Color := $00e4eaed;
+              if (k <> 34) and (k <> 35)  then
+                begin
+                  component := FindComponentEx('Conf.grp'+inttostr(k));
+                  TGroupBox(component).Color := $00e4eaed;
+                end;
             end;
+          Conf.ScrollBox1.Color := $00e4eaed;
+          Conf.ScrollBox2.Color := $00e4eaed;
           Conf.PBuilds_MamePlus.Color := $00e4eaed;
           Conf.PBuilds_MameXT.Color := $00e4eaed;
         end;
     1 : begin
           for k := 1 to 122 do
             begin
-              component := FindComponentEx('Conf.grp'+inttostr(k));
-              TGroupBox(component).Color := $00bae5e8;
+              if (k <> 34) and (k <> 35)  then
+                begin
+                  component := FindComponentEx('Conf.grp'+inttostr(k));
+                  TGroupBox(component).Color := $00bae5e8;
+                end;
             end;
+          Conf.ScrollBox1.Color := $00bae5e8;
+          Conf.ScrollBox2.Color := $00bae5e8;
           Conf.PBuilds_MamePlus.Color := $00bae5e8;
           Conf.PBuilds_MameXT.Color := $00bae5e8;
         end;
     2 : begin
           for k := 1 to 122 do
             begin
-              if (k <> 11) and (k <> 12) and (k <> 17) and (k <> 18) and
-                (k <> 20) and (k <> 30) and (k <> 31) and (k <> 32) and
-                (k <> 33) and (k <> 34) and (k <> 35) then
+              if (k <> 34) and (k <> 35) then
                 begin
                   component := FindComponentEx('Conf.grp'+inttostr(k));
                   TGroupBox(component).Color := $00e7e7e7;
                 end;
             end;
+          Conf.ScrollBox1.Color := $00e7e7e7;
+          Conf.ScrollBox2.Color := $00e7e7e7;
           Conf.PBuilds_MamePlus.Color := $00e7e7e7;
           Conf.PBuilds_MameXT.Color := $00e7e7e7;
         end;
@@ -221,150 +222,151 @@ end;
 
 procedure AllCursor(cur: Byte);
 var
-  l: Byte;
+  i: Integer;
   Comp: TComponent;
 begin
   SetCursors(cur);
   //Menu Panel
   Conf.Menu_Panel.Cursor := Arrow;
-  Conf.sBitBtn6.Cursor := Arrow;
-  Conf.sBitBtn7.Cursor := Arrow;
-  Conf.sBitBtn8.Cursor := Arrow;
-  Conf.sBitBtn9.Cursor := Arrow;
-  Conf.sBitBtn10.Cursor := Arrow;
-  Conf.sBitBtn11.Cursor := Arrow;
-  Conf.sBitBtn12.Cursor := Arrow;
-  Conf.sBitBtn13.Cursor := Arrow;
-  Conf.sBitBtn14.Cursor := Arrow;
-  Conf.sBitBtn15.Cursor := Arrow;
-  Conf.sBitBtn16.Cursor := Arrow;
+  for i := 6 to 16 do
+    begin
+      Comp := FindComponentEx('Conf.sBitBtn' + IntToStr(i));
+      TsBitBtn(Comp).Cursor := Arrow;
+    end;
   Conf.Menu_Image.Cursor := Arrow;
   Conf.stat1.Cursor := TArrow;
-  //Panel Main
+  //Mains Panel in Main Panel
   Conf.Main_Panel.Cursor := Arrow;
-
-  //{ConfEditor}
-  //Panel CE_StartWizard
   Conf.Pce_wizard.Cursor := Arrow;
-  //Panel CE_Configuration
   Conf.Pce_config.Cursor := Arrow;
-  Conf.sCheckBox1.Cursor := Arrow;
-  Conf.sCheckBox2.Cursor := Arrow;
-  Conf.grp116.Cursor := Arrow;
-  Conf.sComboBox74.Cursor := Arrow;
+  Conf.Pce_themes.Cursor := Arrow;
+  Conf.Pexf_configuration.Cursor := Arrow;
+  Conf.Pexf_themes.Cursor := Arrow;
+  Conf.Pem_mame_dirs.Cursor := Arrow;
+  Conf.Pem_mame_graphics.Cursor := Arrow;
+  Conf.Pem_mame_sound.Cursor := Arrow;
+  Conf.Pem_mame_others.Cursor := Arrow;
+  Conf.Pem_mame_builds.Cursor := Arrow;
+  Conf.Pem_mame_database.Cursor := Arrow;
+  Conf.Pem_zinc_paths.Cursor := Arrow;
+  Conf.Pem_zinc_graphics.Cursor := Arrow;
+  Conf.Pem_zinc_sound.Cursor := Arrow;
+  Conf.Pem_zinc_database.Cursor := Arrow;
+  Conf.Pem_hatari_paths.Cursor := Arrow;
+  Conf.Pem_hatari_system.Cursor := Arrow;
+  Conf.Pem_hatari_roms.Cursor := Arrow;
+  Conf.Pem_hatari_screen.Cursor := Arrow;
+  Conf.Pem_hatari_joy.Cursor := Arrow;
+  Conf.Pem_hatari_database.Cursor := Arrow;
+  Conf.Pem_psx_paths.Cursor := Arrow;
+  Conf.Pem_psx_screen.Cursor := Arrow;
+  Conf.Pem_psx_sound.Cursor := Arrow;
+  Conf.Pem_psx_others.Cursor := Arrow;
+  Conf.Pem_psx_database.Cursor := Arrow;
+  Conf.Pem_kigb_paths.Cursor := Arrow;
+  Conf.Pem_kigb_screen.Cursor := Arrow;
+  Conf.Pem_kigb_sound.Cursor := Arrow;
+  Conf.Pem_kigb_others.Cursor := Arrow;
+  Conf.Pem_kigb_database.Cursor := Arrow;
+  Conf.Pwg_weather.Cursor := Arrow;
+  Conf.Pwg_timedate.Cursor := Arrow;
+
+  //groupBoxes(grp)
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.grp' + IntToStr(i)) <> nil then
+        begin
+          Comp := FindComponentEx('Conf.grp' + IntToStr(i));
+          TGroupBox(Comp).Cursor := Arrow;
+        end;
+    end;
+  //sPanels
+  Conf.sPanel.Cursor := Precision;
+  for i := 2 to 68 do
+    begin
+      Comp := FindComponentEx('Conf.sPanel' + IntToStr(i));
+      TsPanel(Comp).Cursor := Precision;
+    end;
+  for i := 69 to 200 do
+    begin
+      if FindComponentEx('Conf.sPanel' + IntToStr(i)) <> nil then
+        begin
+          Comp := FindComponentEx('Conf.sPanel' + IntToStr(i));
+          TsPanel(Comp).Cursor := Arrow;
+        end;
+    end;
+  //sCheckBoxes
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.sCheckBox' + IntToStr(i)) <> nil then
+        begin
+          Comp := FindComponentEx('Conf.sCheckBox' + IntToStr(i));
+          TsCheckBox(Comp).Cursor := Arrow;
+        end;
+    end;
+  //sComboBoxes
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.sComboBox' + IntToStr(i)) <> nil then
+        begin
+          Comp := FindComponentEx('Conf.sComboBox' + IntToStr(i));
+          TsComboBox(Comp).Cursor := Arrow;
+        end;
+    end;
+  //sEdits
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.sEdit' + IntToStr(i)) <> nil then
+        begin
+          Comp := FindComponentEx('Conf.sEdit' + IntToStr(i));
+          TsEdit(Comp).Cursor := TArrow;
+        end;
+    end;
+  //sBitBtns
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.sBitBtn' + IntToStr(i)) <> nil then
+        begin
+          Comp := FindComponentEx('Conf.sBitBtn' + IntToStr(i));
+          TsBitBtn(Comp).Cursor := Arrow;
+        end;
+    end;
+  //radioButtons(rb)
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.rb' + IntToStr(i)) <> nil then
+        begin
+          Comp := FindComponentEx('Conf.rb' + IntToStr(i));
+          TRadioButton(Comp).Cursor := Arrow;
+        end;
+    end;
+  //sButtons
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.sButton' + IntToStr(i)) <> nil then
+        begin
+          Comp := FindComponentEx('Conf.sButton' + IntToStr(i));
+          TsButton(Comp).Cursor := Arrow;
+        end;
+    end;
+
+  //(confEditor)
+  //Panel CE_Config
   Conf.se1.Cursor := Arrow;
   //Panel CE_Themes
-  Conf.Pce_themes.Cursor := Arrow;
   Conf.sLB_ce_themes.Cursor := Arrow;
   Conf.sBB_apply_ce_themes.Cursor := Arrow;
   Conf.img_ce_theme.Cursor := Arrow;
-  Conf.sPanel1.Cursor := Arrow;
 
   //{ExtraFE}
   //Panel EXF_Configuration
-  Conf.Pexf_configuration.Cursor := Arrow;
   //Panel EXF_Themes
-  Conf.Pexf_themes.Cursor := Arrow;
-
-  //{Weather}
-  Conf.Pwg_weather.Cursor := Arrow;
-
-  //{Time/Date}
-  Conf.Pwg_timedate.Cursor := Arrow;
 
   //{Mame}
   //Panel Mame_Dirs
-  Conf.Pem_mame_dirs.Cursor := Arrow;
   Conf.panel_mame_page1.Cursor := Arrow;
   Conf.panel_mame_page2.Cursor := Arrow;
-  Conf.grp95.Cursor := Arrow;
-  Conf.sComboBox1.Cursor := Arrow;
-  Conf.sBitBtn42.Cursor := Arrow;
-  Conf.sEdit11.cursor := TArrow;
-  Conf.sEdit5.cursor := TArrow;
-  Conf.sEdit2.Cursor := TArrow;
-  Conf.sEdit3.cursor := TArrow;
-  Conf.sEdit4.cursor := TArrow;
-  Conf.sEdit8.cursor := TArrow;
-  Conf.sEdit6.cursor := TArrow;
-  Conf.sEdit9.cursor := TArrow;
-  Conf.sEdit10.cursor := TArrow;
-  Conf.sEdit7.cursor := TArrow;
-  Conf.sBitBtn17.Cursor := Arrow;
-  Conf.sBitBtn18.Cursor := Arrow;
-  Conf.sBitBtn19.Cursor := Arrow;
-  Conf.sBitBtn20.Cursor := Arrow;
-  Conf.sBitBtn21.Cursor := Arrow;
-  Conf.sBitBtn22.Cursor := Arrow;
-  Conf.sBitBtn23.Cursor := Arrow;
-  Conf.sBitBtn24.Cursor := Arrow;
-  Conf.sEdit11.Cursor := TArrow;
-  Conf.sEdit5.Cursor := TArrow;
-  Conf.sEdit58.Cursor := TArrow;
-  Conf.sEdit59.Cursor := TArrow;
-  Conf.sEdit60.Cursor := TArrow;
-  Conf.sEdit61.Cursor := TArrow;
-  Conf.sEdit62.Cursor := TArrow;
-  Conf.sEdit63.Cursor := TArrow;
-  Conf.sBitBtn27.Cursor := Arrow;
-  Conf.sBitBtn28.Cursor := Arrow;
-  Conf.sBitBtn29.Cursor := Arrow;
-  Conf.sBitBtn30.Cursor := Arrow;
-  Conf.sBitBtn31.Cursor := Arrow;
-  Conf.sBitBtn32.Cursor := Arrow;
-  Conf.sBitBtn33.Cursor := Arrow;
-  Conf.sBitBtn34.Cursor := Arrow;
-  Conf.sBitBtn25.Cursor := Arrow;
-  Conf.sBitBtn26.Cursor := Arrow;
-  Conf.sEdit64.Cursor := TArrow;
-  Conf.sBitBtn35.Cursor := Arrow;
-  Conf.sBitBtn36.Cursor := Arrow;
-  Conf.sBitBtn37.Cursor := Arrow;
-  Conf.sCheckBox127.Cursor := Arrow;
-  Conf.sButton4.Cursor := Arrow;
-  Conf.sButton22.Cursor := Arrow;
   //Panel Mame_Graphics
-  Conf.Pem_mame_graphics.Cursor := Arrow;
-  Conf.grp96.cursor := Arrow;
-  Conf.sComboBox20.cursor := Arrow;
-  Conf.sCheckBox40.cursor := Arrow;
-  Conf.sCheckBox41.cursor := Arrow;
-  Conf.grp97.cursor := Arrow;
-  Conf.grp98.cursor := Arrow;
-  Conf.sCheckBox7.cursor := Arrow;
-  Conf.sComboBox3.cursor := Arrow;
-  Conf.grp99.Cursor := Arrow;
-  Conf.grp101.cursor := Arrow;
-  Conf.sCheckBox4.cursor := Arrow;
-  Conf.sCheckBox5.cursor := Arrow;
-  Conf.sComboBox6.cursor := Arrow;
-  Conf.sComboBox8.cursor := Arrow;
-  Conf.sComboBox7.cursor := Arrow;
-  Conf.sCheckBox9.cursor := Arrow;
-  Conf.grp103.cursor := Arrow;
-  Conf.sCheckBox11.cursor := Arrow;
-  Conf.sCheckBox12.cursor := Arrow;
-  Conf.sCheckBox13.cursor := Arrow;
-  Conf.sCheckBox14.cursor := Arrow;
-  Conf.grp104.cursor := Arrow;
-  Conf.sCheckBox15.cursor := Arrow;
-  Conf.sComboBox9.cursor := Arrow;
-  Conf.sComboBox2.Cursor := Arrow;
-  Conf.sCheckBox3.cursor := Arrow;
-  Conf.sCheckBox6.cursor := Arrow;
-  Conf.sComboBox4.cursor := Arrow;
-  Conf.sComboBox5.cursor := Arrow;
-  Conf.grp2.Cursor := Arrow;
-  Conf.grp3.Cursor := Arrow;
-  Conf.grp4.Cursor := Arrow;
-  Conf.grp5.Cursor := Arrow;
-  Conf.grp6.Cursor := Arrow;
-  Conf.grp7.Cursor := Arrow;
-  Conf.grp8.Cursor := Arrow;
-  Conf.grp9.Cursor := Arrow;
-  Conf.grp100.Cursor := Arrow;
-  Conf.sCheckBox8.cursor := Arrow;
-  Conf.sEdit1.Cursor := TArrow;
   Conf.sbar_mame_emulatrionspeed.Cursor := Horizontal;
   Conf.sbar_mame_pausebrightness.Cursor := Horizontal;
   Conf.sbar_mame_gammacorrection.Cursor := Horizontal;
@@ -375,426 +377,85 @@ begin
   Conf.sbar_mame_Fgamma.Cursor := Horizontal;
   Conf.sbar_mame_Fbrightness.Cursor := Horizontal;
   Conf.sbar_mame_Fcontrast.Cursor := Horizontal;
-  Conf.sBitBtn38.Cursor := Arrow;
-  Conf.sBitBtn39.Cursor := Arrow;
-  Conf.sButton5.Cursor := Arrow;
-  Conf.sButton1.Cursor := Arrow;
   //Panel Mame_Sound
-  Conf.Pem_mame_sound.Cursor := Arrow;
-  Conf.grp10.Cursor := Arrow;
-  Conf.grp105.cursor := Arrow;
   Conf.sbar_mame_valumeattenuation.Cursor := Horizontal;
   Conf.sbar_mame_audiolatency.Cursor := Horizontal;
-  Conf.sComboBox18.cursor := Arrow;
-  Conf.sCheckBox43.cursor := Arrow;
-  Conf.sCheckBox26.Cursor := Arrow;
-  Conf.grp106.cursor := Arrow;
-  Conf.grp107.cursor := Arrow;
-  Conf.grp109.cursor := Arrow;
-  Conf.sEdit15.Cursor := TArrow;
-  Conf.grp108.cursor := Arrow;
-  Conf.sComboBox10.cursor := Arrow;
-  Conf.sComboBox11.cursor := Arrow;
-  Conf.sComboBox12.cursor := Arrow;
-  Conf.sComboBox13.cursor := Arrow;
-  Conf.sComboBox14.cursor := Arrow;
-  Conf.sComboBox15.cursor := Arrow;
-  Conf.sComboBox16.cursor := Arrow;
-  Conf.sComboBox17.cursor := Arrow;
   Conf.sbar_mame_joysdeadzone.Cursor := Horizontal;
   Conf.sbar_mame_joysaturation.Cursor := Horizontal;
-  Conf.sBitBtn40.Cursor := Arrow;
-  Conf.sBitBtn41.Cursor := Arrow;
-  Conf.sCheckBox16.cursor := Arrow;
-  Conf.sCheckBox17.cursor := Arrow;
-  Conf.sCheckBox18.cursor := Arrow;
-  Conf.sCheckBox19.cursor := Arrow;
-  Conf.sCheckBox20.cursor := Arrow;
-  Conf.sCheckBox21.cursor := Arrow;
-  Conf.sCheckBox22.cursor := Arrow;
-  Conf.sCheckBox23.cursor := Arrow;
-  Conf.sButton6.Cursor := Arrow;
-  Conf.sButton2.Cursor := Arrow;
   //Panel Mame_Others
-  Conf.Pem_mame_others.Cursor := Arrow;
-  Conf.grp15.Cursor := Arrow;
-  Conf.grp16.Cursor := Arrow;
-  Conf.grp110.cursor := Arrow;
-  Conf.grp111.cursor := Arrow;
-  Conf.grp102.Cursor := Arrow;
-  Conf.grp112.cursor := Arrow;
-  Conf.sComboBox73.Cursor := Arrow;
-  Conf.sComboBox75.Cursor := Arrow;
-  Conf.sComboBox19.cursor := Arrow;
-  Conf.grp113.cursor := Arrow;
-  Conf.sCheckBox35.cursor := Arrow;
-  Conf.sCheckBox36.cursor := Arrow;
-  Conf.sCheckBox37.cursor := Arrow;
-  Conf.sCheckBox38.cursor := Arrow;
-  Conf.grp114.cursor := Arrow;
-  Conf.sCheckBox39.cursor := Arrow;
-  Conf.sCheckBox24.cursor := Arrow;
-  Conf.sCheckBox27.cursor := Arrow;
-  Conf.sCheckBox28.cursor := Arrow;
-  Conf.sCheckBox29.cursor := Arrow;
-  Conf.sCheckBox30.cursor := Arrow;
-  Conf.sCheckBox31.cursor := Arrow;
   Conf.sbar_mame_threadpriority.Cursor := Horizontal;
   Conf.sbar_mame_beamwidth.Cursor := Horizontal;
   Conf.sbar_mame_flicker.Cursor := Horizontal;
-  Conf.sButton7.Cursor := Arrow;
-  Conf.sButton3.Cursor := Arrow;
   //Panel Mame_Builds
-  Conf.Pem_mame_builds.Cursor := Arrow;
-  Conf.sBitBtn43.Cursor := Arrow;
-  Conf.sBitBtn44.Cursor := Arrow;
   Conf.PBuilds_MameBuilds.Cursor := Arrow;
   Conf.PBuilds_MamePlus.Cursor := Arrow;
-  Conf.sBitBtn45.Cursor := Arrow;
-  Conf.sCheckBox32.Cursor := Arrow;
-  Conf.sCheckBox10.Cursor := Arrow;
-  Conf.sCheckBox33.Cursor := Arrow;
-  Conf.sCheckBox34.Cursor := Arrow;
-  Conf.sEdit12.Cursor := TArrow;
-  Conf.sBitBtn1.Cursor := Arrow;
-  Conf.sEdit13.Cursor := TArrow;
-  Conf.sBitBtn98.Cursor := Arrow;
   Conf.nxtgrd_ips_mameplus.Cursor := Arrow;
-  Conf.grp117.Cursor := Arrow;
-  Conf.grp118.Cursor := Arrow;
   Conf.sbar_Mame_UITransparent_MamePlus.Cursor := Horizontal;
   Conf.PBuilds_MameXT.Cursor := Arrow;
-  Conf.sBitBtn46.Cursor := Arrow;
-  Conf.sCheckBox44.Cursor := Arrow;
-  Conf.sCheckBox128.Cursor := Arrow;
-  Conf.sCheckBox129.Cursor := Arrow;
-  Conf.sCheckBox130.Cursor := Arrow;
-  Conf.sEdit16.Cursor := TArrow;
-  Conf.sEdit17.Cursor := TArrow;
-  Conf.sBitBtn99.Cursor := Arrow;
-  Conf.sBitBtn100.Cursor := Arrow;
-  Conf.sBitBtn101.Cursor := Arrow;
   Conf.sbar_Mame_UITransparent_MameXT.Cursor := Horizontal;
   Conf.nxtgrd_ips_mamext.Cursor := Arrow;
-  Conf.grp119.Cursor := Arrow;
-  Conf.grp120.Cursor := Arrow;
-  Conf.grp121.Cursor := Arrow;
-  Conf.sComboBox76.Cursor := Arrow;
   Conf.PBuilds_MameTools.Cursor := Arrow;
-  Conf.grp122.Cursor := Arrow;
-  Conf.rb56.Cursor := Arrow;
-  Conf.rb57.Cursor := Arrow;
   Conf.LMDFontComboBox1.Cursor := Arrow;
-  Conf.sEdit125.Cursor := TArrow;
-  Conf.sBitBtn103.Cursor := Arrow;
   Conf.LMDFontSizeComboBox1.Cursor := Arrow;
-  Conf.sBitBtn104.Cursor := Arrow;
   Conf.img86.Cursor := Arrow;
-  Conf.sButton8.Cursor := Arrow;
-  Conf.sButton9.Cursor := Arrow;
   //Panel Mame_Database
-  Conf.Pem_mame_database.Cursor := Arrow;
-  Conf.grp115.Cursor := Arrow;
   Conf.nxtgrd_mame.Cursor := Arrow;
-  Conf.sComboBox72.Cursor := Arrow;
   Conf.sWebLabel3.Cursor := Link;
 
   //{Zinc}
   //Panel Zinc_Paths
-  Conf.Pem_zinc_paths.Cursor := Arrow;
-  Conf.sEdit53.Cursor := TArrow;
-  Conf.sEdit54.Cursor := TArrow;
-  Conf.sEdit55.Cursor := TArrow;
-  Conf.sBitBtn47.Cursor := Arrow;
-  Conf.sBitBtn48.Cursor := Arrow;
-  Conf.sBitBtn49.Cursor := Arrow;
   //Panel Zinc_Graphics
-  Conf.Pem_zinc_graphics.Cursor := Arrow;
-  Conf.grp1.Cursor := Arrow;
-  Conf.grp19.Cursor := Arrow;
-  for l := 21 to 29 do
-    begin
-      Comp := FindComponentEx('Conf.grp' + IntToStr(l));
-      TGroupBox(Comp).Cursor := Arrow;
-    end;
-  for l := 3 to 6 do
-    begin
-      Comp := FindComponentEx('Conf.rb' + IntToStr(l));
-      TRadioButton(Comp).Cursor := Arrow;
-    end;
-  Conf.rb9.Cursor := Arrow;
-  Conf.rb10.Cursor := Arrow;
-  for l := 26 to 37 do
-    begin
-      Comp := FindComponentEx('Conf.sComboBox' + IntToStr(l));
-      TsComboBox(Comp).Cursor := Arrow;
-    end;
-  for l := 48 to 59 do
-    begin
-      Comp := FindComponentEx('Conf.sCheckBox' + IntToStr(l));
-      TsCheckBox(Comp).Cursor := Arrow;
-    end;
-  Conf.sEdit65.Cursor := TArrow;
-  Conf.sEdit66.Cursor := TArrow;
-
   //Panel Zinc_Sound
-  Conf.Pem_zinc_sound.Cursor := Arrow;
-  for l := 79 to 85 do
-    begin
-      Comp := FindComponentEx('Conf.sCheckBox' + IntToStr(l));
-      TsCheckBox(Comp).Cursor := Arrow;
-    end;
-  Conf.sEdit74.Cursor := TArrow;
-  Conf.sEdit75.Cursor := TArrow;
+  //Panel Zinc_Database
+  Conf.nxtgrd_zinc.Cursor := Arrow;
 
   //{Hatari}
+  //Panel Hatari_Paths
   //Panel Hatari_System
-  Conf.Pem_hatari_system.Cursor := Arrow;
-  for l := 36 to 42 do
-    begin
-      Comp := FindComponentEx('Conf.grp' + IntToStr(l));
-      TGroupBox(Comp).Cursor := Arrow;
-    end;
-  for l := 45 to 48 do
-    begin
-      Comp := FindComponentEx('Conf.grp' + IntToStr(l));
-      TGroupBox(Comp).Cursor := Arrow;
-    end;
-  Conf.sCheckBox92.Cursor := Arrow;
-  Conf.sCheckBox93.Cursor := Arrow;
-  Conf.sCheckBox94.Cursor := Arrow;
-  for l := 13 to 27 do
-    begin
-      Comp := FindComponentEx('Conf.rb' + IntToStr(l));
-      TRadioButton(Comp).Cursor := Arrow;
-    end;
-  for l := 86 to 89 do
-    begin
-      Comp := FindComponentEx('Conf.sCheckBox' + IntToStr(l));
-      TsCheckBox(Comp).Cursor := Arrow;
-    end;
-  Conf.sCheckBox91.Cursor := Arrow;
-  Conf.sComboBox43.Cursor := Arrow;
-  Conf.sComboBox45.Cursor := Arrow;
-
   //Panel Hatari_Roms
-  Conf.Pem_hatari_roms.Cursor := Arrow;
-  Conf.grp43.Cursor := Arrow;
-  Conf.grp44.Cursor := Arrow;
-  Conf.grp49.Cursor := Arrow;
-  for l := 60 to 70 do
-    begin
-      Comp := FindComponentEx('Conf.sBitBtn' + IntToStr(l));
-      TsBitBtn(Comp).Cursor := Arrow;
-    end;
-  Conf.sComboBox44.Cursor := Arrow;
-  Conf.sComboBox46.Cursor := Arrow;
-  Conf.sCheckBox90.Cursor := Arrow;
-  Conf.sCheckBox95.Cursor := Arrow;
-
   //Panel Hatari_Screen
-  Conf.Pem_hatari_screen.Cursor := Arrow;
-  for l := 50 to 58 do
-    begin
-      Comp := FindComponentEx('Conf.grp' + IntToStr(l));
-      TGroupBox(Comp).Cursor := Arrow;
-    end;
-  for l := 96 to 100 do
-    begin
-      Comp := FindComponentEx('Conf.sCheckBox' + IntToStr(l));
-      TsCheckBox(Comp).Cursor := Arrow;
-    end;
-  for l := 47 to 54 do
-    begin
-      Comp := FindComponentEx('Conf.sComboBox' + IntToStr(l));
-      TsComboBox(Comp).Cursor := Arrow;
-    end;
-  Conf.sBitBtn71.Cursor := Arrow;
-  Conf.sBitBtn72.Cursor := Arrow;
-  Conf.sBitBtn73.Cursor := Arrow;
   //Panel Hatari_Joy
-  Conf.Pem_hatari_joy.Cursor := Arrow;
-  Conf.grp59.Cursor := Arrow;
-  Conf.grp60.Cursor := Arrow;
-  Conf.grp61.Cursor := Arrow;
-  Conf.sComboBox55.Cursor := Arrow;
-  Conf.sComboBox56.Cursor := Arrow;
-  Conf.sComboBox57.Cursor := Arrow;
-  Conf.rb28.Cursor := Arrow;
-  Conf.rb29.Cursor := Arrow;
-  Conf.rb30.Cursor := Arrow;
-  for l := 37 to 41 do
-    begin
-      Comp := FindComponentEx('Conf.sPanel' + IntToStr(l));
-      TsPanel(Comp).Cursor := Precision;
-    end;
-  Conf.sBitBtn75.Cursor := Arrow;
-  Conf.sCheckBox101.Cursor := Arrow;
-  Conf.sCheckBox102.Cursor := Arrow;
+  //Panel Hatari_Database
+  Conf.sGauge_HatariData.Cursor := Arrow;
+  Conf.nxtgrd_hatari.Cursor := Arrow;
 
   //{pSX Emulator}
   //Panel pSX_Paths
-  Conf.Pem_psx_paths.Cursor := Arrow;
-  Conf.grp62.Cursor := Arrow;
-  Conf.grp63.Cursor := Arrow;
-  for l := 81 to 88 do
-    begin
-      Comp := FindComponentEx('Conf.sEdit' + IntToStr(l));
-      TsEdit(Comp).Cursor := TArrow;
-    end;
-  for l := 76 to 85 do
-    begin
-      Comp := FindComponentEx('Conf.sBitBtn' + IntToStr(l));
-      TsBitBtn(Comp).Cursor := Arrow;
-    end;
   Conf.sWebLabel1.cursor := Link;
   Conf.sWebLabel2.cursor := Link;
   //Panel pSX_Screen
-  Conf.Pem_psx_screen.Cursor := Arrow;
-  Conf.grp64.Cursor := Arrow;
-  Conf.grp65.Cursor := Arrow;
-  Conf.grp66.Cursor := Arrow;
-  for l := 103 to 109 do
-    begin
-      Comp := FindComponentEx('Conf.sCheckBox' + IntToStr(l));
-      TsCheckBox(Comp).Cursor := Arrow;
-    end;
-  Conf.sBitBtn86.Cursor := Arrow;
-  Conf.sComboBox58.Cursor := Arrow;
-  Conf.sComboBox59.Cursor := Arrow;
-  Conf.sComboBox60.Cursor := Arrow;
-  Conf.sComboBox61.Cursor := Arrow;
   Conf.sbar_psx_gamma.Cursor := Horizontal;
   Conf.sbar_psx_brightness.Cursor := Horizontal;
   Conf.sbar_psx_contrast.Cursor := Horizontal;
   //Panel pSX_Sound
-  Conf.Pem_psx_sound.Cursor := Arrow;
-  Conf.grp11.Cursor := Arrow;
-  Conf.grp12.Cursor := Arrow;
-  Conf.grp67.Cursor := Arrow;
-  Conf.grp68.Cursor := Arrow;
-  Conf.sComboBox63.Cursor := Arrow;
-  Conf.sComboBox64.Cursor := Arrow;
-  Conf.sComboBox62.Cursor := Arrow;
-  Conf.sComboBox21.Cursor := Arrow;
-  Conf.sComboBox22.Cursor := Arrow;
-  Conf.sCheckBox25.Cursor := Arrow;
-  Conf.sCheckBox46.Cursor := Arrow;
-  Conf.sCheckBox42.Cursor := Arrow;
-  Conf.sCheckBox45.Cursor := Arrow;
-  Conf.sCheckBox47.Cursor := Arrow;
-  Conf.sPanel.Cursor := Precision;
-  for l := 2 to 20 do
-    begin
-      Comp := FindComponentEx('Conf.sPanel' + IntToStr(l));
-      TsPanel(Comp).Cursor := Precision;
-    end;
   Conf.sbar_psx_latency.Cursor := Horizontal;
   Conf.sbar_psx_xalatency.Cursor := Horizontal;
   //Panel pSX_Others
-  Conf.Pem_psx_others.Cursor := Arrow;
-  Conf.grp13.Cursor := Arrow;
-  Conf.grp14.Cursor := Arrow;
-  Conf.sComboBox23.Cursor := Arrow;
-  Conf.sComboBox24.Cursor := Arrow;
-  Conf.sComboBox25.Cursor := Arrow;
-  Conf.sComboBox65.Cursor := Arrow;
-  for l := 21 to 36 do
-    begin
-      Comp := FindComponentEx('Conf.sPanel' + IntToStr(l));
-      TsPanel(Comp).Cursor := Precision;
-    end;
+  //Panel pSX_Database
+
+  Conf.nxtgrd_pSX.Cursor := Arrow;
 
   //{Kigb}
   //Panel Kigb_Paths
-  Conf.Pem_kigb_paths.Cursor := Arrow;
-  for l := 69 to 77 do
-    begin
-      Comp := FindComponentEx('Conf.grp' + IntToStr(l));
-      TGroupBox(Comp).Cursor := Arrow;
-    end;
-  for l := 89 to 97 do
-    begin
-      Comp := FindComponentEx('Conf.sEdit' + IntToStr(l));
-      TsEdit(Comp).Cursor := TArrow;
-    end;
-  for l := 87 to 95 do
-    begin
-      Comp := FindComponentEx('Conf.sBitBtn' + IntToStr(l));
-      TsBitBtn(Comp).Cursor := Arrow;
-    end;
-  for l := 110 to 115 do
-    begin
-      Comp := FindComponentEx('Conf.sCheckBox' + IntToStr(l));
-      TsCheckBox(Comp).Cursor := Arrow;
-    end;
-  Conf.sComboBox66.Cursor := Arrow;
-  Conf.rb1.Cursor := Arrow;
-  Conf.rb2.Cursor := Arrow;
-  Conf.sCheckBox63.Cursor := Arrow;
-  Conf.sCheckBox64.Cursor := Arrow;
-  for l := 31 to 33 do
-    begin
-      Comp := FindComponentEx('Conf.rb' + IntToStr(l));
-      TRadioButton(Comp).Cursor := Arrow;
-    end;
   //Panel Kigb_Screen
-  Conf.Pem_kigb_screen.Cursor := Arrow;
-  for l := 78 to 82 do
+  for i := 1 to 4 do
     begin
-      Comp := FindComponentEx('Conf.grp' + IntToStr(l));
-      TGroupBox(Comp).Cursor := Arrow;
-    end;
-  for l := 39 to 53 do
-    begin
-      Comp := FindComponentEx('Conf.rb' + IntToStr(l));
-      TRadioButton(Comp).Cursor := Arrow;
-    end;
-  for l := 116 to 120 do
-    begin
-      Comp := FindComponentEx('Conf.sCheckBox' + IntToStr(l));
-      TsCheckBox(Comp).Cursor := Arrow;
-    end;
-  for l := 1 to 4 do
-    begin
-      Comp := FindComponentEx('Conf.pnl' + IntToStr(l));
+      Comp := FindComponentEx('Conf.pnl' + IntToStr(i));
       TPanel(Comp).Cursor := Precision;
     end;
   //Panel Kigb_Sound
-  Conf.Pem_kigb_sound.Cursor := Arrow;
-  for l := 83 to 94 do
-    begin
-      Comp := FindComponentEx('Conf.grp' + IntToStr(l));
-      TGroupBox(Comp).Cursor := Arrow;
-    end;
-  Conf.rb54.Cursor := Arrow;
-  Conf.rb55.Cursor := Arrow;
-  for l := 67 to 71 do
-    begin
-      Comp := FindComponentEx('Conf.sComboBox' + IntToStr(l));
-      TsComboBox(Comp).Cursor := Arrow;
-    end;
-  for l := 121 to 126 do
-    begin
-      Comp := FindComponentEx('Conf.sCheckBox' + IntToStr(l));
-      TsCheckBox(Comp).Cursor := Arrow;
-    end;
-  for l := 42 to 68 do
-    begin
-      Comp := FindComponentEx('Conf.sPanel' + IntToStr(l));
-      TsPanel(Comp).Cursor := Precision;
-    end;
   Conf.sbar_kigb_soundvolume.Cursor := Horizontal;
   Conf.sbar_kigb_soundpan.Cursor := Horizontal;
   //Panel Kigb_Others
-  Conf.Pem_kigb_others.Cursor := Arrow;
-  Conf.sBitBtn96.Cursor := Arrow;
-  Conf.sBitBtn97.Cursor := Arrow;
-  for l := 36 to 38 do
-    begin
-      Comp := FindComponentEx('Conf.rb' + IntToStr(l));
-      TRadioButton(Comp).Cursor := Arrow;
-    end;
+  //Panel Kigb_Database
+  Conf.nxtgrd_kigb.Cursor := Arrow;
+
+  //WidGets
+  //Weather
+  Conf.ScrollBox1.Cursor := Arrow;
+  Conf.sListBox1.Cursor := Arrow;
+  //DateTime
+  Conf.ScrollBox2.Cursor := Arrow;
 end;
 
 {procedure SetCursorToBusy(cur: Byte);
@@ -853,7 +514,8 @@ const
   KiGBPanels: array [0..4] of string = ('paths','screen','sound','others','database');
   WidgetsPanels: array [0..1] of string = ('weather','timedate');
 var
-  comp : TComponent;
+  run: Integer;
+  comp: TComponent;
 begin
   for run := 0 to 2 do
     begin
@@ -916,7 +578,7 @@ begin
   CeXmlDoc := CreateXMLDoc;
   CeXML := TCE_Configuration.Create;
   CeXML.Ver :=  GetVersion(ExtraFePath+'confeditor.exe');
-  STBarInfo1 := 'Version : '+ GetVersion(ExtraFePath+'confeditor.exe');
+  STBarInfo[0] := 'Version : '+ GetVersion(ExtraFePath+'confeditor.exe');
   Row_Theme := CeXML.Rows.AddRow;
   Row_Theme.ThemeNumber := 0;
   Row_Config := CeXML.Rows_Conf.AddRow;
@@ -948,12 +610,12 @@ begin
   if GetNodeAttrStr(nodeCe,'Ver','') <> GetVersion(ExtraFePath+'confeditor.exe') then
     begin
       CeXML.Ver := GetVersion(ExtraFePath+'confeditor.exe');
-      STBarInfo1 := 'Version : '+GetVersion(ExtraFePath+'confeditor.exe');
+      STBarInfo[0] := 'Version : '+GetVersion(ExtraFePath+'confeditor.exe');
     end
   else
     begin
       CeXML.Ver := GetNodeAttrStr(nodeCe,'Ver');
-      STBarInfo1 := 'Version : '+GetNodeAttrStr(nodeCe,'Ver');
+      STBarInfo[0] := 'Version : '+GetNodeAttrStr(nodeCe,'Ver');
     end;
   Ce_List := CeXmlDoc.SelectNodes('/confEditor/rowtheme');
   for Inode_Ce := 0 to Ce_List.Length - 1 do
@@ -1003,9 +665,7 @@ begin
   Splash_Screen.Progress_Label(15,'ConfEditor initilisize');
   runMenuJustOpen;
   LoadStaticImages;
-  global_FindJoyInfo;
   LoadCostumCursors;
-  
   Splash_Screen.Progress_Label(20,'Cursors OK');
 end;
 
@@ -1067,17 +727,17 @@ begin
       Conf.sEdit64.Text := FullPathMame_Exe+Mame_Exe;
       InitGlobal_MameMemo_ForMameIni;
       SetMame_DirsFromMameIni;
-      ShowMameProgress(20,'Mame Directories Ready');
+      ShowProgressBar(20,'Mame Directories Ready','Mame');
       SetMame_GraphicsFromMameIni;
-      ShowMameProgress(35,'Mame Graphics Ready');
+      ShowProgressBar(35,'Mame Graphics Ready','Mame');
       SetMame_SoundFromMameIni;
-      ShowMameProgress(50,'Mame Sound Ready');
+      ShowProgressBar(50,'Mame Sound Ready','Mame');
       SetMame_OthersFromMameIni;
-      ShowMameProgress(65,'Mame Others Ready');
+      ShowProgressBar(65,'Mame Others Ready','Mame');
       SetMame_BuildsFromMameIni;
-      ShowMameProgress(80,'Mame Builds Ready');
+      ShowProgressBar(80,'Mame Builds Ready','Mame');
       SetMame_DatabaseFromMameIni;
-      ShowMameProgress(100,'Mame Database Ready');
+      ShowProgressBar(100,'Mame Database Ready','Mame');
       Started := False;
       FromDatabase := False;
     end
@@ -1125,15 +785,15 @@ begin
         ZincData_XmlDoc.LoadFromStream(FGa);
       end;
       FGa.Free;
-      ShowZincProgress(20,'Zinc Files Ready');
+      ShowProgressBar(20,'Zinc Files Ready','Zinc');
       SetZinc_PathsFromZincIni;
-      ShowZincProgress(40,'Zinc Paths Ready');
+      ShowProgressBar(40,'Zinc Paths Ready','Zinc');
       SetZinc_GraphicsFromZincIni;
-      ShowZincProgress(60,'Zinc Graphics Ready');
+      ShowProgressBar(60,'Zinc Graphics Ready','Zinc');
       SetZinc_SoundFromZincIni;
-      ShowZincProgress(80,'Zinc Sound Ready');
+      ShowProgressBar(80,'Zinc Sound Ready','Zinc');
       SetZinc_DatabaseFromZincIni;
-      ShowZincProgress(100,'Zinc Database Ready');
+      ShowProgressBar(100,'Zinc Database Ready','Zinc');
       Started := False;
     end;  
 end;
@@ -1146,17 +806,17 @@ begin
       Hatari_Config := TIniFile.Create(Hatari_confeditor_ini);
       Started := True;
       SetHatari_PathsfromHatariIni;
-      ShowHatariProgress(10,'Hatari Paths Ready');
+      ShowProgressBar(10,'Hatari Paths Ready','Hatari');
       SetHatari_SystemfromHatariIni;
-      ShowHatariProgress(25,'Hatari System Ready');
+      ShowProgressBar(25,'Hatari System Ready','Hatari');
       SetHatari_RomsfromHatariIni;
-      ShowHatariProgress(40,'Hatari Roms Ready');
+      ShowProgressBar(40,'Hatari Roms Ready','Hatari');
       SetHatari_ScreenfromHatariIni;
-      ShowHatariProgress(55,'Hatari Screen/Sound Ready');
+      ShowProgressBar(55,'Hatari Screen/Sound Ready','Hatari');
       SetHatari_JoyfromHatariIni;
-      ShowHatariProgress(70,'Hatari Joystics/Keyboard Ready');
+      ShowProgressBar(70,'Hatari Joystics/Keyboard Ready','Hatari');
       SetHatari_DatabaseFromHatariIni;
-      ShowHatariProgress(100,'Hatari Database Ready');
+      ShowProgressBar(100,'Hatari Database Ready','Hatari');
       Started := False;
     end;
 end;
@@ -1174,15 +834,15 @@ begin
           pSX_Ini := TIniFile.Create(FullPathpSX_Exe + 'psx.ini');
           Started := True;
           SetpSX_PathsfrompSXIni;
-          ShowpSXProgress(20,'pSX Paths Ready');
+          ShowProgressBar(20,'pSX Paths Ready','pSX');
           SetpSX_ScreenfrompSXIni;
-          ShowpSXProgress(40,'pSX Screen Ready');
+          ShowProgressBar(40,'pSX Screen Ready','pSX');
           SetpSX_SoundfrompSXIni;
-          ShowpSXProgress(60,'pSX Sound and Controllers Ready');
+          ShowProgressBar(60,'pSX Sound and Controllers Ready','pSX');
           SetpSX_OthersfrompSXIni;
-          ShowpSXProgress(80,'pSX Others Ready');
+          ShowProgressBar(80,'pSX Others Ready','pSX');
 //          SetpSX_DatabasefrompSXIni;
-          ShowpSXProgress(100,'pSX Database Ready');
+          ShowProgressBar(100,'pSX Database Ready','pSX');
           Started := False;
         end;
     end;
@@ -1199,15 +859,15 @@ begin
       Started := True;
       KigbCfg_File := FullPathKigb_Exe + 'kigb.cfg';
       SetKigb_PathsfromKigbIni;
-      ShowKigbProgress(20,'Kigb Paths Ready');
+      ShowProgressBar(20,'Kigb Paths Ready','Kigb');
       SetKigb_ScreenfromKigbIni;
-      ShowKigbProgress(40,'Kigb Screen Ready');
+      ShowProgressBar(40,'Kigb Screen Ready','Kigb');
       SetKigb_SoundfromKigbIni;
-      ShowKigbProgress(60,'Kigb Sound and Controllers Ready');
+      ShowProgressBar(60,'Kigb Sound and Controllers Ready','Kigb');
       SetKigb_OthersfromKigbIni;
-      ShowKigbProgress(80,'Kigb Others Ready');
+      ShowProgressBar(80,'Kigb Others Ready','Kigb');
       SetKigb_DatabasefromKigbIni;
-      ShowKigbProgress(100,'Kigb Database Ready');
+      ShowProgressBar(100,'Kigb Database Ready','Kigb');
       Started := False;
     end;
 end;
@@ -1217,8 +877,13 @@ begin
   if FileExists(ExtractFilePath(Application.ExeName) + 'media\widgets\weather\weather.ini') then
     begin
       Started := True;
-      WeatherIni := TIniFile.Create(Extractfilepath(Application.ExeName) + 'media\widgets\weather\weather.ini');
-      SetWeather_FromWeatherIni;
+      if StBarInfo[2] = 'Internet Connected' then
+        begin
+          WeatherIni := TIniFile.Create(Extractfilepath(Application.ExeName) + 'media\widgets\weather\weather.ini');
+          SetWeather_FromWeatherIni;
+        end
+      else
+        Conf.sLabel62.Visible := True;
       Started := False;
     end
   else
@@ -1232,11 +897,15 @@ end;
 
 procedure CreateSTBarInfo;
 begin
-  conf.stat1.Panels[0].Text := STBarInfo1;
+  conf.stat1.Panels[0].Text := STBarInfo[0];
   if IsWindows64 = true then
-    STBarInfo2 := 'Windows 64 Bit'
+    STBarInfo[1] := 'Windows 64 Bit'
   else
-    STBarInfo2 := 'Windows 32 Bit';
+    STBarInfo[1] := 'Windows 32 Bit';
+  if IsConnectedToInternet = True then
+    StBarInfo[2] := 'Internet Connected'
+  else
+    StBarInfo[2] := 'Internet Not Found';
   STBarMessages := 0;
   Conf.tmr1.Enabled := True;
 end;
@@ -1255,54 +924,35 @@ begin
   BMPImage.Free;
 end;
 
-procedure ShowMameProgress(progress: Integer; Comment: string);
+procedure ShowProgressBar(progress: Integer; Comment,Emu: string);
 begin
-  if FromArrows_Mamedirs = False then
+  if Emu = 'Mame' then
     begin
-      if FromDatabase = False then
-        Splash_Screen.Progress_Label(progress,Comment)
+      if FromArrows_Mamedirs = False then
+        begin
+          if FromDatabase = False then
+            Splash_Screen.Progress_Label(progress,Comment)
+          else
+            begin
+              Conf.sLabel109.Caption := 'SetSettings To Mame (ConfEditor)';
+              Conf.sGauge_MameData.Progress := progress;
+            end
+        end
       else
         begin
-          Conf.sLabel109.Caption := 'SetSettings To Mame (ConfEditor)';
-          Conf.sGauge_MameData.Progress := progress;
-        end
+          Conf.sLabel112.Caption := Comment;
+          Conf.sGauge_MameChange.Progress := progress;
+        end;
+      Application.ProcessMessages;
+      Sleep(50);
+      Started := True;
     end
   else
     begin
-      Conf.sLabel112.Caption := Comment;
-      Conf.sGauge_MameChange.Progress := progress;
+      Splash_Screen.Progress_Label(progress,Comment);
+      Application.ProcessMessages;
+      Sleep(50);    
     end;
-  Application.ProcessMessages;
-  Sleep(50);
-  Started := True;
-end;
-
-procedure ShowZincProgress(progress: Integer; Comment: string);
-begin
-  Splash_Screen.Progress_Label(progress,Comment);
-  Application.ProcessMessages;
-  Sleep(50);
-end;
-
-procedure ShowHatariProgress(progress: Integer; Comment: string);
-begin
-  Splash_Screen.Progress_Label(progress,Comment);
-  Application.ProcessMessages;
-  Sleep(50);
-end;
-
-procedure ShowpSXProgress(progress: Integer; Comment: string);
-begin
-  Splash_Screen.Progress_Label(progress,Comment);
-  Application.ProcessMessages;
-  Sleep(50);
-end;
-
-procedure ShowKigbProgress(progress: Integer; Comment: string);
-begin
-  Splash_Screen.Progress_Label(progress,Comment);
-  Application.ProcessMessages;
-  Sleep(50);
 end;
 
 end.

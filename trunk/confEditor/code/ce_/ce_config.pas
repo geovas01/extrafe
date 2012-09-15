@@ -9,6 +9,7 @@ uses
   procedure CheckShowHelpInFormCaption;
   procedure WindowsEffectsType;
   procedure WindowsEffectsTimeChange;
+  procedure CreateLog_For_All;
 
 // Menu actions
   procedure Show_confEditor_configurationpanel;
@@ -81,6 +82,88 @@ begin
   CeXML.SaveToFile(Ce_XMLPath,ofIndent);
 end;
 
+procedure CreateLog_For_All;
+var
+  comp: TComponent;
+  i: Integer;
+  LogFile: TStringList;
+begin
+  LogFile := TStringList.Create;
+  LogFile.Add('[Results for sPanel]');
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.sPanel' + IntToStr(i)) <> nil then
+        LogFile.Add('Conf.sPanel' + IntToStr(i) + ' is find')
+      else
+        LogFile.Add('Conf.sPanel' + IntToStr(i) + ' not find');
+    end;
+  LogFile.Add(' ');
+  LogFile.Add('Results for sLabel');
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.sLabel' + IntToStr(i)) <> nil then
+        LogFile.Add('Conf.sLabel' + IntToStr(i) + ' is find')
+      else
+        LogFile.Add('Conf.slabel' + IntToStr(i) + ' not find');
+    end;
+  LogFile.Add(' ');
+  LogFile.Add('Results for sCheckBox');
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.sCheckBox' + IntToStr(i)) <> nil then
+        LogFile.Add('Conf.sCheckBox' + IntToStr(i) + ' is find')
+      else
+        LogFile.Add('Conf.sCheckBox' + IntToStr(i) + ' not find');
+    end;
+  LogFile.Add(' ');
+  LogFile.Add('Results for sComboBox');
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.sComboBox' + IntToStr(i)) <> nil then
+        LogFile.Add('Conf.sComboBox' + IntToStr(i) + ' is find')
+      else
+        LogFile.Add('Conf.sComboBox' + IntToStr(i) + ' not find');
+    end;
+  LogFile.Add(' ');
+  LogFile.Add('Results for sEdit');
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.sEdit' + IntToStr(i)) <> nil then
+        LogFile.Add('Conf.sEdit' + IntToStr(i) + ' is find')
+      else
+        LogFile.Add('Conf.sEdit' + IntToStr(i) + ' not find');
+    end;
+  LogFile.Add(' ');
+  LogFile.Add('Results for sBitBtn');
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.sBitBtn' + IntToStr(i)) <> nil then
+        LogFile.Add('Conf.sBitBtn' + IntToStr(i) + ' is find')
+      else
+        LogFile.Add('Conf.sBitBtn' + IntToStr(i) + ' not find');
+    end;
+  LogFile.Add(' ');
+  LogFile.Add('Results for Radio Button');
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.rb' + IntToStr(i)) <> nil then
+        LogFile.Add('Conf.rb' + IntToStr(i) + ' is find')
+      else
+        LogFile.Add('Conf.rb' + IntToStr(i) + ' not find');
+    end;
+  LogFile.Add(' ');
+  LogFile.Add('Results for sButton');
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.sButton' + IntToStr(i)) <> nil then
+        LogFile.Add('Conf.sButton' + IntToStr(i) + ' is find')
+      else
+        LogFile.Add('Conf.sButton' + IntToStr(i) + ' not find');
+    end;
+  LogFile.SaveToFile('log.txt');
+  LogFile.Free;
+end;
+
 /////////////////////////////////////////////////////////////////////////////////
 procedure ce_config_ShowDynamicComps;
 var
@@ -90,11 +173,11 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pce_config,'media\confeditor\images\confeditor\confeditor.png',
-              3,571,155,85,i,True);
+              3,571,155,85,i,'',True,False);
         2 : Image_Comp(Conf.Pce_config,'media\confeditor\images\confeditor\confeditor_image.png',
-              600,381,126,280,i,True);
+              600,381,126,280,i,'',True,False);
         3 : Image_Comp(Conf.Pce_config,'media\confeditor\images\confeditor\configuration.png',
-              499,2,230,71,i,True);
+              499,2,230,71,i,'',True,False);
       end;
     end;
 end;

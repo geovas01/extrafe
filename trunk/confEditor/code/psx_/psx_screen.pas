@@ -292,11 +292,11 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pem_psx_screen,'media\confeditor\images\psx\psx.png',
-              3,590,100,71,i,True);
+              3,590,100,71,i,'',True,False);
         2 : Image_Comp(Conf.Pem_psx_screen,'media\confeditor\images\psx\psx_image.png',
-              587,381,150,280,i,True);
+              587,381,150,280,i,'',True,False);
         3 : Image_Comp(Conf.Pem_psx_screen,'media\confeditor\images\psx\screen.png',
-              608,2,120,71,i,True);
+              608,2,120,71,i,'',True,False);
       end;
     end;
 end;

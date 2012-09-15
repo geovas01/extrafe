@@ -2,10 +2,10 @@ unit loadT;
 
 interface
 uses
-  Classes,SysUtils,Controls,Windows,Forms,
-  GLKeyboard, GLHUDObjects,GlFilePNG,
-  OmniXML,OmniXMLUtils,mame_xmlext,
-  uSimpleListBox;
+  Classes,SysUtils,Controls,Windows,Forms,Graphics,
+  GLKeyboard, GLHUDObjects,GlFilePNG, GLWindowsFont,
+  OmniXML,OmniXMLUtils,
+  mame_xmlext,uMain_ListBox;
 
   procedure Intro(aTime: Double);
   procedure Progress_Bar_Intro(Progresspercent: real);
@@ -131,13 +131,11 @@ end;
 
 procedure LoadTheMenuTexturesandSounds;
 const
-  MenuMats : array [1..1] of string = ('back');
-  EarthMats: array [1..6] of String = ('back', 'mame', 'emulators', 'arcade', 'zinc','exit');
-  PlanetMats: array [1..4] of String = ('planet_1', 'planet_2', 'planet_3','planet_4');
+  MenuMats : array [1..1] of string = ('background');
 begin
   AddMaterials(MatLib, 'media\extrafe\main_menu\', MenuMats, MenuMats);
   // Set The Background
-  MainForm.BackGround.Material.Assign(MatLib.Materials.GetLibMaterialByName('back').Material);
+  MainForm.BackGround.Material.Assign(MatLib.Materials.GetLibMaterialByName('background').Material);
   MainForm.BackGround.Height := MainForm.GLSceneViewer.Height;
   MainForm.BackGround.Width := MainForm.GLSceneViewer.Width;
   MainForm.BackGround.Position.X := CenterX;
@@ -159,10 +157,11 @@ var
   MameDatabase_XML: IXMLDocument;
   GameList: IXMLNodeList;
   nodeGame : IXMLNode;  
-  Mame_Exe,MameData : string;
-  count: Integer;
-//  process_num: Real;
-//  process_str: string;
+  Mame_Exe,MameData,game,romid : string;
+  count,i: Integer;
+
+  fexistFont: TGLWindowsBitmapFont;
+  fnonexistFont: TGLWindowsBitmapFont;
 
 begin
 // Add the materials to library
@@ -186,9 +185,20 @@ begin
       MameConfig_XML := nil;
       if FileExists(MameData) then
         begin
-          fListBox := TSimpleListBox.CreateAsChild(MainForm.Dummy_mame,MatLib,MainForm.Font_Mame);
+          fexistFont := TGLWindowsBitmapFont.Create(MainForm);
+          fexistFont.Font.Name := 'Norton';
+          fexistFont.Font.Size := 12;
+
+          fnonexistFont := TGLWindowsBitmapFont.Create(MainForm);
+          fnonexistFont.Font.Name := 'Norton';
+          fnonexistFont.Font.Size := 12;
+
+
+          fListBox := TSimpleListBox.CreateAsChild(MainForm.Dummy_mame,MatLib,fexistFont,fnonexistFont);
           fListBox.Position.X := 250;
           fListBox.Position.Y := 340;
+          for i := 0 to 5 do
+            fListBox.AddItemTextNum(' ',i,0);
           GameMan := TStringList.Create;
           GameYear := TStringList.Create;
           GameClone := TStringList.Create;
@@ -204,7 +214,12 @@ begin
           for count := 0 to GameList.Length - 1 do
             begin
               nodeGame := GameList.Item[count];
-              fListBox.AddItemText(GetNodeAttrStr(nodeGame,'GameName'));
+              if GetNodeAttrStr(nodeGame,'PathOf','') <> '' then
+                romid := GetNodeAttrStr(nodeGame,'PathOf')
+              else
+                romid := '0';
+              game := SetCapitalTheFirstLetter(GetNodeAttrStr(nodeGame,'GameName'));
+              fListBox.AddItemTextNum(game,count + 6,StrToInt(romid));
               if GetNodeAttrStr(nodeGame,'Manufactor','') <> '' then
                 GameMan.Insert(count,GetNodeAttrStr(nodeGame,'Manufactor'));
               if GetNodeAttrStr(nodeGame,'Year','') <> '' then
@@ -221,9 +236,10 @@ begin
               Progress_Bar_Intro(StrToFloat(process_str));}
             end;
           MameDatabase_XML := nil;
+          fListBox.fItems.Sort(CompareNames);
+          fListBox.Index := 8;
         end;
     end;
-
 
 end;
 

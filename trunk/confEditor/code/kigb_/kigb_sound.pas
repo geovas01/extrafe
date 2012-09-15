@@ -603,43 +603,43 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pem_kigb_sound,'media\confeditor\images\kigb\kigb.png',
-              3,590,90,71,i,True);
+              3,590,90,71,i,'',True,False);
         2 : Image_Comp(Conf.Pem_kigb_sound,'media\confeditor\images\kigb\kigb_image.png',
-              582,538,147,120,i,True);
+              582,538,147,120,i,'',True,False);
         3 : Image_Comp(Conf.Pem_kigb_sound,'media\confeditor\images\kigb\sound.png',
-              450,2,278,71,i,True);
+              450,2,278,71,i,'',True,False);
       end;
     end;
   for i := 1 to 27 do
     begin
       case i of
-        1 : Label_Comp(Conf.grp94,'Exit',90,24,i,True,True,True);
-        2 : Label_Comp(Conf.grp94,'Reset',78,72,i,True,True,True);
-        3 : Label_Comp(Conf.grp94,'Pause',76,120,i,True,True,True);
-        4 : Label_Comp(Conf.grp89,'Up',74,20,i,True,True,True);
-        5 : Label_Comp(Conf.grp89,'Down',60,55,i,True,True,True);
-        6 : Label_Comp(Conf.grp89,'Left',69,90,i,True,True,True);
-        7 : Label_Comp(Conf.grp89,'Right',61,125,i,True,True,True);
-        8 : Label_Comp(Conf.grp89,'Button A',130,20,i,True,True,True);
-        9 : Label_Comp(Conf.grp89,'Button B',131,55,i,True,True,True);
-        10 : Label_Comp(Conf.grp89,'Select',144,90,i,True,True,True);
-        11 : Label_Comp(Conf.grp89,'Start',150,125,i,True,True,True);
-        12 : Label_Comp(Conf.grp91,'Up',74,20,i,True,True,True);
-        13 : Label_Comp(Conf.grp91,'Down',60,55,i,True,True,True);
-        14 : Label_Comp(Conf.grp91,'Left',69,90,i,True,True,True);
-        15 : Label_Comp(Conf.grp91,'Right',61,125,i,True,True,True);
-        16 : Label_Comp(Conf.grp91,'Button A',130,20,i,True,True,True);
-        17 : Label_Comp(Conf.grp91,'Button B',131,55,i,True,True,True);
-        18 : Label_Comp(Conf.grp91,'Select',144,90,i,True,True,True);
-        19 : Label_Comp(Conf.grp91,'Start',150,125,i,True,True,True);
-        20 : Label_Comp(Conf.grp92,'Up',110,30,i,True,True,True);
-        21 : Label_Comp(Conf.grp92,'Down',94,65,i,True,True,True);
-        22 : Label_Comp(Conf.grp92,'Left',103,100,i,True,True,True);
-        23 : Label_Comp(Conf.grp92,'Right',95,135,i,True,True,True);
-        24 : Label_Comp(Conf.grp93,'Up',110,30,i,True,True,True);
-        25 : Label_Comp(Conf.grp93,'Down',94,65,i,True,True,True);
-        26 : Label_Comp(Conf.grp93,'Left',103,100,i,True,True,True);
-        27 : Label_Comp(Conf.grp93,'Right',95,135,i,True,True,True);
+        1 : Label_Comp(Conf.grp94,'Exit',90,24,i,'',True,True,True);
+        2 : Label_Comp(Conf.grp94,'Reset',78,72,i,'',True,True,True);
+        3 : Label_Comp(Conf.grp94,'Pause',76,120,i,'',True,True,True);
+        4 : Label_Comp(Conf.grp89,'Up',74,20,i,'',True,True,True);
+        5 : Label_Comp(Conf.grp89,'Down',60,55,i,'',True,True,True);
+        6 : Label_Comp(Conf.grp89,'Left',69,90,i,'',True,True,True);
+        7 : Label_Comp(Conf.grp89,'Right',61,125,i,'',True,True,True);
+        8 : Label_Comp(Conf.grp89,'Button A',130,20,i,'',True,True,True);
+        9 : Label_Comp(Conf.grp89,'Button B',131,55,i,'',True,True,True);
+        10 : Label_Comp(Conf.grp89,'Select',144,90,i,'',True,True,True);
+        11 : Label_Comp(Conf.grp89,'Start',150,125,i,'',True,True,True);
+        12 : Label_Comp(Conf.grp91,'Up',74,20,i,'',True,True,True);
+        13 : Label_Comp(Conf.grp91,'Down',60,55,i,'',True,True,True);
+        14 : Label_Comp(Conf.grp91,'Left',69,90,i,'',True,True,True);
+        15 : Label_Comp(Conf.grp91,'Right',61,125,i,'',True,True,True);
+        16 : Label_Comp(Conf.grp91,'Button A',130,20,i,'',True,True,True);
+        17 : Label_Comp(Conf.grp91,'Button B',131,55,i,'',True,True,True);
+        18 : Label_Comp(Conf.grp91,'Select',144,90,i,'',True,True,True);
+        19 : Label_Comp(Conf.grp91,'Start',150,125,i,'',True,True,True);
+        20 : Label_Comp(Conf.grp92,'Up',110,30,i,'',True,True,True);
+        21 : Label_Comp(Conf.grp92,'Down',94,65,i,'',True,True,True);
+        22 : Label_Comp(Conf.grp92,'Left',103,100,i,'',True,True,True);
+        23 : Label_Comp(Conf.grp92,'Right',95,135,i,'',True,True,True);
+        24 : Label_Comp(Conf.grp93,'Up',110,30,i,'',True,True,True);
+        25 : Label_Comp(Conf.grp93,'Down',94,65,i,'',True,True,True);
+        26 : Label_Comp(Conf.grp93,'Left',103,100,i,'',True,True,True);
+        27 : Label_Comp(Conf.grp93,'Right',95,135,i,'',True,True,True);
       end;
     end;
 end;

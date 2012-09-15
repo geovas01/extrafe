@@ -3,7 +3,7 @@ unit functionX;
 interface
 uses
   Windows, SysUtils, Classes, Controls, Forms, ComObj, Winsock, Math,
-  ShellAPI,sGauge;
+  ShellAPI,sGauge,WinInet;
 
 type
   TGauseStream = class(TMemoryStream)
@@ -34,6 +34,7 @@ function ShellExecAndWait(const FileName, Parameters, dir: string;
   CmdShow: Integer): Boolean;
 //function PortUDP_IsOpen(dwPort : Word; ipAddressStr: AnsiString) : boolean;
 function GetCharFromVirtualKey(Key: Word): string;
+function IsConnectedToInternet:Boolean;
 
 
 const
@@ -461,5 +462,36 @@ function GetCharFromVirtualKey(Key: Word): string;
         Result := '';
     end;
  end;
+
+function IsConnectedToInternet:Boolean;
+var
+  dwFlags: DWORD;
+begin
+  if InternetGetConnectedState(@dwFlags, 0) then
+  begin
+    if (dwFlags and INTERNET_CONNECTION_MODEM) = INTERNET_CONNECTION_MODEM  then
+      Result := True
+//      ShowMessage('Modem Connection')
+    else
+    if (dwFlags and INTERNET_CONNECTION_LAN) = INTERNET_CONNECTION_LAN then
+      Result := True
+//      ShowMessage('LAN Connection')
+    else
+    if (dwFlags and INTERNET_CONNECTION_PROXY) = INTERNET_CONNECTION_PROXY then
+      Result := True
+//      ShowMessage('Connection thru Proxy')
+    else
+    if (dwFlags and INTERNET_CONNECTION_OFFLINE) = INTERNET_CONNECTION_OFFLINE then
+      Result := True
+//      ShowMessage('Local system in offline mode')
+    else
+    if (dwFlags and INTERNET_CONNECTION_CONFIGURED) = INTERNET_CONNECTION_CONFIGURED then
+      Result := True;
+//      ShowMessage('Valid connection exists, but might or might not be connected')
+  end
+  else
+    Result := False;
+//    ShowMessage('Not Connected. Try to connect and risk of being prompted to dial into another Internet Service Provider.');
+end;
 
 end.

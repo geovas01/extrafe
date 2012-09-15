@@ -47,7 +47,7 @@ begin
   ZincData_Xml := TData_Games.Create;
   ZincDatabaseFile := ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\database\zinc_efuse';
   RunCaptured(ExtractFileDrive(FullPathZinc_Exe),FullPathZinc_Exe+Zinc_Exe,' --list-games',ZincDatabaseFile+'.txt');
-  Screen.Cursor := crDefault;
+//  Screen.Cursor := crDefault;
   AssignFile(ZincFile,ZincDatabaseFile+'.txt');
   Reset(ZincFile);
   SetupTheGrid;
@@ -148,11 +148,11 @@ begin
   Zinc_Config.WriteString('Zinc_Paths','Zinc_Snaps',FullPathZinc_Exe+'snaps');
   Zinc_Config.WriteString('Zinc_Paths','Zinc_Renderer',FullPathZinc_Exe+'renderer.cfg');
   Zinc_Config.WriteString('Zinc_Paths','Zinc_Sound',FullPathZinc_Exe+'zinc_sound.cfg');
-  if FileExists(FullPathZinc_Exe+'ogl_renderer.znc') then
+  if FileExists(ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\ogl_renderer.znc') then
     Zinc_Config.WriteBool('Zinc_Files','Zinc_OpenGL',True)
   else
     Zinc_Config.WriteBool('Zinc_Files','Zinc_OpenGL',False);
-  if FileExists(FullPathZinc_Exe+'d3d_renderer.znc') then
+  if FileExists(ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\d3d_renderer.znc') then
     Zinc_Config.WriteBool('Zinc_Files','Zinc_D3D',True)
   else
     Zinc_Config.WriteBool('Zinc_Files','Zinc_D3D',False);
@@ -161,62 +161,6 @@ begin
   else
     Zinc_Config.WriteBool('Zing_Files','Zinc_SoundDll',False);
   Zinc_Config.WriteString('Zinc_Conf','Graphics','OpenGL');
-end;
-
-procedure Show_zinc_databasepanel;
-begin
-  if (Cmenustate = 'em_arcade_zinc_paths') then
-    em_zinc_paths_FreeDynamicComps
-  else if (Cmenustate = 'em_arcade_zinc_graphics') then
-    em_zinc_graphics_FreeDynamicComps
-  else if (Cmenustate = 'em_arcade_zinc_sound') then
-    em_zinc_sound_FreeDynamicComps;
-  ShowPathInCaption(CDirPath,Conf.sBitBtn9.Caption,False,True);
-  Cmenustate := 'em_arcade_zinc_database';
-  em_zinc_database_ShowDynamicComps;
-  ShowButtonDown(9,'EM_ARCADE_ZINC_DATABASE');
-  ShowHidePanel(CurrentPanel,'Pem_zinc_database');
-end;
-
-procedure em_zinc_database_ShowDynamicComps;
-var
-  i: Integer;
-begin
-  for i := 1 to 3 do
-    begin
-      case i of
-        1 : Image_Comp(Conf.Pem_zinc_database,'media\confeditor\images\zinc\zinc.png',
-              3,590,97,75,i,True);
-        2 : Image_Comp(Conf.Pem_zinc_database,'media\confeditor\images\zinc\zinc_image.png',
-              580,483,150,175,i,True);
-        3 : Image_Comp(Conf.Pem_zinc_database,'media\confeditor\images\zinc\database.png',
-              576,2,151,71,i,True);
-      end;
-    end;
-  for i := 1 to 2 do
-    begin
-      case i of
-        1 : Label_Comp(Conf.Pem_zinc_database,'Rom Path:',24,30,i,True,True,True);
-        2 : Label_Comp(Conf.Pem_zinc_database,Conf.sEdit54.Text,30,50,i,True,True,True);
-      end;
-    end;
-end;
-
-procedure em_zinc_database_FreeDynamicComps;
-var
-  i : Integer;
-  Comp: TComponent;
-begin
-  for i := 1 to 3 do
-    begin
-      Comp := FindComponentEx('Conf.Pic'+IntToStr(i));
-      TImage(Comp).Free;
-    end;
-  for i := 1 to 2 do
-    begin
-      Comp := FindComponentEx('Conf.Label'+IntToStr(i));
-      TsLabel(Comp).Free;
-    end;
 end;
 
 procedure SetZinc_DatabaseFromZincIni;
@@ -279,6 +223,64 @@ begin
   Conf.nxtgrd_zinc.BestFitColumn(3,bfHeader);
   Conf.nxtgrd_zinc.BestFitColumn(4,bfBoth);
   Conf.nxtgrd_zinc.BestFitColumn(5,bfBoth);
+end;
+
+///////////////////////////////////////////////////////////////////
+
+procedure Show_zinc_databasepanel;
+begin
+  if (Cmenustate = 'em_arcade_zinc_paths') then
+    em_zinc_paths_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_zinc_graphics') then
+    em_zinc_graphics_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_zinc_sound') then
+    em_zinc_sound_FreeDynamicComps;
+  ShowPathInCaption(CDirPath,Conf.sBitBtn9.Caption,False,True);
+  Cmenustate := 'em_arcade_zinc_database';
+  em_zinc_database_ShowDynamicComps;
+  ShowButtonDown(9,'EM_ARCADE_ZINC_DATABASE');
+  ShowHidePanel(CurrentPanel,'Pem_zinc_database');
+end;
+
+procedure em_zinc_database_ShowDynamicComps;
+var
+  i: Integer;
+begin
+  for i := 1 to 3 do
+    begin
+      case i of
+        1 : Image_Comp(Conf.Pem_zinc_database,'media\confeditor\images\zinc\zinc.png',
+              3,590,97,75,i,'',True,False);
+        2 : Image_Comp(Conf.Pem_zinc_database,'media\confeditor\images\zinc\zinc_image.png',
+              580,483,150,175,i,'',True,False);
+        3 : Image_Comp(Conf.Pem_zinc_database,'media\confeditor\images\zinc\database.png',
+              576,2,151,71,i,'',True,False);
+      end;
+    end;
+  for i := 1 to 2 do
+    begin
+      case i of
+        1 : Label_Comp(Conf.Pem_zinc_database,'Rom Path:',24,30,i,'',True,True,True);
+        2 : Label_Comp(Conf.Pem_zinc_database,Conf.sEdit54.Text,30,50,i,'',True,True,True);
+      end;
+    end;
+end;
+
+procedure em_zinc_database_FreeDynamicComps;
+var
+  i : Integer;
+  Comp: TComponent;
+begin
+  for i := 1 to 3 do
+    begin
+      Comp := FindComponentEx('Conf.Pic'+IntToStr(i));
+      TImage(Comp).Free;
+    end;
+  for i := 1 to 2 do
+    begin
+      Comp := FindComponentEx('Conf.Label'+IntToStr(i));
+      TsLabel(Comp).Free;
+    end;
 end;
 
 end.

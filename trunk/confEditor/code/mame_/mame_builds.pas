@@ -1604,11 +1604,11 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pem_mame_builds,'media\confeditor\images\mame\mame.png',
-              -10,587,155,85,i,True);
+              -10,587,155,85,i,'',True,False);
         2 : Image_Comp(Conf.Pem_mame_builds,'media\confeditor\images\mame\mame_image.png',
-              558,381,169,280,i,True);
+              558,381,169,280,i,'',True,False);
         3 : Image_Comp(Conf.Pem_mame_builds,'media\confeditor\images\mame\builds.png',
-              613,2,132,71,i,True);
+              613,2,132,71,i,'',True,False);
       end;
     end;
 end;

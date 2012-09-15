@@ -52,8 +52,9 @@ begin
       Conf.sButton13.Down := False;
       Conf.sButton14.Down := False;
       Conf.sButton10.Down := True;
+      Conf.nxtgrd_hatari.Height := 1;
+      LoadSingleGames_Database;
     end;
-  LoadSingleGames_Database;
 end;
 
 procedure BigCollections_Click;
@@ -174,6 +175,7 @@ begin
         end;
       Conf.nxtgrd_hatari.EndUpdate;
     finally
+      Conf.nxtgrd_hatari.Height := 407;
     end;
 end;
 
@@ -269,11 +271,11 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pem_hatari_database,'media\confeditor\images\hatari\hatari.png',
-              3,586,106,70,i,True);
+              3,586,106,70,i,'',True,False);
         2 : Image_Comp(Conf.Pem_hatari_database,'media\confeditor\images\hatari\hatari_image.png',
-              559,565,169,97,i,True);
+              559,565,169,97,i,'',True,False);
         3 : Image_Comp(Conf.Pem_hatari_database,'media\confeditor\images\hatari\database.png',
-              577,2,151,71,i,True);
+              577,2,151,71,i,'',True,False);
       end;
     end;
 end;

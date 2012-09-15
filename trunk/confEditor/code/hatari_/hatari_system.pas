@@ -218,11 +218,11 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pem_hatari_system,'media\confeditor\images\hatari\hatari.png',
-              3,586,106,70,i,True);
+              3,586,106,70,i,'',True,False);
         2 : Image_Comp(Conf.Pem_hatari_system,'media\confeditor\images\hatari\hatari_image.png',
-              559,565,169,97,i,True);
+              559,565,169,97,i,'',True,False);
         3 : Image_Comp(Conf.Pem_hatari_system,'media\confeditor\images\hatari\system.png',
-              606,2,129,71,i,True);
+              606,2,129,71,i,'',True,False);
       end;
     end;
 end;
