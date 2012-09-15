@@ -140,11 +140,11 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pem_kigb_others,'media\confeditor\images\kigb\kigb.png',
-              3,590,90,71,i,True);
+              3,590,90,71,i,'',True,False);
         2 : Image_Comp(Conf.Pem_kigb_others,'media\confeditor\images\kigb\kigb_image.png',
-              582,538,147,120,i,True);
+              582,538,147,120,i,'',True,False);
         3 : Image_Comp(Conf.Pem_kigb_others,'media\confeditor\images\kigb\others.png',
-              608,2,120,71,i,True);
+              608,2,120,71,i,'',True,False);
       end;
     end;
 end;

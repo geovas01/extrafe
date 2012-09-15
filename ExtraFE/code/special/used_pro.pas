@@ -9,6 +9,7 @@ interface
   function GetDisplayFrequency: Integer;
   function VersionInfo(filename,savetofile : String): string;
   function GetVersionInfo(sFileName:string): string;
+  function SetCapitalTheFirstLetter(Word : String) : string;
 
   function AddMaterial(aMatLib: TGlMaterialLibrary; aFileName, aMaterialName: string): TGlLibMaterial;
   Procedure AddMaterials(aMatLib: TGlMaterialLibrary; aFolder: String; aFiles: array of String; aNames: array of String);
@@ -45,10 +46,9 @@ end;
 
 
 //Get the display frequency
-function GetDisplayFrequency: Integer;                       
-var                                                          
-DeviceMode: TDeviceMode;                                     
-                                                             
+function GetDisplayFrequency: Integer;
+var
+  DeviceMode: TDeviceMode;
 begin                                                        
   EnumDisplaySettings(nil, Cardinal(-1), DeviceMode);        
   Result := DeviceMode.dmDisplayFrequency;                   
@@ -106,8 +106,23 @@ begin
   FreeMem(VerInfo, VerInfoSize);
 end;
 
-function AddMaterial(aMatLib: TGlMaterialLibrary; aFileName, aMaterialName: string): TGlLibMaterial;
+function SetCapitalTheFirstLetter(Word : String) : string;
+var
+  capital: string;
+begin
+  if Length(Word) > 0 then
+    begin
+      if (Word[1] in ['a'..'z']) then
+        begin
+          capital := UpperCase(Word[1]);
+          Result := capital + Trim(Copy(Word,2,Length(Word)));
+        end
+      else
+        Result := Word;
+    end;
+end;
 
+function AddMaterial(aMatLib: TGlMaterialLibrary; aFileName, aMaterialName: string): TGlLibMaterial;
 begin
   result := aMatLib.Materials.Add;
   with result do

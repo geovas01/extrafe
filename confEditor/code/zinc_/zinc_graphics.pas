@@ -634,11 +634,11 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pem_zinc_graphics,'media\confeditor\images\zinc\zinc.png',
-              3,590,97,75,i,True);
+              3,590,97,75,i,'',True,False);
         2 : Image_Comp(Conf.Pem_zinc_graphics,'media\confeditor\images\zinc\zinc_image.png',
-              580,483,150,175,i,True);
+              580,483,150,175,i,'',True,False);
         3 : Image_Comp(Conf.Pem_zinc_graphics,'media\confeditor\images\zinc\graphics.png',
-              591,2,136,71,i,True);
+              591,2,136,71,i,'',True,False);
       end;
     end;
 end;

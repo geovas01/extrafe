@@ -98,22 +98,22 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pce_themes,'media\confeditor\images\confeditor\confeditor.png',
-              3,571,155,85,i,True);
+              3,571,155,85,i,'',True,False);
         2 : Image_Comp(Conf.Pce_themes,'media\confeditor\images\confeditor\confeditor_image.png',
-              600,381,126,280,i,True);
+              600,381,126,280,i,'',True,False);
         3 : Image_Comp(Conf.Pce_themes,'media\confeditor\images\confeditor\themes.png',
-              587,2,136,71,i,True);
+              587,2,136,71,i,'',True,False);
       end;
     end;
 // Label Components
   for i := 1 to 5 do
     begin
       case i of
-        1 : Label_Comp(Conf.Pce_themes,'Choose Theme :',23,51,i,True,True,True);
-        2 : Label_Comp(Conf.Pce_themes,'Preview',238,51,i,True,True,True);
-        3 : Label_Comp(Conf.Pce_themes,'Theme used :',23,290,i,True,True,True);
-        4 : Label_Comp(Conf.Pce_themes,'Constructed by :',600,294,i,True,True,True);
-        5 : Label_Comp(Conf.Pce_themes,'Theme real name :',600,338,i,True,True,True);
+        1 : Label_Comp(Conf.Pce_themes,'Choose Theme :',23,51,i,'',True,True,True);
+        2 : Label_Comp(Conf.Pce_themes,'Preview',238,51,i,'',True,True,True);
+        3 : Label_Comp(Conf.Pce_themes,'Theme used :',23,290,i,'',True,True,True);
+        4 : Label_Comp(Conf.Pce_themes,'Constructed by :',600,294,i,'',True,True,True);
+        5 : Label_Comp(Conf.Pce_themes,'Theme real name :',600,338,i,'',True,True,True);
       end;
     end;
 end;

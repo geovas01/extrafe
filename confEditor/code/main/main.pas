@@ -26,7 +26,8 @@ uses
   kigb_paths,kigb_screen,kigb_sound,kigb_others,kigb_database,
   wg_weather,wg_timedate,
   JvExExtCtrls, JvExtComponent, JvPanel, JvOfficeColorPanel,
-  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP;
+  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP,
+  IdUDPBase, IdUDPClient, IdSNTP, NLDJoystick;
 
 
 const
@@ -215,7 +216,8 @@ type
 //  Pick Color Components
     JvOfficeColorPanel1: TJvOfficeColorPanel;    
 //  UnKnow Panels
-    sPanel1: TsPanel;pnl1: TPanel;pnl2: TPanel;pnl3: TPanel;pnl4: TPanel;
+//    sPanel1: TsPanel;
+    pnl1: TPanel;pnl2: TPanel;pnl3: TPanel;pnl4: TPanel;
     sButton18: TsButton;
     ScrollBox1: TScrollBox;
     IdHTTP1: TIdHTTP;
@@ -227,6 +229,24 @@ type
     sLabel61: TsLabel;
     sListBox1: TsListBox;
     sButton20: TsButton;
+    sLabel62: TsLabel;
+    ScrollBox2: TScrollBox;
+    grp32: TGroupBox;
+    sButton21: TsButton;
+    sButton23: TsButton;
+    sComboBox42: TsComboBox;
+    sButton24: TsButton;
+    grp33: TGroupBox;
+    sComboBox77: TsComboBox;
+    sBitBtn109: TsBitBtn;
+    Button1: TButton;
+    sLabel79: TsLabel;
+    sLabel130: TsLabel;
+    sLabel131: TsLabel;
+    sButton25: TsButton;
+    sLabel132: TsLabel;
+    sLabel133: TsLabel;
+    NLDJoystick1: TNLDJoystick;
 
 //  Main form actions
     procedure FormCreate(Sender: TObject);
@@ -290,6 +310,8 @@ type
 //  Weather
     procedure sEdit31KeyPress(Sender: TObject; var Key: Char);
     procedure Weather_Config(Sender: TObject);
+//  DateTime
+    procedure DateTime_Config(Sender: TObject);
 
   private
     { Private declarations }
@@ -306,7 +328,6 @@ var
   gFindFiles,gFindDirs,gSaveFiles: string;
   resolutions: TStringList; //List with all avialable graphic card resolutions
   FGa: TGauseStream;
-  wPanelKill: Integer;
 
 implementation
 
@@ -513,7 +534,9 @@ begin
   else if TsComboBox(Sender).Hint = 'Window_effect_type' then
     WindowsEffectsType
   else if TSpinEdit(Sender).Hint = 'Window_effect_time' then
-    WindowsEffectsTimeChange;
+    WindowsEffectsTimeChange
+  else if TButton(Sender).Hint = 'Make_Log' then
+    CreateLog_For_All;
 end;
 
 procedure TConf.confEditor_Themes_Set(Sender: TObject);
@@ -962,18 +985,68 @@ end;
 
 procedure TConf.ClosePanel(Sender: TObject);
 begin
-  wPanelKill := TsBitBtn(Sender).Tag;
-  PostMessage(Handle, UM_DESTROYPANEL,0, 0);
-
+  PostMessage(Handle, UM_DESTROYPANEL, TsBitBtn(Sender).Tag, 0);
 end;
 
 procedure TConf.UMDestroyPanel(var Message: TMessage);
 var
   panelComp: TComponent;
 begin
-  panelComp := FindComponentEx('Conf.MyPanel' + IntToStr(wPanelKill));
+  if Message.WParam < 11 then
+    panelComp := FindComponentEx('Conf.MyPanel_weather' + IntToStr(Message.WParam))
+  else if Message.WParam >= 11 then
+    panelComp := FindComponentEx('Conf.MyPanel_datetime' + IntToStr(Message.WParam));
   panelComp.Destroy;
-  SortOtherPanels(wPanelKill);
+  SortOtherPanels(Message.WParam);
 end;
 
+procedure TConf.DateTime_Config(Sender: TObject);
+begin
+  if TsButton(Sender).Hint = 'DateTime_AddSelection' then
+    Press_AddTime
+  else if TsButton(Sender).Hint = 'DateTime_Cancel' then
+    Cancel_Add
+  else if TsBitBtn(Sender).Hint = 'DateTime_InternetTime' then
+    Get_InternetTime
+  else if TsButton(Sender).Hint = 'DateTime_SetComputersTime' then
+    Set_ComputersTime
+  else if TsComboBox(Sender).Hint = 'DateTime_CountryChoosed' then
+    Get_DataOfCountry
+  else if TsButton(Sender).Hint = 'DateTime_CreateSelection' then
+    AddSelection;
+end;
+
+initialization
+  RegisterClass(TNextGrid);
+  RegisterClass(TsSkinManager);
+  RegisterClass(TsSkinProvider);
+  RegisterClass(TOpenDialog);
+  RegisterClass(TSaveDialog);
+  RegisterClass(TSoundDeviceInfo);
+  RegisterClass(TDesktopMonitorInfo);
+  RegisterClass(TTimer);
+  RegisterClass(TSplitter);
+  RegisterClass(TStatusBar);
+  RegisterClass(TsPanel);
+  RegisterClass(TPanel);
+  RegisterClass(TGroupBox);
+  RegisterClass(TsLabel);
+  RegisterClass(TsCheckBox);
+  RegisterClass(TsComboBox);
+  RegisterClass(TsEdit);
+  RegisterClass(TsBitBtn);
+  RegisterClass(TImage);
+  RegisterClass(TRadioButton);
+  RegisterClass(TsScrollBar);
+  RegisterClass(TsButton);
+  RegisterClass(TsAlphaImageList);
+  RegisterClass(TsLabelFX);
+  RegisterClass(TsGauge);
+  RegisterClass(TsWebLabel);
+  RegisterClass(TsCheckListBox);
+  RegisterClass(TSpinEdit);
+  RegisterClass(TLMDFontComboBox);
+  RegisterClass(TLMDFontSizeComboBox);
+  RegisterClass(TJvOfficeColorPanel);
+  RegisterClass(TNLDJoystick);
 end.

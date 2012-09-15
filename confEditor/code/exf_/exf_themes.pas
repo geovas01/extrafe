@@ -35,11 +35,11 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pexf_themes,'media\confeditor\images\extrafe\extrafe.png',
-              3,586,155,85,i,True);
+              3,586,135,75,i,'',True,False);
         2 : Image_Comp(Conf.Pexf_themes,'media\confeditor\images\extrafe\extrafe_image.png',
-              602,381,150,280,i,True);
+              602,381,150,280,i,'',True,False);
         3 : Image_Comp(Conf.Pexf_themes,'media\confeditor\images\extrafe\themes.png',
-              603,2,136,71,i,True);
+              587,2,136,71,i,'',True,False);
       end;
     end;
 end;

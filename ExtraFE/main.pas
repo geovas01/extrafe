@@ -7,7 +7,7 @@ uses
   Dialogs,StdCtrls,
   GLCrossPlatform, BaseClasses, GLScene, GLWin32Viewer,GLCoordinates,
   GLObjects, GLHUDObjects, GLMaterial, GLTexture, GLCadencer, GLBitmapFont,
-  GLWindowsFont,uBaseButton;
+  GLWindowsFont,uBaseButton,uTweener;
 
   type
   TMainForm = class(TForm)
@@ -28,14 +28,10 @@ uses
     GlCamera_MainMenu: TGLCamera;
     BackGround: TGLHUDSprite;
     Dummy_mainmenu: TGLDummyCube;
-    Left_Wing: TGLHUDSprite;
-    Right_Wing: TGLHUDSprite;
-    Font_MainMenu: TGLWindowsBitmapFont;
     GLS_mame: TGLScene;
     Dummy_mame: TGLDummyCube;
     GlCamera_mame: TGLCamera;
     Mame_Background: TGLHUDSprite;
-    Font_Mame: TGLWindowsBitmapFont;
     GLHUDText_Progress_Info: TGLHUDText;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -54,6 +50,7 @@ var
   CountScenes : Byte;
   dTime,nTime: Double;
   CenterX,CenterY: Real;
+  fTweener: TTweener;
 
   MatLib: TGLMaterialLibrary;
 implementation
@@ -69,9 +66,9 @@ begin
 
   if MatLib=nil then
     MatLib := TGLMaterialLibrary.Create(MainForm);
-
+  Frequency := GetDisplayFrequency;
   GLSceneViewer.Cursor := crNone;
-  SetScreen(32,1280,768,Frequency);
+  SetScreen(32,1024,768,Frequency);
 
   IntroScene := True;
   MainMenu := False;
@@ -114,7 +111,7 @@ begin
     LSMainMenu(nTime);
 
   if MameStart = True then
-    MameMenu(nTime);
+      MameMenu(nTime);
 end;
 
 end.

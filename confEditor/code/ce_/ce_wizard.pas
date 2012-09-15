@@ -38,11 +38,11 @@ begin
     begin
       case i of
         1 : Image_Comp(Conf.Pce_wizard,'media\confeditor\images\confeditor\confeditor.png',
-              3,571,155,85,i,True);
+              3,571,155,85,i,'',True,False);
         2 : Image_Comp(Conf.Pce_wizard,'media\confeditor\images\confeditor\confeditor_image.png',
-              600,381,126,280,i,True);
+              600,381,126,280,i,'',True,False);
         3 : Image_Comp(Conf.Pce_wizard,'media\confeditor\images\confeditor\wizard.png',
-              595,2,136,71,i,True);
+              595,2,136,71,i,'',True,False);
       end;
     end;
 end;

@@ -4,14 +4,15 @@ interface
 
 uses
   Graphics,Windows,SysUtils,ExtCtrls,Controls,Forms,StdCtrls,Classes,
-  pngimage,sLabel,sPanel,sBitBtn;
+  pngimage,JvGIF,sLabel,sPanel,sBitBtn,JvClock;
 
-  procedure Image_Comp(Location: TWinControl; Picture_path: string; Pic_Left,Pic_Top,Pic_Width,Pic_Height,Numofcomp: Integer; Pic_Trans: Boolean);
-  procedure Label_Comp(Location: TWinControl; Text: String; Label_Left,Label_Top,Numofcomp: Integer; Label_Autosize,Label_FontBold,Label_Trans: Boolean);
+  procedure Image_Comp(Location: TWinControl; Picture_path: string; Pic_Left,Pic_Top,Pic_Width,Pic_Height,Numofcomp: Integer; NameOwn:string; Pic_Trans,Pic_Stretch: Boolean);
+  procedure Label_Comp(Location: TWinControl; Text: String; Label_Left,Label_Top,Numofcomp: Integer; NameOwn: string; Label_Autosize,Label_FontBold,Label_Trans: Boolean);
   procedure Memo_Comp(Location: TWinControl; NumOfComp: Integer; Aling:string; Memo_Left, Memo_Top, Memo_Width, Memo_Height: Integer; Memo_Visible: Boolean);
   procedure MemoEmu_Comp(Location: TWinControl; NumOfComp: Integer);
-  procedure Panel_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width: Integer);
-  procedure BitBtn_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width,ImageNum: Integer);
+  procedure Panel_Comp(Location: TWinControl; NameOwn: string; NumOfComp: Integer; Left,Top,Height,Width: Integer);
+  procedure BitBtn_Comp(Location: TWinControl; NumOfComp: Integer; Caption: string; Left,Top,Height,Width,ImageNum: Integer);
+  procedure AnalogClock_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width: Integer);
 
 var
   MyImage: TImage;
@@ -19,16 +20,17 @@ var
   MyMemoEmu,MyMemo: TMemo;
   MyPanel: TsPanel;
   MyBitBtn: TsBitBtn;
+  MyAnalogClock: TJvClock;
 
 implementation
 
 uses
   main,wg_weather;
 
-procedure Image_Comp(Location: TWinControl; Picture_path: string; Pic_Left,Pic_Top,Pic_Width,Pic_Height,Numofcomp: Integer; Pic_Trans: Boolean);
+procedure Image_Comp(Location: TWinControl; Picture_path: string; Pic_Left,Pic_Top,Pic_Width,Pic_Height,Numofcomp: Integer; NameOwn:string; Pic_Trans,Pic_Stretch: Boolean);
 begin
   MyImage := TImage.Create(Conf);
-  MyImage.Name := 'Pic'+IntToStr(Numofcomp);
+  MyImage.Name := 'Pic' + NameOwn + IntToStr(Numofcomp);
   MyImage.Picture.LoadFromFile(ExtractFilePath(Application.ExeName)+Picture_path);
   MyImage.Parent := Location;
   MyImage.Left := Pic_Left;
@@ -36,13 +38,13 @@ begin
   MyImage.Width := Pic_Width;
   MyImage.Height := Pic_Height;
   MyImage.Transparent := Pic_Trans;
-  MyImage.Stretch := True;
+  MyImage.Stretch := Pic_Stretch;
 end;
 
-procedure Label_Comp(Location: TWinControl; Text: String; Label_Left,Label_Top,Numofcomp: Integer; Label_Autosize,Label_FontBold,Label_Trans: Boolean);
+procedure Label_Comp(Location: TWinControl; Text: String; Label_Left,Label_Top,Numofcomp: Integer; NameOwn: string; Label_Autosize,Label_FontBold,Label_Trans: Boolean);
 begin
   MyLabel := TsLabel.Create(Conf);
-  MyLabel.Name := 'Label'+IntToStr(Numofcomp);
+  MyLabel.Name := 'Label' + NameOwn + IntToStr(Numofcomp);
   MyLabel.Parent := Location;
   MyLabel.Caption := Text;
   MyLabel.Left := Label_Left;
@@ -72,10 +74,10 @@ begin
   MyMemoEmu.WordWrap := False;
 end;
 
-procedure Panel_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,width:Integer);
+procedure Panel_Comp(Location: TWinControl; NameOwn: string; NumOfComp: Integer; Left,Top,Height,Width: Integer);
 begin
   MyPanel := TsPanel.Create(Conf);
-  MyPanel.Name := 'MyPanel' + IntToStr(NumOfComp);
+  MyPanel.Name := 'MyPanel'+ NameOwn + IntToStr(NumOfComp);
   MyPanel.Parent := Location;
   MyPanel.Left := Left;
   MyPanel.Top := Top;
@@ -84,7 +86,7 @@ begin
   MyPanel.Caption := '';
 end;
 
-procedure BitBtn_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width,ImageNum: Integer);
+procedure BitBtn_Comp(Location: TWinControl; NumOfComp: Integer; Caption: string; Left,Top,Height,Width,ImageNum: Integer);
 begin
   MyBitBtn := TsBitBtn.Create(Conf);
   MyBitBtn.Name := 'MyBitBtn' + IntToStr(NumOfComp);
@@ -93,11 +95,26 @@ begin
   MyBitBtn.Top := Top;
   MyBitBtn.Height := Height;
   MyBitBtn.Width := Width;
-  MyBitBtn.Caption := '';
+  MyBitBtn.ShowCaption := False;
   MyBitBtn.Images := Conf.InBitBtn_Imagelist;
   MyBitBtn.ImageIndex := ImageNum;
-  MyBitBtn.Tag := NumOfComp;
-  MyBitBtn.OnClick := Conf.ClosePanel; 
+  if Caption = 'weather' then
+    MyBitBtn.Tag := NumOfComp
+  else
+    MyBitBtn.Tag := NumOfComp + 11;
+  MyBitBtn.OnClick := Conf.ClosePanel;
+end;
+
+procedure AnalogClock_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width: Integer);
+begin
+  MyAnalogClock := TJvClock.Create(Conf);
+  MyAnalogClock.Name := 'MyAnalogClock' + IntToStr(NumOfComp);
+  MyAnalogClock.Parent := Location;
+  MyAnalogClock.Left := Left;
+  MyAnalogClock.Top := Top;
+  MyAnalogClock.Height := Height;
+  MyAnalogClock.Width := Width;
+  MyAnalogClock.ShowMode := scAnalog;
 end;
 
 end.

@@ -3,15 +3,13 @@ unit global;
 interface
 
 uses
-  SysUtils,Forms,GLKeyboard,StdCtrls,sPanel,Graphics,Classes,MMSystem;
+  SysUtils,Forms,GLKeyboard,StdCtrls,sPanel,Graphics,Classes;
 
   procedure global_Find_FilesCanClose;
   procedure global_Find_FilesClose;
   procedure global_Find_DirsClose;
   procedure global_Save_FilesCanClose;
 
-  //
-  procedure global_FindJoyInfo;
   //Configures keys global to Extrafe
   procedure CheckForHittingKey;
   procedure RestoreTheOriginalColor;
@@ -204,24 +202,6 @@ begin
           TsPanel(component).Color := clBtnFace;
         end;
     end;
-end;
-
-procedure global_FindJoyInfo;
-var
-  Joystick : TJoyInfo;
-  JoystickCaps: TJoyCaps;
-  k: Integer;
-begin
-  k := 0;
-  repeat
-    if joyGetDevCaps(JOYSTICKID2,@JoystickCaps,SizeOf(JoystickCaps)) <> 0 then
-      begin
-        Joysticks[0] := JoystickCaps.szPname;
-        k := k + 1;
-      end
-    else
-      k := 0;
-  until (k > 8) or (k = 0);
 end;
 
 end.
