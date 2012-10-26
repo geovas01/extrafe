@@ -41,7 +41,7 @@ uses
 
 var
   STBarMessages: Byte;
-  StBarInfo : array [0..2] of string;
+  StBarInfo : array [0..3] of string;
 
 implementation
 uses
@@ -1309,7 +1309,7 @@ begin
                   until i = 0;
                   Conf.Caption := Trim(Copy(OldText,0,(Length(OldText) - (Length(cText)+1))));
                 end;
-              end;
+            end;
         end;
       CDirPath := Conf.Caption;
     end;
@@ -1319,15 +1319,19 @@ procedure ChangeStatusInfo;
 begin
   case STBarMessages of
     0 : begin
-          Conf.stat1.Panels[0].Text := StBarInfo[0];
+          Conf.stat1.Panels[0].Text := 'confEditor Ver: ' + STBarInfo[0];
           STBarMessages := 1;
         end;
-    1 : Begin
-          Conf.stat1.Panels[0].Text := StBarInfo[1];
+    1 : begin
+          Conf.stat1.Panels[0].Text := 'ExtraFe Ver: ' + StBarInfo[1];
           STBarMessages := 2;
         end;
-    2 : begin
+    2 : Begin
           Conf.stat1.Panels[0].Text := StBarInfo[2];
+          STBarMessages := 3;
+        end;
+    3 : begin
+          Conf.stat1.Panels[0].Text := StBarInfo[3];
           STBarMessages := 0; 
         end;
   end;
@@ -1347,8 +1351,11 @@ end;
 
 procedure CurrentStateSave;
 begin
+// ConfEditor
+  if Cmenustate = 'ce_configuration' then
+    SaveCE_ConfigAtExit
 // Mame
-  if Cmenustate = 'em_arcade_mame_paths' then
+  else if Cmenustate = 'em_arcade_mame_paths' then
     SaveMame_DirsAtExit
   else if Cmenustate = 'em_arcade_mame_graphics' then
     SaveMame_GraphicsAtExit

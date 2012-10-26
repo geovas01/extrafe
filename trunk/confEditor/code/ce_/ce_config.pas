@@ -3,12 +3,18 @@ unit ce_config;
 interface
 
 uses
-  SysUtils,OmniXML,OmniXMLUtils,Classes,ExtCtrls;
+  SysUtils,Classes,ExtCtrls,
+  NativeXml;
 
-  procedure CheckShowHelpInMainPanel;
+  procedure SetCE_ConfigFromConfigIni;
+  procedure SaveCE_ConfigAtExit;
+
+
+  procedure FirstTimeStart;
+  procedure ReadConfiguration;
+
   procedure CheckShowHelpInFormCaption;
   procedure WindowsEffectsType;
-  procedure WindowsEffectsTimeChange;
   procedure CreateLog_For_All;
 
 // Menu actions
@@ -16,24 +22,108 @@ uses
   procedure ce_config_ShowDynamicComps;
   procedure ce_config_FreeDynamicComps;
 
+var
+  FXml_CE: TNativeXml;
+  CE_SHelpInCaption,CE_SHelpInMain: Boolean;
+  WinEffectsType,Ce_XMLPath: string;
+  WinEffectsTime,Inode_Ce,ThemeNumber: Integer;
+
 implementation
 
 uses
   main,mainconf,onflycomponents,FunctionX,menu,
-  ce_wizard,ce_themes;
+  ce_wizard,ce_themes,form_splash;
 
-procedure CheckShowHelpInMainPanel;
+var
+  node: TXmlNode;
+
+procedure SetCE_ConfigFromConfigIni;
 begin
-  CE_SHelpInMain := conf.sCheckBox1.Checked;
-  Row_Config.HelpInMainMenu := CE_SHelpInMain;
-  CeXML.SaveToFile(Ce_XMLPath,ofIndent);
+  StartSkinEngine;
+  Splash_Screen.Show;
+  CDirPath := Conf.Caption;
+  CreateSTBarInfo;
+  Splash_Screen.Progress_Label(5,'Info Created');
+  HideAllPanels;
+  Splash_Screen.Progress_Label(15,'ConfEditor initilisize');
+  runMenuJustOpen;
+  LoadStaticImages;
+  LoadCostumCursors;
+  Splash_Screen.Progress_Label(20,'Cursors OK');
+end;
+
+procedure SaveCE_ConfigAtExit;
+begin
+  if not Assigned(FXml_CE) then
+    begin
+      FXml_CE := TNativeXml.CreateName('confeditor');
+      FXml_CE.XmlFormat := xfReadable;
+    end;
+  FXml_CE.Root.WriteAttributeString('Ver',STBarInfo[0]);
+  node := FXml_CE.Root.NodeByName('rowconfig');
+  node.WriteAttributeBool('HelpInCaption',CE_SHelpInCaption);
+  node.WriteAttributeBool('HelpInMainMenu',CE_SHelpInMain);
+  node.WriteAttributeString('WindowsEffects',WinEffectsType);
+  node.WriteAttributeInteger('EffectsTime',WinEffectsTime);
+  FXml_CE.SaveToFile(Ce_XMLPath);
+end;
+
+procedure FirstTimeStart;
+begin
+  FXml_CE := TNativeXml.CreateName('confEditor');
+  FXml_CE.XmlFormat := xfReadable;
+  FXml_CE.Root.WriteAttributeString('Ver',GetVersion(Program_Path + 'confeditor.exe'));
+  STBarInfo[0] := 'Version : '+ GetVersion(Program_Path+'confeditor.exe');
+  node := FXml_CE.Root.NodeNew('rowtheme');
+  node.WriteAttributeInteger('ThemeNumber',0);
+  node := FXml_CE.Root.NodeNew('rowconfig');
+  node.WriteAttributeBool('HelpInCaption',True);
+  node.WriteAttributeBool('HelpInMainMenu',True);
+  node.WriteAttributeString('WindowsEffects','None');
+  node.WriteAttributeInteger('EffectsTime',400);
+  ThemeNumber := 0;
+  CE_SHelpInCaption := True;
+  CE_SHelpInMain := True;
+  WinEffectsType := 'None';
+  WinEffectsTime := 400;
+  conf.sCheckBox1.Checked := CE_SHelpInMain;
+  Conf.sCheckBox2.Checked := CE_SHelpInCaption;
+  Conf.sComboBox74.ItemIndex  := Conf.sComboBox74.IndexOf(WinEffectsType);
+  Conf.sComboBox74.Text := WinEffectsType;
+  Started := True;
+  WindowsEffectsType;
+  Conf.se1.Value := WinEffectsTime;
+  FXml_CE.SaveToFile(Ce_XMLPath);
+end;
+
+procedure ReadConfiguration;
+begin
+  FXml_CE := TNativeXml.CreateName('confeditor');
+  FXml_CE.LoadFromFile(Ce_XMLPath);
+  FXml_CE.XmlFormat := xfReadable;
+  if FXml_CE.Root.ReadAttributeString('Ver','') <> GetVersion(Program_Path + 'confeditor.exe') then
+    FXml_CE.Root.WriteAttributeString('Ver',GetVersion(Program_Path + 'confeditor.exe'));
+  STBarInfo[0] := FXml_CE.Root.ReadAttributeString('Ver');
+  StBarInfo[1] := GetVersion('extrafe.exe');
+  node := FXml_CE.Root.NodeByName('rowtheme');
+  ThemeNumber := node.ReadAttributeInteger('ThemeNumber');
+  node := FXml_CE.Root.NodeByName('rowconfig');
+  CE_SHelpInCaption := node.ReadAttributeBool('HelpInCaption');
+  CE_SHelpInMain := node.ReadAttributeBool('HelpInMainMenu');
+  WinEffectsType := node.ReadAttributeString('WindowsEffects');
+  WinEffectsTime := node.ReadAttributeInteger('EffectsTime');
+  conf.sCheckBox1.Checked := CE_SHelpInMain;
+  Conf.sCheckBox2.Checked := CE_SHelpInCaption;
+  Conf.sComboBox74.ItemIndex  := Conf.sComboBox74.IndexOf(WinEffectsType);
+  Conf.sComboBox74.Text := WinEffectsType;
+  Started := True;
+  WindowsEffectsType;
+  Conf.se1.Value := WinEffectsTime;
 end;
 
 procedure CheckShowHelpInFormCaption;
 begin
   CE_SHelpInCaption := Conf.sCheckBox2.Checked;
-  Row_Config.HelpInCaption := CE_SHelpInCaption;
-  CeXML.SaveToFile(Ce_XMLPath,ofIndent);
   if CE_SHelpInCaption then
     Conf.Caption := '"confEditor"    Path: ConfEditor>Configuration'
   else
@@ -68,23 +158,10 @@ begin
     9 : WinEffectsType := WEffTypes[5];
     10 : WinEffectsType := WEffTypes[Random(5)];
   end;
-  if Started = False then
-    begin
-      Row_Config.WindowsEffects := Conf.sComboBox74.Items.Strings[Conf.sComboBox74.itemIndex];
-      CeXML.SaveToFile(Ce_XMLPath,ofIndent);
-    end;
-end;
-
-procedure WindowsEffectsTimeChange;
-begin
-  WinEffectsTime := Conf.se1.Value;
-  Row_Config.EffectsTime := WinEffectsTime;
-  CeXML.SaveToFile(Ce_XMLPath,ofIndent);
 end;
 
 procedure CreateLog_For_All;
 var
-  comp: TComponent;
   i: Integer;
   LogFile: TStringList;
 begin
@@ -200,6 +277,7 @@ begin
     ce_wizard_FreeDynamicComps
   else if Cmenustate = 'ce_themes' then
     ce_themes_FreeDynamicComps;
+  CurrentStateSave;
   ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,True);
   Cmenustate := 'ce_configuration';
   ce_config_ShowDynamicComps;

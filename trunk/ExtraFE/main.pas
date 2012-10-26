@@ -7,7 +7,7 @@ uses
   Dialogs,StdCtrls,
   GLCrossPlatform, BaseClasses, GLScene, GLWin32Viewer,GLCoordinates,
   GLObjects, GLHUDObjects, GLMaterial, GLTexture, GLCadencer, GLBitmapFont,
-  GLWindowsFont,uBaseButton,uTweener;
+  GLWindowsFont,uBaseButton,uTweener, ExtCtrls;
 
   type
   TMainForm = class(TForm)
@@ -33,6 +33,28 @@ uses
     GlCamera_mame: TGLCamera;
     Mame_Background: TGLHUDSprite;
     GLHUDText_Progress_Info: TGLHUDText;
+    GLS_zinc: TGLScene;
+    GLS_atarist: TGLScene;
+    GLS_playstation: TGLScene;
+    GLS_gameboy: TGLScene;
+    GLS_widgets: TGLScene;
+    atarist_back: TGLHUDSprite;
+    GLCamera_atarist: TGLCamera;
+    GLDummy_atarist: TGLDummyCube;
+    gameboy_back: TGLHUDSprite;
+    GLCamera_gameboy: TGLCamera;
+    GLDummy_gameboy: TGLDummyCube;
+    playstation_back: TGLHUDSprite;
+    GLCamera_playstation: TGLCamera;
+    GLDummy_playstation: TGLDummyCube;
+    zinc_back: TGLHUDSprite;
+    GLCamera_zinc: TGLCamera;
+    GLDummy_zinc: TGLDummyCube;
+    widgets_back: TGLHUDSprite;
+    GLCamera_widgets: TGLCamera;
+    GLDummy_widgets: TGLDummyCube;
+    GLPlane_Image: TGLPlane;
+    GLLightSource1: TGLLightSource;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure GLCadencerProgress(Sender: TObject; const deltaTime,
@@ -40,19 +62,26 @@ uses
   private
     { Private declarations }
   public
+    procedure ActiveScene(scene: Integer);
     { Public declarations }
   end;
 
 var
+// SceneList = (0.intro) (1.MainMenu) (2.Mame) (3.Zinc)
+//   (4.Atari ST) (5.Playstation) (6.Gameboy) (7.Widgets)
+
+  EmuList: array [0..7] of Boolean;
+  fromback: Boolean;
+
   MainForm: TMainForm;
   Frequency,oldResolutionX,oldResolutionY: Integer;
-  IntroScene,MainMenu,MameStart : Boolean;
-  CountScenes : Byte;
   dTime,nTime: Double;
   CenterX,CenterY: Real;
   fTweener: TTweener;
 
   MatLib: TGLMaterialLibrary;
+
+
 implementation
 
 {$R *.dfm}
@@ -62,6 +91,8 @@ uses
   mame;
 
 procedure TMainForm.FormCreate(Sender: TObject);
+var
+  i: Integer;
 begin
 
   if MatLib=nil then
@@ -70,11 +101,8 @@ begin
   GLSceneViewer.Cursor := crNone;
   SetScreen(32,1024,768,Frequency);
 
-  IntroScene := True;
-  MainMenu := False;
-  MameStart := False;
-  CountScenes := 0;
-
+  ActiveScene(0);
+  fromback := False;
 end;
 
 procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -95,23 +123,21 @@ begin
       CenterY := GLSceneViewer.Height div 2;
     end;
 
-  if IntroScene = True then
+  if EmuList[0] = True then
     Intro(nTime)
-  else if CountScenes = 0 then
-    begin
-//      MatLib.Materials.Clear;
-      GLCadencer.Scene := GLS_MainMenu;
-      GLSceneViewer.Camera := GlCamera_MainMenu;
-      GLSceneViewer.Cursor := crDefault;
-      MainMenu := True;
-      CountScenes := 1;
-    end;
+  else if EmuList[1] = True then
+    LSMainMenu(nTime)
+  else if EmuList[2] = True then
+    MameMenu(nTime);
+end;
 
-  if (MainMenu = True) and (CountScenes = 1) then
-    LSMainMenu(nTime);
-
-  if MameStart = True then
-      MameMenu(nTime);
+procedure TMainForm.ActiveScene(scene: Integer);
+var
+  i : Integer;
+begin
+  for i := 0 to 7 do
+    EmuList[i] := False;
+  EmuList[scene] := True;
 end;
 
 end.

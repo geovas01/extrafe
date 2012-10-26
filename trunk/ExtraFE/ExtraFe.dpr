@@ -13,7 +13,8 @@ uses
   uSimplePanel in 'code\arcade\uSimplePanel.pas',
   uSimpleButton in 'code\gui\uSimpleButton.pas',
   uBaseButton in 'code\gui\uBaseButton.pas',
-  uMain_ListBox in 'code\arcade\uMain_ListBox.pas';
+  uMain_ListBox in 'code\arcade\uMain_ListBox.pas',
+  vitru_key in 'code\special\vitru_key.pas';
 
 {$R *.res}
 

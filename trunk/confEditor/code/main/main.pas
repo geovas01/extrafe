@@ -11,7 +11,6 @@ uses
   JvBaseDlg, JvSelectDirectory, JvDialogs,JvAppInst, //Jvcl units
   NxScrollControl, NxCustomGridControl, NxCustomGrid, NxGrid,NxColumnClasses, NxColumns,
   LMDFontSizeComboBox,LMDThemedComboBox, LMDCustomComboBox,LMDFontComboBox,//NextGrid Units
-  OmniXML,OmniXMLUtils, // XML Functions And Units
   FunctionX,global, // functions units
   LMDCustomNImage, LMDNImage,
   GLKeyboard,
@@ -20,7 +19,7 @@ uses
   menu,
   ce_themes,ce_config,
   mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
-  zinc_paths,zinc_graphics,zinc_sound,
+  zinc_paths,zinc_graphics,zinc_sound,zinc_database,
   hatari_system,hatari_roms,hatari_screen,hatari_joy,hatari_paths,hatari_database,
   psx_paths,psx_screen,psx_sound,psx_others,psx_database,
   kigb_paths,kigb_screen,kigb_sound,kigb_others,kigb_database,
@@ -230,23 +229,25 @@ type
     sListBox1: TsListBox;
     sButton20: TsButton;
     sLabel62: TsLabel;
+    Button1: TButton;
+    NLDJoystick1: TNLDJoystick;
+    Ptimedate_internettime: TsPanel;
+    sLabel79: TsLabel;
+    sLabel133: TsLabel;
+    sLabel132: TsLabel;
+    sLabel131: TsLabel;
+    sLabel130: TsLabel;
+    sComboBox77: TsComboBox;
+    sButton25: TsButton;
+    sBitBtn109: TsBitBtn;
+    Ptimedate_worldclock: TsPanel;
     ScrollBox2: TScrollBox;
-    grp32: TGroupBox;
-    sButton21: TsButton;
     sButton23: TsButton;
+    sButton21: TsButton;
     sComboBox42: TsComboBox;
     sButton24: TsButton;
-    grp33: TGroupBox;
-    sComboBox77: TsComboBox;
-    sBitBtn109: TsBitBtn;
-    Button1: TButton;
-    sLabel79: TsLabel;
-    sLabel130: TsLabel;
-    sLabel131: TsLabel;
-    sButton25: TsButton;
-    sLabel132: TsLabel;
-    sLabel133: TsLabel;
-    NLDJoystick1: TNLDJoystick;
+    sBitBtn110: TsBitBtn;
+    sBitBtn111: TsBitBtn;
 
 //  Main form actions
     procedure FormCreate(Sender: TObject);
@@ -260,6 +261,8 @@ type
     procedure Find_FilesCanClose(Sender: TObject; var CanClose: Boolean);
     // Timers
     procedure tmr1Timer(Sender: TObject);
+    //xmlProgress
+    procedure XMLProgress(Sender: TObject; position: Int64);
 //  Menu
     procedure HitButtonMenu(Sender:TObject);
     procedure MouseInButtonMenu(Sender: TObject);
@@ -324,15 +327,20 @@ type
 var
 //New Version 0.3.0
   Conf: TConf;
-  Cmenustate,CurrentPanel,Program_Path,ConfEditor_ImagePath,CDirPath: string;
+  Program_Path: string;
+  Cmenustate,CurrentPanel,ConfEditor_ImagePath,CDirPath: string;
   gFindFiles,gFindDirs,gSaveFiles: string;
+  progressComesFrom: string;
   resolutions: TStringList; //List with all avialable graphic card resolutions
   FGa: TGauseStream;
+
+  FFileName: UTF8String;  // Native progress
+  FFileSize: int64;       // Native progress 
 
 implementation
 
 uses
-  mainconf;
+  mainconf,form_splash;
 
 {$R *.dfm}
 {$R resfiles/mycursors.res}
@@ -367,6 +375,7 @@ begin
       Comp := FindComponentEx('Conf.MemoEmu' + IntToStr(i));
       TMemo(Comp).Free
     end;
+  SaveWeather_AtExit;
 end;
 
 ////////////////////////////////////////
@@ -527,14 +536,10 @@ end;
 
 procedure TConf.confEditor_Config_Set(Sender: TObject);
 begin
-  if TsCheckBox(Sender).Hint = 'Help_in_main_panel' then
-    CheckShowHelpInMainPanel
-  else if TsCheckBox(Sender).Hint = 'Show_path_in_main_form' then
+  if TsCheckBox(Sender).Hint = 'Show_path_in_main_form' then
     CheckShowHelpInFormCaption
   else if TsComboBox(Sender).Hint = 'Window_effect_type' then
     WindowsEffectsType
-  else if TSpinEdit(Sender).Hint = 'Window_effect_time' then
-    WindowsEffectsTimeChange
   else if TButton(Sender).Hint = 'Make_Log' then
     CreateLog_For_All;
 end;
@@ -1002,11 +1007,15 @@ end;
 
 procedure TConf.DateTime_Config(Sender: TObject);
 begin
-  if TsButton(Sender).Hint = 'DateTime_AddSelection' then
+  if TsBitBtn(Sender).Hint = 'DateTime_WorldClock' then
+    ShowWorldClock
+  else if TsBitBtn(Sender).Hint = 'DateTime_InternetTime' then
+    ShowInternetTime
+  else if TsButton(Sender).Hint = 'DateTime_AddSelection' then
     Press_AddTime
   else if TsButton(Sender).Hint = 'DateTime_Cancel' then
     Cancel_Add
-  else if TsBitBtn(Sender).Hint = 'DateTime_InternetTime' then
+  else if TsBitBtn(Sender).Hint = 'DateTime_GetInternetTime' then
     Get_InternetTime
   else if TsButton(Sender).Hint = 'DateTime_SetComputersTime' then
     Set_ComputersTime
@@ -1016,37 +1025,9 @@ begin
     AddSelection;
 end;
 
-initialization
-  RegisterClass(TNextGrid);
-  RegisterClass(TsSkinManager);
-  RegisterClass(TsSkinProvider);
-  RegisterClass(TOpenDialog);
-  RegisterClass(TSaveDialog);
-  RegisterClass(TSoundDeviceInfo);
-  RegisterClass(TDesktopMonitorInfo);
-  RegisterClass(TTimer);
-  RegisterClass(TSplitter);
-  RegisterClass(TStatusBar);
-  RegisterClass(TsPanel);
-  RegisterClass(TPanel);
-  RegisterClass(TGroupBox);
-  RegisterClass(TsLabel);
-  RegisterClass(TsCheckBox);
-  RegisterClass(TsComboBox);
-  RegisterClass(TsEdit);
-  RegisterClass(TsBitBtn);
-  RegisterClass(TImage);
-  RegisterClass(TRadioButton);
-  RegisterClass(TsScrollBar);
-  RegisterClass(TsButton);
-  RegisterClass(TsAlphaImageList);
-  RegisterClass(TsLabelFX);
-  RegisterClass(TsGauge);
-  RegisterClass(TsWebLabel);
-  RegisterClass(TsCheckListBox);
-  RegisterClass(TSpinEdit);
-  RegisterClass(TLMDFontComboBox);
-  RegisterClass(TLMDFontSizeComboBox);
-  RegisterClass(TJvOfficeColorPanel);
-  RegisterClass(TNLDJoystick);
+procedure TConf.XMLProgress(Sender: TObject; position: Int64);
+begin
+  ProgressTgauge(position);
+end;
+
 end.

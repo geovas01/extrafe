@@ -3,9 +3,9 @@ unit zinc_database;
 interface
 
 uses
-  zinc_xmlext,OmniXML,OmniXMLUtils,OmniXMLProperties,
   SysUtils,Forms,Controls,IniFiles,ExtCtrls,Classes,
   NxGrid,NxColumnClasses,NxCustomGridControl,
+  NativeXml,
   slabel;
 
   procedure CreateFirstTimeDatabase;
@@ -21,13 +21,9 @@ uses
 
 
 var
-  ZincData_XmlDoc: IXMLDocument;
-  ZincData_Xml: TData_Games;
-  RowGame: TRowZinc_Game;
-  node_gameZinc: IXMLNode;
-  gameList_Zinc : IXMLNodeList;
-  inode_zinc: Integer; 
-  
+  FXml_Zinc: TNativeXml;
+
+
 implementation
 
 uses
@@ -42,12 +38,11 @@ var
   count,rownum: Byte;
   GameFound: Boolean;
   rec : TSearchRec;
+  node: TXmlNode;
 begin
-  ZincData_XmlDoc := CreateXMLDoc;
-  ZincData_Xml := TData_Games.Create;
-  ZincDatabaseFile := ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\database\zinc_efuse';
+  FXml_Zinc := TNativeXml.CreateName('Zinc');
+  FXml_Zinc.XmlFormat := xfReadable;
   RunCaptured(ExtractFileDrive(FullPathZinc_Exe),FullPathZinc_Exe+Zinc_Exe,' --list-games',ZincDatabaseFile+'.txt');
-//  Screen.Cursor := crDefault;
   AssignFile(ZincFile,ZincDatabaseFile+'.txt');
   Reset(ZincFile);
   SetupTheGrid;
@@ -63,25 +58,30 @@ begin
         begin
           count := 0;
           GameFound := False;
-          RowGame := ZincData_Xml.Rows.AddRow;
+          node := FXml_Zinc.Root.NodeNew('row');
           t2 := Trim(Copy(text,1,Length(text)));
           r := Pos(' ',t2);
           t1 := Trim(Copy(t2,0,r));
           Conf.nxtgrd_zinc.Cell[4,rownum].AsString := t1;
-          RowGame.RunGameNumber := StrToInt(t1);
+          node.WriteAttributeInteger('RunGameNumber',StrToInt(t1));
           t1 := Trim(Copy(t2,r,Length(t2)));
           r := Pos('[',t1);
           t2 := Trim(Copy(t1,0,r-1));
           Conf.nxtgrd_zinc.Cell[1,rownum].AsString := t2;
-          RowGame.GameName := t2;
+          node.WriteAttributeString('GameName',t2);
           t2 := Trim(Copy(t1,r+1,Length(t1)-(r+1)));
           repeat
             count := count + 1;
             r := Pos(',',t2);
-            t1 := Trim(Copy(t2,0,r-1));
+            if r <> 0 then
+              t1 := Trim(Copy(t2,0,r-1))
+            else
+              t1 := t2;
             case count of
               1 : begin
-                    RowGame.RomName := t1;
+                    node.WriteAttributeString('RomName',t1);
+                    node.WriteAttributeString('ParentName',' ');
+                    node.WriteAttributeString('BiosName',' ');
                     if FindFirst(Zinc_RomsPath+'\*.*' , faAnyFile, Rec) = 0 then
                       begin
                         repeat
@@ -89,14 +89,14 @@ begin
                             begin
                               if Rec.Name = t1+'.zip' then
                                 begin
-                                  RowGame.IfGameExists := 'ok';
+                                  node.WriteAttributeString('IfGameExists','ok');
                                   Conf.nxtgrd_zinc.Cell[2,rownum].AsString := t1;
                                   Conf.nxtgrd_zinc.Cell[3,rownum].AsInteger := 32;
                                   GameFound := True;
                                   Break
                                 end
                             end;
-                        until FindNext(Rec) <> 0; 
+                        until FindNext(Rec) <> 0;
                       end;
                   end;
               2 : begin
@@ -105,13 +105,13 @@ begin
                     if t3 = 'parent' then
                       begin
                         t1 := Trim(Copy(t1,r1,Length(t3)));
-                        RowGame.ParentName := t1;
+                        node.WriteAttributeString('ParentName',t1);
                         Conf.nxtgrd_zinc.Cell[6,rownum].AsString := t1;
                       end
                     else
                       begin
                         t1 := Trim(Copy(t2,Length(t3)+1,Length(t2) - Length(t3)));
-                        RowGame.BiosName := t1;
+                        node.WriteAttributeString('BiosName',t1);
                         Conf.nxtgrd_zinc.Cell[5,rownum].AsString := t1;
                       end;
                   end;
@@ -119,14 +119,17 @@ begin
                     r1 := Pos(' ',t2);
                     t3 := Trim(Copy(t2,0,r1));
                     t1 := Trim(Copy(t2,r1,Length(t3)));
-                    RowGame.BiosName := t1;
+                    node.WriteAttributeString('BiosName',t1);
                     Conf.nxtgrd_zinc.Cell[5,rownum].AsString := t1;
                   end;
             end;
             t2 := Trim(Copy(t2,r+1,Length(t2)-r));
           until r = 0;
           if GameFound = False then
-            Conf.nxtgrd_zinc.Cell[3,rownum].AsInteger := 33;
+            begin
+              Conf.nxtgrd_zinc.Cell[3,rownum].AsInteger := 33;
+              node.WriteAttributeString('IfGameExists',' ');
+            end;
           rownum := rownum + 1;
         end
       else
@@ -134,13 +137,13 @@ begin
           t1 := Trim(Copy(text,r,Length(text)-r));
           r := Pos(' ',t1);
           t2 := Trim(Copy(t1,0,r));
-          ZincData_Xml.ZincVer := t2;
+          FXml_Zinc.Root.AttributeAdd('ZincVer',t2);
         end;
     end;
   Conf.nxtgrd_zinc.EndUpdate;
   CloseFile(ZincFile);
   DeleteFile(ZincDatabaseFile+'.txt');
-  ZincData_Xml.SaveToFile(ZincDatabaseFile+'.xml',ofIndent);
+  FXml_Zinc.SaveToFile(ZincDatabaseFile+'.xml');
   Zinc_Config := TIniFile.Create(Zinc_ini);
   Zinc_Config.WriteString('Zinc_Paths','Zinc_Exe',Zinc_Exe);
   Zinc_Config.WriteString('Zinc_Paths','Zinc_Path',FullPathZinc_Exe);
@@ -159,38 +162,36 @@ begin
   if FileExists(FullPathZinc_Exe+'s11player.dll') then
     Zinc_Config.WriteBool('Zinc_Files','Zinc_SoundDll',True)
   else
-    Zinc_Config.WriteBool('Zing_Files','Zinc_SoundDll',False);
+     Zinc_Config.WriteBool('Zing_Files','Zinc_SoundDll',False);
   Zinc_Config.WriteString('Zinc_Conf','Graphics','OpenGL');
+  Screen.Cursor := crDefault;
 end;
 
 procedure SetZinc_DatabaseFromZincIni;
+var
+  i,count: Integer;
 begin
   SetUpTheGrid;
-  gameList_Zinc := ZincData_XmlDoc.SelectNodes('/ZincDatabase/rowgamestatus');
-  Conf.nxtgrd_zinc.AddRow(gameList_Zinc.Length);
+  Count:= 0;
+  Conf.nxtgrd_zinc.AddRow(71);
   Conf.nxtgrd_zinc.BeginUpdate;
-  for inode_zinc := 0 to gameList_Zinc.Length - 1 do
-    begin
-      node_gameZinc := gameList_Zinc.Item[inode_zinc];
-      Conf.nxtgrd_zinc.Cell[1,inode_zinc].AsString := GetNodeAttrStr(node_gameZinc,'GameName');
-      if GetNodeAttrStr(node_gameZinc,'RomName','') <> '' then
-        Conf.nxtgrd_zinc.Cell[2,inode_zinc].AsString := GetNodeAttrStr(node_gameZinc,'RomName')
-      else
-        Conf.nxtgrd_zinc.Cell[2,inode_zinc].AsString := '';
-      if GetNodeAttrStr(node_gameZinc,'IfGameExists','') <> '' then
-        Conf.nxtgrd_zinc.Cell[3,inode_zinc].AsInteger := 32
-      else
-        Conf.nxtgrd_zinc.Cell[3,inode_zinc].AsInteger := 33;
-      Conf.nxtgrd_zinc.Cell[4,inode_zinc].AsString := GetNodeAttrStr(node_gameZinc,'RunGameNumber');
-      if GetNodeAttrStr(node_gameZinc,'BiosName','') <> '' then
-        Conf.nxtgrd_zinc.Cell[5,inode_zinc].AsString := GetNodeAttrStr(node_gameZinc,'BiosName')
-      else
-        Conf.nxtgrd_zinc.Cell[5,inode_zinc].AsString := '';
-      if GetNodeAttrStr(node_gameZinc,'Parent','') <> '' then
-        Conf.nxtgrd_zinc.Cell[6,inode_zinc].AsString := GetNodeAttrStr(node_gameZinc,'Parent')
-      else
-        Conf.nxtgrd_zinc.Cell[6,inode_zinc].AsString := '';
-    end;
+  with FXml_Zinc.Root do
+    for i := 1 to NodeCount - 1 do
+      begin
+//        if Nodes[i].Name <> 'ZincVer' then
+//          begin
+            Conf.nxtgrd_zinc.Cell[1,count].AsString := Nodes[i].Nodes[1].Value;
+            Conf.nxtgrd_zinc.Cell[2,count].AsString := Nodes[i].Nodes[2].Value;
+            if Nodes[i].Nodes[5].Value <> ' ' then
+              Conf.nxtgrd_zinc.Cell[3,count].AsInteger := 32
+            else
+              Conf.nxtgrd_zinc.Cell[3,count].AsInteger := 33;
+            Conf.nxtgrd_zinc.Cell[4,count].AsString := Nodes[i].Nodes[0].Value;
+            Conf.nxtgrd_zinc.Cell[5,count].AsString := Nodes[i].Nodes[3].Value;
+            Conf.nxtgrd_zinc.Cell[6,count].AsString := Nodes[i].Nodes[4].Value;
+            count := count + 1;
+//          end;
+      end;
   BestFitForZincGrid;
   Conf.nxtgrd_zinc.EndUpdate;
 end;

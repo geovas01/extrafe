@@ -56,8 +56,8 @@ unit main_menu;
 interface
   uses
     SysUtils,Classes,Windows,Forms,Dialogs,Controls,
-    uBaseButton,uTweener,
-    GLHUDObjects,GLKeyboard;
+    uBaseButton,uTweener,uSimpleButton,
+    GLHUDObjects,GLKeyboard,GLFilePNG;
 
   type
     TEmu = class
@@ -74,6 +74,8 @@ interface
   procedure runSelectedEmu(numOfEmu: Integer);
   procedure clickLeftKey(x,y:Integer);
   procedure clickRightKey(x,y:Integer);
+
+  procedure UpDateWidGets;
 
   type
     fRight_btn = class(TGUIAlphaButton)
@@ -96,6 +98,7 @@ interface
     RightButton : fRight_Btn;
     LeftButton : fLeft_Btn;
     fRightBtn1,fLeftBtn1: TGUIAlphaButton;
+    fWidgetsBtn: TGLHUDSprite;
     Start: Boolean;
 
     fActiveEmulator: integer;
@@ -111,18 +114,6 @@ procedure LSMainMenu(aTime: Double);
 var
   MPos: TPoint;
   IsKeyP: Boolean;
-{  Function AddSprite(aMatName: String; aX, aY: integer; aW, aH: Integer): TGlHudSprite;
-  begin
-    result := TGlHudSprite.CreateAsChild(MainForm.Dummy_mainmenu);
-    with result do
-    begin
-      Material.LibMaterialName := aMatName;
-      Material.MaterialLibrary := MatLib;
-      Width  := aW;
-      Height := aH;
-      Position.SetPoint(aX, aY, 0);
-    end;
-  end;}
 
   Function AddEmulator(aMatName: String; aAlpha: Single = 1): TEmu;
   begin
@@ -142,54 +133,59 @@ var
       fEmulators.Add(result);
     end;
   end;
-  
-{  Function AddEmulator(aInActiveMate,aActiveMate: String; aAlpha: Single = 1): TEmu;
-  begin
-    Result := TEmu.Create;
-    Result.fEmuButton := TGUIAlphaButton.CreateAsChild(MainForm.Dummy_mainmenu);
-//    result.fSprite := TGlHudSprite.CreateAsChild(MainForm.Dummy_mainmenu);
-    with Result.fEmuButton do
-      begin
-        Material.MaterialLibrary := MatLib;
-        SetMaterials(aInActiveMate,aActiveMate,MatLib);
-        Position.SetPoint(500,380,0);
-        Material.GetActualPrimaryMaterial.FrontProperties.Diffuse.Alpha := aAlpha;
-        Result.fX := 500;
-        Result.fAlpha := aAlpha;
-        fEmulators.Add(Result);
-      end;
-  end;}
+
 begin
   if MainForm.Tag = 0 then
     begin
       if Start = False then
         begin
-          AddMaterials(MatLib,'media\extrafe\main_menu\',['background','left_button','left_button_p','right_button','right_button_p'],['background','leftB','leftBP','rightB','rightBP']);
-          AddMaterials(MatLib,'media\extrafe\main_menu\',['mame_cab','zinc_cab','hatari_cab','psxemulator_cab','kigb_cab','widgets'],['mameC','zincC','hatariC','psxemulatorC','kigbC','widgets']);
-          AddMaterials(MatLib,'media\extrafe\main_menu\',['mame_cab_p','zinc_cab_p','hatari_cab_p','psxemulator_cab_p','kigb_cab_p'],['mameCA','ZincCA','hatariCA','psxemulatorCA','kigbCA']);
+          MainForm.GLCadencer.Scene := MainForm.GLS_MainMenu;
+          MainForm.GLSceneViewer.Camera := MainForm.GlCamera_MainMenu;
+          MainForm.GLSceneViewer.Cursor := crDefault;
 
-          InitTweener;
+          if fromback = False then
+            begin
+              AddMaterials(MatLib,'media\extrafe\main_menu\',['background','left_button','left_button_p','right_button','right_button_p'],['background','leftB','leftBP','rightB','rightBP']);
+              AddMaterials(MatLib,'media\extrafe\main_menu\',['mame_cab','zinc_cab','hatari_cab','psxemulator_cab','kigb_cab','widgets'],['mameC','zincC','hatariC','psxemulatorC','kigbC','widgets']);
+              AddMaterials(MatLib,'media\extrafe\main_menu\',['mame_cab_p','zinc_cab_p','hatari_cab_p','psxemulator_cab_p','kigb_cab_p'],['mameCA','ZincCA','hatariCA','psxemulatorCA','kigbCA']);
+              AddMaterials(MatLib,'media\extrafe\main_menu\',['widgets','widgets_p'],['wid','wid_p']);
 
-          AddEmulator('mameC',0);
-          AddEmulator('zincC',0);
-          AddEmulator('hatariC',0);
-          AddEmulator('psxemulatorC',0);
-          AddEmulator('kigbC',0);
+              InitTweener;
 
-          fRightBtn1 := TGUIAlphaButton.CreateAsChild(MainForm.Dummy_mainmenu);
-          fRightBtn1.SetMaterials('rightB','rightBP',MatLib);
-          fRightBtn1.Position.SetPoint(900,380,0);
-          fRightBtn1.OnMouseClick := RightButton.OnNextClick;
-          fRightBtn1.Show;
+              AddEmulator('mameC',0);
+              AddEmulator('zincC',0);
+              AddEmulator('hatariC',0);
+              AddEmulator('psxemulatorC',0);
+              AddEmulator('kigbC',0);
 
-          fLeftBtn1 := TGUIAlphaButton.CreateAsChild(MainForm.Dummy_mainmenu);
-          fLeftBtn1.SetMaterials('leftB','leftBP',MatLib);
-          fLeftBtn1.Position.SetPoint(100,380,0);
-          fLeftBtn1.OnMouseClick := LeftButton.OnPrevClick;
-          fLeftBtn1.Show;
+              fRightBtn1 := TGUIAlphaButton.CreateAsChild(MainForm.Dummy_mainmenu);
+              fRightBtn1.SetMaterials('rightB','rightBP',MatLib);
+              fRightBtn1.Position.SetPoint(900,380,0);
+              fRightBtn1.OnMouseClick := RightButton.OnNextClick;
+              fRightBtn1.Show;
 
+              fLeftBtn1 := TGUIAlphaButton.CreateAsChild(MainForm.Dummy_mainmenu);
+              fLeftBtn1.SetMaterials('leftB','leftBP',MatLib);
+              fLeftBtn1.Position.SetPoint(100,380,0);
+              fLeftBtn1.OnMouseClick := LeftButton.OnPrevClick;
+              fLeftBtn1.Show;
 
+              fWidgetsBtn := TGLHUDSprite.CreateAsChild(MainForm.Dummy_mainmenu);
+              AddMaterial(MatLib, 'media\extrafe\main_menu\widgets.png', 'widgets');
+              fWidgetsBtn.Material.Assign(MatLib.Materials.GetLibMaterialByName('widgets').Material);
+              fWidgetsBtn.Height := 100;
+              fWidgetsBtn.Width := 100;
+              fWidgetsBtn.Position.X := 950;
+              fWidgetsBtn.Position.Y := 700;
+              fWidgetsBtn.Material.FrontProperties.Diffuse.Alpha := 0.8;
+              
+//              fWidgetsBtn := TSimpleButton.CreateAsChild(MainForm.Dummy_mainmenu);
+//              fWidgetsBtn('wid',MatLib);
+//              fWidgetsBtn.Position.SetPoint(950,700,0);
+//              fWidgetsBtn.Show;
+            end;
           ActivateEmulator(0, -1);
+          fromback := False;
           Start := True;
         end
       else
@@ -197,6 +193,7 @@ begin
 
           fTweener.Update(dTime);
           UpdateEmulators;
+          UpDateWidGets;
 
           GetCursorPos(Mpos);
           MPos := MainForm.GLSceneViewer.ScreenToClient(MPos);
@@ -208,7 +205,7 @@ begin
             clickLeftKey(110, 390);
           if IsKeyDown(VK_RIGHT) then
             clickRightKey(910, 390);
-          if KeyPressed() = 13 then
+          if IsKeyDown(VK_RETURN) then
             runSelectedEmu(fActiveEmulator);
 
           MainForm.GLSceneViewer.Invalidate;
@@ -234,15 +231,15 @@ begin
 end;
 
 procedure begin_Mame;
+var
+  i: Integer;
 begin
-  fTweener.Free;
-  MainMenu := False;
-  MameStart := True;
+  MainForm.ActiveScene(2);
 end;
 
 procedure begin_Zinc;
 begin
-
+  
 end;
 
 procedure begin_Hatari;
@@ -308,6 +305,11 @@ begin
     end;
 
   fActiveEmulator := aIndex;
+end;
+
+procedure UpDateWidGets;
+begin
+  fWidgetsBtn.Rotation := fWidgetsBtn.Rotation + 0.2;
 end;
 
 { fRight_btn }

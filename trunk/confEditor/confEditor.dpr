@@ -39,9 +39,6 @@ uses
   global in 'code\others\global.pas',
   form_splash in 'code\other_forms_\form_splash.pas' {Splash_Screen},
   form_general in 'code\other_forms_\form_general.pas' {FGeneral},
-  mame_xmlext in 'code\mame_\mame_xmlext.pas',
-  ce_xmlext in 'code\ce_\ce_xmlext.pas',
-  zinc_xmlext in 'code\zinc_\zinc_xmlext.pas',
   zinc_database in 'code\zinc_\zinc_database.pas',
   onflycomponents in 'code\main\onflycomponents.pas',
   ce_wizard in 'code\ce_\ce_wizard.pas',
@@ -52,8 +49,7 @@ uses
   hatari_paths in 'code\hatari_\hatari_paths.pas',
   hatari_database in 'code\hatari_\hatari_database.pas',
   psx_database in 'code\psx_\psx_database.pas',
-  kigb_database in 'code\kigb_\kigb_database.pas',
-  hatari_xmlext in 'code\hatari_\hatari_xmlext.pas';
+  kigb_database in 'code\kigb_\kigb_database.pas';
 
 var
   Map : THandle;

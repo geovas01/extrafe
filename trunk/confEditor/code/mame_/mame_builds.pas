@@ -3,7 +3,7 @@ unit mame_builds;
 interface
 uses
   SysUtils,Forms,Graphics,Classes,Controls,Dialogs,FileCtrl,StdCtrls,ExtCtrls,
-  OmniXML,OmniXMLUtils,
+  NativeXml,
   NxColumnClasses,NxGrid,NxCustomGridControl,
   pngimage;
 
@@ -28,7 +28,7 @@ uses
   procedure FindIPSDir_MamePlus;
   procedure FindIPSDir_MameXT;
   procedure IPSEnableClick_MameXT;
-  procedure GetIPS_MamePlus;
+  procedure GetIPS(BuildMame: string);
   procedure SetupIPSMameGrid(Name:string);
   procedure IpsMamePlus_Expand(ARow: Integer);
   procedure IpsMameXT_Expand(ARow: Integer);
@@ -40,7 +40,6 @@ uses
   procedure ChangeColorInFont_MameBuilds;
   procedure DefaultColorInFont_MameBuilds;
   procedure ChangeImage2x_MameBuilds;
-  procedure GetIPS_MameXT;
   procedure GetMameXT_GamesList;
   procedure GetMameXT_Game_CountTime;
   procedure RunGameCount_PlayTime_MameXT_Memo;
@@ -58,6 +57,8 @@ uses
 
   procedure MameBuilds_Clear;
 
+  procedure Assigned_IPS;
+
 // Menu actions
   procedure Show_mame_buildspanel;
   procedure em_mame_builds_ShowDynamicComps;
@@ -68,6 +69,8 @@ var
   IPSPath,HiScoreFile,HiScorePath,ipsNotFoundImg: String;
   IsIPSChecked,IsApplyChecked,NewIPSDir: Boolean;
   GamePlayTime_Memo: TMemo;
+
+  FXml_IPS: TNativeXml;
 
 implementation
 uses
@@ -146,8 +149,8 @@ begin
       Conf.nxtgrd_ips_mameplus.ClearRows;
       Conf.nxtgrd_ips_mameplus.Columns.Clear;
       Conf.nxtgrd_ips_mameplus.Enabled := False;
-      MameXmlUseDoc.DocumentElement.SetAttribute('IpsChecked','False');
-      MameXmlUseDoc.Save(MameDatabaseFile,ofNone);
+      FXml_MameDatabase.Root.WriteAttributeBool('IpsChecked',False);
+      FXml_MameDatabase.SaveToFile(MameDatabaseFile);
     end
   else
     begin
@@ -156,9 +159,9 @@ begin
       Conf.sBitBtn98.Enabled := True;
       Conf.sLabel35.Enabled := True;
       Conf.nxtgrd_ips_mameplus.Enabled := True;
-      MameXmlUseDoc.DocumentElement.SetAttribute('IpsChecked','True');
-      MameXmlUseDoc.Save(MameDatabaseFile,ofNone);
-      GetIPS_MamePlus;
+      FXml_MameDatabase.Root.WriteAttributeBool('IpsChecked',True);
+      FXml_MameDatabase.SaveToFile(MameDatabaseFile);
+      GetIPS('MamePlus');
     end;
 end;
 
@@ -175,8 +178,8 @@ begin
       Conf.nxtgrd_ips_mamext.ClearRows;
       Conf.nxtgrd_ips_mamext.Columns.Clear;
       Conf.nxtgrd_ips_mamext.Enabled := False;
-      MameXmlUseDoc.DocumentElement.SetAttribute('IpsChecked','False');
-      MameXmlUseDoc.Save(MameDatabaseFile,ofNone);
+      FXml_MameDatabase.Root.WriteAttributeBool('IpsChecked',False);
+      FXml_MameDatabase.SaveToFile(MameDatabaseFile);
     end
   else
     begin
@@ -185,16 +188,17 @@ begin
       Conf.sBitBtn100.Enabled := True;
       Conf.sLabel38.Enabled := True;
       Conf.nxtgrd_ips_mamext.Enabled := True;
-      MameXmlUseDoc.DocumentElement.SetAttribute('IpsChecked','True');
-      MameXmlUseDoc.Save(MameDatabaseFile,ofNone);
-      GetIPS_MameXT;
+      FXml_MameDatabase.Root.WriteAttributeBool('IpsChecked',True);
+      FXml_MameDatabase.SaveToFile(MameDatabaseFile);
+      GetIPS('MameXT');
     end;
 end;
 
 procedure SetMame_BuildsFromMameIni;
 var
   MameIniFile: TextFile;
-  value,text,t1,t2,t3,CheckIps,CheckHiscore: string;
+  value,text,t1,t2,t3: string;
+  CheckIps,CheckHiscore: Boolean;
   r: integer;
 begin
   if Started = True then
@@ -227,9 +231,11 @@ begin
               BuildsClick;
               Builds_MameXT;
             end;
-          nodegame := MameXmlUseDoc.SelectSingleNode('MameInfo');
-          CheckIps := GetNodeAttrStr(nodegame,'IpsChecked');
-          CheckHiscore := GetNodeAttrStr(nodegame,'HiScoreChecked');
+          CheckIps := FXml_MameDatabase.Root.ReadAttributeBool('IpsChecked');
+          CheckHiscore := FXml_MameDatabase.Root.ReadAttributeBool('HiScoreChecked');
+//          nodegame := MameXmlUseDoc.SelectSingleNode('MameInfo');
+//          CheckIps := GetNodeAttrStr(nodegame,'IpsChecked');
+//          CheckHiscore := GetNodeAttrStr(nodegame,'HiScoreChecked');
           FromMame_BuildsToFindBuilds := True;
           value := FullPathMame_Exe+'mame.ini';
           AssignFile(MameIniFile,value);
@@ -267,15 +273,15 @@ begin
                   HiScorefile := HiScorePath+t2;
                   if Mame_Exe = 'mamep.exe' then
                     begin
-                      if CheckHiscore = 'True' then
-                        Conf.sCheckBox33.Checked := StrToBool(CheckHiscore)
+                      if CheckHiscore = True then
+                        Conf.sCheckBox33.Checked := CheckHiscore
                       else
                         HiScorePath_MamePlus;
                     end
                   else
                     begin
-                      if CheckHiscore = 'True' then
-                        Conf.sCheckBox129.Checked := StrToBool(CheckHiscore)
+                      if CheckHiscore = True then
+                        Conf.sCheckBox129.Checked := CheckHiscore
                       else
                         HiScorePath_MameXT;
                     end;
@@ -302,15 +308,15 @@ begin
                   IPSPath := t3;
                   if Mame_Exe = 'mamep.exe' then
                     begin
-                      if CheckIps = 'True' then
-                        Conf.sCheckBox34.Checked := StrToBool(CheckIps)
+                      if CheckIps = True then
+                        Conf.sCheckBox34.Checked := CheckIps
                       else
                         IPSEnableClick_MamePlus;
                     end
                   else
                     begin
-                      if CheckIps = 'True' then
-                        Conf.sCheckBox130.Checked := StrToBool(CheckIps)
+                      if CheckIps = True then
+                        Conf.sCheckBox130.Checked := CheckIps
                       else
                         IPSEnableClick_MameXT;
                     end;
@@ -530,111 +536,182 @@ begin
     end;
 end;
 
-procedure GetIPS_MamePlus;
+
+// Synexeia apo edo
+procedure GetIPS(BuildMame: string);
 var
-  xmlDoc: IXMLDocument;
-  nodegame: IXMLNode;
-  gameList : IXMLNodeList;
   rec,recdat : TSearchRec;
   FindDat,DatString,t1,t2: String;
-  k1,k2,iNode,CountF: Integer;
+  k1,k2,CountF: Integer;
   CountDat: Byte;
   DatFile: TextFile;
   CheckIPSFolder_MamePlus: Boolean;
+
+  i: Integer;
+  node: TXmlNode;
 begin
   if (FromDatabase = True) and FileExists(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml') then
     DeleteFile(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml');
   if (FileExists(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml')) and (NewIPSDir = False) then
     begin
       CheckIPSFolder_MamePlus := True;
-      try
-        XMLDoc := CreateXMLDoc;
-        try
-          if Started = True then
-            begin
-              Splash_Screen.sLabel1.Caption := 'Found IPS Files for MamePlus. Try to Sotring (Please Wait...)';
-              Application.ProcessMessages;
-            end
-          else
-            begin
-              IsIPSChecked := true;
-              Conf.sGauge_IPSMamePlus.Visible := True;
-              Conf.sLabel110.Visible := True;
-              Conf.sLabel110.Caption := 'Please Wait';
-            end;
-          XMLDoc.PreserveWhiteSpace := True;
-          XMLDoc.Load(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml');
-        finally
+      Assigned_IPS;
+      if Started = True then
+        progressComesFrom := 'Ips_Start'
+      else
+        begin
+          IsIPSChecked := true;
+          Conf.sGauge_IPSMamePlus.Visible := True;
+          Conf.sLabel110.Visible := True;
+          Conf.sLabel110.Caption := 'Please Wait';
+        end;
+//      try
+//
+//        XMLDoc := CreateXMLDoc;
+//        try
+//          if Started = True then
+//            begin
+//              Splash_Screen.sLabel1.Caption := 'Found IPS Files for MamePlus. Try to Sotring (Please Wait...)';
+//              Application.ProcessMessages;
+//            end
+//          else
+//            begin
+//              IsIPSChecked := true;
+//              Conf.sGauge_IPSMamePlus.Visible := True;
+//              Conf.sLabel110.Visible := True;
+//              Conf.sLabel110.Caption := 'Please Wait';
+//            end;
+//          XMLDoc.PreserveWhiteSpace := True;
+//          XMLDoc.Load(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml');
+//        finally
+          FXml_IPS.LoadFromFile(Program_Path+'\media\emulators\arcade\mame\database\ips_mamep.xml');
           CountF := CountFilesOrFolders(IPSPath,'folders');
           SetupIPSMameGrid('MamePlus');
-          gameList := xmlDoc.SelectNodes('/NxGrid/Row');
-          k2 := -1;
-          Conf.nxtgrd_ips_mameplus.BeginUpdate;
-          for iNode := 0 to gameList.Length - 1 do
-            begin
-              nodegame := gameList.Item[iNode];
-              if GetNodeTextStr(nodegame,'GameNameID','') <> '' then
-                begin
-                  Application.ProcessMessages;
-                  k2 := k2 + 1;
-                  t1 := GetNodeTextStr(nodegame,'GameNameID');
-                  Conf.nxtgrd_ips_mameplus.AddRow();
-                  Conf.nxtgrd_ips_mameplus.Cell[0,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'GameNameID');
-                  Conf.nxtgrd_ips_mameplus.Cell[1,Conf.nxtgrd_ips_mameplus.LastAddedRow].Empty := True;
-                  Conf.nxtgrd_ips_mameplus.RowHeight[Conf.nxtgrd_ips_mameplus.LastAddedRow] := 16;
-                  Conf.nxtgrd_ips_mameplus.SelectLastRow();
-                  if Started = True then
+          with FXml_IPS.Root do
+            for i := 0 to NodeCount - 1 do
+              begin
+                node := FXml_IPS.Root.Nodes[i];
+                if node.Name = 'Row' then
+                  if node.ReadAttributeString('GameNameID') <> '' then
                     begin
-                      Splash_Screen.Progress_Label((100 * k2) div (CountF-1),'Try to Sotring IPS ('+t1+')');
-                      Splash_Screen.sGauge_Splash.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
+                      k2 := k2 + 1;
+                      t1 := node.ReadAttributeString('GameNameID');
+                      Conf.nxtgrd_ips_mameplus.AddRow();
+                      Conf.nxtgrd_ips_mameplus.Cell[0,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := t1;
+                      Conf.nxtgrd_ips_mameplus.Cell[1,Conf.nxtgrd_ips_mameplus.LastAddedRow].Empty := True;
+                      Conf.nxtgrd_ips_mameplus.RowHeight[Conf.nxtgrd_ips_mameplus.LastAddedRow] := 16;
+                      Conf.nxtgrd_ips_mameplus.SelectLastRow();
+                      if Started = True then
+                        begin
+                          Splash_Screen.Progress_Label((100 * k2) div (CountF-1),'Try to Sotring IPS ('+t1+')');
+                          Splash_Screen.sGauge_Splash.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
+                        end
+                      else
+                        begin
+                          Conf.sLabel110.Caption := 'Try to Sotring IPS ('+t1+')';
+                          Conf.sGauge_IPSMamePlus.Progress := (100 * k2) div (CountF-1);
+                          Conf.sGauge_IPSMamePlus.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
+                        end;
                     end
                   else
                     begin
-                      Conf.sLabel110.Caption := 'Try to Sotring IPS ('+t1+')';
-                      Conf.sGauge_IPSMamePlus.Progress := (100 * k2) div (CountF-1);
-                      Conf.sGauge_IPSMamePlus.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
+                      Conf.nxtgrd_ips_mameplus.AddChildRow(Conf.nxtgrd_ips_mameplus.SelectedRow,crlast);
+                      Conf.nxtgrd_ips_mameplus.Cell[1,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsBoolean := StrToBool(node.ReadAttributeString('Apply'));
+                      if node.ReadAttributeString('IPSName') <> '' then
+                        Conf.nxtgrd_ips_mameplus.Cell[2,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := node.ReadAttributeString('IPSName');
+                      if node.ReadAttributeString('Hacker') <> '' then
+                        Conf.nxtgrd_ips_mameplus.Cell[3,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := node.ReadAttributeString('Hacker');
+                      if node.ReadAttributeString('Translator') <> '' then
+                        Conf.nxtgrd_ips_mameplus.Cell[4,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := node.ReadAttributeString('Translator');
+                      if node.ReadAttributeString('Description') <> '' then
+                        Conf.nxtgrd_ips_mameplus.Cell[5,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := node.ReadAttributeString('Description');
+                      if node.ReadAttributeString('Date') <> '' then
+                        Conf.nxtgrd_ips_mameplus.Cell[6,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := node.ReadAttributeString('Date');
+                      if node.ReadAttributeString('Image_Path') <> '' then
+                        begin
+                          Conf.nxtgrd_ips_mameplus.Cell[8,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := node.ReadAttributeString('Image_Path');
+                          Conf.nxtgrd_ips_mameplus.RowHeight[Conf.nxtgrd_ips_mameplus.LastAddedRow] := 80;
+                        end;
                     end;
-                end
-              else
-                begin
-                  Conf.nxtgrd_ips_mameplus.AddChildRow(Conf.nxtgrd_ips_mameplus.SelectedRow,crlast);
-                  Conf.nxtgrd_ips_mameplus.Cell[1,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsBoolean := StrToBool(GetNodeTextStr(nodegame,'Apply'));
-                  if GetNodeTextStr(nodegame,'IPSName','') <> '' then
-                    Conf.nxtgrd_ips_mameplus.Cell[2,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'IPSName');
-                  if GetNodeTextStr(nodegame,'Hacker','') <> '' then
-                    Conf.nxtgrd_ips_mameplus.Cell[3,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Hacker');
-                  if GetNodeTextStr(nodegame,'Translator','') <> '' then
-                    Conf.nxtgrd_ips_mameplus.Cell[4,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Translator');
-                  if GetNodeTextStr(nodegame,'Description','') <> '' then
-                    Conf.nxtgrd_ips_mameplus.Cell[5,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Description');
-                  if GetNodeTextStr(nodegame,'Date','') <> '' then
-                    Conf.nxtgrd_ips_mameplus.Cell[6,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Date');
-                  if GetNodeTextStr(nodegame,'Image_Path','') <> '' then
-                    begin
-                      Conf.nxtgrd_ips_mameplus.Cell[8,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Image_Path');
-                      Conf.nxtgrd_ips_mameplus.RowHeight[Conf.nxtgrd_ips_mameplus.LastAddedRow] := 80;
-                    end;
-                end;
-            end;
+              end;
           Conf.nxtgrd_ips_mameplus.EndUpdate;
           Conf.nxtgrd_ips_mameplus.BestFitColumn(1,bfHeader);
-        end;
-      finally
-        xmlDoc := nil;
-        if Started = True then
-          Splash_Screen.sGauge_Splash.Suffix := '%'
-        else
-          begin
-            Conf.sLabel110.Visible := False;
-            Conf.sGauge_IPSMamePlus.Visible := False;
-          end;
-      end;
+          if Started = True then
+            Splash_Screen.sGauge_Splash.Suffix := '%'
+          else
+            begin
+              Conf.sLabel110.Visible := False;
+              Conf.sGauge_IPSMamePlus.Visible := False;
+            end;
+
+//          gameList := xmlDoc.SelectNodes('/NxGrid/Row');
+//          k2 := -1;
+//          Conf.nxtgrd_ips_mameplus.BeginUpdate;
+//          for iNode := 0 to gameList.Length - 1 do
+//            begin
+//              nodegame := gameList.Item[iNode];
+//              if GetNodeTextStr(nodegame,'GameNameID','') <> '' then
+//                begin
+//                  Application.ProcessMessages;
+//                  k2 := k2 + 1;
+//                  t1 := GetNodeTextStr(nodegame,'GameNameID');
+//                  Conf.nxtgrd_ips_mameplus.AddRow();
+//                  Conf.nxtgrd_ips_mameplus.Cell[0,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'GameNameID');
+//                  Conf.nxtgrd_ips_mameplus.Cell[1,Conf.nxtgrd_ips_mameplus.LastAddedRow].Empty := True;
+//                  Conf.nxtgrd_ips_mameplus.RowHeight[Conf.nxtgrd_ips_mameplus.LastAddedRow] := 16;
+//                  Conf.nxtgrd_ips_mameplus.SelectLastRow();
+//                  if Started = True then
+//                    begin
+//                      Splash_Screen.Progress_Label((100 * k2) div (CountF-1),'Try to Sotring IPS ('+t1+')');
+//                      Splash_Screen.sGauge_Splash.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
+//                    end
+//                  else
+//                    begin
+//                      Conf.sLabel110.Caption := 'Try to Sotring IPS ('+t1+')';
+//                      Conf.sGauge_IPSMamePlus.Progress := (100 * k2) div (CountF-1);
+//                      Conf.sGauge_IPSMamePlus.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
+//                    end;
+//                end
+//              else
+//                begin
+//                  Conf.nxtgrd_ips_mameplus.AddChildRow(Conf.nxtgrd_ips_mameplus.SelectedRow,crlast);
+//                  Conf.nxtgrd_ips_mameplus.Cell[1,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsBoolean := StrToBool(GetNodeTextStr(nodegame,'Apply'));
+//                  if GetNodeTextStr(nodegame,'IPSName','') <> '' then
+//                    Conf.nxtgrd_ips_mameplus.Cell[2,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'IPSName');
+//                  if GetNodeTextStr(nodegame,'Hacker','') <> '' then
+//                    Conf.nxtgrd_ips_mameplus.Cell[3,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Hacker');
+//                  if GetNodeTextStr(nodegame,'Translator','') <> '' then
+//                    Conf.nxtgrd_ips_mameplus.Cell[4,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Translator');
+//                  if GetNodeTextStr(nodegame,'Description','') <> '' then
+//                    Conf.nxtgrd_ips_mameplus.Cell[5,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Description');
+//                  if GetNodeTextStr(nodegame,'Date','') <> '' then
+//                    Conf.nxtgrd_ips_mameplus.Cell[6,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Date');
+//                  if GetNodeTextStr(nodegame,'Image_Path','') <> '' then
+//                    begin
+//                      Conf.nxtgrd_ips_mameplus.Cell[8,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Image_Path');
+//                      Conf.nxtgrd_ips_mameplus.RowHeight[Conf.nxtgrd_ips_mameplus.LastAddedRow] := 80;
+//                    end;
+//                end;
+//            end;
+//          Conf.nxtgrd_ips_mameplus.EndUpdate;
+//          Conf.nxtgrd_ips_mameplus.BestFitColumn(1,bfHeader);
+//        end;
+//      finally
+//        xmlDoc := nil;
+//        if Started = True then
+//          Splash_Screen.sGauge_Splash.Suffix := '%'
+//        else
+//          begin
+//            Conf.sLabel110.Visible := False;
+//            Conf.sGauge_IPSMamePlus.Visible := False;
+//          end;
+//      end;
     end
   else
     begin
       CheckIPSFolder_MamePlus := False;
       CountF := CountFilesOrFolders(IPSPath,'folders');
-      iNode := -1;
+      i := 0;
       if FindFirst(IPSPath+'\*',faDirectory, Rec) = 0 then
         begin
           if NewIPSDir = False then
@@ -656,7 +733,6 @@ begin
                 if (rec.Name <> '.') and (rec.Name <> '..') then
                   begin
                     Conf.nxtgrd_ips_mameplus.AddRow();
-                    iNode := iNode + 1;
                     Conf.nxtgrd_ips_mameplus.Cell[0,Conf.nxtgrd_ips_mameplus.LastAddedRow].AsString := rec.Name;
                     Conf.nxtgrd_ips_mameplus.Cell[1,Conf.nxtgrd_ips_mameplus.LastAddedRow].Empty := True;
                     Conf.nxtgrd_ips_mameplus.RowHeight[Conf.nxtgrd_ips_mameplus.LastAddedRow] := 16;
@@ -722,15 +798,16 @@ begin
                     if FromDatabase = False then
                       begin
                         Conf.sLabel110.Caption := 'Try to Sotring IPS ('+rec.Name+')';
-                        Conf.sGauge_IPSMamePlus.Progress := (100 * iNode) div (CountF - 1);
-                        Conf.sGauge_IPSMamePlus.Suffix := '% ('+IntToStr(iNode)+'/'+IntToStr(CountF - 1)+')';
+                        Conf.sGauge_IPSMamePlus.Progress := (100 * i) div (CountF - 1);
+                        Conf.sGauge_IPSMamePlus.Suffix := '% ('+IntToStr(i)+'/'+IntToStr(CountF - 1)+')';
                       end
                     else
                       begin
-                        Conf.sGauge_MameData.Progress := (100 * iNode) div (CountF - 1);
-                        Conf.sGauge_MameData.Suffix := '% ('+IntToStr(iNode)+'/'+IntToStr(CountF - 1)+')';
+                        Conf.sGauge_MameData.Progress := (100 * i) div (CountF - 1);
+                        Conf.sGauge_MameData.Suffix := '% ('+IntToStr(i)+'/'+IntToStr(CountF - 1)+')';
                         Conf.sLabel109.Caption := rec.Name;
                       end;
+                    i := i + 1;
                     Application.ProcessMessages;
                   end;
               end;
@@ -886,253 +963,6 @@ begin
   FGeneral.Close;
 end;
 
-procedure GetIPS_MameXT;
-var
-  xmlDoc: IXMLDocument;
-  nodegame: IXMLNode;
-  gameList : IXMLNodeList;
-  rec,recdat : TSearchRec;
-  FindDat,DatString,t1,t2: String;
-  k1,k2,iNode,CountF: Integer;
-  CountDat: Byte;
-  DatFile: TextFile;
-  CheckIPSFolder_MameXT: Boolean;
-begin
-  if (FromDatabase = True) and FileExists(Program_Path+'\media\emulators\arcade\mame\database\ips_mamext.xml') then
-    DeleteFile(Program_Path+'\media\emulators\arcade\mame\database\ips_mamext.xml');
-  if (FileExists(Program_Path+'\media\emulators\arcade\mame\database\ips_mamext.xml')) and (NewIPSDir = False) then
-    begin
-      CheckIPSFolder_MameXT := True;
-      try
-        XMLDoc := CreateXMLDoc;
-        try
-          if Started = True then
-            begin
-              Splash_Screen.sLabel1.Caption := 'Found IPS Files for MameXT. Try to Sotring (Please Wait...)';
-              Application.ProcessMessages;
-            end
-          else
-            begin
-              IsIPSChecked := true;
-              Conf.sGauge_IPSMameXT.Visible := True;
-              Conf.sLabel111.Visible := True;
-              Conf.sLabel111.Caption := 'Please Wait';
-            end;
-          XMLDoc.PreserveWhiteSpace := True;
-          XMLDoc.Load(Program_Path+'\media\emulators\arcade\mame\database\ips_mamext.xml');
-        finally
-          CountF := CountFilesOrFolders(IPSPath,'folders');
-          SetupIPSMameGrid('MameXT');
-          gameList := xmlDoc.SelectNodes('/NxGrid/Row');
-          k2 := -1;
-          Conf.nxtgrd_ips_mamext.BeginUpdate;
-          for iNode := 0 to gameList.Length - 1 do
-            begin
-              nodegame := gameList.Item[iNode];
-              if GetNodeTextStr(nodegame,'GameNameID','') <> '' then
-                begin
-                  Application.ProcessMessages;
-                  k2 := k2 + 1;
-                  t1 := GetNodeTextStr(nodegame,'GameNameID');
-                  Conf.nxtgrd_ips_mamext.AddRow();
-                  Conf.nxtgrd_ips_mamext.Cell[0,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := GetNodeTextStr(nodegame,'GameNameID');
-                  Conf.nxtgrd_ips_mamext.Cell[1,Conf.nxtgrd_ips_mamext.LastAddedRow].Empty := True;
-                  Conf.nxtgrd_ips_mamext.RowHeight[Conf.nxtgrd_ips_mamext.LastAddedRow] := 16;
-                  Conf.nxtgrd_ips_mamext.SelectLastRow();
-                  if FromArrows_Mamedirs = False then
-                    begin
-                      if Started = True then
-                        begin
-                          Splash_Screen.Progress_Label((100 * k2) div (CountF-1),'Try to Sotring IPS ('+t1+')');
-                          Splash_Screen.sGauge_Splash.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
-                        end
-                      else
-                        begin
-                          Conf.sLabel111.Caption := 'Try to Sotring IPS ('+t1+')';
-                          Conf.sGauge_IPSMameXT.Progress := (100 * k2) div (CountF-1);
-                          Conf.sGauge_IPSMameXT.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
-                        end;
-                    end
-                  else
-                    begin
-                      Conf.sLabel112.Caption := 'Try to Sotring IPS ('+t1+')';
-                      Conf.sGauge_MameChange.Progress := (100 * k2) div (CountF-1);
-                      Conf.sGauge_MameChange.Suffix := '% ('+IntToStr(k2)+'/'+IntToStr(CountF - 1)+')';
-                    end;
-                end
-              else
-                begin
-                  Conf.nxtgrd_ips_mamext.AddChildRow(Conf.nxtgrd_ips_mamext.SelectedRow,crlast);
-                  Conf.nxtgrd_ips_mamext.Cell[1,Conf.nxtgrd_ips_mamext.LastAddedRow].AsBoolean := StrToBool(GetNodeTextStr(nodegame,'Apply'));
-                  if GetNodeTextStr(nodegame,'IPSName','') <> '' then
-                    Conf.nxtgrd_ips_mamext.Cell[2,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := GetNodeTextStr(nodegame,'IPSName');
-                  if GetNodeTextStr(nodegame,'Hacker','') <> '' then
-                    Conf.nxtgrd_ips_mamext.Cell[3,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Hacker');
-                  if GetNodeTextStr(nodegame,'Translator','') <> '' then
-                    Conf.nxtgrd_ips_mamext.Cell[4,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Translator');
-                  if GetNodeTextStr(nodegame,'Description','') <> '' then
-                    Conf.nxtgrd_ips_mamext.Cell[5,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Description');
-                  if GetNodeTextStr(nodegame,'Date','') <> '' then
-                    Conf.nxtgrd_ips_mamext.Cell[6,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Date');
-                  if GetNodeTextStr(nodegame,'Image_Path','') <> '' then
-                    begin
-                      Conf.nxtgrd_ips_mamext.Cell[8,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := GetNodeTextStr(nodegame,'Image_Path');
-                      Conf.nxtgrd_ips_mamext.RowHeight[Conf.nxtgrd_ips_mamext.LastAddedRow] := 80;
-                    end;
-                end;
-            end;
-          Conf.nxtgrd_ips_mamext.EndUpdate;
-          Conf.nxtgrd_ips_mamext.BestFitColumn(1,bfHeader);
-        end;
-      finally
-        xmlDoc := nil;
-        if Started = True then
-          Splash_Screen.sGauge_Splash.Suffix := '%'
-        else
-          begin
-            Conf.sLabel111.Visible := False;
-            Conf.sGauge_IPSMameXT.Visible := False;
-          end;
-      end;
-    end
-  else
-    begin
-      CheckIPSFolder_MameXT := False;
-      CountF := CountFilesOrFolders(IPSPath,'folders');
-      iNode := -1;
-      if SysUtils.FindFirst(IPSPath+'\*',faDirectory, Rec) = 0 then
-        begin
-          if NewIPSDir = False then
-            Screen.Cursor := AniBusy;
-          if FromDatabase = False then
-            begin
-              Conf.sGauge_IPSMameXT.Visible := True;
-              Conf.sLabel111.Visible := True;
-              Conf.sLabel111.Caption := 'Please Wait';
-            end
-          else
-            Conf.sLabel109.Caption := 'Found IPS Files for MamePlus. Now sorted to IPS String (Please Wait)';
-          Application.ProcessMessages;
-          SetupIPSMameGrid('MameXT');
-          repeat
-            Conf.nxtgrd_ips_mamext.BeginUpdate;
-            if  (Rec.Attr and faDirectory) = faDirectory  then
-              begin
-                if (rec.Name <> '.') and (rec.Name <> '..') then
-                  begin
-                    Conf.nxtgrd_ips_mamext.AddRow();
-                    iNode := iNode + 1;
-                    Conf.nxtgrd_ips_mamext.Cell[0,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := rec.Name;
-                    Conf.nxtgrd_ips_mamext.Cell[1,Conf.nxtgrd_ips_mamext.LastAddedRow].Empty := True;
-                    Conf.nxtgrd_ips_mamext.RowHeight[Conf.nxtgrd_ips_mamext.LastAddedRow] := 16;
-                    Conf.nxtgrd_ips_mamext.SelectLastRow();
-                    if FindFirst(IPSPath+'\'+Rec.Name+'\*.*', faAnyFile, recdat) = 0 then
-                      repeat
-                        FindDat := Trim(Copy(recdat.Name,Length(recdat.Name)-3,4));
-                        if FindDat = '.dat' then
-                          begin
-                            Conf.nxtgrd_ips_mamext.AddChildRow(Conf.nxtgrd_ips_mamext.SelectedRow,crlast);
-                            Conf.nxtgrd_ips_mamext.Cell[1,Conf.nxtgrd_ips_mamext.LastAddedRow].AsBoolean := False;
-                            if FileExists(IPSPath+'\'+rec.Name+'\'+Trim(Copy(recdat.Name,0,Length(recdat.Name)-4))+'.png') then
-                              t1 := IPSPath+'\'+rec.Name+'\'+Trim(Copy(recdat.Name,0,Length(recdat.Name)-4))+'.png'
-                            else
-                              t1 := ipsNotFoundImg;
-                            Conf.nxtgrd_ips_mamext.Cell[8,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := t1;
-                            Conf.nxtgrd_ips_mamext.RowHeight[Conf.nxtgrd_ips_mamext.LastAddedRow] := 80;
-                            CountDat := 0;
-                            AssignFile(DatFile,FullPathMame_Exe+'\IPS\'+rec.Name+'\'+recdat.Name);
-                            Reset(DatFile);
-                            while not Eof(DatFile) do
-                              begin
-                                Readln(DatFile,DatString);
-                                k1 := Pos('[',DatString);
-                                k2 := Pos(':',DatString);
-                                if (k1 <> 0) and (k2 = 0) then
-                                  CountDat := CountDat + 1;
-                                if CountDat < 2 then
-                                  begin
-                                    if CountDat = 1 then
-                                      begin
-                                        if (DatString <> '') and (k2 = 0) and (k1 = 0) then
-                                          begin
-                                            if Conf.nxtgrd_ips_mamext.Cell[2,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString <> '' then
-                                              Conf.nxtgrd_ips_mamext.Cell[6,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := DatString
-                                            else
-                                              Conf.nxtgrd_ips_mamext.Cell[2,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := DatString;
-                                            if CheckIPSFolder_MameXT = False then
-                                              CheckIPSFolder_MameXT := True;
-                                          end;
-                                        if k2 <> 0 then
-                                          begin
-                                            t1 := Trim(Copy(DatString,0,k2-1));
-                                            t2 := Trim(Copy(DatString,k2+1,Length(DatString)-k2));
-                                            if t1 = 'Hacker' then
-                                              Conf.nxtgrd_ips_mamext.Cell[3,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := t2
-                                            else if t1 = 'Date' then
-                                              Conf.nxtgrd_ips_mamext.Cell[6,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := t2
-                                            else if t1 = 'Translation' then
-                                              Conf.nxtgrd_ips_mamext.Cell[4,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := t2
-                                            else if t1 = 'Description' then
-                                              Conf.nxtgrd_ips_mamext.Cell[5,Conf.nxtgrd_ips_mamext.LastAddedRow].AsString := t2;
-                                          end;
-                                      end
-                                  end
-                                else
-                                  Break;
-                              end;
-                            CloseFile(DatFile);
-                          end;
-                      until FindNext(recdat) <> 0;
-                    FindClose(recdat);
-                    if FromDatabase = False then
-                      begin
-                        Conf.sLabel111.Caption := 'Try to Sotring IPS ('+rec.Name+')';
-                        Conf.sGauge_IPSMameXT.Progress := (100 * iNode) div (CountF - 1);
-                        Conf.sGauge_IPSMameXT.Suffix := '% ('+IntToStr(iNode)+'/'+IntToStr(CountF - 1)+')';
-                      end
-                    else
-                      begin
-                        Conf.sGauge_MameData.Progress := (100 * iNode) div (CountF - 1);
-                        Conf.sGauge_MameData.Suffix := '% ('+IntToStr(iNode)+'/'+IntToStr(CountF - 1)+')';
-                        Conf.sLabel109.Caption := rec.Name;
-                      end;
-                    Application.ProcessMessages;
-                  end;
-              end;
-          until FindNext(rec) <> 0;
-          if CheckIPSFolder_MameXT = False then
-            begin
-              Conf.nxtgrd_ips_mamext.Columns.Clear;
-              Conf.nxtgrd_ips_mamext.ClearRows;
-              Conf.nxtgrd_ips_mamext.Caption := 'I Have no Data to Show.';
-            end
-          else
-            begin
-              Conf.nxtgrd_ips_mamext.EndUpdate;
-              Conf.nxtgrd_ips_mamext.BestFitColumn(1,bfHeader);
-              if FromDatabase = False then
-                Conf.sLabel111.Caption := 'Saving Changes'
-              else
-                Conf.sGauge_MameData.Suffix := '%';
-            end;
-          Application.ProcessMessages;
-          if CheckIPSFolder_MameXT = True then
-            Conf.nxtgrd_ips_mamext.SaveToXMLFile(Program_Path+'\media\emulators\arcade\mame\database\ips_mamext.xml');
-          FindClose(rec);
-        end;
-      Conf.sLabel111.Visible := False;
-      Conf.sGauge_IPSMameXT.Visible := False;
-      NewIPSDir := False;
-    end;
-  if CheckIPSFolder_MameXT = True then
-    begin
-      Conf.nxtgrd_ips_mamext.BestFitColumn(0,bfBoth);
-      for k1 := 0 to Conf.nxtgrd_ips_mamext.RowCount - 1  do
-        Conf.nxtgrd_ips_mamext.Expanded[k1] := False;
-      Conf.nxtgrd_ips_mamext.SelectFirstRow();
-    end;
-end;
-
 procedure GetMameXT_GamesList;
 var
   GameCount: TextFile;
@@ -1211,8 +1041,8 @@ begin
       if not FileExists(HiScoreFile) then
         Conf.sLabel102.Visible := True;
       Conf.sBitBtn1.Enabled := True;
-      MameXmlUseDoc.DocumentElement.SetAttribute('HiScoreChecked','True');
-      MameXmlUseDoc.Save(MameDatabaseFile,ofIndent);
+      FXml_MameDatabase.Root.WriteAttributeBool('HiScoreChecked',True);
+      FXml_MameDatabase.SaveToFile(MameDatabaseFile);
     end
   else
     begin
@@ -1220,8 +1050,8 @@ begin
       Conf.sEdit12.Text := '';
       Conf.sLabel102.Visible := False;
       Conf.sBitBtn1.Enabled := False;
-      MameXmlUseDoc.DocumentElement.SetAttribute('HiScoreChecked','False');
-      MameXmlUseDoc.Save(MameDatabaseFile,ofIndent);
+      FXml_MameDatabase.Root.WriteAttributeBool('HiScoreChecked',False);
+      FXml_MameDatabase.SaveToFile(MameDatabaseFile);
     end;
 end;
 
@@ -1234,8 +1064,8 @@ begin
       if not FileExists(HiScoreFile) then
         Conf.sLabel103.Visible := True;
       Conf.sBitBtn99.Enabled := True;
-      MameXmlUseDoc.DocumentElement.SetAttribute('HiScoreChecked','True');
-      MameXmlUseDoc.Save(MameDatabaseFile,ofNone);
+      FXml_MameDatabase.Root.WriteAttributeBool('HiScoreChecked',True);
+      FXml_MameDatabase.SaveToFile(MameDatabaseFile);
     end
   else
     begin
@@ -1243,8 +1073,8 @@ begin
       Conf.sEdit16.Text := '';
       Conf.sLabel103.Visible := False;
       Conf.sBitBtn99.Enabled := False;
-      MameXmlUseDoc.DocumentElement.SetAttribute('HiScoreChecked','False');
-      MameXmlUseDoc.Save(MameDatabaseFile,ofNone);
+      FXml_MameDatabase.Root.WriteAttributeBool('HiScoreChecked',False);
+      FXml_MameDatabase.SaveToFile(MameDatabaseFile);
     end;
 end;
 
@@ -1528,7 +1358,7 @@ procedure RunGameCount_PlayTime_MameXT_Memo;
 var
   Comp: TComponent;
 begin
-  MemoEmu_Comp(Conf,2);
+  MemoEmu_Comp(Conf,'MameXT');
   if FromArrows_Mamedirs = False then
     begin
       if FromDatabase = False then
@@ -1574,6 +1404,17 @@ begin
   Conf.sCheckBox130.Checked := False;
   Conf.sCheckBox130.Checked := True;
 end;
+
+procedure Assigned_IPS;
+begin
+  if not Assigned(FXml_IPS) then
+    begin
+      FXml_IPS := TNativeXml.CreateName('MameIps');
+      FXml_IPS.XmlFormat := xfReadable;
+    end;
+end;
+
+/////////////////////////////////////////////////////////////
 
 procedure Show_mame_buildspanel;
 begin

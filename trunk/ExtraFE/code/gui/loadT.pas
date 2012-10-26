@@ -2,10 +2,10 @@ unit loadT;
 
 interface
 uses
-  Classes,SysUtils,Controls,Windows,Forms,Graphics,
+  Classes,SysUtils,Controls,Windows,Forms,Graphics,Dialogs,
   GLKeyboard, GLHUDObjects,GlFilePNG, GLWindowsFont,
-  OmniXML,OmniXMLUtils,
-  mame_xmlext,uMain_ListBox;
+  NativeXml,
+  uMain_ListBox;
 
   procedure Intro(aTime: Double);
   procedure Progress_Bar_Intro(Progresspercent: real);
@@ -14,13 +14,14 @@ uses
 
 var
   Mame_EmulatedRomSets, Mame_FoundRomSets: Integer;
-
   fListBox: TSimpleListBox;
-  GameMan: TStringList;
-  GameYear: TStringList;
-  GameClone: TStringList;  
+  fnonexistFont: TGLWindowsBitmapFont;
+  fexistFont: TGLWindowsBitmapFont;
+  MameTotalRoms: Integer;
 
-    
+  FXml_MameDatabase: TNativeXml;
+  FXml_MameConfig: TNativeXml;
+
 implementation
 uses
   main,used_pro,
@@ -46,7 +47,7 @@ begin
 
   if MainForm.Background_intro.Tag = 1 then
     if MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha < 1.5 then
-      MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha := MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha + 0.3 * dTime
+      MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha := MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha + 0.4 * dTime
     else
       MainForm.Background_intro.Tag := 2;
 
@@ -61,21 +62,28 @@ begin
       MainForm.GLHUDText_Progress_Info.Position.X := 380;
       MainForm.GLHUDText_Progress_Info.Position.Y := CenterY - 30;
       MainForm.GLHUDText_Progress_Info.Text := 'Start';
-
-      Progress_Bar_Intro(30);
       LoadTheMenuTexturesandSounds;
-      Progress_Bar_Intro(0);
       LoadTheMameContent;
+      MainForm.Progress.Visible := False;
+      MainForm.GLHUDText_Progress_Info.Visible := False;
       MainForm.GLHUDText_ExtraFE_Ver.Visible := False;
       MainForm.GLHUDText_confEditor_Ver.Visible := False;
+      AddMaterials(MatLib,'media\extrafe\main_menu\',['background','left_button','left_button_p','right_button','right_button_p'],['background','leftB','leftBP','rightB','rightBP']);
+      AddMaterials(MatLib,'media\extrafe\main_menu\',['mame_cab','zinc_cab','hatari_cab','psxemulator_cab','kigb_cab','widgets'],['mameC','zincC','hatariC','psxemulatorC','kigbC','widgets']);
+      AddMaterials(MatLib,'media\extrafe\main_menu\',['mame_cab_p','zinc_cab_p','hatari_cab_p','psxemulator_cab_p','kigb_cab_p'],['mameCA','ZincCA','hatariCA','psxemulatorCA','kigbCA']);
+      Application.ProcessMessages;
       MainForm.Background_intro.Tag := 3;
+      MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha := 2;
     end;
 
     if MainForm.Background_intro.Tag = 3 then
-      if MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha > 0.3 then
-        MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha := MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha - 0.2 * dTime
+      if MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha > 0.1 then
+        begin
+          MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha := MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha - 0.01; // * dTime
+          Application.ProcessMessages;          
+        end
       else
-        IntroScene := False;
+        MainForm.ActiveScene(1);        
 
 end;
 
@@ -121,11 +129,8 @@ begin
       MainForm.GLHUDText_Progress.Position.X := CenterX-20;
       MainForm.GLHUDText_Progress.Position.Y := CenterY+18;
       MainForm.GLHUDText_Progress.Text := FloatToStr(Progresspercent + 1) + '%';
-      Progress_Bar.Visible := true;
       Application.ProcessMessages;
     end
-   else
-    Progress.Visible := False;
   end
 end;
 
@@ -141,9 +146,16 @@ begin
   MainForm.BackGround.Position.X := CenterX;
   MainForm.BackGround.Position.Y := CenterY;
   MainForm.GLHUDText_Progress_Info.Text := 'Load Menu Materials';
-  Progress_Bar_Intro(50);
-  Progress_Bar_Intro(70);
-  Progress_Bar_Intro(99);
+  Progress_Bar_Intro(10);
+  // load the fonts
+  fexistFont := TGLWindowsBitmapFont.Create(MainForm);
+  fexistFont.Font.Name := 'Norton';
+  fexistFont.Font.Size := 12;
+  
+  fnonexistFont := TGLWindowsBitmapFont.Create(MainForm);
+  fnonexistFont.Font.Name := 'Norton';
+  fnonexistFont.Font.Size := 10;
+  Progress_Bar_Intro(20);
 end;
 
 procedure LoadTheMameContent;
@@ -153,96 +165,82 @@ const
   MameMats: array [1..4] of String = ('front_list','back_list','selection_list','back_mame');
 
 var
-  MameConfig_XML : IXMLDocument;
-  MameDatabase_XML: IXMLDocument;
-  GameList: IXMLNodeList;
-  nodeGame : IXMLNode;  
-  Mame_Exe,MameData,game,romid : string;
+  Mame_Exe,MameData: string;
   count,i: Integer;
-
-  fexistFont: TGLWindowsBitmapFont;
-  fnonexistFont: TGLWindowsBitmapFont;
+  gamename,trimgamename,gamezip,romid : string;
+  node: TXmlNode;
 
 begin
 // Add the materials to library
   MainForm.GLHUDText_Progress_Info.Text := 'Start Mame';
   AddMaterials(MatLib, 'media\emulators\arcade\mame\extrafe\', MameMats, MameMats);
   MainForm.Mame_Background.Material.Assign(MatLib.Materials.GetLibMaterialByName('back_mame').Material);
-  MainForm.Mame_Background.Height := MainForm.GLSceneViewer.Height;
-  MainForm.Mame_Background.Width := MainForm.GLSceneViewer.Width;
-  MainForm.Mame_Background.Position.X := CenterX;
-  MainForm.Mame_Background.Position.Y := CenterY;
+//  MainForm.Mame_Background.Height := MainForm.GLSceneViewer.Height;
+//  MainForm.Mame_Background.Width := MainForm.GLSceneViewer.Width;
+//  MainForm.Mame_Background.Position.X := CenterX;
+//  MainForm.Mame_Background.Position.Y := CenterY;
+  MainForm.GLPlane_Image.Position.X := -100;
+  MainForm.GLPlane_Image.Position.Y := -100;
+  MainForm.GLPlane_Image.Position.Z := 0;
+  Progress_Bar_Intro(30);
+  
 // Manipulate The XML Database
   if FileExists(MameConfig) then
     begin
-      MameConfig_XML := CreateXMLDoc;
-      MameConfig_XML.Load(MameConfig);
-      nodeGame := MameConfig_XML.SelectSingleNode('MamePath');
-      if GetNodeAttrStr(nodeGame,'SelectedMame','') <> '' then
-        Mame_Exe := GetNodeAttrStr(nodegame,'SelectedMame');
+      FXml_MameConfig := TNativeXml.CreateName('MameConfig');
+      FXml_MameConfig.XmlFormat := xfReadable;
+      FXml_MameConfig.LoadFromFile(MameConfig);
+      Mame_Exe := FXml_MameConfig.Root.ReadAttributeString('SelectedMame');
       Mame_Exe := Trim(Copy(Mame_Exe,0,Length(Mame_Exe)-4));
       MameData := MamePathDatabase + Mame_Exe + '_efuse.xml';
-      MameConfig_XML := nil;
       if FileExists(MameData) then
         begin
-          fexistFont := TGLWindowsBitmapFont.Create(MainForm);
-          fexistFont.Font.Name := 'Norton';
-          fexistFont.Font.Size := 12;
-
-          fnonexistFont := TGLWindowsBitmapFont.Create(MainForm);
-          fnonexistFont.Font.Name := 'Norton';
-          fnonexistFont.Font.Size := 12;
-
-
           fListBox := TSimpleListBox.CreateAsChild(MainForm.Dummy_mame,MatLib,fexistFont,fnonexistFont);
-          fListBox.Position.X := 250;
-          fListBox.Position.Y := 340;
+          fListBox.Position.X := 240;
+          fListBox.Position.Y := 310;
           for i := 0 to 5 do
-            fListBox.AddItemTextNum(' ',i,0);
-          GameMan := TStringList.Create;
-          GameYear := TStringList.Create;
-          GameClone := TStringList.Create;
-          MameDatabase_XML := CreateXMLDoc;
-          MainForm.GLHUDText_Progress_Info.Text := 'Load Mame Database';
+            fListBox.AddItemTextNum(' ','',i,0);
+          FXml_MameDatabase := TNativeXml.CreateName('MameInfo');
+          FXml_MameDatabase.XmlFormat := xfReadable;
+          Progress_Bar_Intro(50);
           Application.ProcessMessages;
-          MameDatabase_XML.Load(MameData);
-          nodegame := MameDatabase_XML.SelectSingleNode('MameInfo');
-          Mame_EmulatedRomSets := GetNodeAttrInt(nodeGame,'RomsEmulated');
-          Mame_FoundRomSets := GetNodeAttrInt(nodeGame,'FinalRomsFound');
-          GameList := MameDatabase_XML.SelectNodes('/MameInfo/row');
+          Fxml_MameDatabase.LoadFromFile(MameData);
+          Mame_EmulatedRomSets := Fxml_MameDatabase.Root.ReadAttributeInteger('RomsEmulated');
+          Mame_FoundRomSets := Fxml_MameDatabase.Root.ReadAttributeInteger('FinalRomsFound');
           MainForm.GLHUDText_Progress_Info.Text := 'Get Mame Database';
-          for count := 0 to GameList.Length - 1 do
+          for count := 4 to Fxml_MameDatabase.Root.NodeCount - 1 do
             begin
-              nodeGame := GameList.Item[count];
-              if GetNodeAttrStr(nodeGame,'PathOf','') <> '' then
-                romid := GetNodeAttrStr(nodeGame,'PathOf')
+              node := Fxml_MameDatabase.Root.Nodes[count];
+              gamezip := node.Nodes[2].Value;
+              gamename := node.Nodes[1].Value;
+              if LengthInPixels(gamename) > 320 then
+                trimgamename := SetTextInGivenPixels(320,gamename)
+              else
+                trimgamename := gamename;
+              if node.Nodes[3].Value <> ' ' then
+                romid := node.Nodes[3].Value
               else
                 romid := '0';
-              game := SetCapitalTheFirstLetter(GetNodeAttrStr(nodeGame,'GameName'));
-              fListBox.AddItemTextNum(game,count + 6,StrToInt(romid));
-              if GetNodeAttrStr(nodeGame,'Manufactor','') <> '' then
-                GameMan.Insert(count,GetNodeAttrStr(nodeGame,'Manufactor'));
-              if GetNodeAttrStr(nodeGame,'Year','') <> '' then
-                GameYear.Insert(count,GetNodeAttrStr(nodeGame,'Year'));
-              if GetNodeAttrStr(nodeGame,'CloneOf','') <> '' then
-                GameClone.Insert(count,GetNodeAttrStr(nodeGame,'CloneOf'))
-              else
-                GameClone.Insert(count,'Original');
-              {process_num := (count* 100) / (GameList.Length - 1);
+              fListBox.AddItemTextNum(trimgamename,gamezip,(count + 6) -4,StrToInt(romid));
+            end;
+          Progress_Bar_Intro(80);
+          FXml_MameConfig.Free;
+          Fxml_MameDatabase.Free;
+          fListBox.fItems.Sort(CompareNames);
+          fListBox.Index := 8;
+          MameTotalRoms := Mame_FoundRomSets;
+        end;
+    end;
+end;
+
+end.
+
+
+//diadikasia emfanisis posostieas monadas poli agri omos...
+{              process_num := (count* 100) / (GameList.Length - 1);
               if process_num < 1 then
                 process_str := '0'
               else
                 process_str := FormatFloat('#####',process_num);
               Progress_Bar_Intro(StrToFloat(process_str));}
-            end;
-          MameDatabase_XML := nil;
-          fListBox.fItems.Sort(CompareNames);
-          fListBox.Index := 8;
-        end;
-    end;
-
-end;
-
-
-end.
 

@@ -546,7 +546,7 @@ begin
           res := 'resolution3';
           vie := 'view3';
         end;
-      Comp := FindComponentEx('Conf.MemoEmu1');
+      Comp := FindComponentEx('Conf.MemoEmu_Mame');
       for k := 0 to TMemo(Comp).Lines.Count - 1 do
         begin
           value := TMemo(Comp).Lines.Strings[k];

@@ -439,7 +439,6 @@ end;
 procedure em_psx_sound_ShowDynamicComps;
 var
   i: Integer;
-  Comp: TComponent;
 begin
   for i := 1 to 4 do
     begin
@@ -469,3 +468,4 @@ begin
 end;
 
 end.
+

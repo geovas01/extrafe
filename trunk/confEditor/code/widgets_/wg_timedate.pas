@@ -3,7 +3,7 @@ unit wg_timedate;
 interface
 uses
   SysUtils,Classes,ExtCtrls,Windows,Forms,IdSNTP,IdException,
-  sPanel,sLabel;
+  sPanel,sLabel,AsyncCalls,JvClock;
 
 type
   TMyTimer = class(TTimer)
@@ -18,6 +18,8 @@ type
   procedure Set_ComputersTime;
   procedure AddSelection;
   procedure CreateDateTimePanel(num: Integer);
+  procedure ShowWorldClock;
+  procedure ShowInternetTime;
 
 // Menu actions
   procedure Show_widget_timedate;
@@ -48,13 +50,11 @@ begin
       TImage(Comp).Free;
       freeCompsGetTimeZoneInfo := False;
     end;
-  Conf.grp32.Visible := True;
   Conf.sComboBox42.Visible := True;
 end;
 
 procedure Cancel_Add;
 begin
-  Conf.grp32.Visible := False;
   Conf.sComboBox42.Visible := False;
   Conf.sComboBox42.ItemIndex := -1;
   Conf.sComboBox42.Text := 'Countries...';
@@ -72,7 +72,6 @@ var
   picFlag,picMap: string;
   i: Integer;
   Comp: TComponent;
-  UpDateTime: TTimer;
 begin
   if freeCompsGetTimeZoneInfo = True then
     begin
@@ -97,17 +96,17 @@ begin
             if FileExists(picFlag) then
               begin
                 picFlag := 'media\confeditor\images\timedate\flags\' + text1 + '.gif';
-                Image_Comp(Conf.grp32,picFlag,15,112,100,80,1,'_datetime',True,True)
+                Image_Comp(Conf.Ptimedate_worldclock,picFlag,376,152,100,80,1,'_datetime',True,True)
               end
             else
-              Image_Comp(Conf.grp32,picFlagNone,25,112,80,80,1,'_datetime',True,True);
+              Image_Comp(Conf.Ptimedate_worldclock,picFlagNone,386,152,80,80,1,'_datetime',True,True);
             if FileExists(picMap) then
               begin
                 picMap := 'media\confeditor\images\timedate\maps\' + text1 + '.gif';
-                Image_Comp(Conf.grp32,picMap,120,64,219,161,2,'_datetime',True,True)
+                Image_Comp(Conf.Ptimedate_worldclock,picMap,480,104,225,161,2,'_datetime',True,True)
               end
             else
-              Image_Comp(Conf.grp32,picMapNone,120,64,209,161,2,'_datetime',True,True);
+              Image_Comp(Conf.Ptimedate_worldclock,picMapNone,480,104,215,161,2,'_datetime',True,True);
             freeCompsGetTimeZoneInfo := True;
             i := Pos('(',text2);
             Capital := Trim(Copy(text2,0,i-1));
@@ -128,6 +127,7 @@ begin
     CDPanels := 0;
   CreateDateTimePanel(CDPanels+1);
   Cancel_Add;
+  CDPanels := CDPanels + 1;
 end;
 
 procedure CreateDateTimePanel(num: Integer);
@@ -142,53 +142,63 @@ begin
   Panel_Comp(Conf.ScrollBox2,'_datetime',(num - 1) + 11,8,TTop,70,322);
   Comp := FindComponentEx('Conf.MyPanel_datetime' + IntToStr((num - 1)+11));
   BitBtn_Comp(TsPanel(Comp),(num - 1)+11,'datetime',304,2,16,16,33);
-  AnalogClock_Comp(TsPanel(comp),num-1,5,15,30,30);
+  AnalogClock_Comp(TsPanel(comp),num-1,5,15,30,30,StrToTime(Conf.sButton24.Caption));
 end;
 
 procedure Get_InternetTime;
 var
   SNTPClient: TIdSNTP;
   DT,DateTimeNow: string;
-  SysDateTime: TDateTime;
-  setSystemDateTime: SYSTEMTIME;
-begin
-  SNTPClient := TIdSNTP.Create(nil);
-  try
-    try
-      if Conf.sComboBox77.Text <> 'Time Servers...' then
-        begin
-          SNTPClient.Host := Conf.sComboBox77.Text;
-          SNTPClient.SyncTime;
-          DT := DateTimeToStr(SNTPClient.DateTime);
-          Conf.sLabel130.Caption := 'Time Server: ' + Conf.sComboBox77.Text;
-          Conf.sLabel131.Caption := 'Date Time: '+ DT;
-          DateTimeNow := DateTimeToStr(Now);
-          Conf.sLabel133.Caption := 'Computers Date Time: '+ DateTimeNow;
-          if DateTimeNow <> DT then
-            Conf.sButton25.Visible := True;
-        end
-      else
-        begin
-          Conf.sLabel130.Caption := 'Please select a time server...';
-          Conf.sLabel131.Caption := '';
+//  SysDateTime: TDateTime;
+//  setSystemDateTime: SYSTEMTIME;
+//  aIT: IAsyncCall;
+
+  function ShowInternetTime : Boolean;
+    begin
+      SNTPClient := TIdSNTP.Create(nil);
+      try
+        try
+          if Conf.sComboBox77.Text <> 'Time Servers...' then
+            begin
+              SNTPClient.Host := Conf.sComboBox77.Text;
+              SNTPClient.SyncTime;
+              DT := DateTimeToStr(SNTPClient.DateTime);
+              Conf.sLabel130.Caption := 'Time Server: ' + Conf.sComboBox77.Text;
+              Conf.sLabel131.Caption := 'Date Time: '+ DT;
+              DateTimeNow := DateTimeToStr(Now);
+              Conf.sLabel133.Caption := 'Computers Date Time: '+ DateTimeNow;
+              if DateTimeNow <> DT then
+                Conf.sButton25.Visible := True;
+            end
+          else
+            begin
+              Conf.sLabel130.Caption := 'Please select a time server...';
+              Conf.sLabel131.Caption := '';
+            end;
+        finally
+          SNTPClient.Free;
         end;
-    finally
-      SNTPClient.Free;
-    end;
-  except
-    on E: EIdException do
-      if E.Message = 'Socket Error # 11001'+#13#10+'Host not found.' then
-        begin
-          Conf.sLabel130.Caption := 'Time Server: ' + Conf.sComboBox77.Text +' not accesible';
-          Conf.sLabel131.Caption := '';
-        end;
-  end;
+      except
+        on E: EIdException do
+          if E.Message = 'Socket Error # 11001'+#13#10+'Host not found.' then
+            begin
+              Conf.sLabel130.Caption := 'Time Server: ' + Conf.sComboBox77.Text +' not accesible';
+              Conf.sLabel131.Caption := '';
+            end;
+      end;
 
 //  SysDateTime := Now;
 //  Memo1.Lines.Add(DateTimeToStr(SysDateTime));
 //  DateTimeToSystemTime(SysDateTime,setSystemDateTime);
 //  SetLocalTime(setSystemDateTime);
 //  Memo1.Lines.Add('System Date and Time succesfully added');
+    end;
+begin
+  Conf.sButton25.Visible := False;
+  Conf.sLabel130.Caption := '';
+  Conf.sLabel131.Caption := '';
+  Conf.sLabel133.Caption := '';
+  LocalAsyncExec(@ShowInternetTime,Application.ProcessMessages);
 end;
 
 procedure Set_ComputersTime;
@@ -201,9 +211,36 @@ end;
 procedure TMyTimer.OnMyTimer(Sender: TObject);
 var
   text: string;
+  i: Integer;
+  comp : TComponent;
 begin
   text := TimeToStr(now);
-  Conf.sButton24.Caption := text;
+  if Conf.sButton24.Visible = True then
+    Conf.sButton24.Caption := text;
+
+  if Assigned(MyAnalogClock) then
+    begin
+      for i:= 0 to MyAnalogClock.Tag do
+        begin
+          comp := FindComponentEx('Conf.MyAnalogClock' + IntToStr(i));
+          TJvClock(comp).FixedTime := StrToTime(text);
+          TJvClock(comp).UpdateClock;
+        end;
+    end;
+end;
+
+procedure ShowWorldClock;
+begin
+  Conf.sBitBtn110.Down := True;
+  Conf.sBitBtn111.Down := False;
+  Conf.Ptimedate_worldclock.BringToFront;
+end;
+
+procedure ShowInternetTime;
+begin
+  Conf.sBitBtn111.Down := True;
+  Conf.sBitBtn110.Down := False;
+  Conf.Ptimedate_internettime.BringToFront;
 end;
 
 /////////////////////////////////////////////////////////////////////
@@ -216,6 +253,8 @@ begin
   wg_timedate_ShowDynamicComps;
   ShowButtonDown(10,'WG_TIMEDATE');
   ShowHidePanel(CurrentPanel,'Pwg_timedate');
+  if Conf.sBitBtn111.Down = False then
+    ShowWorldClock;
 end;
 
 procedure wg_timedate_ShowDynamicComps;
