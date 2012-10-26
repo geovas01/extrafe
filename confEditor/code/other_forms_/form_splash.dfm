@@ -44,9 +44,8 @@ object Splash_Screen: TSplash_Screen
   object sLabel1: TsLabel
     Left = 6
     Top = 242
-    Width = 45
+    Width = 5
     Height = 13
-    Caption = 'sLabel1'
     ParentFont = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText

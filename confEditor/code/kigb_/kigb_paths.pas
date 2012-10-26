@@ -611,8 +611,8 @@ var
   text,value: string;
   Comp: TComponent;
 begin
-  MemoEmu_Comp(Conf,2);
-  Comp := FindComponentEx('Conf.MemoEmu2');
+  MemoEmu_Comp(Conf,'Kigb');
+  Comp := FindComponentEx('Conf.MemoEmu_Kigb');
   value := FullPathKigb_Exe + 'kigb.cfg';
   AssignFile(KigbCfgFile,value);
   Reset(KigbCfgFile);

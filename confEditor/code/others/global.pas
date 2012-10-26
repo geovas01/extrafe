@@ -13,6 +13,7 @@ uses
   //Configures keys global to Extrafe
   procedure CheckForHittingKey;
   procedure RestoreTheOriginalColor;
+  procedure ProgressTgauge(Position: Int64);
 
 var
   CheckedTimes: Integer;
@@ -21,10 +22,10 @@ var
 implementation
 
 uses
-  main,menu,FunctionX,
+  main,menu,FunctionX,form_splash,
   mame_dirs,mame_graphics,mame_database,mame_builds,
   zinc_paths,
-  hatari_paths,hatari_roms,hatari_joy,
+  hatari_paths,hatari_roms,hatari_joy,hatari_database,
   psx_paths,
   kigb_paths;
 
@@ -202,6 +203,35 @@ begin
           TsPanel(component).Color := clBtnFace;
         end;
     end;
+end;
+
+procedure ProgressTgauge(Position: Int64);
+begin
+  if FFileSize > 0 then
+    if progressComesFrom = 'Zinc_start' then
+      Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Loading Zinc Database...')
+    else if progressComesFrom = 'Mame_start' then
+      Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Loading Mame Database...')
+    else if progressComesFrom = 'Hatari_Database' then
+      begin
+        Conf.sGauge_HatariData.Progress := Round(position / FFileSize) * 100;
+        Application.ProcessMessages;
+      end
+    else if progressComesFrom = 'Mame_database' then
+      begin
+        Conf.sGauge_MameData.Progress := Round(position / FFileSize) * 100;
+        Application.ProcessMessages;
+      end
+    else if progressComesFrom = 'Mame_dirs' then
+      begin
+        Conf.sGauge_MameChange.Progress := Round(position / FFileSize) * 100;
+        Application.ProcessMessages;
+      end
+    else if progressComesFrom = 'Ips_Start' then
+      begin
+        Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Found IPS Files. Try to Sotring (Please Wait...)');
+        Application.ProcessMessages;
+      end;  
 end;
 
 end.

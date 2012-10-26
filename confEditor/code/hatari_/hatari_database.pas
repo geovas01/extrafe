@@ -2,8 +2,9 @@ unit hatari_database;
 
 interface
 uses
-  SysUtils,Classes,ExtCtrls,OmniXML,OmniXMLUtils,OmniXMLProperties,hatari_xmlext,
-  Forms,NxColumns,NxColumnClasses,NxCustomGridControl,StdCtrls;
+  SysUtils,Classes,ExtCtrls,Forms,StdCtrls,
+  NxColumns,NxColumnClasses,NxCustomGridControl,
+  NativeXml;
 
   procedure SetHatari_DatabasefromHatariIni;
 
@@ -29,12 +30,7 @@ uses
   hatari_roms,hatari_screen,hatari_joy,hatari_paths,hatari_system;
 
 var
-  HatariData_XmlDoc: IXMLDocument;
-//  HatariData_Xml: TData_Games;
-//  RowGame: TRowHatari_Game;
-  node_gameHatari: IXMLNode;
-  gameList_Hatari : IXMLNodeList;
-  inode_Hatari: Integer;
+  FXml_Hatari: TNativeXml;
 
 procedure SetHatari_DatabasefromHatariIni;
 begin
@@ -115,68 +111,75 @@ end;
 
 procedure LoadSingleGames_Database;
 var
-  DName,MemoText: string;
+  F: TFileStream;
+  i,totalRows: Integer;
+  node : Txmlnode;
 begin
-  DName := DatabasesPaths('single');
-  HatariData_XmlDoc := CreateXMLDoc;
-  FGa := TGauseStream.Create;
-    try
-      HatariData_XmlDoc.PreserveWhiteSpace := True;
-      FGa.LoadFromFile(DName);
-      FGa.Gause := Conf.sGauge_HatariData;
-      HatariData_XmlDoc.LoadFromStream(FGa);
-      SetTheGrid_HatariData('single');
-      gameList_Hatari := HatariData_XmlDoc.SelectNodes('/NxGrid/Row');
-      Conf.nxtgrd_hatari.AddRow(gameList_Hatari.Length);
-      Conf.nxtgrd_hatari.BeginUpdate;
-      for inode_Hatari := 0 to gameList_Hatari.Length - 1 do
-        begin
-          node_gameHatari := gameList_Hatari.Item[inode_Hatari];
-          Conf.nxtgrd_hatari.Cell[1,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'GameName');
-          Conf.nxtgrd_hatari.Cell[2,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'Year');
-          Conf.nxtgrd_hatari.Cell[3,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'Publisher');
-          Conf.nxtgrd_hatari.Cell[4,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'Genres');
-          Conf.nxtgrd_hatari.Cell[5,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'GenresType');
-          Conf.nxtgrd_hatari.Cell[6,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'Musician');
-          Conf.nxtgrd_hatari.Cell[7,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'MusicianNickName');
-          Conf.nxtgrd_hatari.Cell[8,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'GameDifficulty');
-          Conf.nxtgrd_hatari.Cell[9,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'CrackerName');
-          Conf.nxtgrd_hatari.Cell[10,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'DateLastPlayed');
-          Conf.nxtgrd_hatari.Cell[11,inode_Hatari].AsInteger := GetNodeTextInt(node_gameHatari,'TimesPlayed');
-          if GetNodeTextStr(node_gameHatari,'IsGameExists','') = 'True' then
-            Conf.nxtgrd_hatari.Cell[12,inode_Hatari].AsInteger := 32
-          else
-            Conf.nxtgrd_hatari.Cell[12,inode_Hatari].AsInteger := 33;
-          if GetNodeTextStr(node_gameHatari,'Favorite','') = 'True' then
-            Conf.nxtgrd_hatari.Cell[13,inode_Hatari].AsInteger := 32
-          else
-            Conf.nxtgrd_hatari.Cell[13,inode_Hatari].AsInteger := 33;
-          Conf.nxtgrd_hatari.Cell[14,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'ProgeammerName');
-          Conf.nxtgrd_hatari.Cell[15,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'Language');
-          Conf.nxtgrd_hatari.Cell[16,inode_Hatari].AsInteger := GetNodeTextInt(node_gameHatari,'RatingGame');
-          Conf.nxtgrd_hatari.Cell[17,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'PALorNTSC');
-          if GetNodeTextStr(node_gameHatari,'NeedsTrueDriveEmu','') = 'True' then
-            Conf.nxtgrd_hatari.Cell[18,inode_Hatari].AsInteger := 32
-          else
-            Conf.nxtgrd_hatari.Cell[18,inode_Hatari].AsInteger := 33;
-          Conf.nxtgrd_hatari.Cell[19,inode_Hatari].AsInteger := GetNodeTextInt(node_gameHatari,'HowManyDisks');
-          Conf.nxtgrd_hatari.Cell[20,inode_Hatari].AsInteger := GetNodeTextInt(node_gameHatari,'MaxPlayers');
-          if GetNodeTextStr(node_gameHatari,'SimultaneouslyPlayers','') = 'True' then
-            Conf.nxtgrd_hatari.Cell[21,inode_Hatari].AsInteger := 32
-          else
-            Conf.nxtgrd_hatari.Cell[21,inode_Hatari].AsInteger := 33;
-          if GetNodeTextStr(node_gameHatari,'Adult','') = 'True' then
-            Conf.nxtgrd_hatari.Cell[22,inode_Hatari].AsInteger := 32
-          else
-            Conf.nxtgrd_hatari.Cell[22,inode_Hatari].AsInteger := 33;
-          MemoText := GetNodeTextStr(node_gameHatari,'SpecialText');
-          Conf.nxtgrd_hatari.Cell[23,inode_Hatari].AsString := MemoText;
-          Conf.nxtgrd_hatari.Cell[24,inode_Hatari].AsString := GetNodeTextStr(node_gameHatari,'ControlType');
-        end;
-      Conf.nxtgrd_hatari.EndUpdate;
-    finally
-      Conf.nxtgrd_hatari.Height := 407;
+  FFileName := DatabasesPaths('single');
+  FXml_Hatari := TNativeXml.CreateName('hatari');
+  FXml_Hatari.XmlFormat := xfReadable;
+  FXml_Hatari.OnProgress := Conf.XMLProgress;
+  progressComesFrom := 'Hatari_Database';
+  F := TFileStream.Create(FFileName, fmOpenRead or fmShareDenyWrite);
+  try
+    FFileSize := F.Size;
+    if IsBinary(F) then
+      FXml_Hatari.LoadFromBinaryStream(F)
+    else
+      FXml_Hatari.LoadFromStream(F);
+  finally
+    F.Free;
+  end;
+  SetTheGrid_HatariData('single');
+  totalRows := FXml_Hatari.Root.AttributeByName['totalRows'].ValueAsInteger;
+  Conf.nxtgrd_hatari.AddRow(totalRows);
+  for i := 3 to fxml_hatari.Root.NodeCount - 1 do
+    begin
+      node := FXml_Hatari.Root.Nodes[i];
+      Conf.nxtgrd_hatari.Cell[1,i-3].AsString := node.Nodes[1].Value;
+      Conf.nxtgrd_hatari.Cell[2,i-3].AsString := node.Nodes[3].Value;
+      Conf.nxtgrd_hatari.Cell[3,i-3].AsString := node.Nodes[4].Value;
+      Conf.nxtgrd_hatari.Cell[4,i-3].AsString := node.Nodes[5].Value;
+      Conf.nxtgrd_hatari.Cell[5,i-3].AsString := node.Nodes[6].Value;
+      Conf.nxtgrd_hatari.Cell[6,i-3].AsString := node.Nodes[9].Value;
+      Conf.nxtgrd_hatari.Cell[7,i-3].AsString := node.Nodes[10].Value;
+      Conf.nxtgrd_hatari.Cell[7,i-3].AsString := node.Nodes[12].Value;
+      Conf.nxtgrd_hatari.Cell[7,i-3].AsString := node.Nodes[13].Value;
+      Conf.nxtgrd_hatari.Cell[10,i-3].AsString := node.Nodes[15].Value;
+      Conf.nxtgrd_hatari.Cell[11,i-3].AsInteger := node.Nodes[16].ValueAsInteger;
+      if node.Nodes[17].Value = 'True' then
+        Conf.nxtgrd_hatari.Cell[12,i-3].AsInteger := 32
+      else
+        Conf.nxtgrd_hatari.Cell[12,i-3].AsInteger := 33;
+      if node.Nodes[20].Value = 'True' then
+        Conf.nxtgrd_hatari.Cell[13,i-3].AsInteger := 32
+      else
+        Conf.nxtgrd_hatari.Cell[13,i-3].AsInteger := 33;
+      Conf.nxtgrd_hatari.Cell[14,i-3].AsString := node.Nodes[21].Value;
+      Conf.nxtgrd_hatari.Cell[15,i-3].AsString := node.Nodes[22].Value;
+      Conf.nxtgrd_hatari.Cell[16,i-3].AsInteger := node.Nodes[23].ValueAsInteger;
+      Conf.nxtgrd_hatari.Cell[17,i-3].AsString := node.Nodes[24].Value;
+      if node.Nodes[25].Value = 'True' then
+        Conf.nxtgrd_hatari.Cell[18,i-3].AsInteger := 32
+      else
+        Conf.nxtgrd_hatari.Cell[18,i-3].AsInteger := 33;
+      Conf.nxtgrd_hatari.Cell[19,i-3].AsInteger := node.Nodes[26].ValueAsInteger;
+      Conf.nxtgrd_hatari.Cell[20,i-3].AsInteger := node.Nodes[27].ValueAsInteger;
+      if node.Nodes[28].Value = 'True' then
+        Conf.nxtgrd_hatari.Cell[21,i-3].AsInteger := 32
+      else
+        Conf.nxtgrd_hatari.Cell[21,i-3].AsInteger := 33;
+      if node.Nodes[30].Value = 'True' then
+        Conf.nxtgrd_hatari.Cell[22,i-3].AsInteger := 32
+      else
+        Conf.nxtgrd_hatari.Cell[22,i-3].AsInteger := 33;
+      Conf.nxtgrd_hatari.Cell[23,i-3].AsString := node.Nodes[31].Value;
+      Conf.nxtgrd_hatari.Cell[24,i-3].AsString := node.Nodes[32].Value;
+      Conf.sGauge_HatariData.Progress := (100 * i) div (totalRows-1);
+      Application.ProcessMessages;
     end;
+  Conf.nxtgrd_hatari.EndUpdate;
+  Conf.nxtgrd_hatari.Height := 407;
 end;
 
 function DatabasesPaths(DName: string): string;

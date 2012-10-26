@@ -17,15 +17,23 @@ type
 //------------------------------------------------------------------------------
   TSimpleListItem = class
   protected
-    fText: WideString;
+    fGameName: WideString;
+    fZipName: WideString;
+    fManufactorName: WideString;
+    fYear: WideString;
+    fCloneOfName: WideString;
     fNumber: Integer;
     fSelectAlpha: Single;
     fSelected: Boolean;
     fExistRom: Integer;
   public
-    property Text: WideString read fText;
+    property GameName: WideString read fGameName;
     property Number: Integer read fNumber;
     property RomExist: Integer  read fExistRom;
+    property GameZip: WideString read fZipName;
+    property Manufactor: WideString  read fManufactorName;
+    property RYear: WideString read fYear;
+    property CloneOf: WideString  read fCloneOfName;
     Constructor Create(aText: WideString);
   end;
 //------------------------------------------------------------------------------
@@ -34,6 +42,7 @@ type
     fMatLib: TGLMaterialLibrary;
     yFont: TGLCustomBitmapFont;
     nFont: TGLCustomBitmapFont;
+
 
     fHeight: Integer;
     fDeltaHeight: Integer; // for each Item
@@ -61,7 +70,7 @@ type
     function GetIndexBySelection: Integer;
     Function GetIndexByMouse: Integer;
     Function AddItem(aItem: TSimpleListItem): Integer;
-    Function AddItemTextNum(const aText: WideString; aNum,isRomExist: Integer): TSimpleListItem;
+    Function AddItemTextNum(const aGame,aZip: WideString; aNum,isRomExist: Integer): TSimpleListItem;
     procedure DOClickDown;
     procedure DOClickUp;
     procedure DOClickLeft;
@@ -85,12 +94,12 @@ type
 implementation
 uses
   GLCrossPlatform,
-  SysUtils;
+  SysUtils,mame;
 //------------------------------------------------------------------------------
 Constructor TSimpleListItem.Create(aText: WideString);
 begin
   inherited Create;
-  fText := aText;
+  fGameName := aText;
 end;
 //==============================================================================
 Function TSimpleListBox.GetItemByIndex(aIndex: Integer): TSimpleListItem;
@@ -126,9 +135,10 @@ begin
   result := fItems.Add(aItem);
 end;
 //------------------------------------------------------------------------------
-Function TSimpleListBox.AddItemTextNum(const aText: WideString; aNum,isRomExist: integer): TSimpleListItem;
+Function TSimpleListBox.AddItemTextNum(const aGame,aZip: WideString; aNum,isRomExist: integer): TSimpleListItem;
 begin
-  result := TSimpleListItem.Create(aText);
+  Result := TSimpleListItem.Create(aGame);
+  Result.fZipName := aZip;
   Result.fNumber := aNum;
   Result.fExistRom := isRomExist;
   AddItem(result);
@@ -154,13 +164,11 @@ begin
 //  fPanelBack.Position.X := Position.X;
 //  fPanelBack.Position.Y := Position.Y - 10;
   fPanelSelection.Position.X := Position.X;
-  fItemExistText.Position.X := Position.X - 160;
-  fItemNoExistText.Position.X := Position.X - 160;
-//  fItemHudText.Position.X := Position.X - 160;
-
+  fItemExistText.Position.X := Position.X - 172;
+  fItemNoExistText.Position.X := Position.X - 172;
 //  fPanelBack.DoRender(ARci, true, false);
 
-
+  
   for i := 0 to fItems.Count - 1 do
     if(i < fItems.Count)
     and(dY + fDeltaHeight * i <  fHeight + fDeltaHeight / 2)
@@ -175,9 +183,9 @@ begin
         fItemNoExistText.Position.Y := Position.Y + dY + fDeltaHeight * i;
 
       if item.fExistRom <> 0 then
-        fItemExistText.Text := item.fText
+        fItemExistText.Text := item.fGameName
       else
-        fItemNoExistText.Text := item.fText;
+        fItemNoExistText.Text := item.fGameName;
       with fPanelSelection.Material.GetActualPrimaryMaterial do
         FrontProperties.Diffuse.Alpha := item.fSelectAlpha;
       fPanelSelection.DoRender(ARci, true, false);
@@ -196,21 +204,13 @@ var
   i: Integer;
 begin
   dy := (fMousePosition[1] - (Position.Y - fHeight));
-//  dy := fKeyPosition -(Position.Y - fHeight);
   if dY < 0 then
     dY := 0;
   if dY > fHeight * 2 then
     dY := fHeight * 2;
 
-//  if fItems.Count >= fMaxVisibleCount then
-//    fYPosition := fYPosition + progressTime.deltaTime * 3 * (-dY * (fItems.Count - fMaxVisibleCount) * fDeltaheight / fHeight / 2 - fYPosition)
-//  else
-//    fYPosition := 0;
-
-
   if fItems.Count >= fMaxVisibleCount then
     fYPosition := fYPosition
-//    fYPosition := fYPosition + progressTime.deltaTime * (-dY * (fItems.Count - fMaxVisibleCount) * fDeltaheight / fHeight / 2 - fYPosition)
   else
     fYPosition := 0;
 
@@ -247,7 +247,7 @@ begin
   fItemExistText.Layout := tlCenter;
 
   fItemNoExistText := TGLHUDText.CreateAsChild(fMainDummy);
-  fItemNoExistText.BitmapFont := nFont;
+  fItemNoExistText.BitmapFont := yFont;
   fItemNoExistText.ModulateColor.AsWinColor := clRed;
   fItemNoExistText.Layout := tlCenter;
 
@@ -255,9 +255,8 @@ begin
   fPanelFront := AddPanel('front_list');
   fPanelSelection := AddPanel('selection_list');
   fPanelSelection.Height := 30;
-  fPanelSelection.Width := 340;
+  fPanelSelection.Width := 380;
 
-  fItemExistText.MoveLast;
 end;
 //------------------------------------------------------------------------------
 Function TSimpleListBox.GetItemsCount: integer;
@@ -322,6 +321,7 @@ begin
       fYPosition := fYPosition - 30;
       sItem := sItem + 1;
       Sleep(sleeping);
+      mame.IsImgShowed := False;
     end;
 end;
 
@@ -333,11 +333,13 @@ begin
       fYPosition := fYPosition + (30 * 16);
       sItem := sItem - 16;
       Sleep(sleeping);
+      mame.IsImgShowed := False;
     end
   else
     begin
       fYPosition := 0;
       sItem := 6;
+      mame.IsImgShowed := False;
     end;
 end;
 
@@ -349,11 +351,13 @@ begin
       fYPosition := fYPosition - (30 * 16);
       sItem := sItem + 16;
       Sleep(sleeping);
+      mame.IsImgShowed := False;
     end
   else
     begin
       fYPosition := -(30 * (fItems.Count - 7));
       sItem := fItems.Count - 1;
+      mame.IsImgShowed := False;
     end;
 end;
 
@@ -365,6 +369,7 @@ begin
       fYPosition := fYPosition + 30;
       sItem := sItem - 1;
       Sleep(sleeping);
+      mame.IsImgShowed := False;
     end;
 end;
 
@@ -381,9 +386,9 @@ begin
   sItem1 := TSimpleListItem(Item1);
   sItem2 := TSimpleListItem(Item2);
 
-  if   sItem1.Text > sItem2.Text
+  if   sItem1.GameName > sItem2.GameName
   then Result := 1
-  else if sItem1.Text = sItem2.Text
+  else if sItem1.GameName = sItem2.GameName
   then Result := 0
   else Result := -1;
 end;

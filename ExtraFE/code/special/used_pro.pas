@@ -2,7 +2,7 @@ unit used_pro;
 
 interface
   uses
-    main,windows,Classes,SysUtils,
+    main,windows,Classes,SysUtils,ShellAPI,Graphics,loadT,
     GLmaterial,GLTexture,GlCompositeImage;
 
   procedure SetScreen(bpp:byte; width,height,FR:integer);
@@ -10,6 +10,10 @@ interface
   function VersionInfo(filename,savetofile : String): string;
   function GetVersionInfo(sFileName:string): string;
   function SetCapitalTheFirstLetter(Word : String) : string;
+  function ShellExecAndWait(const FileName, Parameters, dir: string;
+  CmdShow: Integer): Boolean;
+  function LengthInPixels(const word: string): Integer;
+  function SetTextInGivenPixels(const wLength: Integer; const wWord: string) : string;
 
   function AddMaterial(aMatLib: TGlMaterialLibrary; aFileName, aMaterialName: string): TGlLibMaterial;
   Procedure AddMaterials(aMatLib: TGlMaterialLibrary; aFolder: String; aFiles: array of String; aNames: array of String);
@@ -160,5 +164,58 @@ begin
       AddMaterial(aMatLib, aFolder + aFiles[i], aNames[i]);
 end;
 
+function ShellExecAndWait(const FileName, Parameters, dir: string;
+  CmdShow: Integer): Boolean;
+var
+  Sei: TShellExecuteInfo;
+begin
+  FillChar(Sei, SizeOf(Sei), #0);
+  Sei.cbSize := SizeOf(Sei);
+  Sei.fMask := SEE_MASK_DOENVSUBST or SEE_MASK_FLAG_NO_UI or SEE_MASK_NOCLOSEPROCESS;
+  Sei.lpFile := PChar(FileName);
+  Sei.lpParameters := PChar(Parameters);
+  Sei.lpdirectory := PChar(dir);
+  Sei.nShow := CmdShow;
+  Result := ShellExecuteEx(@Sei);
+  if Result then
+  begin
+    WaitForInputIdle(Sei.hProcess, INFINITE);
+    WaitForSingleObject(Sei.hProcess, INFINITE);
+    CloseHandle(Sei.hProcess);
+  end;
+end;
+
+function LengthInPixels(const word: string): Integer;
+var
+  aB: TBitmap;
+  aF: TFont;
+begin
+  aF := TFont.Create;
+  aF.Name := loadT.fexistFont.Font.Name;
+  aF.Size := loadT.fexistFont.Font.Size;
+  aB := TBitmap.Create;
+  aB.Canvas.Font := aF;
+  Result := aB.Canvas.TextWidth(word);
+  aB.Free;
+  aF.Free;
+end;
+
+function SetTextInGivenPixels(const wLength: Integer; const wWord: string) : string;
+var
+  aText: string;
+  i: Integer;
+begin
+  i := 40;
+  for i := 40 downto 0 do
+    begin
+      aText := Trim(Copy(wWord,0,i));
+      aText := aText + '...';
+      if LengthInPixels(aText) < wLength then
+        begin
+          Result := aText;
+          Break;
+        end;
+    end;
+end;
+
 end.
- 

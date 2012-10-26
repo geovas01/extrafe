@@ -1,8 +1,9 @@
 unit exf_config;
 
 interface
+
 uses
-  SysUtils,OmniXML,OmniXMLUtils,Classes,ExtCtrls;
+  SysUtils,Classes,ExtCtrls;
 
 // Menu actions
   procedure Show_ExtraFe_configurationpanel;

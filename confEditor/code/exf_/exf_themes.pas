@@ -3,7 +3,7 @@ unit exf_themes;
 interface
 
 uses
-  SysUtils,OmniXML,OmniXMLUtils,Classes,ExtCtrls;
+  SysUtils,Classes,ExtCtrls;
 
 // Menu actions
   procedure Show_ExtraFe_themespanel;

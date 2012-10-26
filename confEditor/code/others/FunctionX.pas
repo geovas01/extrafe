@@ -2,8 +2,8 @@ unit functionX;
 
 interface
 uses
-  Windows, SysUtils, Classes, Controls, Forms, ComObj, Winsock, Math,
-  ShellAPI,sGauge,WinInet;
+  Windows, SysUtils, Classes, Controls, Forms, ComObj,
+  Winsock, Math,ShellAPI,sGauge,WinInet;
 
 type
   TGauseStream = class(TMemoryStream)
@@ -35,7 +35,7 @@ function ShellExecAndWait(const FileName, Parameters, dir: string;
 //function PortUDP_IsOpen(dwPort : Word; ipAddressStr: AnsiString) : boolean;
 function GetCharFromVirtualKey(Key: Word): string;
 function IsConnectedToInternet:Boolean;
-
+function IsBinary(S: TStream): boolean;
 
 const
   InfoNum = 10;
@@ -248,7 +248,6 @@ begin
         0, nil, PChar(_dirName), start, procInfo) then
         begin
           Application.ProcessMessages;
-          Screen.Cursor := AniBusy;
           SetPriorityClass(procInfo.hProcess, Idle_Priority_Class);
           WaitForSingleObject(procInfo.hProcess, Infinite);
           GetExitCodeProcess(procInfo.hProcess, return);
@@ -277,7 +276,6 @@ begin
       raise;
     end;
   finally
-
   end;
 end;
 
@@ -493,5 +491,16 @@ begin
     Result := False;
 //    ShowMessage('Not Connected. Try to connect and risk of being prompted to dial into another Internet Service Provider.');
 end;
+
+function IsBinary(S: TStream): boolean;
+var
+  Cookie: array[0..3] of AnsiChar;
+begin
+  S.Position := 0;
+  S.Read(Cookie, 4);
+  Result := (Cookie = '$BXM');
+  S.Position := 0;
+end;
+
 
 end.

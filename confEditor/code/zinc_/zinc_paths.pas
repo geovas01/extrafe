@@ -2,8 +2,7 @@ unit zinc_paths;
 
 interface
 uses
-  SysUtils,FileCtrl,Classes,global,Forms,IniFiles,ExtCtrls,
-  zinc_xmlext;
+  SysUtils,FileCtrl,Classes,global,Forms,IniFiles,ExtCtrls;
 
   procedure SetZinc_PathsFromZincIni;
   procedure SaveZinc_PathsAtExit;

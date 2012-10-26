@@ -3,8 +3,11 @@ unit mame_dirs;
 interface
 
 uses
-  SysUtils,StdCtrls,FunctionX,ShellAPI,Classes,sEdit,Types,ExtCtrls,
-  Graphics,Controls,OmniXML,OmniXMLUtils,FileCtrl,Forms,Windows;
+  SysUtils,StdCtrls,ShellAPI,Classes,Types,ExtCtrls,Graphics,Controls,
+  FileCtrl,Forms,Windows,
+  FunctionX,
+  sEdit,
+  NativeXml;
 
   procedure SetMame_DirsFromMameIni;
   procedure SaveMame_DirsAtExit;
@@ -21,6 +24,7 @@ uses
   procedure SelectMameUp;
   procedure SelectMameDown;
   procedure SearchForSelectedMame(num: Integer);
+  function NumOfSelectedMame(MameName: string) : Integer;
   procedure CheckWin64ForListBox(num:ShortInt);
   procedure ListBoxOfSetupedMames(Line:Integer;Position: TRect);
   procedure ShowOnlySetupedMameBuilds;
@@ -38,6 +42,8 @@ uses
 
   procedure InitGlobal_MameMemo_ForMameIni;
 
+  procedure Assigned_MameConfiguration;
+
 // Menu actions
   procedure Show_mame_dirspanel;
   procedure em_mame_dirs_ShowDynamicComps;
@@ -52,6 +58,10 @@ var
   FromMame_DirsToFindDirs,ArrowClick,FromArrows_Mamedirs,CreateNewMame: Boolean;
   NewRomDirectory: String;
   SetupedMame: array [0..5] of string;
+  FXml_MameConfing,FXml_MameDatabase: TNativeXml;
+  MameConfigFile,MameDatabaseFile,Mame_Exe,FullPathMame_Exe: String;
+  SelectedMame: Shortint;
+  FromDatabase: Boolean;
 
 implementation
 
@@ -60,8 +70,8 @@ uses
   mame_graphics,mame_sound,mame_others,mame_builds,mame_database;
 
 var
-  Inode_Dirs: Integer;
-  OldDir: String;
+  node: TXmlNode;
+  OldDir,NewDir: String;
 
 procedure RightPageDirs;
 begin
@@ -161,80 +171,61 @@ end;
 
 procedure SearchForSelectedMame(num: Integer);
 var
-  MameName,MamePath: string;
+  node: TXmlNode;
+  i: Integer;
+  MamePath: string;
   FindMame: Boolean;
 begin
-  MameName := '';
-  MamePath := '';
   FindMame := False;
-  if Assigned(MameXMLConfig) then
-    MameXMLConfig.Clear;
-  gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
-  for Inode_Dirs := 0 to gameList.Length - 1 do
-  begin
-    nodegame := gameList.Item[Inode_dirs];
-    RowDir := MameXMLConfig.RowsDir.AddRowDir;
-    RowDir.MameName := GetNodeAttrStr(nodegame,'MameName');
-    RowDir.MamePath := GetNodeAttrStr(nodegame,'MamePath');
-    RowDir.Selected := GetNodeAttrInt(nodegame,'Selected');
-    RowDir.Cabinets := GetNodeAttrStr(nodegame,'Cabinets');
-    RowDir.Flyers := GetNodeAttrStr(nodegame,'Flyers');
-    RowDir.Marquees := GetNodeAttrStr(nodegame,'Marquess');
-    RowDir.Control_Panels := GetNodeAttrStr(nodegame,'Control_Panels');
-    RowDir.PCBs := GetNodeAttrStr(nodegame,'Pcbs');
-    RowDir.Artwork_Preview := GetNodeAttrStr(nodegame,'Artwork_Preview');
-    RowDir.Titles := GetNodeAttrStr(nodegame,'Titles');
-    RowDir.Select := GetNodeAttrStr(nodegame,'Select');
-    RowDir.Scores := GetNodeAttrStr(nodegame,'Scores');
-    RowDir.Bosses := GetNodeAttrStr(nodegame,'Bosses');
-    if IsWindows64 = true then
+  with FXml_MameConfing.Root do
+    for i:= 0 to NodeCount - 1 do
       begin
-        if GetNodeAttrStr(nodegame,'MameName') = conf.sCheckListBox1.Items[num] then
-          begin
-            MameName := GetNodeAttrStr(nodegame,'MameName');
-            Mame_Exe := MameName;
-            MamePath := GetNodeAttrStr(nodegame,'MamePath');
-            FindMame := True;
-          end
-        else
-          if FindMame = False then
-            Mame_Exe := '';
-      end
-     else
-      begin
-        if GetNodeAttrStr(nodegame,'MameName') = conf.sCheckListBox1.Items[num] then
-          begin
-            MameName := GetNodeAttrStr(nodegame,'MameName');
-            Mame_Exe := MameName;
-            MamePath := GetNodeAttrStr(nodegame,'MamePath');
-            FindMame := True;
-          end
-        else
-          if FindMame = False then
-            Mame_Exe := '';
+        node := FXml_MameConfing.Root.Nodes[i];
+        if node.Name = 'rowDir' then
+          if conf.sCheckListBox1.Items.Strings[num] = node.ReadAttributeString('MameName') then
+            begin
+              FindMame := True;
+              Mame_Exe := node.ReadAttributeString('MameName');
+              MamePath := node.ReadAttributeString('MamePath');
+              FXml_MameConfing.Root.WriteAttributeString('SelectedMame',Mame_Exe);
+              FXml_MameConfing.Root.WriteAttributeString('FullPathOfSelectedMame',MamePath);
+              FXml_MameConfing.Root.WriteAttributeInteger('Selected',NumOfSelectedMame(Mame_Exe));
+              FXml_MameConfing.SaveToFile(MameConfigFile);
+              Conf.sEdit64.Text := MamePath+Mame_exe;
+            end;
       end;
-  end;
-  gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowpath');
-  for Inode_Dirs := 0 to gameList.Length - 1 do
+  if FindMame = False then
+    Mame_Exe := '';
+end;
+
+function NumOfSelectedMame(MameName: string) : Integer;
+begin
+  if MameName = 'mame.exe' then
+    Result := 0
+  else if MameName = 'mamepp.exe' then
+    Result := 1
+  else if MameName = 'mame64.exe' then
+    Result := 2
+  else if MameName = 'mamep' then
     begin
-      nodegame := gameList.Item[Inode_Dirs];
-      RowPath := MameXMLConfig.RowsPath.AddPath;
-      RowPath.MameName := GetNodeAttrStr(nodegame,'MameName');
-      RowPath.PathId := GetNodeAttrInt(nodegame,'PathId');
-      RowPath.RomPath := GetNodeAttrStr(nodegame,'RomPath');
-      RowPath.RomsFound := GetNodeAttrInt(nodegame,'RomsFound');
-    end;
-  MameXMLConfig.Condition := 'Active';
-  MameXMLConfig.SelectedMame := Mame_Exe;
-  MameXMLConfig.FullPathOfSelectedMame := MamePath;
-  MameXMLConfig.Selected := num;
-  MameXMLConfig.SaveToFile(MameConfigFile,ofIndent);
-  Conf.sEdit64.Text := MamePath+Mame_exe;
+      if IsWindows64 = True then
+        Result := 3
+      else
+        Result := 2
+      end
+  else if MameName = 'mamepuiXT_x86' then
+    begin
+      if IsWindows64 = True then
+        Result := 4
+      else
+        Result := 3
+    end
+  else if MameName = 'mamepuiXT_x64' then
+    Result := 5;
 end;
 
 procedure GetMame;
 begin
-  Mame_Exe := Conf.sEdit64.Text;
   gFindFiles := 'mame';
   Conf.Find_Files.InitialDir := Program_Path+'emulators';
   if IsWindows64 = true then
@@ -253,72 +244,71 @@ end;
 
 procedure CheckForMameAndCreateIni;
 var
-  eraseolddirs,foundMame: Boolean;
-  li,lo: Integer;
+  option,foundMame: Boolean;
+  i: Integer;
+  InMessageBox,NewMameExe,NewMameFullPath: String;
+
+  procedure addNewMame(clear: Boolean);
+    begin
+      if clear = False then
+        SysUtils.DeleteFile(MameDatabaseFile);
+      Mame_Exe := ExtractFileName(Conf.Find_Files.FileName);
+      FullPathMame_Exe := ExtractFilePath(Conf.Find_Files.FileName);
+      ShellExecute(0,'open',PChar(FullPathMame_Exe+Mame_Exe),PChar('-createconfig'),nil,0);
+      Conf.sEdit64.Text := FullPathMame_Exe + Mame_Exe;
+      CreateNewMame := True;
+    end;
+
 Begin
-  li := 1;
-  lo := 1;
+  option := False;
   CreateNewMame := False;
-  eraseolddirs := False;
   foundMame := False;
   if (Conf.Find_Files.FileName <> '') and (Conf.Find_Files.FileName <> FullPathMame_Exe+Mame_Exe) then
     begin
-      gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
-      for Inode_Dirs := 0 to gameList.Length - 1 do
+      if not Assigned(FXml_MameConfing) then
         begin
-          nodegame := gameList.Item[Inode_Dirs];
-          if ExtractFileName(Conf.Find_Files.FileName) = GetNodeAttrStr(nodegame,'MameName') then
-            foundMame := True;
+          FXml_MameConfing := TNativeXml.CreateName('MameConfig');
+          FXml_MameConfing.XmlFormat := xfReadable;
         end;
-      if foundMame = False then
+    end
+  else
+    begin
+      with FXml_MameDatabase.Root do
+        for i := 0 to NodeCount - 1 do
+          begin
+            node := FXml_MameDatabase.Root.Nodes[i];
+            if node.ReadAttributeString('MameName') = ExtractFileName(Conf.Find_Files.FileName) then
+              begin
+                foundMame := True;
+                Break;
+              end;
+          end;
+    end;
+  if foundMame = False then
+    begin
+      Mame_Exe := ExtractFileName(Conf.Find_Files.FileName);
+      FullPathMame_Exe := ExtractFilePath(Conf.Find_Files.FileName);
+      ShellExecute(0,'open',PChar(FullPathMame_Exe+Mame_Exe),PChar('-createconfig'),nil,0);
+      Conf.sEdit64.Text := FullPathMame_Exe + Mame_Exe;
+      CreateNewMame := True;
+    end
+  else
+    begin
+      NewMameExe := ExtractFileName(Conf.Find_Files.FileName);
+      NewMameFullPath := ExtractFilePath(Conf.Find_Files.FileName);
+      if NewMameExe = Mame_Exe then
         begin
-          Mame_Exe := ExtractFileName(Conf.Find_Files.FileName);
-          FullPathMame_Exe := ExtractFilePath(Conf.Find_Files.FileName);
-          ShellExecute(0,'open',PChar(FullPathMame_Exe+Mame_Exe),PChar('-createconfig'),nil,0);
-          Conf.sEdit64.Text := FullPathMame_Exe + Mame_Exe;
-          CreateNewMame := True;
-        end
-      else
-        begin
-          if MessageBox(0,'There is an already installed mame version." & vbcrlf & "Do you want to replace it with the new one?','Replace Mame',+mb_YesNo +mb_ICONWARNING) = 6 then
-            begin
-              SysUtils.DeleteFile(MameDatabaseFile);
-              MameDatabaseFile := Trim(Copy(MameDatabaseFile,0,Length(MameDatabaseFile)-10));
-              MameDatabaseFile := MameDatabaseFile + '.xml';
-              SysUtils.DeleteFile(MameDatabaseFile);
-//              MameName := ExtractFileName(Conf.Find_Files.FileName);
-//              nodegame := MameXmlConfigDoc.SelectSingleNode('MamePath');
-//              DeleteAllChildren(nodegame,'rowpath[@MameName="'+MameName+'"');
-//              DeleteAllChildren(nodegame,'rowdir[@MameName="'+MameName+'"');
-              gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowPath');
-              for Inode_Dirs := 0 to gameList.Length - 1 do
-                begin
-                  nodegame := gameList.Item[Inode_Dirs];
-                    if GetNodeAttrStr(nodegame,'MameName','') = ExtractFileName(Conf.Find_Files.FileName) then
-                      li:= li + 1;
-                end;
-              gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
-              for Inode_Dirs := 0 to gameList.Length - 1 do
-                begin
-                  nodegame := gameList.Item[Inode_Dirs];
-                  if GetNodeAttrStr(nodegame,'MameName','') <> ExtractFileName(Conf.Find_Files.FileName) then
-                    lo := lo + 1;
-                end;
-              nodegame := MameXmlConfigDoc.SelectSingleNode('/MamePath');
-              repeat
-                DeleteNode(nodegame, 'rowpath[@MameName="'+ExtractFileName(Conf.Find_Files.FileName)+'"]');
-                DeleteNode(nodegame, 'rowdir[@MameName="'+ExtractFileName(Conf.Find_Files.FileName)+'"]');
-                lo := lo -1;
-                li := li -1;
-              until (lo <= 0) and (li <= 0) ;
-              MameXmlConfigDoc.Save(MameConfigFile,ofIndent);
-              Mame_Exe := ExtractFileName(Conf.Find_Files.FileName);
-              FullPathMame_Exe := ExtractFilePath(Conf.Find_Files.FileName);
-              ShellExecute(0,'open',PChar(FullPathMame_Exe+Mame_Exe),PChar('-createconfig'),nil,0);
-              Conf.sEdit64.Text := FullPathMame_Exe + Mame_Exe;
-              CreateNewMame := True;
-            end
+          if GetMameVer(FullPathMame_Exe,Mame_Exe,PathXmlMamePath+'ver.txt') = FXml_MameDatabase.Root.ReadAttributeString('Ver') then
+            InMessageBox := 'The MAME you try to install is the same version you have already installed' + #13#10 + 'Ver := ' + FXml_MameDatabase.Root.ReadAttributeString('Ver') + #13#10 + 'Do you want to continue?'
+          else
+            InMessageBox := 'There is an already installed '+ Mame_Exe +' version.(Ver : ' + FXml_MameDatabase.Root.ReadAttributeString('Ver')+'"' + #13#10 + '"Do you want to replace it with the new one (Ver : ' + GetMameVer(NewMameFullPath,NewMameExe,PathXmlMamePath+'ver.txt') +' ?';
+          option := True
         end;
+      if option = True then
+        if MessageBox(0,PChar(InMessageBox),'Replace Mame',+mb_YesNo +mb_ICONWARNING) = 6 then
+           addNewMame(False)
+        else
+          addNewMame(True);
     end;
 end;
 
@@ -328,6 +318,7 @@ var
   value,text,t1,t2: string;
   k,r,r1: Integer;
   RomsDirs: TStringList;
+  node: TXmlNode;
 begin
   FromMame_DirsToFindDirs := True;
   if FromArrows_Mamedirs = False then
@@ -336,26 +327,25 @@ begin
     begin
       for k := 0 to 5 do
         SetupedMame[k] := '';
-      gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
-      for Inode_Dirs := 0 to gameList.Length - 1 do
-        begin
-          nodegame := gameList.Item[iNode_Dirs];
-          if GetNodeAttrStr(nodegame,'MameName','') <> '' then
-            if GetNodeAttrStr(nodegame,'MameName','') = Mame_Exe then
+      with FXml_MameConfing.Root do
+        for k := 0 to NodeCount - 1 do
+          begin
+            node := FXml_MameConfing.Root.NodeByName('rowdir');
+            if node.ReadAttributeString('MameName') = Mame_Exe then
               begin
-                Conf.sEdit3.Text := GetNodeAttrStr(nodegame,'Cabinets');
-                Conf.sEdit8.Text := GetNodeAttrStr(nodegame,'Flyers');
-                Conf.sEdit10.Text := GetNodeAttrStr(nodegame,'Marquess');
-                Conf.sEdit6.Text := GetNodeAttrStr(nodegame,'Control_Panels');
-                Conf.sEdit9.Text := GetNodeAttrStr(nodegame,'Pcbs');
-                Conf.sEdit7.Text := GetNodeAttrStr(nodegame,'Artwork_Preview');
-                Conf.sEdit11.Text := GetNodeAttrStr(nodegame,'Titles');
-                Conf.sEdit5.Text := GetNodeAttrStr(nodegame,'Select');
-                Conf.sEdit58.Text := GetNodeAttrStr(nodegame,'Scores');
-                Conf.sEdit59.Text := GetNodeAttrStr(nodegame,'Bosses');
+                Conf.sEdit3.Text := node.ReadAttributeString('Cabinets');
+                Conf.sEdit8.Text :=node.ReadAttributeString('Flyers');
+                Conf.sEdit10.Text := node.ReadAttributeString('Marquees');
+                Conf.sEdit6.Text := node.ReadAttributeString('Control_Panels');
+                Conf.sEdit9.Text := node.ReadAttributeString('Pcbs');
+                Conf.sEdit7.Text := node.ReadAttributeString('Artwork_Preview');
+                Conf.sEdit11.Text := node.ReadAttributeString('Titles');
+                Conf.sEdit5.Text := node.ReadAttributeString('Select');
+                Conf.sEdit58.Text := node.ReadAttributeString('Scores');
+                Conf.sEdit59.Text := node.ReadAttributeString('Bosses');
               end;
-          SetupedMame[Inode_Dirs] := GetNodeAttrStr(nodegame,'MameName');
-        end;
+            SetupedMame[k] := node.ReadAttributeString('MameName');
+          end;
       k:= 0;
       value := FullPathMame_Exe + 'mame.ini';
       AssignFile(MameIniFile,value);
@@ -383,13 +373,13 @@ begin
               RomsDirs := TStringList.Create;
               RomsDirs.Delimiter := ';';
               RomsDirs.DelimitedText := '"' + StringReplace(t2, RomsDirs.Delimiter, '"' + RomsDirs.Delimiter + '"', [rfReplaceAll]) + '"';
-              for r1 := 0 to RomsDirs.Count - 2 do
+              for r1 := 0 to RomsDirs.Count - 1 do
                 begin
                   if RomsDirs[r1] = 'roms' then
                     begin
-                      Conf.sComboBox1.Items.Add(ExtractFilePath(Mame_Exe)+'roms');
+                      Conf.sComboBox1.Items.Add(FullPathMame_Exe+'roms');
                       if FromDatabase = False then
-                        Conf.sComboBox72.Items.Add(ExtractFilePath(Mame_Exe)+'roms');
+                        Conf.sComboBox72.Items.Add(FullPathMame_Exe+'roms');
                     end
                   else
                     begin
@@ -491,10 +481,7 @@ begin
   else
     begin
       if (Started = True) and (SelectedMame <> -2) then
-        begin
-          nodegame := MameXmlConfigDoc.SelectSingleNode('MamePath');
-          Conf.sCheckListBox1.Selected[GetNodeAttrInt(nodegame,'Selected')] := True;
-        end
+        Conf.sCheckListBox1.Selected[FXml_MameConfing.Root.ReadAttributeInteger('Selected')] := True
       else
         Conf.sCheckListBox1.Selected[0] := True;
     end;
@@ -511,66 +498,32 @@ begin
 end;
 
 procedure SaveMame_DirsAtExit;
+var
+  node: TXmlNode;
+  i: Integer;
 begin
   if FromDatabase = False then
-    begin
-      if Mame_Exe <> '' then
+    if Mame_Exe <> '' then
+      for i := 0 to FXml_MameConfing.Root.NodeCount - 1 do
         begin
-          MameXMLConfig.RowsDir.Clear;
-          gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowpath');
-          for Inode_Dirs := 0 to gameList.Length -1 do
-            begin
-              nodegame := gameList.Item[INode_Dirs];
-              RowPath := MameXMLConfig.RowsPath.AddPath;
-              RowPath.MameName := GetNodeAttrStr(nodegame,'MameName');
-              RowPath.PathId := GetNodeAttrInt(nodegame,'PathId');
-              RowPath.RomPath := GetNodeAttrStr(nodegame,'RomPath');
-              RowPath.RomsFound := GetNodeAttrInt(nodegame,'RomsFound');
-            end;
-          gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
-          for Inode_Dirs := 0 to gameList.Length -1 do
-            begin
-              nodegame := gameList.Item[iNode_Dirs];
-              if GetNodeAttrStr(nodegame,'MameName','') <> '' then
-                if GetNodeAttrStr(nodegame,'MameName','') = Mame_Exe then
-                  begin
-                    RowDir := MameXMLConfig.RowsDir.AddRowDir;
-                    RowDir.MameName := Mame_Exe;
-                    RowDir.MamePath := GetNodeAttrStr(nodegame,'MamePath');
-                    RowDir.Selected := GetNodeAttrInt(nodegame,'Selected');
-                    RowDir.Cabinets := Conf.sEdit3.Text;
-                    RowDir.Flyers := Conf.sEdit8.Text;
-                    RowDir.Marquees := Conf.sEdit10.Text;
-                    RowDir.Control_Panels := Conf.sEdit6.Text;
-                    RowDir.PCBs := Conf.sEdit9.Text;
-                    RowDir.Artwork_Preview := Conf.sEdit7.Text;
-                    RowDir.Titles := Conf.sEdit11.Text;
-                    RowDir.Select := Conf.sEdit5.Text;
-                    RowDir.Scores := Conf.sEdit58.Text;
-                    RowDir.Bosses := Conf.sEdit59.Text;
-                  end
-                else
-                  begin
-                    RowDir := MameXMLConfig.RowsDir.AddRowDir;
-                    RowDir.MameName := GetNodeAttrStr(nodegame,'MameName');
-                    RowDir.MamePath := GetNodeAttrStr(nodegame,'MamePath');
-                    RowDir.Selected := GetNodeAttrInt(nodegame,'Selected');
-                    RowDir.Cabinets := GetNodeAttrStr(nodegame,'Cabinets');
-                    RowDir.Flyers := GetNodeAttrStr(nodegame,'Flyers');
-                    RowDir.Marquees := GetNodeAttrStr(nodegame,'Marquess');
-                    RowDir.Control_Panels := GetNodeAttrStr(nodegame,'Control_Panels');
-                    RowDir.PCBs := GetNodeAttrStr(nodegame,'Pcbs');
-                    RowDir.Artwork_Preview := GetNodeAttrStr(nodegame,'Artwork_Preview');
-                    RowDir.Titles := GetNodeAttrStr(nodegame,'Titles');
-                    RowDir.Select := GetNodeAttrStr(nodegame,'Select');
-                    RowDir.Scores := GetNodeAttrStr(nodegame,'Scores');
-                    RowDir.Bosses := GetNodeAttrStr(nodegame,'Bosses');
-                  end;
-            end;
-          MameXMLConfig.SaveToFile(PathXmlMamePath+'config.xml',ofIndent);
-          FromMame_DirsToFindDirs := False;
+          node := FXml_MameConfing.Root.Nodes[i];
+          if node.Name = 'rowDir' then
+            if node.ReadAttributeString('MameName') = Mame_Exe then
+              begin
+                node.WriteAttributeString('Cabinets',Conf.sEdit3.Text);
+                node.WriteAttributeString('Flyers',Conf.sEdit8.Text);
+                node.WriteAttributeString('Marquees',Conf.sEdit10.Text);
+                node.WriteAttributeString('Control_Panels',Conf.sEdit6.Text);
+                node.WriteAttributeString('PCBs',Conf.sEdit9.Text);
+                node.WriteAttributeString('Artwork_Preview',Conf.sEdit7.Text);
+                node.WriteAttributeString('Titles',Conf.sEdit11.Text);
+                node.WriteAttributeString('Select',Conf.sEdit5.Text);
+                node.WriteAttributeString('Scores',Conf.sEdit58.Text);
+                node.WriteAttributeString('Bosses',Conf.sEdit59.Text);
+              end;
         end;
-    end
+  FXml_MameConfing.SaveToFile(MameConfigFile);
+  FromMame_DirsToFindDirs := False;
 end;
 
 procedure OldDirIs(name: string);
@@ -615,44 +568,44 @@ begin
   OldDirIs(name);
   gFindDirs := name;
   if Mame_Exe <> '' then
-    if SelectDirectory(OldDir,[sdAllowCreate,sdPerformCreate],0) then
+    if SelectDirectory('Select Dir',OldDir,NewDir) then
       global_Find_DirsClose;
 end;
 
 procedure SetMamePath(name:string);
 begin
   if name = 'mamesnapshots' then
-    Conf.sEdit2.Text := OldDir
+    Conf.sEdit2.Text := NewDir
   else if name = 'mamesamples' then
-    Conf.sEdit4.Text := OldDir
+    Conf.sEdit4.Text := NewDir
   else if name = 'mamecabinets' then
-    Conf.sEdit3.Text := OldDir
+    Conf.sEdit3.Text := NewDir
   else if name = 'mameflyers' then
-    conf.sEdit8.Text := OldDir
+    conf.sEdit8.Text := NewDir
   else if name = 'mamemarquees' then
-    conf.sEdit10.Text := OldDir
+    conf.sEdit10.Text := NewDir
   else if name = 'mamecontrolpanels' then
-    conf.sEdit6.Text := OldDir
+    conf.sEdit6.Text := NewDir
   else if name = 'mamepcbs' then
-    Conf.sEdit9.Text := OldDir
+    Conf.sEdit9.Text := NewDir
   else if name = 'mameartworkpreview' then
-    Conf.sEdit7.Text := OldDir
+    Conf.sEdit7.Text := NewDir
   else if name = 'mametitles' then
-    Conf.sEdit11.Text := OldDir
+    Conf.sEdit11.Text := NewDir
   else if name = 'mameselect' then
-    Conf.sEdit5.Text := OldDir
+    Conf.sEdit5.Text := NewDir
   else if name = 'mamescores' then
-    Conf.sEdit58.Text := OldDir
+    Conf.sEdit58.Text := NewDir
   else if name = 'mamebosses' then
-    Conf.sEdit59.Text := OldDir
+    Conf.sEdit59.Text := NewDir
   else if name = 'mamecrosshair' then
-    Conf.sEdit60.Text := OldDir
+    Conf.sEdit60.Text := NewDir
   else if name = 'mameartwork' then
-    Conf.sEdit61.Text := OldDir
+    Conf.sEdit61.Text := NewDir
   else if name = 'mameinputfiles' then
-    Conf.sEdit62.Text := OldDir
+    Conf.sEdit62.Text := NewDir
   else if name = 'mamestate' then
-    conf.sEdit63.Text := OldDir;
+    conf.sEdit63.Text := NewDir;
   ChangeMemoForMame_Dirs(name);
   FromMame_DirsToFindDirs := False;
 end;
@@ -663,7 +616,7 @@ var
   text,t1,value: string;
   Comp: TComponent;
 begin
-  Comp := FindComponentEx('Conf.MemoEmu1');
+  Comp := FindComponentEx('Conf.MemoEmu_Mame');
   if find = 'mamesnapshots' then
     begin
       find := 'snapshot_directory';
@@ -710,71 +663,41 @@ end;
 procedure ShowOnlySetupedMameBuilds;
 var
   oldMameName: string;
-  itemNum: Integer;
-  MameExists: Boolean;
+  itemNum,i,countMame: Integer;
+  node: TXmlNode;
   Mame_Name: array [0..5] of string;
-  Mame_Path: array [0..5] of string;
-  Mame_Selected: array [0..5] of string;
 begin
   for itemNum := 0 to 5 do
-    begin
-      Mame_Name[itemNum] := '';
-      Mame_Path[itemNum] := '';
-      Mame_Selected[itemNum] := '';
-    end;
+    Mame_Name[itemNum] := '';
+  countMame := 0;
   itemNum := Conf.sCheckListBox1.ItemIndex;
   oldMameName := Conf.sCheckListBox1.Items.Strings[itemNum];
   Conf.sCheckListBox1.Clear;
-  gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
+  with FXml_MameConfing.Root do
+    for i := 0 to NodeCount - 1 do
+      begin
+        node := FXml_MameConfing.Root.Nodes[i];
+        if node.Name = 'rowDir' then
+          begin
+            Mame_Name[countMame] := node.ReadAttributeString('MameName');
+            countMame := countMame + 1;
+          end;
+      end;
   if Conf.sCheckBox127.Checked = True then
     begin
-      for Inode_Dirs := 0 to gameList.Length - 1 do
-        begin
-          nodegame := gameList.Item[Inode_dirs];
-          Mame_Name[Inode_Dirs] := GetNodeAttrStr(nodegame,'MameName');
-          Mame_Path[Inode_Dirs] := GetNodeAttrStr(nodegame,'MamePath');
-          Mame_Selected[Inode_Dirs] := GetNodeAttrStr(nodegame,'Selected');
-        end;
-      if Mame_Name[0] <> '' then
-        begin
-          for itemNum := 0 to 5 do
-            begin
-              if Mame_Name[itemNum] <> '' then
-                  Conf.sCheckListBox1.Items.Add(Mame_Name[itemNum]);
-            end;
-        end;
-      for itemNum := 0 to gameList.Length - 1 do
-        begin
-          if conf.sCheckListBox1.Items.Strings[itemNum] = oldMameName then
-            MameExists := True;
-        end;
-      if MameExists = true then
-        begin
-          itemNum := Conf.sCheckListBox1.Items.IndexOf(oldMameName);
-          Conf.sCheckListBox1.Checked[itemNum] := True;
-          Conf.sCheckListBox1.Selected[itemNum] := True;
-        end
-      else
-        begin
-          Conf.sCheckListBox1.Checked[0] := True;
-          Conf.sCheckListBox1.Selected[0] := True;
-          MameXMLConfig.SelectedMame := Mame_Name[0];
-          MameXMLConfig.FullPathOfSelectedMame := Mame_Path[0];
-          MameXMLConfig.Selected := StrToInt(Mame_Selected[0]);
-          MameXMLConfig.SaveToFile(MameConfigFile,ofIndent);
-          FromArrows_Mamedirs := True;
-          Conf.sLabel112.Visible := True;
-          Conf.sGauge_MameChange.Visible := True;
-          StartEmuMame;
-          Conf.sLabel112.Visible := False;
-          Conf.sGauge_MameChange.Visible := False;
-          FromArrows_Mamedirs := False;
-        end;
+      for i := 0 to 5 do
+        if Mame_Name[i] <> '' then
+          Conf.sCheckListBox1.Items.Add(Mame_Name[i]);
+      for i := 0 to 5 do
+        if Conf.sCheckListBox1.Items.Strings[i] = oldMameName then
+          begin
+            Conf.sCheckListBox1.Checked[i] :=  True;
+            Conf.sCheckListBox1.Selected[i] := True;
+            Break;
+          end;
     end
   else
-    begin
-      Checkwin64ForListBox(SelectedMame);
-    end;
+    Checkwin64ForListBox(SelectedMame);
 end;
 
 procedure MameChooseRomsDirsOrAdd;
@@ -963,8 +886,13 @@ var
   value: string;
   Comp: TComponent;
 begin
-  MemoEmu_Comp(Conf,1);
-  Comp := FindComponentEx('Conf.MemoEmu1');
+  if FindComponentEx('Conf.MemoEmu_Mame') <> nil then
+    begin
+      Comp := FindComponentEx('Conf.MemoEmu_Mame');
+      TMemo(Comp).Free;
+    end;
+  MemoEmu_Comp(Conf,'Mame');
+  Comp := FindComponentEx('Conf.MemoEmu_Mame');
   value := FullPathMame_Exe + 'mame.ini';
   TMemo(Comp).Lines.LoadFromFile(value);
 end;
@@ -998,6 +926,17 @@ begin
         SelectedMame := 3;
     end;
 end;
+
+procedure Assigned_MameConfiguration;
+begin
+  if not Assigned(FXml_MameConfing) then
+    begin
+      FXml_MameConfing := TNativeXml.CreateName('MameConfig');
+      FXml_MameConfing.XmlFormat := xfReadable;
+    end;
+end;
+
+////////////////////////////////////////////////////////////
 
 procedure Show_mame_dirspanel;
 begin

@@ -13,13 +13,11 @@ uses
   psx_paths,psx_screen,psx_sound,psx_others,psx_database,
   kigb_paths,kigb_screen,kigb_sound,kigb_others,kigb_database,
   wg_weather,
-  OmniXML,OmniXMLUtils,mame_xmlext,ce_xmlext;
+  NativeXml;
 
 
   procedure StartProgConfEditor;
   procedure StartConfEditor;
-  procedure ReadConfiguration;
-  procedure FirstTimeStart;
 
   procedure StartProgExtraFE;
 
@@ -44,25 +42,10 @@ uses
   procedure LoadCostumCursors;
 
 var
-//Application Vars
-  ExtraFePath: string;
 //Cursors
   Arrow,TArrow,Link,Busy,Horizontal,Vertical,Precision : Byte;
-//ConfEditor Vars
-  CeXmlDoc: IXMLDocument;
-  CeXML: TCE_Configuration;
-  Row_Theme: TRowCe_Themes;
-  Row_Config: TRowCe_Config;
-  nodeCe: IXMLNode;
-  Ce_List : IXMLNodeList;
-  CE_SHelpInCaption,CE_SHelpInMain: Boolean;
-  WinEffectsType,Ce_XMLPath: string;
-  WinEffectsTime,Inode_Ce,ThemeNumber: Integer;
-//ExtraFe Vars
-//Mame Vars
-  MameConfigFile,MameDatabaseFile,Mame_Exe,FullPathMame_Exe: String;
-  SelectedMame: Shortint;
-  Started,FromDatabase: Boolean;
+//MainConf
+  Started: Boolean;
 //Zinc Vars
   Zinc_Exe,FullPathZinc_Exe,Zinc_RomsPath,ZincDatabaseFile,Zinc_ini: String;
   Zinc_Config: TIniFile;
@@ -126,7 +109,7 @@ Begin
     0 : begin
           for k := 1 to 122 do
             begin
-              if (k <> 34) and (k <> 35)  then
+              if (k <> 32) and (k <> 33) and (k <> 34) and (k <> 35)  then
                 begin
                   component := FindComponentEx('Conf.grp'+inttostr(k));
                   TGroupBox(component).Color := $00e4eaed;
@@ -140,7 +123,7 @@ Begin
     1 : begin
           for k := 1 to 122 do
             begin
-              if (k <> 34) and (k <> 35)  then
+              if (k <> 32) and (k <> 33) and (k <> 34) and (k <> 35)  then
                 begin
                   component := FindComponentEx('Conf.grp'+inttostr(k));
                   TGroupBox(component).Color := $00bae5e8;
@@ -154,7 +137,7 @@ Begin
     2 : begin
           for k := 1 to 122 do
             begin
-              if (k <> 34) and (k <> 35) then
+              if (k <> 32) and (k <> 33) and (k <> 34) and (k <> 35) then
                 begin
                   component := FindComponentEx('Conf.grp'+inttostr(k));
                   TGroupBox(component).Color := $00e7e7e7;
@@ -573,100 +556,14 @@ begin
   resolutions.Free;
 end;
 
-procedure FirstTimeStart;
-begin
-  CeXmlDoc := CreateXMLDoc;
-  CeXML := TCE_Configuration.Create;
-  CeXML.Ver :=  GetVersion(ExtraFePath+'confeditor.exe');
-  STBarInfo[0] := 'Version : '+ GetVersion(ExtraFePath+'confeditor.exe');
-  Row_Theme := CeXML.Rows.AddRow;
-  Row_Theme.ThemeNumber := 0;
-  Row_Config := CeXML.Rows_Conf.AddRow;
-  Row_Config.HelpInCaption := True;
-  Row_Config.HelpInMainMenu := True;
-  Row_Config.WindowsEffects := 'None';
-  Row_Config.EffectsTime := 400;
-  ThemeNumber := 0;
-  CE_SHelpInCaption := True;
-  CE_SHelpInMain := True;
-  WinEffectsType := 'None';
-  WinEffectsTime := 400;
-  conf.sCheckBox1.Checked := CE_SHelpInMain;
-  Conf.sCheckBox2.Checked := CE_SHelpInCaption;
-  Conf.sComboBox74.ItemIndex  := Conf.sComboBox74.IndexOf(WinEffectsType);
-  Conf.sComboBox74.Text := WinEffectsType;
-  Started := True;
-  WindowsEffectsType;
-  Conf.se1.Value := WinEffectsTime;
-  CeXML.SaveToFile(Ce_XMLPath,ofIndent);
-end;
-
-procedure ReadConfiguration;
-begin
-  CeXmlDoc := CreateXMLDoc;
-  CeXmlDoc.Load(Ce_XMLPath);
-  CeXML := TCE_Configuration.Create;
-  nodeCe := CeXmlDoc.SelectSingleNode('/confEditor');
-  if GetNodeAttrStr(nodeCe,'Ver','') <> GetVersion(ExtraFePath+'confeditor.exe') then
-    begin
-      CeXML.Ver := GetVersion(ExtraFePath+'confeditor.exe');
-      STBarInfo[0] := 'Version : '+GetVersion(ExtraFePath+'confeditor.exe');
-    end
-  else
-    begin
-      CeXML.Ver := GetNodeAttrStr(nodeCe,'Ver');
-      STBarInfo[0] := 'Version : '+GetNodeAttrStr(nodeCe,'Ver');
-    end;
-  Ce_List := CeXmlDoc.SelectNodes('/confEditor/rowtheme');
-  for Inode_Ce := 0 to Ce_List.Length - 1 do
-    begin
-      nodeCe := Ce_List.Item[Inode_Ce];
-      Row_Theme := CeXML.Rows.AddRow;
-      Row_Theme.ThemeNumber := GetNodeAttrInt(nodeCe,'ThemeNumber');
-    end;
-  ThemeNumber := GetNodeAttrInt(nodeCe,'ThemeNumber');
-  Ce_List := CeXmlDoc.SelectNodes('/confEditor/rowconfig');
-  for Inode_Ce := 0 to Ce_List.Length - 1 do
-    begin
-      nodeCe := Ce_List.Item[Inode_Ce];
-      Row_Config := CeXML.Rows_Conf.AddRow;
-      Row_Config.HelpInCaption := GetNodeAttrBool(nodeCe,'HelpInCaption');
-      Row_Config.HelpInMainMenu := GetNodeAttrBool(nodeCe,'HelpInMainMenu');
-      Row_Config.WindowsEffects := GetNodeAttrStr(nodeCe,'WindowsEffects');
-      Row_Config.EffectsTime := GetNodeAttrInt(nodeCe,'EffectsTime');
-    end;
-  CE_SHelpInCaption := StrToBool(GetNodeAttrStr(nodeCe,'HelpInCaption'));
-  CE_SHelpInMain := StrToBool(GetNodeAttrStr(nodeCe,'HelpInMainMenu'));
-  WinEffectsType := GetNodeAttrStr(nodeCe,'WindowsEffects');
-  WinEffectsTime := GetNodeAttrInt(nodeCe,'EffectsTime');
-  conf.sCheckBox1.Checked := CE_SHelpInMain;
-  Conf.sCheckBox2.Checked := CE_SHelpInCaption;
-  Conf.sComboBox74.ItemIndex  := Conf.sComboBox74.IndexOf(WinEffectsType);
-  Conf.sComboBox74.Text := WinEffectsType;
-  Started := True;
-  WindowsEffectsType;
-  Conf.se1.Value := WinEffectsTime;
-end;
-
 procedure StartProgConfEditor;
 begin
-  ExtraFePath := ExtractFilePath(Application.ExeName);
-  Ce_XMLPath := ExtraFePath+'media\confeditor\config\config.xml';
+  Ce_XMLPath := Program_Path+'media\confeditor\config\config.xml';
   if FileExists(Ce_XMLPath) then
     ReadConfiguration
   else
     FirstTimeStart;
-  StartSkinEngine;
-  Splash_Screen.Show;
-  CDirPath := Conf.Caption;
-  CreateSTBarInfo;
-  Splash_Screen.Progress_Label(5,'Info Created');
-  HideAllPanels;
-  Splash_Screen.Progress_Label(15,'ConfEditor initilisize');
-  runMenuJustOpen;
-  LoadStaticImages;
-  LoadCostumCursors;
-  Splash_Screen.Progress_Label(20,'Cursors OK');
+  SetCE_ConfigFromConfigIni;
 end;
 
 procedure StartProgExtraFE;
@@ -676,53 +573,44 @@ end;
 
 procedure StartEmuMame;
 var
-  kst: Integer;
+  F: TFileStream;
 begin
-  if FileExists(ExtractFilePath(Application.ExeName)+'media/emulators/arcade/mame/config/config.xml') then
+  PathXmlMamePath := Program_Path+'media\emulators\arcade\mame\config\';
+  MameConfigFile := Program_Path+'media\emulators\arcade\mame\config\config.xml';
+  if FileExists(Program_Path +'media\emulators\arcade\mame\config\config.xml') then
     begin
-      MameConfigFile := ExtractFilePath(Application.ExeName)+'media/emulators/arcade/mame/config/config.xml';
-      if not Assigned(MameXmlConfigDoc) then
-        MameXmlConfigDoc := CreateXMLDoc;
-      if FromDatabase = False then
-        MameXMLConfig := TMameXMLPath.Create;
-      MameXmlConfigDoc.Load(MameConfigFile);
-      nodegame := MameXmlConfigDoc.SelectSingleNode('MamePath');
-      if GetNodeAttrStr(nodegame,'SelectedMame','') <> '' then
-        Mame_Exe := GetNodeAttrStr(nodegame,'SelectedMame');
-      if GetNodeAttrStr(nodegame,'Selected','') <> '' then
-        SelectedMame := GetNodeAttrInt(nodegame,'Selected');
-      if GetNodeAttrStr(nodegame,'FullPathOfSelectedMame','') <> '' then
-        FullPathMame_Exe := GetNodeAttrStr(nodegame,'FullPathOfSelectedMame');
+      MameConfigFile := Program_Path+'media\emulators\arcade\mame\config\config.xml';
+      Assigned_MameConfiguration;
+      FXml_MameConfing.LoadFromFile(MameConfigFile);
+      Mame_Exe := FXml_MameConfing.Root.ReadAttributeString('SelectedMame');
+      SelectedMame := FXml_MameConfing.Root.ReadAttributeInteger('Selected');
+      FullPathMame_Exe := FXml_MameConfing.Root.ReadAttributeString('FullPathOfSelectedMame');
     end
   else
     SelectedMame := -1;
-  PathXmlMamePath := Program_Path+'media\emulators\arcade\mame\config\';
   if Mame_Exe <> '' then
     begin
       PathXmlMame := Program_Path+'media\emulators\arcade\mame\database\'+Mame_Exe;
       Delete(PathXmlMame,Length(PathXmlMame)-3,4);
       MameDatabaseFile := PathXmlMame+'_efuse.xml';
-      if FromDatabase = False then
-        begin
-          try
-            FGa := TGauseStream.Create;
-            MameXmlUseDoc := CreateXMLDoc;
-            MameXMLUse := TMameXML.Create;
-          finally
-            if FromArrows_Mamedirs = False then
-              Splash_Screen.sLabel1.Caption := 'Loading Mame Database...'
-            else
-              Conf.sLabel112.Caption := 'Loading Mame Database...';
-            Application.ProcessMessages;
-            MameXmlUseDoc.PreserveWhiteSpace := True;
-            FGa.LoadFromFile(MameDatabaseFile);
-            if FromArrows_Mamedirs = False then
-              FGa.Gause := Splash_Screen.sGauge_Splash
-            else
-              FGa.Gause := Conf.sGauge_MameChange;
-            MameXmlUseDoc.LoadFromStream(FGa);
-          end;
-          FGa.Free;
+      FFileName := MameDatabaseFile;
+      if FromArrows_Mamedirs then
+        progressComesFrom := 'Mame_dirs'
+      else if FromDatabase = False then
+        progressComesFrom := 'Mame_start'
+      else
+        progressComesFrom := 'Mame_database';
+      Assigned_MameDatabase;
+      FXml_MameDatabase.OnProgress := Conf.XMLProgress;
+      F := TFileStream.Create(FFileName, fmOpenRead or fmShareDenyWrite);
+        try
+          FFileSize := F.Size;
+          if IsBinary(F) then
+            FXml_MameDatabase.LoadFromBinaryStream(F)
+          else
+            FXml_MameDatabase.LoadFromStream(F);
+        finally
+          F.Free;
         end;
       Conf.sEdit64.Text := FullPathMame_Exe+Mame_Exe;
       InitGlobal_MameMemo_ForMameIni;
@@ -741,29 +629,11 @@ begin
       Started := False;
       FromDatabase := False;
     end
-  else
-    begin
-      Started := True;
-      if not Assigned(MameXmlConfigDoc) then
-        begin
-          MameXmlConfigDoc := CreateXMLDoc;
-          SelectedMame := -2;
-        end
-      else
-        begin
-          gameList := MameXmlConfigDoc.SelectNodes('/MamePath/rowdir');
-          for kst := 0 to gameList.Length - 1 do
-            begin
-              nodegame := gameList.Item[kst];
-             SetupedMame[kst] := GetNodeAttrStr(nodegame,'MameName');
-            end;
-        end;
-      Checkwin64ForListBox(SelectedMame);
-      Started := False;
-    end;
 end;
 
 procedure StartEmuZinc;
+var
+  F : TFileStream;
 begin
   if FileExists(ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\config.ini') then
     begin
@@ -773,18 +643,21 @@ begin
       Zinc_Exe := Zinc_Config.ReadString('Zinc_Paths','Zinc_Exe',Zinc_Exe);
       FullPathZinc_Exe := Zinc_Config.ReadString('Zinc_Paths','Zinc_Path',FullPathZinc_Exe);
       ZincDatabaseFile := ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\database\zinc_efuse.xml';
-      try
-        FGa := TGauseStream.Create;
-        ZincData_XmlDoc := CreateXMLDoc;
-      finally
-        Splash_Screen.sLabel1.Caption := 'Loading Zinc Database...';
-        Application.ProcessMessages;
-        ZincData_XmlDoc.PreserveWhiteSpace := True;
-        FGa.LoadFromFile(ZincDatabaseFile);
-        FGa.Gause := Splash_Screen.sGauge_Splash;
-        ZincData_XmlDoc.LoadFromStream(FGa);
-      end;
-      FGa.Free;
+      FFileName := ZincDatabaseFile;
+      progressComesFrom := 'Zinc_start';
+      FXml_Zinc := TNativeXml.Create(nil);
+      FXml_Zinc.XmlFormat := xfReadable; 
+      FXml_Zinc.OnProgress := Conf.XMLProgress;
+      F := TFileStream.Create(FFileName, fmOpenRead or fmShareDenyWrite);
+        try
+          FFileSize := F.Size;
+          if IsBinary(F) then
+            FXml_Zinc.LoadFromBinaryStream(F)
+          else
+            FXml_Zinc.LoadFromStream(F);
+        finally
+          F.Free;
+        end;
       ShowProgressBar(20,'Zinc Files Ready','Zinc');
       SetZinc_PathsFromZincIni;
       ShowProgressBar(40,'Zinc Paths Ready','Zinc');
@@ -877,7 +750,7 @@ begin
   if FileExists(ExtractFilePath(Application.ExeName) + 'media\widgets\weather\weather.ini') then
     begin
       Started := True;
-      if StBarInfo[2] = 'Internet Connected' then
+      if StBarInfo[3] = 'Internet Connected' then
         begin
           WeatherIni := TIniFile.Create(Extractfilepath(Application.ExeName) + 'media\widgets\weather\weather.ini');
           SetWeather_FromWeatherIni;
@@ -897,15 +770,15 @@ end;
 
 procedure CreateSTBarInfo;
 begin
-  conf.stat1.Panels[0].Text := STBarInfo[0];
+  Conf.stat1.Panels[0].Text := 'confEditor Ver: ' + STBarInfo[0];
   if IsWindows64 = true then
-    STBarInfo[1] := 'Windows 64 Bit'
+    STBarInfo[2] := 'Windows 64 Bit'
   else
-    STBarInfo[1] := 'Windows 32 Bit';
+    STBarInfo[2] := 'Windows 32 Bit';
   if IsConnectedToInternet = True then
-    StBarInfo[2] := 'Internet Connected'
+    StBarInfo[3] := 'Internet Connected'
   else
-    StBarInfo[2] := 'Internet Not Found';
+    StBarInfo[3] := 'Internet Not Found';
   STBarMessages := 0;
   Conf.tmr1.Enabled := True;
 end;

@@ -2,9 +2,10 @@ unit ce_themes;
 
 interface
 
-  uses
-    SysUtils,OmniXML,OmniXMLUtils,ExtCtrls,Classes,
-    sLabel;
+uses
+  SysUtils,ExtCtrls,Classes,
+  NativeXml,
+  sLabel;
 
   procedure click_ce_themes;
   procedure click_apply_ce_themes;
@@ -20,6 +21,9 @@ implementation
 uses
   main,mainconf,menu,onflycomponents,FunctionX,
   ce_config,ce_wizard;
+
+var
+  node: TXmlNode;
 
 procedure click_ce_themes;
 var
@@ -39,18 +43,22 @@ begin
 end;
 
 procedure click_apply_ce_themes;
-var
-  i : integer;
 begin
-  i := Conf.sLB_ce_themes.ItemIndex;
-  Conf.skinM.SkinName := Conf.sLB_ce_themes.Items.Strings[i];
+  ThemeNumber := Conf.sLB_ce_themes.ItemIndex;
+  Conf.skinM.SkinName := Conf.sLB_ce_themes.Items.Strings[ThemeNumber];
   conf.sBB_apply_ce_themes.Enabled := False;
-  Row_Theme.ThemeNumber := i;
-  CeXML.SaveToFile(Ce_XMLPath,ofIndent);
-  Conf.sLabelFX3.Caption := Conf.sLB_ce_themes.Items.Strings[i];
-  ThemeCreator(i+1);
-  SetAllCursor(i+1);
-  GroupBoxColors(i);
+  if not Assigned(FXml_CE) then
+    begin
+      FXml_CE := TNativeXml.CreateName('confeditor');
+      FXml_CE.XmlFormat := xfReadable;
+    end;
+  node := FXml_CE.Root.NodeByName('rowtheme');
+  node.WriteAttributeInteger('ThemeNumber',ThemeNumber);
+  FXml_CE.SaveToFile(Ce_XMLPath);
+  Conf.sLabelFX3.Caption := Conf.sLB_ce_themes.Items.Strings[ThemeNumber];
+  ThemeCreator(ThemeNumber+1);
+  SetAllCursor(ThemeNumber+1);
+  GroupBoxColors(ThemeNumber);
 end;
 
 procedure ThemeCreator(num: Byte);
