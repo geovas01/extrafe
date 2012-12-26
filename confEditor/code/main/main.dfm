@@ -2626,7 +2626,7 @@ object Conf: TConf
       end
     end
     object Pem_mame_dirs: TsPanel
-      Left = 1
+      Left = 727
       Top = 0
       Width = 727
       Height = 661
@@ -17275,6 +17275,7 @@ object Conf: TConf
         Height = 25
         Hint = 'Demos'
         Caption = 'Demos'
+        Enabled = False
         TabOrder = 4
         OnClick = Hatari_ConfigDatabase
         SkinData.SkinSection = 'BUTTON'
@@ -17286,6 +17287,7 @@ object Conf: TConf
         Height = 25
         Hint = 'Applications'
         Caption = 'Applications'
+        Enabled = False
         TabOrder = 5
         OnClick = Hatari_ConfigDatabase
         SkinData.SkinSection = 'BUTTON'
@@ -17295,6 +17297,7 @@ object Conf: TConf
         Top = 64
         Width = 169
         Height = 21
+        Hint = 'BigC'
         Alignment = taLeftJustify
         BoundLabel.Indent = 0
         BoundLabel.Font.Charset = DEFAULT_CHARSET
@@ -17308,26 +17311,27 @@ object Conf: TConf
         SkinData.SkinSection = 'COMBOBOX'
         Enabled = False
         ItemHeight = 15
-        ItemIndex = 0
+        ItemIndex = -1
         TabOrder = 6
         Text = 'Choose Team...'
+        OnChange = Hatari_ConfigDatabase
         Items.Strings = (
           'Choose Team...'
           'Adrenalyn'
           'Automation'
           'Bad Brew Crew'
           'Blue Software'
-          'D-Bug'
+          'D - Bug'
           'Delicious'
           'Enigma'
           'Flame Of Filand'
-          'Fusion'
-          'Medway Pirates'
+          'Fuzion'
+          'Medway Boys'
           'Pompey Pirates'
           'Special FX'
           'Supergau'
           'Superior'
-          'Vetronix'
+          'Vectronix'
           'Zuul')
       end
       object sComboBox41: TsComboBox
@@ -17335,6 +17339,7 @@ object Conf: TConf
         Top = 64
         Width = 169
         Height = 21
+        Hint = 'SmallC'
         Alignment = taLeftJustify
         BoundLabel.Indent = 0
         BoundLabel.Font.Charset = DEFAULT_CHARSET
@@ -17348,9 +17353,10 @@ object Conf: TConf
         SkinData.SkinSection = 'COMBOBOX'
         Enabled = False
         ItemHeight = 15
-        ItemIndex = 0
+        ItemIndex = -1
         TabOrder = 7
         Text = 'Choose Team...'
+        OnChange = Hatari_ConfigDatabase
         Items.Strings = (
           'Choose Team...'
           'Atari Force'
@@ -17365,7 +17371,7 @@ object Conf: TConf
           'F.O.F.T'
           'Games Compil'
           'Gravatics'
-          'Guardian Soft Ogik'
+          'Guardians Of Logik'
           'Impact'
           'Infocom'
           'Klapauzius'
@@ -17374,14 +17380,14 @@ object Conf: TConf
           'New Order'
           'Nothing Personal'
           'Pulsion'
-          'Pure Enegry'
+          'Pure Energy'
           'Reanimators'
           'Revolution'
           'Section One'
           'Shaolin Masters'
           'Supremacy'
-          'Syndicaty'
-          'Timelords'
+          'Syndicate'
+          'Time Lords'
           'Tumult')
       end
     end
@@ -17404,12 +17410,22 @@ object Conf: TConf
       end
     end
     object Pem_kigb_database: TsPanel
-      Left = 727
+      Left = 1
       Top = 0
       Width = 727
       Height = 661
       TabOrder = 32
       SkinData.SkinSection = 'PANEL'
+      object sGauge_kigb: TsGauge
+        Left = 20
+        Top = 104
+        Width = 540
+        Height = 17
+        SkinData.SkinSection = 'GAUGE'
+        ForeColor = clBlack
+        Progress = 0
+        Suffix = '%'
+      end
       object nxtgrd_kigb: TNextGrid
         Left = 20
         Top = 132
@@ -17425,8 +17441,10 @@ object Conf: TConf
         Top = 32
         Width = 125
         Height = 25
+        Hint = 'Kigb_GameBoy'
         Caption = 'Game Boy'
         TabOrder = 1
+        OnClick = Kigb_ConfigDatabase
         SkinData.SkinSection = 'BUTTON'
       end
       object sButton16: TsButton
@@ -17434,8 +17452,10 @@ object Conf: TConf
         Top = 32
         Width = 125
         Height = 25
+        Hint = 'Kigb_GameBoyColor'
         Caption = 'Game Boy Color'
         TabOrder = 2
+        OnClick = Kigb_ConfigDatabase
         SkinData.SkinSection = 'BUTTON'
       end
       object sButton17: TsButton
@@ -17444,6 +17464,7 @@ object Conf: TConf
         Width = 125
         Height = 25
         Caption = 'Super Game Boy'
+        Enabled = False
         TabOrder = 3
         SkinData.SkinSection = 'BUTTON'
       end

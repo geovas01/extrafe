@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameBoy TotalGames="612">
+	<row GameName="1942" Developer="Capcom" Released="May 2000"/>
+	<row GameName="2-in-1 Asteroids / Missile Command" Developer="Nintendo" Released="July 1995"/>
+	<row GameName="2-in-1 Centipede / Millipede" Developer="Nintendo" Released="August 1995"/>
+	<row GameName="2-in-1 Defender / Joust" Developer="Nintendo" Released="October 1995"/>
+	<row GameName="2-in-1 Galaga / Galaxian" Developer="Nintendo" Released="September 1995"/>
+	<row GameName="4-in-1 Funpak: Volume 1" Developer="Interplay" Released="September 1992"/>
+	<row GameName="4-in-1 Funpak: Volume 2" Developer="Interplay" Released="August 1993"/>
+	<row GameName="A*mazing Tater" Developer="Atlus Software" Released="February 1992"/>
+	<row GameName="Addams Family, The" Developer="Ocean" Released="January 1992"/>
+	<row GameName="Addams Family: Pugsley&apos;s Scavenger Hunt, The" Developer="Ocean" Released="July 1993"/>
+	<row GameName="Adventure Island" Developer="Hudson Soft" Released="February 1992"/>
+	<row GameName="Adventure Island II: Aliens in Paradise" Developer="Hudson Soft" Released="February 1993"/>
+	<row GameName="Adventures of Star Saver, The" Developer="Taito Software" Released="March 1992"/>
+	<row GameName="Aerostar" Developer="Vic Tokai" Released="September 1991"/>
+	<row GameName="Alfred Chicken" Developer="Mindscape" Released="February 1994"/>
+	<row GameName="Alien vs. Predator: The Last of His Clan" Developer="Activision" Released="November 1993"/>
+	<row GameName="Alien3" Developer="LJN" Released="January 1993"/>
+	<row GameName="Alleyway" Developer="Nintendo" Released="August 1989"/>
+	<row GameName="All-Star Baseball 2000" Developer="Acclaim" Released="May 1999"/>
+	<row GameName="All-Star Baseball &apos;99" Developer="Acclaim" Released="May 1998"/>
+	<row GameName="Altered Space" Developer="Sony Imagesoft" Released="September 1991"/>
+	<row GameName="Amazing Penguin" Developer="Natsume" Released="December 1990"/>
+	<row GameName="Amazing Spider-Man , The" Developer="LJN" Released="July 1990"/>
+	<row GameName="Animaniacs" Developer="Konami" Released="July 1995"/>
+	<row GameName="Antz" Developer="Infogrames" Released="October 1999"/>
+	<row GameName="Arcade Hit: 720 Degrees" Developer="Midway" Released="March 1999"/>
+	<row GameName="Arcade Hit: Defender/Joust" Developer="Midway" Released="March 1999"/>
+	<row GameName="Arcade Hit: Spy Hunter/Moon Patrol" Developer="Midway" Released="May 1999"/>
+	<row GameName="Asteroids" Developer="Accolade" Released="February 1992"/>
+	<row GameName="Atomic Punk" Developer="Hudson Soft" Released="October 1991"/>
+	<row GameName="Attack of the Killer Tomatoes" Developer="THQ" Released="January 1992"/>
+	<row GameName="Azure Dreams" Developer="Konami" Released="February 2000"/>
+	<row GameName="Avenging Spirit" Developer="Jaleco" Released="December 1992"/>
+	<row GameName="Babe and Friends" Developer="Crave Entertainment" Released="November 1999"/>
+	<row GameName="Ballistic" Developer="Infogrames" Released="November 1999"/>
+	<row GameName="Balloon Kid" Developer="Nintendo" Released="October 1990"/>
+	<row GameName="Barbie Game Girl" Developer="Hi-Tech" Released="October 1992"/>
+	<row GameName="Barbie: Ocean Discovery" Developer="Mattel" Released="May 1999"/>
+	<row GameName="Barbie Fashion Pack Games" Developer="Mattel" Released="September 2000"/>
+	<row GameName="Bart Simpson&apos;s Escape from Camp Deadly" Developer="Acclaim" Released="November 1991"/>
+	<row GameName="Baseball" Developer="Nintendo" Released="August 1989"/>
+	<row GameName="Bases Loaded" Developer="Jaleco" Released="July 1990"/>
+	<row GameName="Bassmasters 2000" Developer="THQ" Released="November 1999"/>
+	<row GameName="Batman" Developer="Sunsoft" Released="June 1990"/>
+	<row GameName="Batman Forever" Developer="Acclaim" Released="August 1995"/>
+	<row GameName="Batman: Return of the Joker" Developer="Sunsoft" Released="May 1992"/>
+	<row GameName="Batman: The Animated Series" Developer="Konami" Released="November 1993"/>
+	<row GameName="Battle Arena Toshinden" Developer="Nintendo" Released="November 1996"/>
+	<row GameName="Battle Bull" Developer="Seta" Released="January 1991"/>
+	<row GameName="Battle Unit Zeoth" Developer="Jaleco" Released="July 1991"/>
+	<row GameName="Battle Zone/Super Breakout" Developer="Black Pearl Software" Released="October 1996"/>
+	<row GameName="Battleship" Developer="Mindscape" Released="December 1992"/>
+	<row GameName="Battletoads" Developer="Tradewest" Released="November 1991"/>
+	<row GameName="Battletoads &amp; Double Dragon: The Ultimate Team" Developer="Tradewest" Released="December 1993"/>
+	<row GameName="Battletoads in Ragnarok&apos;s World" Developer="Tradewest" Released="June 1993"/>
+	<row GameName="Beauty and the Beast" Developer="Nintendo" Released="October 1999"/>
+	<row GameName="Beavis and Butthead" Developer="GT Interactive" Released="March 1999"/>
+	<row GameName="Beetlejuice" Developer="LJN" Released="January 1992"/>
+	<row GameName="Best of the Best: Championship Karate" Developer="Electro Brain" Released="December 1992"/>
+	<row GameName="Bill &amp; Ted&apos;s Excellent Game Boy Adventure" Developer="LJN" Released="August 1991"/>
+	<row GameName="Bill Elliot&apos;s Nascar Fast Tracks" Developer="Konami" Released="December 1991"/>
+	<row GameName="Bionic Battler" Developer="Electro Brain" Released="November 1992"/>
+	<row GameName="Bionic Commando" Developer="Capcom" Released="October 1992"/>
+	<row GameName="Black Bass Lure Fishing" Developer="Hot-B" Released="January 1994"/>
+	<row GameName="Blades of Steel" Developer="Ultra Soft" Released="August 1991"/>
+	<row GameName="Blaster Master Boy" Developer="Sunsoft" Released="February 1992"/>
+	<row GameName="Blaster Master: Enemy Below" Developer="Sunsoft" Released="August 2000"/>
+	<row GameName="Blues Brothers, The" Developer="Titus" Released="June 1992"/>
+	<row GameName="Bo Jackson&apos;s Hit and Run! Baseball and Football" Developer="THQ" Released="June 1991"/>
+	<row GameName="Boggle Plus" Developer="Parker Brothers" Released="February 1992"/>
+	<row GameName="Bomberman GB" Developer="Nintendo" Released="April 1998"/>
+	<row GameName="Bomberman Quest" Developer="Electro Brain" Released="November 1999"/>
+	<row GameName="Bonk&apos;s Adventure" Developer="Hudson Soft" Released="December 1992"/>
+	<row GameName="Bonk&apos;s Revenge" Developer="Hudson Soft" Released="November 1994"/>
+	<row GameName="Boomer&apos;s Adventure in Asmik World" Developer="Asmik" Released="April 1990"/>
+	<row GameName="Boxxle" Developer="FCI" Released="February 1990"/>
+	<row GameName="Boxxle II" Developer="FCI" Released="June 1992"/>
+	<row GameName="Brain Drain" Developer="Acclaim" Released="March 1998"/>
+	<row GameName="Brainbender" Developer="Electro Brain" Released="November 1991"/>
+	<row GameName="Bram Stoker&apos;s Dracula" Developer="Sony Imagesoft" Released="September 1993"/>
+	<row GameName="BreakThru!" Developer="Spectrum Holobyte" Released="January 1995"/>
+	<row GameName="Bubble Bobble" Developer="Taito Software" Released="March 1991"/>
+	<row GameName="Bubble Bobble: Part 2" Developer="Taito Software" Released="July 1993"/>
+	<row GameName="Bubble Ghost" Developer="FCI" Released="November 1990"/>
+	<row GameName="Bubsy 2" Developer="SVG Distribution" Released="August 1998"/>
+	<row GameName="Bugs Bunny Crazy Castle 2 , The" Developer="Nintendo" Released="September 1991"/>
+	<row GameName="Bugs Bunny Crazy Castle, The" Developer="Nintendo" Released="March 1990"/>
+	<row GameName="Bugs Bunny: Crazy Castle 3" Developer="Nintendo" Released="January 1999"/>
+	<row GameName="Burai Fighter Deluxe" Developer="Taxan" Released="January 1991"/>
+	<row GameName="Burgertime Deluxe" Developer="Data East" Released="March 1991"/>
+	<row GameName="Bust-A-Move 4" Developer="Acclaim" Released="June 1999"/>
+	<row GameName="Bust-A-Move II" Developer="Acclaim" Released="February 1998"/>
+	<row GameName="Buster Bros." Developer="Hudson Soft" Released="October 1993"/>
+	<row GameName="Caesar&apos;s Palace" Developer="Virgin Interactive" Released="June 1991"/>
+	<row GameName="Captain America and the Avengers" Developer="Mindscape" Released="February 1994"/>
+	<row GameName="Casino Funpak" Developer="Interplay" Released="January 1995"/>
+	<row GameName="Casper" Developer="Natsume" Released="November 1996"/>
+	<row GameName="Castelian" Developer="Triffix" Released="May 1991"/>
+	<row GameName="Castlevania II: Belmont&apos;s Revenge" Developer="Konami" Released="August 1991"/>
+	<row GameName="Castlevania Legends" Developer="Konami" Released="March 1998"/>
+	<row GameName="Castlevania: The Adventure" Developer="Konami" Released="December 1989"/>
+	<row GameName="Catrap" Developer="Asmik" Released="September 1990"/>
+	<row GameName="Centipede" Developer="Accolade" Released="December 1992"/>
+	<row GameName="Championship Pool" Developer="Mindscape" Released="November 1993"/>
+	<row GameName="Chase HQ" Developer="Taito Software" Released="December 1990"/>
+	<row GameName="Chessmaster, The" Developer="Hi-Tech" Released="January 1991"/>
+	<row GameName="Choplifter II" Developer="JVC" Released="September 1991"/>
+	<row GameName="Chuck Rock" Developer="Sony Imagesoft" Released="December 1993"/>
+	<row GameName="Cliffhanger" Developer="Sony Imagesoft" Released="December 1993"/>
+	<row GameName="College Slam" Developer="Acclaim" Released="March 1996"/>
+	<row GameName="Conker&apos;s Pocket Tales" Developer="Nintendo" Released="June 1999"/>
+	<row GameName="Contra: The Alien Wars" Developer="Konami" Released="October 1994"/>
+	<row GameName="Cool Ball" Developer="Takara" Released="August 1994"/>
+	<row GameName="Cool Spot" Developer="Virgin Interactive" Released="October 1994"/>
+	<row GameName="Cool World" Developer="Ocean" Released="June 1993"/>
+	<row GameName="Cosmo Tank" Developer="Atlus Software" Released="September 1990"/>
+	<row GameName="Crystal Quest" Developer="Data East" Released="September 1991"/>
+	<row GameName="CutThroat Island" Developer="Acclaim" Released="January 1996"/>
+	<row GameName="Cyraid" Developer="Ascii" Released="March 1991"/>
+	<row GameName="Daedalian Opus" Developer="Vic Tokai" Released="July 1990"/>
+	<row GameName="Daffy Duck: Fowl Play" Developer="Sunsoft" Released="December 1999"/>
+	<row GameName="Daffy Duck: The Marvin Missions" Developer="Sunsoft" Released="January 1995"/>
+	<row GameName="Darkman" Developer="Ocean" Released="December 1992"/>
+	<row GameName="Darkwing Duck" Developer="Capcom" Released="February 1993"/>
+	<row GameName="Days of Thunder" Developer="Mindscape" Released="February 1992"/>
+	<row GameName="Dead Heat Scramble" Developer="Electro Brain" Released="December 1990"/>
+	<row GameName="Deja Vu 1 &amp; 2" Developer="Kemco" Released="December 1999"/>
+	<row GameName="Dennis the Menace" Developer="Ocean" Released="February 1994"/>
+	<row GameName="Desert Strike: Return to the Gulf" Developer="Malibu Games" Released="February 1995"/>
+	<row GameName="Dexterity" Developer="SNK" Released="July 1990"/>
+	<row GameName="Dick Tracy" Developer="Bandai" Released="December 1991"/>
+	<row GameName="Dig Dug" Developer="Namco" Released="September 1992"/>
+	<row GameName="Disney&apos;s A Bug&apos;s Life" Developer="THQ" Released="December 1998"/>
+	<row GameName="Disney&apos;s Aladdin" Developer="THQ" Released="October 1995"/>
+	<row GameName="Disney&apos;s Mulan" Developer="THQ" Released="October 1998"/>
+	<row GameName="Disney&apos;s Pinocchio" Developer="Black Pearl Software" Released="October 1996"/>
+	<row GameName="Donkey Kong" Developer="Nintendo" Released="June 1994"/>
+	<row GameName="Donkey Kong Land" Developer="Nintendo" Released="June 1995"/>
+	<row GameName="Donkey Kong Land 2: Diddy&apos;s Kong Quest" Developer="Nintendo" Released="September 1996"/>
+	<row GameName="Donkey Kong Land 3" Developer="Nintendo" Released="October 1997"/>
+	<row GameName="Double Dragon" Developer="Tradewest" Released="August 1990"/>
+	<row GameName="Double Dragon II" Developer="Acclaim" Released="December 1991"/>
+	<row GameName="Double Dragon III: The Arcade Game" Developer="Acclaim" Released="August 1992"/>
+	<row GameName="Double Dribble: 5 on 5" Developer="Konami" Released="December 1991"/>
+	<row GameName="Dr. Franken" Developer="Kemco" Released="December 1992"/>
+	<row GameName="Dr. Franken II" Developer="Jaleco" Released="October 1997"/>
+	<row GameName="Dr. Mario" Developer="Nintendo" Released="December 1990"/>
+	<row GameName="Dragon Dance" Developer="Infogrames" Released="August 2000"/>
+	<row GameName="Dragon Warrior 1 &amp; 2" Developer="Enix" Released="September 2000"/>
+	<row GameName="Dragon Warrior Monsters" Developer="Eidos" Released="January 2000"/>
+	<row GameName="Dragon Warrior Monster 2: Cobi&apos;s Journey" Developer="Enix" Released="September 2001"/>
+	<row GameName="Dragon Warriors Monsters 2: Tara&apos;s Adventure" Developer="Enix" Released="September 2001"/>
+	<row GameName="Dragonheart" Developer="Acclaim" Released="May 1996"/>
+	<row GameName="Dragon&apos;s Lair: The Legend" Developer="Sony Imagesoft" Released="January 1991"/>
+	<row GameName="DuckTales" Developer="THQ" Released="November 1990"/>
+	<row GameName="DuckTales 2" Developer="Nintendo" Released="November 1993"/>
+	<row GameName="Earthworm Jim" Developer="Playmates" Released="September 1995"/>
+	<row GameName="Earthworm Jim: Menace 2 The Galaxy" Developer="Crave Entertainment" Released="November 1999"/>
+	<row GameName="Elevator Action" Developer="Taito Software" Released="December 1991"/>
+	<row GameName="Elite Soccer" Developer="Gametek" Released="August 1994"/>
+	<row GameName="Elmo&apos;s 123&apos;s" Developer="Newkidco" Released="March 1999"/>
+	<row GameName="Elmo&apos;s ABC&apos;s" Developer="Newkidco" Released="March 1999"/>
+	<row GameName="Empire Strikes Back , The" Developer="Capcom" Released="January 1993"/>
+	<row GameName="Evel Knievel" Developer="Take 2 Interactive" Released="December 1999"/>
+	<row GameName="Extra Bases" Developer="Bandai" Released="April 1991"/>
+	<row GameName="F1 Pole Position" Developer="UBI Soft" Released="December 1993"/>
+	<row GameName="F-1 Race" Developer="Nintendo" Released="February 1991"/>
+	<row GameName="F-15 Strike" Developer="Eagle Microprose" Released="June 1993"/>
+	<row GameName="Faceball 2000" Developer="Bullet Proof Software" Released="December 1991"/>
+	<row GameName="Fastest Lap" Developer="NTVIC" Released="February 1992"/>
+	<row GameName="Felix the Cat" Developer="Hudson Soft" Released="July 1993"/>
+	<row GameName="Ferrari Grand Prix Challenge" Developer="Acclaim" Released="September 1992"/>
+	<row GameName="FIFA International Soccer" Developer="Malibu Games" Released="February 1995"/>
+	<row GameName="FIFA Road to World Cup &apos;98" Developer="THQ" Released="December 1997"/>
+	<row GameName="FIFA Soccer &apos;96" Developer="Black Pearl Software" Released="December 1995"/>
+	<row GameName="FIFA Soccer &apos;97" Developer="THQ" Released="November 1996"/>
+	<row GameName="Fighting Simulator 2-in-1" Developer="Culture Brain" Released="April 1992"/>
+	<row GameName="Final Fantasy Adventure" Developer="Square Soft" Released="November 1991"/>
+	<row GameName="Final Fantasy Legend" Developer="Square Soft" Released="September 1990"/>
+	<row GameName="Final Fantasy Legend II" Developer="Square Soft" Released="November 1991"/>
+	<row GameName="Final Fantasy Legend III" Developer="Square Soft" Released="August 1993"/>
+	<row GameName="Fish Dude" Developer="Sofel" Released="April 1991"/>
+	<row GameName="Fist of the North Star" Developer="Electro Brain" Released="April 1990"/>
+	<row GameName="Flash, The" Developer="THQ" Released="March 1992"/>
+	<row GameName="Flintstones: King Rock Treasure Island, The" Developer="Taito Software" Released="February 1993"/>
+	<row GameName="Flintstones: The Movie, The" Developer="Ocean" Released="December 1994"/>
+	<row GameName="Flipull" Developer="Taito Software" Released="April 1990"/>
+	<row GameName="Foreman For Real" Developer="Acclaim" Released="September 1995"/>
+	<row GameName="Fortified Zone" Developer="Jaleco" Released="September 1991"/>
+	<row GameName="Frank Thomas&apos; Big Hurt Baseball" Developer="Acclaim" Released="December 1995"/>
+	<row GameName="Frogger" Developer="Majesco" Released="August 1998"/>
+	<row GameName="Game &amp; Watch Gallery" Developer="Nintendo" Released="May 1997"/>
+	<row GameName="Game &amp; Watch Gallery 2" Developer="Nintendo" Released="November 1998"/>
+	<row GameName="Game &amp; Watch Gallery 3" Developer="Nintendo" Released="December 1999"/>
+	<row GameName="Game of Harmony, The" Developer="Accolade" Released="February 1991"/>
+	<row GameName="Gargoyle&apos;s Quest" Developer="Capcom" Released="July 1990"/>
+	<row GameName="Gauntlet II" Developer="Mindscape" Released="September 1991"/>
+	<row GameName="Gear Works" Developer="Sony Imagesoft" Released="October 1993"/>
+	<row GameName="George Foreman&apos;s KO Boxing" Developer="Acclaim" Released="September 1992"/>
+	<row GameName="Getaway, The" Developer="Midway" Released="December 1995"/>
+	<row GameName="Gex 3: Deep Pocket Gecko" Developer="Eidos Interactive" Released="December 1999"/>
+	<row GameName="Gex: Enter the Gecko" Developer="Crave Entertainment" Released="December 1998"/>
+	<row GameName="Ghostbusters II" Developer="Activision" Released="December 1990"/>
+	<row GameName="Ghosts &apos;N Goblins" Developer="Capcom" Released="January 2000"/>
+	<row GameName="Go! Go! Tank" Developer="Electro Brain" Released="May 1991"/>
+	<row GameName="Goal!" Developer="Jaleco" Released="August 1993"/>
+	<row GameName="Godzilla" Developer="Crave Entertainment" Released="December 1999"/>
+	<row GameName="Godzilla" Developer="Toho" Released="October 1990"/>
+	<row GameName="Golf" Developer="Nintendo" Released="February 1990"/>
+	<row GameName="Gradius: The Interstellar Assault" Developer="Konami" Released="January 1992"/>
+	<row GameName="Grand Theft Auto" Developer="Take 2 Interactive" Released="November 1999"/>
+	<row GameName="Great Greed" Developer="Namco" Released="April 1993"/>
+	<row GameName="Gremlins 2: The New Batch" Developer="Sunsoft" Released="January 1991"/>
+	<row GameName="Hal Wrestling" Developer="Hal America" Released="December 1990"/>
+	<row GameName="Harvest Moon GB" Developer="Natsume" Released="August 1998"/>
+	<row GameName="Harvest Moon 2" Developer="Natsume" Released="November 2000"/>
+	<row GameName="Hatris" Developer="Bullet Proof Software" Released="May 1991"/>
+	<row GameName="Heavyweight Championship Boxing" Developer="Activision" Released="September 1990"/>
+	<row GameName="Heiankyo Alien" Developer="Meldac" Released="April 1990"/>
+	<row GameName="Hello Kitty&apos;s Cube Frenzy" Developer="Newkidco" Released="December 1999"/>
+	<row GameName="Hercules" Developer="THQ" Released="July 1997"/>
+	<row GameName="Hexcite" Developer="UBI Soft" Released="January 1999"/>
+	<row GameName="High Stakes Gambling" Developer="Electro Brain" Released="June 1992"/>
+	<row GameName="Hit the Ice" Developer="Taito Software" Released="October 1992"/>
+	<row GameName="Hole In One Golf" Developer="Natsume" Released="August 1999"/>
+	<row GameName="Home Alone" Developer="THQ" Released="November 1991"/>
+	<row GameName="Home Alone II: Lost in New York" Developer="THQ" Released="October 1992"/>
+	<row GameName="Hook" Developer="Sony Imagesoft" Released="April 1992"/>
+	<row GameName="Hot Wheels Stunt Track Driver" Developer="Mattel" Released="January 2000"/>
+	<row GameName="Hudson Hawk" Developer="Sony Imagesoft" Released="December 1991"/>
+	<row GameName="Humans, The" Developer="Gametek" Released="December 1992"/>
+	<row GameName="Hunchback of Notre Dame, The" Developer="THQ" Released="March 1997"/>
+	<row GameName="Hunt for Red October, The" Developer="Hi-Tech" Released="May 1991"/>
+	<row GameName="Hyper Lode Runner" Developer="Bandai" Released="February 1990"/>
+	<row GameName="In Your Face" Developer="Jaleco" Released="December 1990"/>
+	<row GameName="Incredible Crash Dummies, The" Developer="LJN" Released="November 1992"/>
+	<row GameName="Indiana Jones and the Last Crusade" Developer="UBI Soft" Released="July 1994"/>
+	<row GameName="Infogenius French Language Translator" Developer="Gametek" Released="September 1991"/>
+	<row GameName="Infogenius Personal Organizer" Developer="Gametek" Released="September 1991"/>
+	<row GameName="Infogenius Spanish Language Translator" Developer="Gametek" Released="September 1991"/>
+	<row GameName="Infogenius Spell Checker" Developer="Gametek" Released="September 1991"/>
+	<row GameName="Infogenius Travel Guide" Developer="Gametek" Released="September 1991"/>
+	<row GameName="International Rally" Developer="Konami" Released="September 2000"/>
+	<row GameName="International Superstar Soccer" Developer="Konami" Released="October 1998"/>
+	<row GameName="International Track and Field 2000" Developer="Konami" Released="January 2000"/>
+	<row GameName="Iron Man/X-O Manowar: in Heavy Metal" Developer="Acclaim" Released="August 1996"/>
+	<row GameName="Ishido: The Way of Stones" Developer="Ascii" Released="November 1990"/>
+	<row GameName="Itchy &amp; Scratchy in Miniature Golf Madness" Developer="Acclaim" Released="November 1994"/>
+	<row GameName="Jack Nicklaus Golf" Developer="Tradewest" Released="May 1992"/>
+	<row GameName="James Bond 007" Developer="Nintendo" Released="February 1998"/>
+	<row GameName="Jeep Jamboree: Off Road Adventure" Developer="Virgin Interactive" Released="July 1992"/>
+	<row GameName="Jeff Gordon XS Racing" Developer="American Softworks" Released="November 1999"/>
+	<row GameName="Jeopardy!" Developer="Gametek" Released="March 1991"/>
+	<row GameName="Jeopardy! Platinum Edition" Developer="Gametek" Released="December 1996"/>
+	<row GameName="Jeopardy! Sports Edition" Developer="Gametek" Released="May 1994"/>
+	<row GameName="Jeopardy! Teen Tournament" Developer="Gametek" Released="December 1996"/>
+	<row GameName="Jetsons: Robot Panic, The" Developer="Taito Software" Released="October 1992"/>
+	<row GameName="Jimmy Connors Tennis" Developer="UBI Soft" Released="May 1998"/>
+	<row GameName="Joe &amp; Mac" Developer="Data East" Released="June 1993"/>
+	<row GameName="John Madden Football &apos;95" Developer="THQ" Released="November 1994"/>
+	<row GameName="Jordan vs. Bird" Developer="EA Sports" Released="February 1992"/>
+	<row GameName="Judge Dredd" Developer="Acclaim" Released="June 1995"/>
+	<row GameName="Jungle Book, The" Developer="THQ" Released="August 1994"/>
+	<row GameName="Jungle Strike" Developer="Malibu Games" Released="June 1995"/>
+	<row GameName="Jurassic Park" Developer="Ocean" Released="August 1993"/>
+	<row GameName="Jurassic Park 2" Developer="Ocean" Released="December 1994"/>
+	<row GameName="Ken Griffey Jr. Presents: Major League Baseball" Developer="Nintendo" Released="October 1997"/>
+	<row GameName="Kid Dracula" Developer="Konami" Released="March 1993"/>
+	<row GameName="Kid Icarus: Of Myths and Monsters" Developer="Nintendo" Released="November 1991"/>
+	<row GameName="Killer Instinct" Developer="Nintendo" Released="November 1995"/>
+	<row GameName="King of Fighters &apos;95" Developer="Nintendo" Released="February 1997"/>
+	<row GameName="Kingdom Crusade" Developer="Electro Brain" Released="November 1992"/>
+	<row GameName="Kirby&apos;s Block Ball" Developer="Nintendo" Released="May 1996"/>
+	<row GameName="Kirby&apos;s Dream Land" Developer="Nintendo" Released="August 1992"/>
+	<row GameName="Kirby&apos;s Dream Land 2" Developer="Nintendo" Released="May 1995"/>
+	<row GameName="Kirby&apos;s Pinball Land" Developer="Nintendo" Released="November 1993"/>
+	<row GameName="Kirby&apos;s Star Stacker" Developer="Nintendo" Released="April 1997"/>
+	<row GameName="Klax" Developer="Mindscape" Released="July 1991"/>
+	<row GameName="Klustar" Developer="Infogrames" Released="July 1999"/>
+	<row GameName="Klustar" Developer="Infogrames" Released="July 1999"/>
+	<row GameName="Knight&apos;s Quest" Developer="Taito Software" Released="July 1992"/>
+	<row GameName="Krusty&apos;s Funhouse" Developer="Acclaim" Released="January 1993"/>
+	<row GameName="Kung Fu Master" Developer="Irem" Released="February 1991"/>
+	<row GameName="Kwirk" Developer="Acclaim" Released="March 1990"/>
+	<row GameName="Lamborghini American Challenge" Developer="Titus" Released="May 1994"/>
+	<row GameName="Las Vegas Cool Hand" Developer="Take 2 Interactive" Released="December 1998"/>
+	<row GameName="Last Action Hero" Developer="Sony Imagesoft" Released="October 1993"/>
+	<row GameName="Lazlo&apos;s Leap" Developer="DTMC" Released="October 1992"/>
+	<row GameName="Legend of the River King" Developer="Natsume" Released="August 1998"/>
+	<row GameName="Legend of the River King 2" Developer="Natsume" Released="May 2001"/>
+	<row GameName="Legend of Zelda: Link&apos;s Awakening DX, The" Developer="Nintendo" Released="December 1998"/>
+	<row GameName="Legend of Zelda: Link&apos;s Awakening, The" Developer="Nintendo" Released="August 1993"/>
+	<row GameName="Lemmings" Developer="Ocean" Released="August 1994"/>
+	<row GameName="Lethal Weapon" Developer="Ocean" Released="April 1993"/>
+	<row GameName="Lion King, The" Developer="THQ" Released="April 1995"/>
+	<row GameName="Little Mermaid, The" Developer="Nintendo" Released="February 1993"/>
+	<row GameName="Lock &apos;N Chase" Developer="Data East" Released="July 1990"/>
+	<row GameName="Logical" Developer="Sunsoft" Released="April 1999"/>
+	<row GameName="Looney Toons: &quot;Carrot Crazy&quot;" Developer="Infogrames" Released="January 1999"/>
+	<row GameName="Looney Toons: &quot;Twouble&quot;" Developer="Infogrames" Released="December 1998"/>
+	<row GameName="Looney Tunes" Developer="Sunsoft" Released="October 1992"/>
+	<row GameName="LoopZ" Developer="Mindscape" Released="March 1991"/>
+	<row GameName="Madden &apos;96" Developer="Black Pearl Software" Released="October 1995"/>
+	<row GameName="Madden &apos;97" Developer="THQ" Released="November 1996"/>
+	<row GameName="Madden NFL 2000" Developer="EA Sports" Released="November 1999"/>
+	<row GameName="Malibu Beach Volleyball" Developer="Activision" Released="March 1990"/>
+	<row GameName="Marble Madness" Developer="Mindscape" Released="May 1991"/>
+	<row GameName="Mario&apos;s Picross" Developer="Nintendo" Released="March 1995"/>
+	<row GameName="Mary Kate and Ashley: Get a Clue" Developer="Acclaim" Released="June 2000"/>
+	<row GameName="Mary Kate and Ashley Pocket Planner" Developer="Acclaim" Released="November 2000"/>
+	<row GameName="Maru&apos;s Mission" Developer="Jaleco" Released="March 1991"/>
+	<row GameName="Matchbox Caterpillar Construction" Developer="Mattel" Released="January 2000"/>
+	<row GameName="Maui Mallard in Dark Shadow" Developer="Sunsoft" Released="August 1998"/>
+	<row GameName="Mega Man II" Developer="Nintendo" Released="February 1992"/>
+	<row GameName="Mega Man III" Developer="Capcom" Released="December 1992"/>
+	<row GameName="Mega Man IV" Developer="Capcom" Released="December 1993"/>
+	<row GameName="Mega Man V" Developer="Capcom" Released="September 1994"/>
+	<row GameName="Mega Man: Dr. Wily&apos;s Revenge" Developer="Nintendo" Released="December 1991"/>
+	<row GameName="Mega Man X-Treme" Developer="Capcom" Released="January 2001"/>
+	<row GameName="Megalit" Developer="Takara" Released="December 1992"/>
+	<row GameName="Men in Black: The Series" Developer="Crave Entertainment" Released="December 1998"/>
+	<row GameName="Mercenary Force" Developer="Meldac" Released="October 1990"/>
+	<row GameName="Metal Masters" Developer="Electro Brain" Released="December 1994"/>
+	<row GameName="Metal Walker" Developer="Capcom" Released="February 2001"/>
+	<row GameName="Metroid II: Return of Samus" Developer="Nintendo" Released="November 1991"/>
+	<row GameName="Mickey Mouse Magic Wands" Developer="Nintendo" Released="May 1998"/>
+	<row GameName="Mickey&apos;s Dangerous Chase" Developer="Nintendo" Released="May 1991"/>
+	<row GameName="Mickey&apos;s Ultimate Challenge" Developer="Hi-Tech" Released="May 1994"/>
+	<row GameName="Micro Machines" Developer="Ocean" Released="January 1995"/>
+	<row GameName="Mighty Morphin&apos; Power Rangers" Developer="Bandai" Released="August 1994"/>
+	<row GameName="Mighty Morphin Power Rangers - The Movie" Developer="Bandai" Released="August 1995"/>
+	<row GameName="Milon&apos;s Secret Castle" Developer="Hudson Soft" Released="March 1993"/>
+	<row GameName="Miner 2049er" Developer="Mindscape" Released="October 1992"/>
+	<row GameName="Missile Command" Developer="Accolade" Released="March 1992"/>
+	<row GameName="Mole Mania" Developer="Nintendo" Released="February 1997"/>
+	<row GameName="Monopoly" Developer="Parker Brothers" Released="December 1991"/>
+	<row GameName="Monster Max" Developer="Titus" Released="January 1995"/>
+	<row GameName="Monster Rancher Battle Card Edition" Developer="Tecmo" Released="April 2000"/>
+	<row GameName="Montezuma&apos;s Return" Developer="Take 2 Interactive" Released="December 1998"/>
+	<row GameName="Mortal Kombat" Developer="Acclaim" Released="September 1993"/>
+	<row GameName="Mortal Kombat I &amp; II (2-in-1)" Developer="Midway" Released="November 1997"/>
+	<row GameName="Mortal Kombat II" Developer="Acclaim" Released="September 1994"/>
+	<row GameName="Mortal Kombat III" Developer="Midway" Released="November 1995"/>
+	<row GameName="Mortal Kombat IV" Developer="Midway" Released="December 1998"/>
+	<row GameName="Motocross Maniacs" Developer="Ultra Soft" Released="January 1990"/>
+	<row GameName="Mouse Trap Hotel" Developer="Milton Bradley" Released="October 1992"/>
+	<row GameName="Mr. Chin&apos;s Gourmet Paradise" Developer="Romstar" Released="October 1990"/>
+	<row GameName="Mr. Do!" Developer="Ocean" Released="November 1992"/>
+	<row GameName="Ms. Pac Man" Developer="Namco" Released="October 1993"/>
+	<row GameName="Ms. Pac Man Special Color Edition" Developer="Namco" Released="November 1999"/>
+	<row GameName="Muhammad Ali Heavyweight Boxing" Developer="Virgin Interactive" Released="July 1993"/>
+	<row GameName="Mysterium" Developer="Asmik" Released="July 1991"/>
+	<row GameName="Mystical Ninja Starring Goemon" Developer="Konami" Released="April 1998"/>
+	<row GameName="Nail &apos;N Scale" Developer="Data East" Released="April 1992"/>
+	<row GameName="Navy Seals" Developer="Ocean" Released="September 1991"/>
+	<row GameName="NBA 3 on 3 Featuring Kobe Bryant" Developer="Nintendo" Released="December 1999"/>
+	<row GameName="NBA All-Star Challenge" Developer="LJN" Released="February 1991"/>
+	<row GameName="NBA All-Star Challenge 2" Developer="LJN" Released="May 1992"/>
+	<row GameName="NBA In The Zone &apos;99" Developer="Konami" Released="May 1999"/>
+	<row GameName="NBA Jam" Developer="LJN" Released="November 1994"/>
+	<row GameName="NBA Jam &apos;99" Developer="Acclaim" Released="April 1999"/>
+	<row GameName="NBA Jam Tournament Edition" Developer="Acclaim" Released="June 1995"/>
+	<row GameName="NBA Live &apos;96" Developer="Black Pearl Software" Released="March 1996"/>
+	<row GameName="Nemesis" Developer="Ultra Soft" Released="April 1990"/>
+	<row GameName="New Chessmaster, The" Developer="Hi-Tech" Released="April 1993"/>
+	<row GameName="NFL Blitz" Developer="Midway" Released="December 1998"/>
+	<row GameName="NFL Football" Developer="Konami" Released="April 1990"/>
+	<row GameName="NFL Quarterback Club" Developer="LJN" Released="November 1993"/>
+	<row GameName="NFL Quarterback Club 2" Developer="LJN" Released="March 1995"/>
+	<row GameName="NFL Quarterback Club &apos;96" Developer="Acclaim" Released="October 1995"/>
+	<row GameName="NHL &apos;96" Developer="Black Pearl Software" Released="July 1996"/>
+	<row GameName="NHL 2000" Developer="THQ" Released="February 2000"/>
+	<row GameName="NHL Hockey &apos;95" Developer="Malibu Games" Released="June 1995"/>
+	<row GameName="Nigel Mansell&apos;s World Championship Racing" Developer="Gametek" Released="August 1993"/>
+	<row GameName="Ninja Boy" Developer="Culture Brain" Released="November 1990"/>
+	<row GameName="Ninja Boy 2" Developer="Culture Brain" Released="April 1993"/>
+	<row GameName="Ninja Gaiden Shadow" Developer="Tecmo" Released="December 1991"/>
+	<row GameName="Ninja Taro" Developer="American Sammy" Released="September 1992"/>
+	<row GameName="Nintendo World Cup Soccer" Developer="Nintendo" Released="June 1991"/>
+	<row GameName="Nobunaga&apos;s Ambition" Developer="Koei" Released="March 1991"/>
+	<row GameName="Oddworld: Abe&apos;s Adventure" Developer="GT Interactive" Released="December 1998"/>
+	<row GameName="Oddworld Adventures 2" Developer="GT Interactive" Released="January 2000"/>
+	<row GameName="Olympic Summer Games" Developer="Black Pearl Software" Released="June 1996"/>
+	<row GameName="Operation C" Developer="Ultra Soft" Released="February 1991"/>
+	<row GameName="Out of Gas" Developer="FCI" Released="October 1992"/>
+	<row GameName="Pac Man" Developer="Namco" Released="April 1991"/>
+	<row GameName="Pac Man Special Color Edition" Developer="Namco" Released="August 1999"/>
+	<row GameName="Pac-Attack" Developer="Namco" Released="December 1994"/>
+	<row GameName="Pac-in-Time" Developer="Namco" Released="February 1995"/>
+	<row GameName="Pagemaster, The" Developer="Fox Interactive" Released="November 1994"/>
+	<row GameName="Panel Action Bingo" Developer="FCI" Released="November 1993"/>
+	<row GameName="Paperboy" Developer="Mindscape" Released="July 1990"/>
+	<row GameName="Paperboy 2" Developer="Mindscape" Released="April 1992"/>
+	<row GameName="Penguin Wars" Developer="Ascii" Released="July 1990"/>
+	<row GameName="PGA European Tour" Developer="Malibu Games" Released="April 1995"/>
+	<row GameName="PGA Tour &apos;96" Developer="Black Pearl Software" Released="November 1995"/>
+	<row GameName="Pinball Dreams" Developer="Gametek" Released="August 1993"/>
+	<row GameName="Pinball Fantasies" Developer="Gametek" Released="February 1995"/>
+	<row GameName="Pipe Dream" Developer="Bullet Proof Software" Released="September 1990"/>
+	<row GameName="Pitfall: Beyond the Jungle" Developer="Crave Entertainment" Released="December 1998"/>
+	<row GameName="Pit-Fighter" Developer="THQ" Released="June 1992"/>
+	<row GameName="Play Action Football" Developer="Nintendo" Released="December 1990"/>
+	<row GameName="Pocahontas" Developer="Black Pearl Software" Released="April 1996"/>
+	<row GameName="Pocket Bomberman" Developer="Nintendo" Released="November 1998"/>
+	<row GameName="Pocket Bowling" Developer="Jaleco" Released="August 1999"/>
+	<row GameName="Pokemon" Developer="Nintendo" Released="September 1998"/>
+	<row GameName="Pokemon Gold" Developer="Nintendo" Released="October 2000"/>
+	<row GameName="Pokemon Pinball" Developer="Nintendo" Released="June 1999"/>
+	<row GameName="Pokemon Silver" Developer="Nintendo" Released="October 2000"/>
+	<row GameName="Pokemon Trading Card Game" Developer="Nintendo" Released="April 2000"/>
+	<row GameName="Pokemon Yellow" Developer="Nintendo" Released="October 1999"/>
+	<row GameName="Popeye II" Developer="Activision" Released="October 1993"/>
+	<row GameName="Power Mission" Developer="NTVIC" Released="January 1991"/>
+	<row GameName="Power Quest" Developer="Sunsoft" Released="December 1998"/>
+	<row GameName="Power Racer" Developer="Tecmo" Released="December 1990"/>
+	<row GameName="Prehistorik Man" Developer="Titus" Released="January 1996"/>
+	<row GameName="Primal Rage" Developer="Time Warner" Released="July 1995"/>
+	<row GameName="Prince of Persia" Developer="Virgin Interactive" Released="January 1992"/>
+	<row GameName="Prophecy: The Viking Child" Developer="Gametek" Released="July 1992"/>
+	<row GameName="Punisher, The" Developer="LJN" Released="July 1991"/>
+	<row GameName="Puzzle Master" Developer="Metro 3D Studios" Released="December 1999"/>
+	<row GameName="Pyramids of Ra" Developer="Matchbox Toys" Released="April 1993"/>
+	<row GameName="Q Billion" Developer="Seta" Released="April 1990"/>
+	<row GameName="Q*Bert" Developer="Jaleco" Released="February 1992"/>
+	<row GameName="Qix" Developer="Nintendo" Released="May 1990"/>
+	<row GameName="Quarth" Developer="Ultra Soft" Released="December 1990"/>
+	<row GameName="Quest Fantasy Challenge" Developer="Sunsoft" Released="April 1999"/>
+	<row GameName="Quest for Camelot" Developer="Nintendo" Released="December 1998"/>
+	<row GameName="Quest RPG: Brian&apos;s Journey" Developer="Sunsoft" Released="January 2000"/>
+	<row GameName="Race Days" Developer="Gametek" Released="November 1994"/>
+	<row GameName="Race Drivin&apos;" Developer="THQ" Released="January 1993"/>
+	<row GameName="Radar Mission" Developer="Nintendo" Released="February 1991"/>
+	<row GameName="Raging Fighter" Developer="Konami" Released="June 1993"/>
+	<row GameName="Rampage: World Tour" Developer="Midway" Released="December 1998"/>
+	<row GameName="Rats!" Developer="Take 2 Interactive" Released="December 1998"/>
+	<row GameName="Real Ghostbusters , The" Developer="Activision" Released="October 1993"/>
+	<row GameName="Ren &amp; Stimpy Show: Space Cadet Adventures, The" Developer="THQ" Released="November 1992"/>
+	<row GameName="Ren &amp; Stimpy Show: Veediots!, The" Developer="THQ" Released="October 1993"/>
+	<row GameName="Rescue of Princess Blobette, The" Developer="Absolute" Released="May 1991"/>
+	<row GameName="Revelations: Demon Slayer" Developer="Atlus Software" Released="August 1999"/>
+	<row GameName="Revenge of the &apos;Gator" Developer="Hal America" Released="March 1990"/>
+	<row GameName="Riddick Bowe Boxing" Developer="Extreme" Released="January 1994"/>
+	<row GameName="Ring Rage" Developer="Taito Software" Released="April 1998"/>
+	<row GameName="Road Rash" Developer="Ocean" Released="October 1996"/>
+	<row GameName="Roadsters Trophy" Developer="Titus" Released="January 2000"/>
+	<row GameName="Robin Hood: Prince of Thieves" Developer="Virgin Interactive" Released="June 1993"/>
+	<row GameName="RoboCop" Developer="Ocean" Released="December 1990"/>
+	<row GameName="RoboCop 2" Developer="Ocean" Released="November 1991"/>
+	<row GameName="RoboCop vs. Terminator" Developer="Virgin Interactive" Released="August 1994"/>
+	<row GameName="Robopon Star" Developer="Atlus Software" Released="December 2000"/>
+	<row GameName="Rocky and Bullwinkle" Developer="THQ" Released="October 1992"/>
+	<row GameName="Roger Clemens&apos; MVP Baseball" Developer="LJN" Released="September 1992"/>
+	<row GameName="Rolan&apos;s Curse" Developer="American Sammy" Released="January 1991"/>
+	<row GameName="Rolan&apos;s Curse II" Developer="American Sammy" Released="October 1992"/>
+	<row GameName="R-Type" Developer="Irem" Released="May 1991"/>
+	<row GameName="R-Type DX" Developer="Nintendo" Released="June 1999"/>
+	<row GameName="Rugrats Time Traveler" Developer="THQ" Released="November 1999"/>
+	<row GameName="Rugrats: The Movie" Developer="THQ" Released="December 1998"/>
+	<row GameName="Samurai Shodown" Developer="Takara" Released="November 1994"/>
+	<row GameName="SeaQuest: DSV" Developer="Malibu Games" Released="November 1994"/>
+	<row GameName="Serpent" Developer="Taxan" Released="November 1990"/>
+	<row GameName="Shadowgate Classic" Developer="Nintendo" Released="January 1999"/>
+	<row GameName="Shamus" Developer="Vatical Entertainment" Released="March 2000"/>
+	<row GameName="Shanghai" Developer="Hal America" Released="June 1990"/>
+	<row GameName="Shanghai Pocket" Developer="Sunsoft" Released="December 1998"/>
+	<row GameName="Shaq Fu" Developer="Black Pearl Software" Released="October 1995"/>
+	<row GameName="Side Pocket" Developer="Data East" Released="November 1990"/>
+	<row GameName="Simpsons: Bart &amp; the Beanstalk, The" Developer="Acclaim" Released="February 1994"/>
+	<row GameName="Simpsons: Bart vs. the Juggernauts, The" Developer="Acclaim" Released="September 1992"/>
+	<row GameName="Skate Or Die: Bad &apos;N Rad" Developer="Konami" Released="September 1990"/>
+	<row GameName="Skate Or Die: Tour de Thrash" Developer="EA Sports" Released="June 1991"/>
+	<row GameName="Small Soldiers" Developer="THQ" Released="November 1998"/>
+	<row GameName="Smufrs Nightmare" Developer="Infogrames" Released="June 1999"/>
+	<row GameName="Sneaky Snakes" Developer="Tradewest" Released="June 1991"/>
+	<row GameName="Snoopy&apos;s Magic Show" Developer="Seika" Released="October 1990"/>
+	<row GameName="Snow Bros. Jr." Developer="Capcom" Released="January 1992"/>
+	<row GameName="Soccer Mania" Developer="Sony Imagesoft" Released="March 1992"/>
+	<row GameName="Solar Striker" Developer="Nintendo" Released="February 1990"/>
+	<row GameName="Solitaire FunPak" Developer="Interplay" Released="November 1994"/>
+	<row GameName="Solomon&apos;s Club" Developer="Tecmo" Released="April 1991"/>
+	<row GameName="Space Invaders" Developer="Activision" Released="October 1999"/>
+	<row GameName="Space Invaders: The Arcade Game" Developer="Nintendo" Released="October 1994"/>
+	<row GameName="Spanky&apos;s Quest" Developer="Natsume" Released="July 1992"/>
+	<row GameName="Speedball II" Developer="Mindscape" Released="October 1992"/>
+	<row GameName="Speedy Gonzales" Developer="Sunsoft" Released="July 1993"/>
+	<row GameName="Speedy Gonzales: Aztec Adventure" Developer="Sunsoft" Released="January 2000"/>
+	<row GameName="Spider-Man &amp; X-Men: Arcade&apos;s Revenge" Developer="LJN" Released="December 1993"/>
+	<row GameName="Spider-Man 2" Developer="LJN" Released="August 1992"/>
+	<row GameName="Spider-Man 3: Invasion of the Spider Slayers" Developer="LJN" Released="July 1993"/>
+	<row GameName="Sports Illustrated for Kids: The Ultimate Triple Dare" Developer="Malibu Games" Released="April 1994"/>
+	<row GameName="Sports Illustrated Golf Classic" Developer="Malibu Games" Released="October 1994"/>
+	<row GameName="Sports Illustrated: Championship Football &amp; Baseball" Developer="Malibu Games" Released="October 1993"/>
+	<row GameName="Spot" Developer="Virgin Interactive" Released="September 1991"/>
+	<row GameName="Spot&apos;s Cool Adventure" Developer="Virgin Interactive" Released="January 1993"/>
+	<row GameName="Spud&apos;s Adventure" Developer="Atlus Software" Released="June 1991"/>
+	<row GameName="Spy vs. Spy: Operation Booby Trap" Developer="Kemco" Released="September 1992"/>
+	<row GameName="Square Deal" Developer="DTMC" Released="April 1992"/>
+	<row GameName="Star Hawk" Developer="Accolade" Released="June 1993"/>
+	<row GameName="Star Trek" Developer="Ultra Soft" Released="February 1992"/>
+	<row GameName="Star Trek Generations: Beyond the Nexus" Developer="Absolute" Released="November 1994"/>
+	<row GameName="Star Trek: The Next Generation" Developer="Absolute" Released="June 1993"/>
+	<row GameName="Star Wars" Developer="Nintendo" Released="November 1992"/>
+	<row GameName="Stargate" Developer="Acclaim" Released="December 1994"/>
+	<row GameName="Stop That Roach" Developer="Koei" Released="July 1994"/>
+	<row GameName="Street Fighter II" Developer="Nintendo" Released="September 1995"/>
+	<row GameName="Street Racer" Developer="UBI Soft" Released="December 1996"/>
+	<row GameName="Sumo Fighter" Developer="DTMC" Released="March 1993"/>
+	<row GameName="Super Battletank" Developer="Absolute" Released="April 1994"/>
+	<row GameName="Super Black Bass" Developer="Hot-B" Released="November 1998"/>
+	<row GameName="Super Breakout" Developer="Majesco" Released="December 1998"/>
+	<row GameName="Super Chase HQ" Developer="Taito Software" Released="January 1994"/>
+	<row GameName="Super Hunchback" Developer="Ocean" Released="April 1992"/>
+	<row GameName="Super Mario Land" Developer="Nintendo" Released="August 1989"/>
+	<row GameName="Super Mario Land 2: 6 Golden Coins" Developer="Nintendo" Released="November 1992"/>
+	<row GameName="Super Off Road" Developer="Tradewest" Released="November 1992"/>
+	<row GameName="Super R.C. Pro-Am Racing" Developer="Nintendo" Released="October 1991"/>
+	<row GameName="Super Return of the Jedi" Developer="Black Pearl Software" Released="November 1995"/>
+	<row GameName="Super Scrabble" Developer="Milton Bradley" Released="March 1991"/>
+	<row GameName="Superman" Developer="Titus" Released="December 1997"/>
+	<row GameName="Survival Kids" Developer="Konami" Released="October 1999"/>
+	<row GameName="Swamp Thing" Developer="THQ" Released="October 1992"/>
+	<row GameName="Sword of Hope 2, The" Developer="Kemco" Released="September 1996"/>
+	<row GameName="Sword of Hope, The" Developer="Seika" Released="June 1991"/>
+	<row GameName="T2: The Arcade Game" Developer="LJN" Released="November 1992"/>
+	<row GameName="Tail &apos;Gator" Developer="Natsume" Released="June 1991"/>
+	<row GameName="Tale Spin" Developer="Capcom" Released="December 1992"/>
+	<row GameName="Tamagotchi" Developer="Bandai" Released="October 1997"/>
+	<row GameName="Tarzan: Lord of the Jungle" Developer="Gametek" Released="October 1994"/>
+	<row GameName="Tasmania Story" Developer="FCI" Released="April 1991"/>
+	<row GameName="Tasmanian Devil: Munching Madness" Developer="Sunsoft" Released="November 1999"/>
+	<row GameName="Taz-Mania" Developer="Sunsoft" Released="September 1994"/>
+	<row GameName="Taz-Mania 2" Developer="Black Pearl Software" Released="January 1997"/>
+	<row GameName="Tecmo Bowl" Developer="Tecmo" Released="September 1991"/>
+	<row GameName="Teenage Mutant Ninja Turtles II: Back from the Sewers" Developer="Konami" Released="December 1991"/>
+	<row GameName="Teenage Mutant Ninja Turtles III: Radical Rescue" Developer="Konami" Released="November 1993"/>
+	<row GameName="Teenage Mutant Ninja Turtles: Fall of the Foot Clan" Developer="Ultra Soft" Released="August 1990"/>
+	<row GameName="Tennis" Developer="Nintendo" Released="August 1989"/>
+	<row GameName="Terminator 2: Judgment Day" Developer="LJN" Released="January 1992"/>
+	<row GameName="Tesserae" Developer="Gametek" Released="August 1993"/>
+	<row GameName="Test Drive Off Road 3" Developer="Infogrames" Released="November 1999"/>
+	<row GameName="Tetris" Developer="Nintendo" Released="June 1989"/>
+	<row GameName="Tetris 2" Developer="Nintendo" Released="December 1993"/>
+	<row GameName="Tetris Attack" Developer="Nintendo" Released="August 1996"/>
+	<row GameName="Tetris Blast" Developer="Nintendo" Released="January 1996"/>
+	<row GameName="Tetris DX" Developer="Nintendo" Released="November 1998"/>
+	<row GameName="Tetris Plus" Developer="Nintendo" Released="August 1997"/>
+	<row GameName="The Fidgetts" Developer="Jaleco" Released="October 1997"/>
+	<row GameName="The Lost World: Jurassic Park" Developer="THQ" Released="December 1997"/>
+	<row GameName="The New Adventures of Mary Kate and Ashley" Developer="Acclaim" Released="December 1999"/>
+	<row GameName="The Smurfs" Developer="Nintendo" Released="October 1998"/>
+	<row GameName="Tiger Woods Golf" Developer="THQ" Released="January 2000"/>
+	<row GameName="Tiny Toon Adventures 2: Montana&apos;s Movie Madness" Developer="Konami" Released="November 1993"/>
+	<row GameName="Tiny Toon Adventures: Babs&apos; Big Break" Developer="Konami" Released="February 1992"/>
+	<row GameName="Tiny Toon Adventures: Wacky Sports Challenge" Developer="Konami" Released="December 1994"/>
+	<row GameName="Titus the Fox" Developer="Titus" Released="November 2000"/>
+	<row GameName="Titus the Fox" Developer="Titus" Released="June 1993"/>
+	<row GameName="TNN Outdoors Fishing Champ" Developer="American Softworks" Released="December 1999"/>
+	<row GameName="Tom &amp; Jerry" Developer="Hi-Tech" Released="October 1992"/>
+	<row GameName="Tom &amp; Jerry: Frantic Antics" Developer="Hi-Tech" Released="October 1993"/>
+	<row GameName="Top Gun: Guts &amp; Glory" Developer="Konami" Released="January 1993"/>
+	<row GameName="Top Rank Tennis" Developer="Nintendo" Released="May 1993"/>
+	<row GameName="Torpedo Range" Developer="Seta" Released="November 1996"/>
+	<row GameName="Total Carnage" Developer="Malibu Games" Released="February 1994"/>
+	<row GameName="Toxic Crusaders" Developer="Bandai" Released="September 1992"/>
+	<row GameName="Toy Story" Developer="THQ" Released="May 1996"/>
+	<row GameName="Toy Story 2" Developer="THQ" Released="November 1999"/>
+	<row GameName="Track &amp; Field" Developer="Konami" Released="September 1992"/>
+	<row GameName="Trax" Developer="Hal America" Released="September 1991"/>
+	<row GameName="True Lies" Developer="LJN" Released="February 1995"/>
+	<row GameName="Tumble Pop" Developer="Data East" Released="March 1993"/>
+	<row GameName="Turn and Burn: The F-14 Dogfight Simulator" Developer="Absolute" Released="May 1992"/>
+	<row GameName="Turok 2: Seeds of Evil" Developer="Acclaim" Released="December 1998"/>
+	<row GameName="Turok: Battle of the Bionosaurs" Developer="Acclaim" Released="December 1997"/>
+	<row GameName="Turrican" Developer="Accolade" Released="November 1991"/>
+	<row GameName="Ultima: Runes of Virtue" Developer="FCI" Released="July 1992"/>
+	<row GameName="Ultima: Runes of Virtue II" Developer="FCI" Released="March 1994"/>
+	<row GameName="Ultra Golf" Developer="Ultra Soft" Released="March 1992"/>
+	<row GameName="Universal Soldier" Developer="Accolade" Released="December 1992"/>
+	<row GameName="Uno" Developer="Mattel" Released="February 2000"/>
+	<row GameName="Urban Strike" Developer="Black Pearl Software" Released="November 1996"/>
+	<row GameName="USHRA Monster Truck Wars" Developer="Acclaim" Released="November 1994"/>
+	<row GameName="Vegas Stakes" Developer="Nintendo" Released="December 1995"/>
+	<row GameName="Wario Blast: Featuring Bomberman!" Developer="Nintendo" Released="November 1994"/>
+	<row GameName="Wario Land 2" Developer="Nintendo" Released="March 1998"/>
+	<row GameName="Wario Land: Super Mario Land 3" Developer="Nintendo" Released="February 1994"/>
+	<row GameName="Wave Race" Developer="Nintendo" Released="July 1992"/>
+	<row GameName="Wayne&apos;s World" Developer="THQ" Released="November 1993"/>
+	<row GameName="WCW: The Main Event" Developer="FCI" Released="February 1994"/>
+	<row GameName="We&apos;re Back!: A Dinosaur&apos;s Story" Developer="Hi-Tech" Released="October 1993"/>
+	<row GameName="Wheel of Fortune" Developer="Gametek" Released="September 1990"/>
+	<row GameName="Who Framed Roger Rabbit?" Developer="Capcom" Released="November 1991"/>
+	<row GameName="Wild Snake" Developer="Spectrum Holobyte" Released="September 1994"/>
+	<row GameName="Wings of Fury" Developer="Mindscape" Released="December 1999"/>
+	<row GameName="Winter Olympic Games" Developer="US Gold" Released="January 1994"/>
+	<row GameName="Wizards &amp; Warriors X: Fortress of Fear" Developer="Acclaim" Released="January 1990"/>
+	<row GameName="Word Zap" Developer="Jaleco" Released="September 1992"/>
+	<row GameName="Wordtris" Developer="Spectrum Holobyte" Released="November 1992"/>
+	<row GameName="World Bowling" Developer="Romstar" Released="April 1990"/>
+	<row GameName="World Circuit Series" Developer="Ultra Soft" Released="March 1992"/>
+	<row GameName="World Cup &apos;98" Developer="THQ" Released="June 1998"/>
+	<row GameName="World Heroes 2 Jet" Developer="Playmates" Released="August 1995"/>
+	<row GameName="WWF King of the Ring" Developer="LJN" Released="September 1993"/>
+	<row GameName="WWF Raw" Developer="LJN" Released="December 1994"/>
+	<row GameName="WWF Superstars" Developer="LJN" Released="April 1991"/>
+	<row GameName="WWF Superstars 2: Steel Cage Challenge" Developer="LJN" Released="August 1992"/>
+	<row GameName="WWF War Zone" Developer="Acclaim" Released="June 1998"/>
+	<row GameName="WWF Wrestlemania 2000" Developer="THQ" Released="November 1999"/>
+	<row GameName="Xenon 2" Developer="Mindscape" Released="October 1992"/>
+	<row GameName="Yar&apos;s Revenge" Developer="Telegames" Released="September 1999"/>
+	<row GameName="Yoda&apos;s Stories" Developer="THQ" Released="December 1999"/>
+	<row GameName="Yogi Bear in Yogi Bear&apos;s Goldrush" Developer="Gametek" Released="October 1994"/>
+	<row GameName="Yoshi" Developer="Nintendo" Released="July 1992"/>
+</GameBoy>

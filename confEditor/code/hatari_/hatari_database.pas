@@ -10,13 +10,16 @@ uses
 
   procedure SingleGames_Click;
   procedure BigCollections_Click;
+  procedure LoadBigCollection(Name: string);
   procedure SmallCollections_Click;
+  procedure LoadSmallCollection(Name: string);
   procedure Demos_Click;
   procedure Applications_Click;
 
   procedure LoadSingleGames_Database;
-  function DatabasesPaths(DName: string): string;
+  function DatabasesPaths(DName: string; Collection,BigOrSmall: Boolean): string;
   procedure SetTheGrid_HatariData(DName: string);
+  procedure ClearNextGrid;
 
 // Menu actions
   procedure Show_hatari_databasepanel;
@@ -30,7 +33,7 @@ uses
   hatari_roms,hatari_screen,hatari_joy,hatari_paths,hatari_system;
 
 var
-  FXml_Hatari: TNativeXml;
+  FXml_Hatari,FXml_Big,FXml_Small: TNativeXml;
 
 procedure SetHatari_DatabasefromHatariIni;
 begin
@@ -111,14 +114,17 @@ end;
 
 procedure LoadSingleGames_Database;
 var
-  F: TFileStream;
-  i,totalRows: Integer;
+//  F: TFileStream;
+  i,k,totalRows: Integer;
   node : Txmlnode;
+  AtariSingleDatabase: string;
 begin
-  FFileName := DatabasesPaths('single');
-  FXml_Hatari := TNativeXml.CreateName('hatari');
+  ClearNextGrid;
+  AtariSingleDatabase := DatabasesPaths('single',False,False);
+  FXml_Hatari := TNativeXml.CreateName('AtariST_SingleGames');
   FXml_Hatari.XmlFormat := xfReadable;
-  FXml_Hatari.OnProgress := Conf.XMLProgress;
+  FXml_Hatari.LoadFromFile(AtariSingleDatabase);
+{  FXml_Hatari.OnProgress := Conf.XMLProgress;
   progressComesFrom := 'Hatari_Database';
   F := TFileStream.Create(FFileName, fmOpenRead or fmShareDenyWrite);
   try
@@ -129,66 +135,168 @@ begin
       FXml_Hatari.LoadFromStream(F);
   finally
     F.Free;
-  end;
+  end;}
   SetTheGrid_HatariData('single');
-  totalRows := FXml_Hatari.Root.AttributeByName['totalRows'].ValueAsInteger;
+  totalRows := FXml_Hatari.Root.AttributeByName['TotalGames'].ValueAsInteger;
+  Conf.nxtgrd_hatari.BeginUpdate;
   Conf.nxtgrd_hatari.AddRow(totalRows);
-  for i := 3 to fxml_hatari.Root.NodeCount - 1 do
-    begin
-      node := FXml_Hatari.Root.Nodes[i];
-      Conf.nxtgrd_hatari.Cell[1,i-3].AsString := node.Nodes[1].Value;
-      Conf.nxtgrd_hatari.Cell[2,i-3].AsString := node.Nodes[3].Value;
-      Conf.nxtgrd_hatari.Cell[3,i-3].AsString := node.Nodes[4].Value;
-      Conf.nxtgrd_hatari.Cell[4,i-3].AsString := node.Nodes[5].Value;
-      Conf.nxtgrd_hatari.Cell[5,i-3].AsString := node.Nodes[6].Value;
-      Conf.nxtgrd_hatari.Cell[6,i-3].AsString := node.Nodes[9].Value;
-      Conf.nxtgrd_hatari.Cell[7,i-3].AsString := node.Nodes[10].Value;
-      Conf.nxtgrd_hatari.Cell[7,i-3].AsString := node.Nodes[12].Value;
-      Conf.nxtgrd_hatari.Cell[7,i-3].AsString := node.Nodes[13].Value;
-      Conf.nxtgrd_hatari.Cell[10,i-3].AsString := node.Nodes[15].Value;
-      Conf.nxtgrd_hatari.Cell[11,i-3].AsInteger := node.Nodes[16].ValueAsInteger;
-      if node.Nodes[17].Value = 'True' then
-        Conf.nxtgrd_hatari.Cell[12,i-3].AsInteger := 32
-      else
-        Conf.nxtgrd_hatari.Cell[12,i-3].AsInteger := 33;
-      if node.Nodes[20].Value = 'True' then
-        Conf.nxtgrd_hatari.Cell[13,i-3].AsInteger := 32
-      else
-        Conf.nxtgrd_hatari.Cell[13,i-3].AsInteger := 33;
-      Conf.nxtgrd_hatari.Cell[14,i-3].AsString := node.Nodes[21].Value;
-      Conf.nxtgrd_hatari.Cell[15,i-3].AsString := node.Nodes[22].Value;
-      Conf.nxtgrd_hatari.Cell[16,i-3].AsInteger := node.Nodes[23].ValueAsInteger;
-      Conf.nxtgrd_hatari.Cell[17,i-3].AsString := node.Nodes[24].Value;
-      if node.Nodes[25].Value = 'True' then
-        Conf.nxtgrd_hatari.Cell[18,i-3].AsInteger := 32
-      else
-        Conf.nxtgrd_hatari.Cell[18,i-3].AsInteger := 33;
-      Conf.nxtgrd_hatari.Cell[19,i-3].AsInteger := node.Nodes[26].ValueAsInteger;
-      Conf.nxtgrd_hatari.Cell[20,i-3].AsInteger := node.Nodes[27].ValueAsInteger;
-      if node.Nodes[28].Value = 'True' then
-        Conf.nxtgrd_hatari.Cell[21,i-3].AsInteger := 32
-      else
-        Conf.nxtgrd_hatari.Cell[21,i-3].AsInteger := 33;
-      if node.Nodes[30].Value = 'True' then
-        Conf.nxtgrd_hatari.Cell[22,i-3].AsInteger := 32
-      else
-        Conf.nxtgrd_hatari.Cell[22,i-3].AsInteger := 33;
-      Conf.nxtgrd_hatari.Cell[23,i-3].AsString := node.Nodes[31].Value;
-      Conf.nxtgrd_hatari.Cell[24,i-3].AsString := node.Nodes[32].Value;
-      Conf.sGauge_HatariData.Progress := (100 * i) div (totalRows-1);
-      Application.ProcessMessages;
-    end;
+  k := 0;
+  with FXml_Hatari.Root do
+    for i := 0 to NodeCount - 1 do
+      begin
+        node := FXml_Hatari.Root.Nodes[i];
+        if node.Name = 'row' then
+          begin
+            Conf.nxtgrd_hatari.Cell[1,k].AsString := node.ReadAttributeString('GameName');
+            Conf.nxtgrd_hatari.Cell[2,k].AsString := node.ReadAttributeString('Year');
+            Conf.nxtgrd_hatari.Cell[3,k].AsString := node.ReadAttributeString('Publisher');
+            Conf.nxtgrd_hatari.Cell[4,k].AsString := node.ReadAttributeString('Genres');
+            Conf.nxtgrd_hatari.Cell[5,k].AsString := node.ReadAttributeString('GenresType');
+            Conf.nxtgrd_hatari.Cell[6,k].AsString := node.ReadAttributeString('Musician');
+            Conf.nxtgrd_hatari.Cell[7,k].AsString := node.ReadAttributeString('MusicianNickName');
+            Conf.nxtgrd_hatari.Cell[8,k].AsString := node.ReadAttributeString('GameDifficulty');
+            Conf.nxtgrd_hatari.Cell[9,k].AsString := node.ReadAttributeString('CrackerName');
+            Conf.nxtgrd_hatari.Cell[10,k].AsString := node.ReadAttributeString('ProgeammerName');
+            Conf.nxtgrd_hatari.Cell[11,k].AsString := node.ReadAttributeString('Language');
+            Conf.nxtgrd_hatari.Cell[12,k].AsInteger := node.ReadAttributeInteger('Rate');
+            Conf.nxtgrd_hatari.Cell[13,k].AsString := node.ReadAttributeString('PALorNTSC');
+            if node.ReadAttributeBool('NeedsTrueDriveEmu') = True then
+              Conf.nxtgrd_hatari.Cell[14,k].AsInteger := 32
+            else
+              Conf.nxtgrd_hatari.Cell[14,k].AsInteger := 33;
+            Conf.nxtgrd_hatari.Cell[15,k].AsInteger := node.ReadAttributeInteger('HowManyDisks');
+            Conf.nxtgrd_hatari.Cell[16,k].AsInteger := node.ReadAttributeInteger('MaxPlayers');
+            if node.ReadAttributeBool('SimultaneouslyPlayers') = True then
+              Conf.nxtgrd_hatari.Cell[17,k].AsInteger := 32
+            else
+              Conf.nxtgrd_hatari.Cell[17,k].AsInteger := 33;
+            if node.ReadAttributeBool('Adult') = True then
+              Conf.nxtgrd_hatari.Cell[18,k].AsInteger := 32
+            else
+              Conf.nxtgrd_hatari.Cell[18,k].AsInteger := 33;
+            Conf.nxtgrd_hatari.Cell[19,k].AsString := node.ReadAttributeString('SpecialText');
+            Conf.nxtgrd_hatari.Cell[20,k].AsString := node.ReadAttributeString('ControlType');
+            Conf.sGauge_HatariData.Progress := (100 * k) div (totalRows-1);
+            Application.ProcessMessages;
+            k := k + 1;
+          end;
+      end;
   Conf.nxtgrd_hatari.EndUpdate;
   Conf.nxtgrd_hatari.Height := 407;
+  FXml_Hatari.Free;
+  Conf.nxtgrd_hatari.Cursor := Arrow;
 end;
 
-function DatabasesPaths(DName: string): string;
+procedure LoadBigCollection(Name: string);
 var
-  DBasePath: string;
+  i,k,l,TotalDisks: integer;
+  node: TXmlNode;
+  AtariBigDatabaseName: string;
 begin
-  DBasePath := ExtractFilePath(Application.ExeName) + 'media\emulators\computers\atari\hatari\database\st_';
-  if DName = 'single' then
-    Result := DBasePath + 'singlegames.xml';
+  ClearNextGrid;
+  AtariBigDatabaseName := DatabasesPaths(Name,True,True);
+  FXml_Big := TNativeXml.CreateName(Name);
+  FXml_Big.XmlFormat := xfReadable;
+  FXml_Big.LoadFromFile(AtariBigDatabaseName);
+  SetTheGrid_HatariData('Collections');
+  TotalDisks:= FXml_Big.Root.ReadAttributeInteger('TotalDisks');
+  k := 0;
+  Conf.nxtgrd_hatari.BeginUpdate;
+  Conf.nxtgrd_hatari.AddRow(TotalDisks);
+  with FXml_Big.Root do
+    for i := 0 to NodeCount - 1 do
+      begin
+        node := FXml_Big.Root.Nodes[i];
+        if node.Name = 'row' then
+          begin
+            Conf.nxtgrd_hatari.Cell[1,k].AsString := node.ReadAttributeString('DiskName');
+            for l := 1 to 10 do
+              Conf.nxtgrd_hatari.Cell[l+1,k].AsString := node.ReadAttributeString('GameNum' + IntToStr(l));
+            Conf.nxtgrd_hatari.Cell[12,k].AsString := node.ReadAttributeString('DiskPath');
+            Conf.sGauge_HatariData.Progress := (100 * k) div (TotalDisks-1);
+            Application.ProcessMessages;
+            k := k + 1;
+          end;
+      end;
+  Conf.nxtgrd_hatari.EndUpdate;
+  Conf.nxtgrd_hatari.Height := 407;
+  FXml_Big.Free;
+  Conf.nxtgrd_hatari.Cursor := Arrow;
+end;
+
+procedure LoadSmallCollection(Name: string);
+var
+  i,k,l,TotalDisks: integer;
+  node: TXmlNode;
+  AtariBigDatabaseName: string;
+begin
+  ClearNextGrid;
+  AtariBigDatabaseName := DatabasesPaths(Name,True,False);
+  FXml_Small := TNativeXml.CreateName(Name);
+  FXml_Small.XmlFormat := xfReadable;
+  FXml_Small.LoadFromFile(AtariBigDatabaseName);
+  SetTheGrid_HatariData('Collections');
+  TotalDisks:= FXml_Small.Root.ReadAttributeInteger('TotalDisks');
+  k := 0;
+  Conf.nxtgrd_hatari.BeginUpdate;
+  Conf.nxtgrd_hatari.AddRow(TotalDisks);
+  with FXml_Small.Root do
+    for i := 0 to NodeCount - 1 do
+      begin
+        node := FXml_Small.Root.Nodes[i];
+        if node.Name = 'row' then
+          begin
+            Conf.nxtgrd_hatari.Cell[1,k].AsString := node.ReadAttributeString('DiskName');
+            for l := 1 to 10 do
+              Conf.nxtgrd_hatari.Cell[l+1,k].AsString := node.ReadAttributeString('GameNum' + IntToStr(l));
+            Conf.nxtgrd_hatari.Cell[12,k].AsString := node.ReadAttributeString('DiskPath');
+            Conf.sGauge_HatariData.Progress := (100 * k) div (TotalDisks-1);
+            Application.ProcessMessages;
+            k := k + 1;
+          end;
+      end;
+  Conf.nxtgrd_hatari.EndUpdate;
+  Conf.nxtgrd_hatari.Height := 407;
+  FXml_Small.Free;
+  Conf.nxtgrd_hatari.Cursor := Arrow;
+end;
+
+function DatabasesPaths(DName: string; Collection,BigOrSmall: Boolean): string;
+const
+  big = 'big\';
+  Small = 'small\';
+var
+  DBasePath,CollDatabase: string;
+  iPos: Integer;
+begin
+  DBasePath := Program_Path + 'media\emulators\computers\atari\atari_st_ste_database\';
+  if Collection = False then
+    begin
+      if DName = 'single' then
+        Result := DBasePath + 'singlegames.xml';
+    end
+  else
+    begin
+      if BigOrSmall = True then
+        begin
+          iPos := Pos(' ',DName);
+          if iPos <> 0 then
+            CollDatabase := StringReplace(DName,' ','_',[rfReplaceAll, rfIgnoreCase])
+          else
+            CollDatabase := DName;
+          Result := DBasePath + big + CollDatabase + '.xml';
+        end
+      else
+        begin
+          iPos := Pos(' ',DName);
+          if iPos <> 0 then
+            CollDatabase := StringReplace(DName,' ','_',[rfReplaceAll, rfIgnoreCase])
+          else
+            CollDatabase := DName;
+          Result := DBasePath + small + CollDatabase + '.xml';        
+        end;
+    
+    end;
 end;
 
 procedure SetTheGrid_HatariData(DName: string);
@@ -205,11 +313,11 @@ begin
       Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Musician Nick Name');
       Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Game Difficulty');
       Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Cracker Name');
-      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Date Last Played');
-      Conf.nxtgrd_hatari.Columns.Add(TNxNumberColumn,'Times Played');
-      Conf.nxtgrd_hatari.Columns.Add(TNxImageColumn,'Is Game Exists');
-      Conf.nxtgrd_hatari.Columns.Add(TNxImageColumn,'Favorite?');
-      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Programmers Names');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Programmer Name');
+//      Conf.nxtgrd_hatari.Columns.Add(TNxNumberColumn,'Times Played');
+//      Conf.nxtgrd_hatari.Columns.Add(TNxImageColumn,'Is Game Exists');
+//      Conf.nxtgrd_hatari.Columns.Add(TNxImageColumn,'Favorite?');
+//      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Programmers Names');
       Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Language');
       Conf.nxtgrd_hatari.Columns.Add(TNxRateColumn,'Rating');
       Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Pal or Ntsc');
@@ -224,25 +332,59 @@ begin
       Conf.nxtgrd_hatari.Columns[0].Header.Alignment := taCenter;
       Conf.nxtgrd_hatari.Columns[0].Width := 40;
 
-      TNxImageColumn(Conf.nxtgrd_hatari.Columns[12]).Images := Conf.InBitBtn_Imagelist;
-      TNxImageColumn(Conf.nxtgrd_hatari.Columns[13]).Images := Conf.InBitBtn_Imagelist;
+      TNxRateColumn(Conf.nxtgrd_hatari.Columns[12]).Max := 5;
+      TNxRateColumn(Conf.nxtgrd_hatari.Columns[12]).Glyph.LoadFromFile('media\confeditor\images\hatari\star.bmp');
+      TNxRateColumn(Conf.nxtgrd_hatari.Columns[12]).EmptyGlyph.LoadFromFile('media\confeditor\images\hatari\star_grey.bmp');
+      TNxImageColumn(Conf.nxtgrd_hatari.Columns[14]).Images := Conf.InBitBtn_Imagelist;
+      TNxRateColumn(Conf.nxtgrd_hatari.Columns[15]).Max := 8;
+      TNxRateColumn(Conf.nxtgrd_hatari.Columns[15]).Glyph.LoadFromFile('media\confeditor\images\hatari\disk.bmp');
+      TNxRateColumn(Conf.nxtgrd_hatari.Columns[15]).EmptyGlyph.LoadFromFile('media\confeditor\images\hatari\disk_grey.bmp');
+      TNxRateColumn(Conf.nxtgrd_hatari.Columns[16]).Max := 20;
+      TNxRateColumn(Conf.nxtgrd_hatari.Columns[16]).Glyph.LoadFromFile('media\confeditor\images\hatari\player.bmp');
+      TNxRateColumn(Conf.nxtgrd_hatari.Columns[16]).EmptyGlyph.LoadFromFile('media\confeditor\images\hatari\player_grey.bmp');
+      TNxImageColumn(Conf.nxtgrd_hatari.Columns[17]).Images := Conf.InBitBtn_Imagelist;
       TNxImageColumn(Conf.nxtgrd_hatari.Columns[18]).Images := Conf.InBitBtn_Imagelist;
-      TNxImageColumn(Conf.nxtgrd_hatari.Columns[21]).Images := Conf.InBitBtn_Imagelist;
-      TNxImageColumn(Conf.nxtgrd_hatari.Columns[22]).Images := Conf.InBitBtn_Imagelist;
-
-      TNxRateColumn(Conf.nxtgrd_hatari.Columns[16]).Max := 5;
-      TNxRateColumn(Conf.nxtgrd_hatari.Columns[16]).Glyph.LoadFromFile('media\confeditor\images\hatari\star.bmp');
-      TNxRateColumn(Conf.nxtgrd_hatari.Columns[16]).EmptyGlyph.LoadFromFile('media\confeditor\images\hatari\star_grey.bmp');
-      TNxRateColumn(Conf.nxtgrd_hatari.Columns[19]).Max := 8;
-      TNxRateColumn(Conf.nxtgrd_hatari.Columns[19]).Glyph.LoadFromFile('media\confeditor\images\hatari\disk.bmp');
+//      TNxImageColumn(Conf.nxtgrd_hatari.Columns[13]).Images := Conf.InBitBtn_Imagelist;
+//      TNxImageColumn(Conf.nxtgrd_hatari.Columns[18]).Images := Conf.InBitBtn_Imagelist;
+//      TNxImageColumn(Conf.nxtgrd_hatari.Columns[21]).Images := Conf.InBitBtn_Imagelist;
+//      TNxImageColumn(Conf.nxtgrd_hatari.Columns[22]).Images := Conf.InBitBtn_Imagelist;
+//
+//      TNxRateColumn(Conf.nxtgrd_hatari.Columns[16]).Max := 5;
+//      TNxRateColumn(Conf.nxtgrd_hatari.Columns[16]).Glyph.LoadFromFile('media\confeditor\images\hatari\star.bmp');
+//      TNxRateColumn(Conf.nxtgrd_hatari.Columns[16]).EmptyGlyph.LoadFromFile('media\confeditor\images\hatari\star_grey.bmp');
+//      TNxRateColumn(Conf.nxtgrd_hatari.Columns[19]).Max := 8;
+//      TNxRateColumn(Conf.nxtgrd_hatari.Columns[19]).Glyph.LoadFromFile('media\confeditor\images\hatari\disk.bmp');
 //      TNxRateColumn(Conf.nxtgrd_hatari.Columns[19]).EmptyGlyph.LoadFromFile('media\confeditor\images\hatari\disk_grey.bmp');
-      TNxRateColumn(Conf.nxtgrd_hatari.Columns[20]).Max := 20;
-      TNxRateColumn(Conf.nxtgrd_hatari.Columns[20]).Glyph.LoadFromFile('media\confeditor\images\hatari\player.bmp');
-      TNxRateColumn(Conf.nxtgrd_hatari.Columns[20]).EmptyGlyph.LoadFromFile('media\confeditor\images\hatari\player_grey.bmp');
-
-      TNxMemoColumn(Conf.nxtgrd_hatari.Columns[22]).MultiLine := True;
-      TNxMemoColumn(Conf.nxtgrd_hatari.Columns[22]).ScrollBars := ssBoth;
+//      TNxRateColumn(Conf.nxtgrd_hatari.Columns[20]).Max := 20;
+//      TNxRateColumn(Conf.nxtgrd_hatari.Columns[20]).Glyph.LoadFromFile('media\confeditor\images\hatari\player.bmp');
+//      TNxRateColumn(Conf.nxtgrd_hatari.Columns[20]).EmptyGlyph.LoadFromFile('media\confeditor\images\hatari\player_grey.bmp');
+//
+//      TNxMemoColumn(Conf.nxtgrd_hatari.Columns[22]).MultiLine := True;
+//      TNxMemoColumn(Conf.nxtgrd_hatari.Columns[22]).ScrollBars := ssBoth;
+    end
+  else if DName = 'Collections' then
+    begin
+      Conf.nxtgrd_hatari.Columns.Add(TNxIncrementColumn,'ID');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Disk Name');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Game Name No 1');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Game Name No 2');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Game Name No 3');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Game Name No 4');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Game Name No 5');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Game Name No 6');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Game Name No 7');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Game Name No 8');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Game Name No 9');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Game Name No 10');
+      Conf.nxtgrd_hatari.Columns.Add(TNxTextColumn,'Disk Directory');
     end;
+end;
+
+procedure ClearNextGrid;
+begin
+  Conf.nxtgrd_hatari.ClearRows;
+  Conf.nxtgrd_hatari.Columns.Clear;
+  Conf.nxtgrd_hatari.Height := 1;
 end;
 
 //////////////////////////////////////////////////////////////////////////////

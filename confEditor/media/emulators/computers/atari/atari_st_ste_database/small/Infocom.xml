@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Infocom TotalDisks="9">
+	<row DiskName="1" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="2" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="3" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="4" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="5" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="6" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="7" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="g1" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="g2" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+</Infocom>

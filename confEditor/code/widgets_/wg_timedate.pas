@@ -3,7 +3,7 @@ unit wg_timedate;
 interface
 uses
   SysUtils,Classes,ExtCtrls,Windows,Forms,IdSNTP,IdException,
-  sPanel,sLabel,AsyncCalls,JvClock;
+  sPanel,sLabel,AsyncCalls,AnalogClock;
 
 type
   TMyTimer = class(TTimer)
@@ -20,6 +20,8 @@ type
   procedure CreateDateTimePanel(num: Integer);
   procedure ShowWorldClock;
   procedure ShowInternetTime;
+  function GetTimeZone: string;
+  function SetTimeForButton(C_GTM, C_Hour: string) : string;
 
 // Menu actions
   procedure Show_widget_timedate;
@@ -36,6 +38,7 @@ var
   freeCompsGetTimeZoneInfo: Boolean;
   MyTimer: TMyTimer;
   CDPanels: Integer;
+  Country,Capital,Hour: string;
   
 procedure Press_AddTime;
 var
@@ -54,10 +57,22 @@ begin
 end;
 
 procedure Cancel_Add;
+var
+  comp: TComponent;
 begin
   Conf.sComboBox42.Visible := False;
   Conf.sComboBox42.ItemIndex := -1;
   Conf.sComboBox42.Text := 'Countries...';
+  if FindComponentEx('Conf.Pic_datetime1') <> nil then
+    begin
+      comp := FindComponentEx('Conf.Pic_datetime1');
+      TImage(comp).Free;
+    end;
+  if FindComponentEx('Conf.Pic_datetime2') <> nil then
+    begin
+      comp := FindComponentEx('Conf.Pic_datetime2');
+      TImage(comp).Free;
+    end;
   Conf.sButton21.Visible := False;
   Conf.sButton24.Visible := False;
 end;
@@ -68,19 +83,25 @@ const
   picMapNone = 'media\confeditor\images\timedate\maps\none.gif';
 var
   TimeZone: TextFile;
-  Path,text,text1,text2,Capital,hour: string;
+  Path,text,text1,text2: string;
   picFlag,picMap: string;
   i: Integer;
   Comp: TComponent;
+  H, M, S, MS: Word;
 begin
+  Country := '';
+  Capital := '';
+  Hour := '';
   if freeCompsGetTimeZoneInfo = True then
     begin
       Comp := FindComponentEx('Conf.Pic_datetime1');
       TImage(Comp).Free;
       Comp := FindComponentEx('Conf.Pic_datetime2');
       TImage(Comp).Free;
+      Comp := FindComponentEx('Conf.MyAnalogClock1');
+      TAnalogClock(Comp).Free;
     end;
-  Path := ExtractFilePath(Application.ExeName) + 'media\widgets\datetime\cocaca.txt';
+  Path := Program_Path + 'media\widgets\datetime\cocaca.txt';
   AssignFile(TimeZone,Path);
   Reset(TimeZone);
     while not Eof(TimeZone) do
@@ -89,10 +110,10 @@ begin
         i := Pos('=',text);
         text1 := Trim(Copy(text,0,i-1));
         text2 := Trim(Copy(text,i+1,Length(text) - i));
-        if text1 = Conf.sComboBox42.Text then
+        if text1 = SetCapitalTheFirstLetter(Conf.sComboBox42.Text) then
           begin
-            picFlag := ExtractFilePath(Application.ExeName) + 'media\confeditor\images\timedate\flags\' + text1 + '.gif';
-            picMap := ExtractFilePath(Application.ExeName) + 'media\confeditor\images\timedate\maps\' + text1 + '.gif';
+            picFlag := Program_Path + 'media\confeditor\images\timedate\flags\' + text1 + '.gif';
+            picMap := Program_Path + 'media\confeditor\images\timedate\maps\' + text1 + '.gif';
             if FileExists(picFlag) then
               begin
                 picFlag := 'media\confeditor\images\timedate\flags\' + text1 + '.gif';
@@ -108,6 +129,7 @@ begin
             else
               Image_Comp(Conf.Ptimedate_worldclock,picMapNone,480,104,215,161,2,'_datetime',True,True);
             freeCompsGetTimeZoneInfo := True;
+            Country := text1;
             i := Pos('(',text2);
             Capital := Trim(Copy(text2,0,i-1));
             hour := Trim(Copy(text2,i + 1,Length(text2)-i-1));
@@ -115,9 +137,11 @@ begin
           end;
       end;
   CloseFile(TimeZone);
-  Text := TimeToStr(Now);
+  DecodeTime(Time,h,m,s,ms);
+//  AnalogClock_Comp(Conf.Parent,1,1,1,1,1,Time,StrToInt(Hour),False);
+  Comp := FindComponentEx('Conf.MyAnalogClock1');
   Conf.sButton24.Visible := True;
-  Conf.sButton24.Caption := text;
+  Conf.sButton24.Caption := IntToStr(H + StrToInt(Hour));
   MyTimer.Enabled := True;
 end;
 
@@ -142,7 +166,10 @@ begin
   Panel_Comp(Conf.ScrollBox2,'_datetime',(num - 1) + 11,8,TTop,70,322);
   Comp := FindComponentEx('Conf.MyPanel_datetime' + IntToStr((num - 1)+11));
   BitBtn_Comp(TsPanel(Comp),(num - 1)+11,'datetime',304,2,16,16,33);
-  AnalogClock_Comp(TsPanel(comp),num-1,5,15,30,30,StrToTime(Conf.sButton24.Caption));
+//  AnalogClock_Comp(TsPanel(comp),num-1,5,10,50,60,StrToTime(Conf.sButton24.Caption));
+  Label_Comp(TsPanel(comp),'Country : ' + Country,70,10,(num * 3),'datetime',True,True,True);
+  Label_Comp(TsPanel(comp),'Capital : ' + Capital,70,30,(num * 3) + 1,'datetime',True,True,True);
+  Label_Comp(TsPanel(comp),'GTM : ' + Hour,260,50,(num * 3 ) + 2,'datetime',True,True,True);
 end;
 
 procedure Get_InternetTime;
@@ -203,30 +230,14 @@ end;
 
 procedure Set_ComputersTime;
 begin
-
+  
 end;
 
 { TMyTimer }
 
 procedure TMyTimer.OnMyTimer(Sender: TObject);
-var
-  text: string;
-  i: Integer;
-  comp : TComponent;
 begin
-  text := TimeToStr(now);
-  if Conf.sButton24.Visible = True then
-    Conf.sButton24.Caption := text;
-
-  if Assigned(MyAnalogClock) then
-    begin
-      for i:= 0 to MyAnalogClock.Tag do
-        begin
-          comp := FindComponentEx('Conf.MyAnalogClock' + IntToStr(i));
-          TJvClock(comp).FixedTime := StrToTime(text);
-          TJvClock(comp).UpdateClock;
-        end;
-    end;
+  
 end;
 
 procedure ShowWorldClock;
@@ -241,6 +252,36 @@ begin
   Conf.sBitBtn111.Down := True;
   Conf.sBitBtn110.Down := False;
   Conf.Ptimedate_internettime.BringToFront;
+end;
+
+function GetTimeZone: string; 
+var 
+  TimeZone: TTimeZoneInformation;
+begin
+  GetTimeZoneInformation(TimeZone);
+  Result := IntToStr(TimeZone.Bias div -60); 
+end;
+
+function SetTimeForButton(C_GTM, C_Hour: string) : string;
+var
+  i,k: Integer;
+  C_Time: string;
+
+begin
+  i := Pos('-',C_GTM);
+  if i = 0 then
+    begin
+      C_Time := TimeToStr(now);
+      k := Pos('+',C_Hour);
+      if k <> 0 then
+        begin
+          C_Hour := Trim(Copy(C_Hour,1,Length(C_Hour) - 1));
+          if StrToInt(C_Hour) > StrToInt(C_GTM) then
+            begin
+
+            end;
+        end;
+    end;
 end;
 
 /////////////////////////////////////////////////////////////////////
@@ -291,6 +332,7 @@ initialization
 MyTimer := TMyTimer.Create(nil);
 with MyTimer do
 begin
+  Enabled := False;
   Interval := 1000;
   OnTimer := OnMyTimer;
 end;

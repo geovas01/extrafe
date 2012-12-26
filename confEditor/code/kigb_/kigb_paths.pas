@@ -42,7 +42,7 @@ uses
 procedure SetKigb_PathsfromKigbIni;
 var
   KigbCfgFile: TextFile;
-  k,x: Integer;
+  x: Integer;
   text,t1,t2: string;
 begin
   if Kigb_Exe <> '' then

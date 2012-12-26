@@ -714,7 +714,7 @@ begin
           ShowProgressBar(60,'pSX Sound and Controllers Ready','pSX');
           SetpSX_OthersfrompSXIni;
           ShowProgressBar(80,'pSX Others Ready','pSX');
-//          SetpSX_DatabasefrompSXIni;
+          SetpSX_DatabasefrompSXIni;
           ShowProgressBar(100,'pSX Database Ready','pSX');
           Started := False;
         end;

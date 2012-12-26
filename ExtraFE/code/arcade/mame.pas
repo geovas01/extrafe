@@ -18,14 +18,17 @@ uses
   procedure UpDateImage(sTime,speed: Single);
   procedure ShowFPS;
 
-//const
-//  SkinsNames: array [1..8] of String = ('white', 'blue', 'shadow', 'transparent', 'marene', 'orange', 'green', 'bloody');
+const
+  ExtraFeMamePath_images = 'media\emulators\arcade\mame\extrafe\';  
+
 
 var
   fMousePressed: Boolean;
   fNumOfGames: TGLHUDText;
   fShowNum: TGLHUDText;
+  fInfoImageText: TGLHUDText;
   fImgShow: TGLHUDSprite;
+  fImgFav: TGLHUDSprite;
 
   IsImgShowed: Boolean;
   dFog: Single;
@@ -71,8 +74,30 @@ begin
               fShowNum.ModulateColor.AsWinColor := clBlue;
               fShowNum.Layout := tlCenter;
               fShowNum.Alignment := taRightJustify;
-              fShowNum.Position.X := 800;
-              fShowNum.Position.Y := 40;
+              fShowNum.Position.X := 980;
+              fShowNum.Position.Y := 20;
+            end;
+          if not Assigned(fInfoImageText) then
+            begin
+              fInfoImageText := TGLHUDText.CreateAsChild(MainForm.Dummy_mame);
+              fInfoImageText.BitmapFont := loadT.fexistFont;
+              fInfoImageText.ModulateColor.AsWinColor := clWhite;
+              fInfoImageText.Layout := tlCenter;
+              fInfoImageText.Rotation := 90;
+              fInfoImageText.Position.X := 940;
+              fInfoImageText.Position.Y := 360;
+            end;  
+          if not Assigned(fImgFav) then
+            begin
+              AddMaterial(MatLib,ExtraFePath + ExtraFeMamePath_images + 'fav.png','fav');
+              fImgFav := TGLHUDSprite.CreateAsChild(MainForm.Dummy_mame);
+              fImgFav.Material.MaterialLibrary := MatLib;
+              fImgFav.Material.LibMaterialName := 'fav';
+              fImgFav.Width := fImgFav.Material.GetActualPrimaryTexture.Image.Width;
+              fImgFav.Height := fImgFav.Material.GetActualPrimaryTexture.Image.Height;
+              fImgFav.SetSize(32,32);
+              fImgFav.Position.X := 60;
+              fImgFav.Position.Y := 16;
             end;
 
           if IsKeyDown(VK_RETURN) then
@@ -89,6 +114,7 @@ begin
         begin
           Game := fListBox.GetItemByIndex(sItem);
           fNumOfGames.Text := IntToStr(sItem - 5) + '/' + IntToStr(MameTotalRoms);
+          fInfoImageText.Text := 'SNAPSHOTS';
           if IsKeyDown(VK_RETURN) then
             RunGame(Game.GameZip)
           else if IsKeyDown(VK_ESCAPE) then
@@ -150,15 +176,18 @@ begin
 end;
 
 procedure ShowImage(ImgName: String);
+const
+  NoPicFoundPath = 'media\emulators\arcade\mame\extrafe\noimg.png';
 var
   SnapImg: string;
   ImgNum: Integer;
 begin
+  ImgName := Trim(Copy(ImgName,0,Length(ImgName)-4));
   if sleeping > 100 then
     begin
-      SnapImg := 'D:\emulators\arcade\mame\snap\' + ImgName + '\0000.png';
+      SnapImg := MameSnapPath + ImgName + '\0000.png';
       if not FileExists(SnapImg) then
-        SnapImg := ExtractFilePath(Application.ExeName)+'media\emulators\arcade\mame\extrafe\noimg.png';
+        SnapImg := ExtraFePath + NoPicFoundPath;
       if Assigned(fImgShow) then
         begin
           ImgNum := MatLib.Materials.GetLibMaterialByName('showImg').Index;
@@ -175,11 +204,11 @@ begin
       fImgShow.Height := fImgShow.Material.GetActualPrimaryTexture.Image.Height;
 
       if fImgShow.Width > fImgShow.Height then
-        fImgShow.SetSize(220,180)
+        fImgShow.SetSize(280,240)
       else
-        fImgShow.SetSize(160,200);
-      fImgShow.Position.X := 665;
-      fImgShow.Position.Y := 360;
+        fImgShow.SetSize(220,260);
+      fImgShow.Position.X := 760;
+      fImgShow.Position.Y := 300;
 
       IsImgShowed := True;
     end;

@@ -4,7 +4,7 @@ interface
 
 uses
   Graphics,Windows,SysUtils,ExtCtrls,Controls,Forms,StdCtrls,Classes,
-  pngimage,JvGIF,sLabel,sPanel,sBitBtn,JvClock;
+  pngimage,JvGIF,sLabel,sPanel,sBitBtn,AnalogClock;
 
   procedure Image_Comp(Location: TWinControl; Picture_path: string; Pic_Left,Pic_Top,Pic_Width,Pic_Height,Numofcomp: Integer; NameOwn:string; Pic_Trans,Pic_Stretch: Boolean);
   procedure Label_Comp(Location: TWinControl; Text: String; Label_Left,Label_Top,Numofcomp: Integer; NameOwn: string; Label_Autosize,Label_FontBold,Label_Trans: Boolean);
@@ -12,7 +12,7 @@ uses
   procedure MemoEmu_Comp(Location: TWinControl; Name: string);
   procedure Panel_Comp(Location: TWinControl; NameOwn: string; NumOfComp: Integer; Left,Top,Height,Width: Integer);
   procedure BitBtn_Comp(Location: TWinControl; NumOfComp: Integer; Caption: string; Left,Top,Height,Width,ImageNum: Integer);
-  procedure AnalogClock_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width: Integer; NewTime: TTime);
+  procedure AnalogClock_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width: Integer; NewTime: TTime; OffSet:Integer; Visible: Boolean);
 
 var
   MyImage: TImage;
@@ -20,7 +20,7 @@ var
   MyMemoEmu,MyMemo: TMemo;
   MyPanel: TsPanel;
   MyBitBtn: TsBitBtn;
-  MyAnalogClock: TJvClock;
+  MyAnalogClock: TAnalogClock;
 
 implementation
 
@@ -107,26 +107,21 @@ begin
   MyBitBtn.OnClick := Conf.ClosePanel;
 end;
 
-procedure AnalogClock_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width: Integer; NewTime: TTime);
+procedure AnalogClock_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width: Integer; NewTime: TTime; OffSet:Integer; Visible: Boolean);
 begin
-  MyAnalogClock := TJvClock.Create(Conf);
+  MyAnalogClock := TAnalogClock.Create(Conf);
   MyAnalogClock.Name := 'MyAnalogClock' + IntToStr(NumOfComp);
   MyAnalogClock.Parent := Location;
   MyAnalogClock.Left := Left;
   MyAnalogClock.Top := Top;
   MyAnalogClock.Height := Height;
   MyAnalogClock.Width := Width;
-  MyAnalogClock.ShowMode := scAnalog;
-  MyAnalogClock.FixedTime := NewTime;
-  MyAnalogClock.Color := clSkyBlue;
-  MyAnalogClock.HoursHandColor := clRed;
-  MyAnalogClock.MinutesHandColor := clGreen;
-  MyAnalogClock.ShowSeconds := True;
+  MyAnalogClock.Style := acModern;
+  MyAnalogClock.Time := NewTime;
   MyAnalogClock.Tag := NumOfComp;
-  MyAnalogClock.BevelInner := bvNone;
-  MyAnalogClock.BevelOuter := bvNone;
-  MyAnalogClock.BorderStyle := bsNone;
-  MyAnalogClock.BorderWidth := 0;
+  MyAnalogClock.Visible := Visible;
+  MyAnalogClock.TimeOffset := OffSet;
+  MyAnalogClock.Active := True;
 end;
 
 end.
