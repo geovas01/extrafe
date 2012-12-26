@@ -38,11 +38,11 @@
 
 
 What the colors Means ****
-Black Text: Means the the concept is in thoughts or designed right now..
-<font color='green'>Green</font> Text: Means that the design is ready and have resources or start to coding the basics procedures or functions...
-<font color='blue'>Blue</font> Text: Means that the first results is here and some parts working ok but have a lot bugs and not all the procedures or functions is ready
-<font color='red'>Red</font> Text: Means that is it the perfect for me now and have some basic testing and working just perfect...
-~~Stikethrouth~~ Text: Means that is ready for stable release so no further changes for this part
+ # Black Text: Means the the concept is in thoughts or designed right now..
+ # <font color='green'>Green</font> Text: Means that the design is ready and have resources or start to coding the basics procedures or functions...
+ # <font color='blue'>Blue</font> Text: Means that the first results is here and some parts working ok but have a lot bugs and not all the procedures or functions is ready
+ # <font color='red'>Red</font> Text: Means that is it the perfect for me now and have some basic testing and working just perfect...
+ # ~~Stikethrouth~~ Text: Means that is ready for stable release so no further changes for this part
 
 Sometimes you can see here that i downgrade the percent result that means that new ideas is comming or recoding the same code to be faster,more stable or smaller... 
    
