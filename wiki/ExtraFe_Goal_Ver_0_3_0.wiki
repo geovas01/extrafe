@@ -12,20 +12,20 @@
   * ~~<font color=red>Master Config settings for Zinc.</font>~~ (100% Done)
   * ~~<font color=red>Creating, manipulating, setting zinc database in XML. </font>~~ (100% Done)
   * <font color='Blue'>Master Config settings for Hatari.</font> (95% Done)
-  * Creating, manipulating, setting "Atari ST" database in xml (30% Done)
+  * <font color='Blue'>Creating, manipulating, setting "Atari ST" database in xml.</font> (70% Done)
   * <font color='Blue'>Master Config settings for pSX.</font> (90% Done)
-  * Creating, manipulating, setting "Playstation" database in xml (5% Done)
+  * ~~<font color=red>Creating, manipulating, setting "Playstation" database in xml</font>~~ (100% Done)
   * Master Config settings for Kigb. (95% Done)
-  * Creating, manipulating, setting "GameBoy" database in xml (5% Done)
+  * <font color='Blue'>Creating, manipulating, setting "GameBoy" database in xml.</font> (70% Done)
   * ~~<font color='red'>GUID, and Master Settings for Weather widget. (100% Done)</font>~~
   * <font color='blue'>Time and Date, local and global settings widget. (75% Done)</font>
 
 = Extrafe =
 
   * ~~<font color='red'>Setup the GLScene and the bass sound library</font>~~ (100% Done)
-  * Create intro and load the textures, sprites, fonts, emulators, widgets, sound, effects, cursors e.t.c (10% Done)
+  * <font color='green'>Create intro and load the textures, sprites, fonts, emulators, widgets, sound, effects, cursors e.t.c.</font> (25% Done)
   * <font color='blue'>Create the Main Menu (50% Done)</font>
-  * Mame panel creation gamelist, info, snaps, effects, animation, navigation (6% Done)
+  * Mame panel creation gamelist, info, snaps, effects, animation, navigation (8% Done)
   * ZiNC panel creation gamelist, info, snaps, effects, animation, navigation (0% Done)
   * Hatari panel creation gamelist, info, snaps, effects, animation, navigation (0% Done)
   * pSX emulator panel creation gamelist, info, snaps, effects, animation, navigation (0% Done)
