@@ -248,6 +248,7 @@ type
     sButton24: TsButton;
     sBitBtn110: TsBitBtn;
     sBitBtn111: TsBitBtn;
+    sGauge_kigb: TsGauge;
 
 //  Main form actions
     procedure FormCreate(Sender: TObject);
@@ -307,6 +308,7 @@ type
     procedure Kigb_ConfigScreen(Sender: TObject);
     procedure Kigb_ConfigSound(Sender: TObject);
     procedure Kigb_ConfigOthers(Sender: TObject);
+    procedure Kigb_ConfigDatabase(Sender: TObject);
 //
 //WidGets
 //
@@ -870,8 +872,18 @@ begin
     SingleGames_Click
   else if TsButton(Sender).Hint = 'BigCollections' then
     BigCollections_Click
-  else if TsBitBtn(Sender).Hint = 'SmallCollections' then
+  else if TsComboBox(Sender).Hint = 'BigC' then
+    begin
+      if TsComboBox(Sender).ItemIndex <> 0 then
+        LoadBigCollection(TsComboBox(Sender).Text)
+    end
+  else if TsButton(Sender).Hint = 'SmallCollections' then
     SmallCollections_Click
+  else if TsComboBox(Sender).Hint = 'SmallC' then
+    begin
+      if TsComboBox(Sender).ItemIndex <> 0 then
+        LoadSmallCollection(TsComboBox(Sender).Text)
+    end
   else if TsButton(Sender).Hint = 'Demos' then
     Demos_Click
   else if TsButton(Sender).Hint = 'Applications' then
@@ -971,6 +983,14 @@ begin
     CheckBarcodeBoy_GB_Device;
 end;
 
+procedure TConf.Kigb_ConfigDatabase(Sender: TObject);
+begin
+  if TsButton(Sender).Hint = 'Kigb_GameBoy' then
+    LoadGameBoyDatabase
+  else if TsButton(Sender).Hint = 'Kigb_GameBoyColor' then
+    LoadGameBoyColorDatabase;
+end;
+
 procedure TConf.Weather_Config(Sender: TObject);
 begin
   if TsButton(Sender).Hint = 'Weather_AddSelection' then
@@ -980,7 +1000,7 @@ begin
   else if TsListBox(Sender).Hint = 'Weather_ClickedTownInfo' then
     onClickIn_Town(TsListBox(Sender).ItemIndex)
   else if TsButton(Sender).Hint = 'Weather_ClickToAddTownInfo' then
-    OnClickCheckIn_Town; 
+    OnClickCheckIn_Town;
 end;
 
 procedure TConf.sEdit31KeyPress(Sender: TObject; var Key: Char);

@@ -7,7 +7,8 @@ uses
   Dialogs,StdCtrls,
   GLCrossPlatform, BaseClasses, GLScene, GLWin32Viewer,GLCoordinates,
   GLObjects, GLHUDObjects, GLMaterial, GLTexture, GLCadencer, GLBitmapFont,
-  GLWindowsFont,uBaseButton,uTweener, ExtCtrls;
+  GLWindowsFont,uBaseButton,uTweener, ExtCtrls,
+  GLSpaceText, GLParticleFX, GLBlur;
 
   type
   TMainForm = class(TForm)
@@ -16,13 +17,7 @@ uses
     GlCamera_intro: TGLCamera;
     Background_intro: TGLHUDSprite;
     GLCadencer: TGLCadencer;
-    Progress_Bar: TGLDummyCube;
-    Bar: TGLHUDSprite;
-    Progress: TGLHUDSprite;
-    mask: TGLHUDSprite;
     GLHUDText_ExtraFE_Ver: TGLHUDText;
-    GLHUDText_confEditor_Ver: TGLHUDText;
-    GLHUDText_Progress: TGLHUDText;
     Font_Intro: TGLWindowsBitmapFont;
     GLS_MainMenu: TGLScene;
     GlCamera_MainMenu: TGLCamera;
@@ -32,7 +27,6 @@ uses
     Dummy_mame: TGLDummyCube;
     GlCamera_mame: TGLCamera;
     Mame_Background: TGLHUDSprite;
-    GLHUDText_Progress_Info: TGLHUDText;
     GLS_zinc: TGLScene;
     GLS_atarist: TGLScene;
     GLS_playstation: TGLScene;
@@ -53,8 +47,10 @@ uses
     widgets_back: TGLHUDSprite;
     GLCamera_widgets: TGLCamera;
     GLDummy_widgets: TGLDummyCube;
-    GLPlane_Image: TGLPlane;
     GLLightSource1: TGLLightSource;
+    GLLightSource2: TGLLightSource;
+    GLDummyCube_Intro: TGLDummyCube;
+    GLCube1: TGLCube;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure GLCadencerProgress(Sender: TObject; const deltaTime,
@@ -94,7 +90,6 @@ procedure TMainForm.FormCreate(Sender: TObject);
 var
   i: Integer;
 begin
-
   if MatLib=nil then
     MatLib := TGLMaterialLibrary.Create(MainForm);
   Frequency := GetDisplayFrequency;

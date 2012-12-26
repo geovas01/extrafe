@@ -36,6 +36,8 @@ function ShellExecAndWait(const FileName, Parameters, dir: string;
 function GetCharFromVirtualKey(Key: Word): string;
 function IsConnectedToInternet:Boolean;
 function IsBinary(S: TStream): boolean;
+function SetCapitalTheFirstLetter(Word : String) : string;
+
 
 const
   InfoNum = 10;
@@ -502,5 +504,20 @@ begin
   S.Position := 0;
 end;
 
+function SetCapitalTheFirstLetter(Word : String) : string;
+var
+  capital: string;
+begin
+  if Length(Word) > 0 then
+    begin
+      if (Word[1] in ['a'..'z']) then
+        begin
+          capital := UpperCase(Word[1]);
+          Result := capital + Trim(Copy(Word,2,Length(Word)));
+        end
+      else
+        Result := Word;
+    end;
+end;
 
 end.

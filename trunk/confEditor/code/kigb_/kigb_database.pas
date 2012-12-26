@@ -2,15 +2,24 @@ unit kigb_database;
 
 interface
 uses
-  SysUtils,Classes,ExtCtrls;
+  SysUtils,Classes,ExtCtrls,
+  NxColumns,NxColumnClasses,NxCustomGridControl,
+  NativeXml;
 
   procedure SetKigb_DatabasefromKigbIni;
   procedure SaveKigb_DatabaseAtExit;
+
+  procedure LoadGameBoyDatabase;
+  procedure LoadGameBoyColorDatabase;
+  procedure CreateTheGridColumns;
 
 // Menu actions
   procedure Show_kigb_databasespanel;
   procedure em_kigb_database_ShowDynamicComps;
   procedure em_kigb_database_FreeDynamicComps;
+
+var
+  fxml_GB: TNativeXml;  
 
 implementation
 
@@ -26,6 +35,82 @@ end;
 procedure SaveKigb_DatabaseAtExit;
 begin
 //
+end;
+
+procedure LoadGameBoyDatabase;
+var
+  i,k,TotalGames: Integer;
+  node: TXmlNode;
+  DataPath: string;
+begin
+  DataPath := Program_Path + 'media\emulators\handheld\nintendo\gameboy_database\gameboy.xml';
+  Conf.nxtgrd_kigb.ClearRows;
+  Conf.nxtgrd_kigb.Columns.Clear;
+  fxml_GB := TNativeXml.CreateName('GameBoy');
+  fxml_GB.XmlFormat := xfReadable;
+  fxml_GB.LoadFromFile(DataPath);
+  TotalGames := fxml_GB.Root.ReadAttributeInteger('TotalGames');
+  k := 0;
+  CreateTheGridColumns;
+  Conf.nxtgrd_kigb.BeginUpdate;
+  Conf.nxtgrd_kigb.AddRow(TotalGames);
+  with fxml_GB.Root do
+    for i := 0 to NodeCount - 1 do
+      begin
+        node := fxml_GB.Root.Nodes[i];
+        if node.Name = 'row' then
+          begin
+            Conf.nxtgrd_kigb.Cell[1,k].AsString := node.ReadAttributeString('GameName');
+            Conf.nxtgrd_kigb.Cell[2,k].AsString := node.ReadAttributeString('Developer');
+            Conf.nxtgrd_kigb.Cell[3,k].AsString := node.ReadAttributeString('Released');
+            Conf.sGauge_kigb.Progress := (100 * k) div (TotalGames-1);
+            k :=  k + 1;          
+          end;
+      end;
+  Conf.nxtgrd_kigb.EndUpdate;
+  fxml_GB.Free;
+end;
+
+procedure LoadGameBoyColorDatabase;
+var
+  i,k,TotalGames: Integer;
+  node: TXmlNode;
+  DataPath: string;
+begin
+  DataPath := Program_Path + 'media\emulators\handheld\nintendo\gameboycolor_database\gameboycolor.xml';
+  Conf.nxtgrd_kigb.ClearRows;
+  Conf.nxtgrd_kigb.Columns.Clear;
+  fxml_GB := TNativeXml.CreateName('GameBoyColor');
+  fxml_GB.XmlFormat := xfReadable;
+  fxml_GB.LoadFromFile(DataPath);
+  TotalGames := fxml_GB.Root.ReadAttributeInteger('TotalGames');
+  k := 0;
+  CreateTheGridColumns;
+  Conf.nxtgrd_kigb.BeginUpdate;
+  Conf.nxtgrd_kigb.AddRow(TotalGames);
+  with fxml_GB.Root do
+    for i := 0 to NodeCount - 1 do
+      begin
+        node := fxml_GB.Root.Nodes[i];
+        if node.Name = 'row' then
+          begin
+            Conf.nxtgrd_kigb.Cell[1,k].AsString := node.ReadAttributeString('GameName');
+            Conf.nxtgrd_kigb.Cell[2,k].AsString := node.ReadAttributeString('Developer');
+            Conf.nxtgrd_kigb.Cell[3,k].AsString := node.ReadAttributeString('Released');
+            Conf.sGauge_kigb.Progress := (100 * k) div (TotalGames-1);
+            k :=  k + 1;          
+          end;
+      end;
+  Conf.nxtgrd_kigb.EndUpdate;
+  fxml_GB.Free;
+end;
+
+procedure CreateTheGridColumns;
+begin
+  Conf.nxtgrd_kigb.Columns.Add(TNxIncrementColumn,'ID');
+  Conf.nxtgrd_kigb.Columns.Add(TNxTextColumn,'Gama Name');
+  Conf.nxtgrd_kigb.Columns.Add(TNxTextColumn,'Developer');
+  Conf.nxtgrd_kigb.Columns.Add(TNxTextColumn,'Date Released');
 end;
 
 //////////////////////////////////////////////////////////////////////////////

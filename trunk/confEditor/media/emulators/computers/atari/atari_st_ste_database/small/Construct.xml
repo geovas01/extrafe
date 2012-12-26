@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Construct TotalDisks="7">
+	<row DiskName="1" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="2" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="3d1" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="3d2" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="3d3" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="3d4" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+	<row DiskName="4" GameNum1="" GameNum2="" GameNum3="" GameNum4="" GameNum5="" GameNum6="" GameNum7="" GameNum8="" GameNum9="" GameNum10="" DiskPath=""/>
+</Construct>

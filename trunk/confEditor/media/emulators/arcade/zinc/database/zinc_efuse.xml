@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Zinc ZincVer="1.1">
+	<row RunGameNumber="1" GameName="Star Gladiator (US 960627)" RomName="starglad" ParentName=" " BiosName="cpzn1" IfGameExists="ok"/>
+	<row RunGameNumber="2" GameName="Street Fighter EX (US 961219)" RomName="sfex" ParentName=" " BiosName="cpzn1" IfGameExists="ok"/>
+	<row RunGameNumber="3" GameName="Street Fighter EX (JP 961130)" RomName="sfexj" ParentName="sfex" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="4" GameName="Street Fighter EX (ASIA 961219)" RomName="sfexa" ParentName="sfex" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="5" GameName="Street Fighter EX Plus (US 970407)" RomName="sfexp" ParentName=" " BiosName="cpzn1" IfGameExists="ok"/>
+	<row RunGameNumber="6" GameName="Street Fighter EX Plus (US 970311)" RomName="sfexpu1" ParentName="sfexp" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="7" GameName="Street Fighter EX Plus (JP 970311)" RomName="sfexpj" ParentName="sfexp" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="8" GameName="Street Fighter EX 2 (US 980526)" RomName="sfex2" ParentName=" " BiosName="cpzn2" IfGameExists="ok"/>
+	<row RunGameNumber="9" GameName="Street Fighter EX 2 (JP 980312)" RomName="sfex2j" ParentName="sfex2" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="10" GameName="Street Fighter EX 2 PLUS (US 990611)" RomName="sfex2p" ParentName=" " BiosName="cpzn2" IfGameExists="ok"/>
+	<row RunGameNumber="11" GameName="Street Fighter EX 2 PLUS (JP 990611)" RomName="sfex2pj" ParentName="sfex2" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="12" GameName="Street Fighter EX 2 PLUS (ASIA 990611)" RomName="sfex2pa" ParentName="sfex2" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="13" GameName="Plasma Sword (US 980316)" RomName="plsmaswd" ParentName=" " BiosName="cpzn2" IfGameExists="ok"/>
+	<row RunGameNumber="14" GameName="Star Gladiator 2 (JP 980316)" RomName="stargld2" ParentName="plsma" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="15" GameName="Rival Schools (ASIA 971117)" RomName="rvschola" ParentName="rvsch" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="16" GameName="Justice Gakuen (JP 991117)" RomName="jgakuen" ParentName="rvsch" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="17" GameName="Rival Schools (US 971117)" RomName="rvschool" ParentName=" " BiosName="cpzn2" IfGameExists="ok"/>
+	<row RunGameNumber="18" GameName="Strider Hiryu 2 (JP 991213)" RomName="shiryu2" ParentName="strid" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="19" GameName="Strider 2 (ASIA 991213)" RomName="strider2" ParentName=" " BiosName="cpzn2" IfGameExists="ok"/>
+	<row RunGameNumber="20" GameName="Kikaioh (JP 980914)" RomName="kikaioh" ParentName="techr" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="21" GameName="Tech Romancer (US 980914)" RomName="techromn" ParentName=" " BiosName="cpzn2" IfGameExists="ok"/>
+	<row RunGameNumber="22" GameName="Battle Arena Toshinden 2 (US 951124)" RomName="ts2" ParentName=" " BiosName="cpzn1" IfGameExists="ok"/>
+	<row RunGameNumber="23" GameName="Battle Arena Toshinden 2 (JP 951124)" RomName="ts2j" ParentName="ts2" BiosName="cpz" IfGameExists="ok"/>
+	<row RunGameNumber="24" GameName="Tetris The Grand Master (JP 980710)" RomName="tgmj" ParentName=" " BiosName="cpzn2" IfGameExists="ok"/>
+	<row RunGameNumber="25" GameName="Sonic Wings Limited (JP)" RomName="sncwgltd" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="26" GameName="Beastorizer (US) *bootleg*" RomName="beastrzb" ParentName=" " BiosName="psarc95" IfGameExists="ok"/>
+	<row RunGameNumber="27" GameName="Beastorizer (US)" RomName="beastrzr" ParentName=" " BiosName="psarc95" IfGameExists="ok"/>
+	<row RunGameNumber="28" GameName="Bloody Roar 2 (JP)" RomName="bldyror2" ParentName=" " BiosName="psarc95" IfGameExists="ok"/>
+	<row RunGameNumber="29" GameName="Brave Blade (JP)" RomName="brvblade" ParentName=" " BiosName="tps" IfGameExists="ok"/>
+	<row RunGameNumber="30" GameName="Psychic Force (JP 2.4J)" RomName="psyforcj" ParentName="psyfo" BiosName="tai" IfGameExists="ok"/>
+	<row RunGameNumber="31" GameName="Psychic Force (World 2.4O)" RomName="psyforce" ParentName=" " BiosName="taitofx1" IfGameExists="ok"/>
+	<row RunGameNumber="32" GameName="Psychic Force EX (JP 2.0J)" RomName="psyfrcex" ParentName="psyfo" BiosName="tai" IfGameExists="ok"/>
+	<row RunGameNumber="33" GameName="Magical Date EX - sotsugyou kokuhaku daisakusen (JP 2.01J)" RomName="mgcldtex" ParentName=" " BiosName="taitofx1" IfGameExists="ok"/>
+	<row RunGameNumber="34" GameName="Raystorm (JP 2.05J)" RomName="raystorj" ParentName="rayst" BiosName="tai" IfGameExists="ok"/>
+	<row RunGameNumber="35" GameName="Raystorm (US 2.06A)" RomName="raystorm" ParentName=" " BiosName="taitofx1" IfGameExists="ok"/>
+	<row RunGameNumber="36" GameName="Fighters Impact A (JP 2.00J)" RomName="ftimpcta" ParentName=" " BiosName="taitofx1" IfGameExists="ok"/>
+	<row RunGameNumber="37" GameName="G-Darius (JP 2.01J)" RomName="gdarius" ParentName=" " BiosName="taitofx1" IfGameExists="ok"/>
+	<row RunGameNumber="38" GameName="G-Darius Ver.2 (JP 2.03J)" RomName="gdarius2" ParentName="gdari" BiosName="tai" IfGameExists="ok"/>
+	<row RunGameNumber="39" GameName="Dancing Eyes (JP) Ver. A" RomName="danceyes" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="40" GameName="Xevious 3D/G (JP) Ver. A" RomName="xevi3dg" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="41" GameName="Star Sweep (JP) Ver. A" RomName="starswep" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="42" GameName="Kosodate Quiz My Angel 3 (JP) Ver. A" RomName="myangel3" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="43" GameName="Tekken (JP) Ver. B" RomName="tekkenb" ParentName="tekke" BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="44" GameName="Tekken (WORLD) Ver. B" RomName="tekkena" ParentName="tekke" BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="45" GameName="Tekken (WORLD) Ver. C" RomName="tekken" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="46" GameName="Tekken 2 (JP) Ver. B" RomName="tekken2a" ParentName="tekke" BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="47" GameName="Tekken 2 (World) Ver. A" RomName="tekken2b" ParentName="tekke" BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="48" GameName="Tekken 2 (World) Ver. B" RomName="tekken2" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="49" GameName="Soul Edge (JP) SO3 Ver. A" RomName="souledga" ParentName="soule" BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="50" GameName="Soul Edge (JP) SO1 Ver. A" RomName="souledgb" ParentName="soule" BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="51" GameName="Soul Edge Ver. II (JP) SO4 Ver. C" RomName="souledge" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="52" GameName="Dunk Mania (US) DM2 Ver. C" RomName="dunkmnia" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="53" GameName="Dunk Mania (JP) DM1 Ver. C" RomName="dunkmnic" ParentName="dunkm" BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="54" GameName="Prime Goal EX (JP) Ver. A" RomName="primglex" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="55" GameName="Wedding Rhapsody (JP) Ver. JAA" RomName="weddingr" ParentName=" " BiosName="konamigv" IfGameExists="ok"/>
+	<row RunGameNumber="56" GameName="Hyper Athlete (JP) Ver. 1.00" RomName="hyperath" ParentName=" " BiosName="konamigv" IfGameExists="ok"/>
+	<row RunGameNumber="57" GameName="Powerful Baseball 96 (JP) Ver. 1.03" RomName="pbball96" ParentName=" " BiosName="konamigv" IfGameExists="ok"/>
+	<row RunGameNumber="58" GameName="Susume! Taisen Puzzle-Dama (JP) Ver. 1.20" RomName="susume" ParentName=" " BiosName="konamigv" IfGameExists="ok"/>
+	<row RunGameNumber="59" GameName="Fighting Layer (JP) Ver. B" RomName="fgtlayer" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="60" GameName="Ehrgeiz (US) Ver. A" RomName="ehrgeiz" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="61" GameName="Tekken 3 (JP) Ver. A" RomName="tekken3" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="62" GameName="Mr Driller (JP) Ver. A" RomName="mrdrillr" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="63" GameName="Aqua Rush (JP) Ver. A" RomName="aquarush" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="64" GameName="Paca Paca Passion (JP) Ver. A" RomName="pacapp" ParentName=" " BiosName=" " IfGameExists="ok"/>
+	<row RunGameNumber="65" GameName="Gallop Racer 3 (JP)" RomName="glpracr3" ParentName=" " BiosName="tps" IfGameExists="ok"/>
+	<row RunGameNumber="66" GameName="Shanghai Matekibuyuu (JP)" RomName="shngmtkb" ParentName=" " BiosName="tps" IfGameExists="ok"/>
+	<row RunGameNumber="67" GameName="Cool Boarders Arcade Jam (US)" RomName="cbaj" ParentName=" " BiosName="tps" IfGameExists="ok"/>
+	<row RunGameNumber="68" GameName="Dead or Alive++" RomName="doapp" ParentName=" " BiosName="tps" IfGameExists="ok"/>
+	<row RunGameNumber="69" GameName="Tondemo Crisis" RomName="tondemo" ParentName=" " BiosName="tps" IfGameExists="ok"/>
+	<row RunGameNumber="70" GameName="Monster Farm Jump (JP)" RomName="mfjump" ParentName=" " BiosName="tps" IfGameExists="ok"/>
+	<row RunGameNumber="71" GameName="Heaven&apos;s Gate" RomName="hvnsgate" ParentName=" " BiosName="atluspsx" IfGameExists="ok"/>
+</Zinc>

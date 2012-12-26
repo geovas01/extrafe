@@ -22,11 +22,11 @@ var
 implementation
 
 uses
-  main,menu,FunctionX,form_splash,
+  main,menu,FunctionX,form_splash,mainconf,
   mame_dirs,mame_graphics,mame_database,mame_builds,
   zinc_paths,
   hatari_paths,hatari_roms,hatari_joy,hatari_database,
-  psx_paths,
+  psx_paths,psx_database,
   kigb_paths;
 
 procedure global_Find_FilesCanClose;
@@ -231,7 +231,19 @@ begin
       begin
         Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Found IPS Files. Try to Sotring (Please Wait...)');
         Application.ProcessMessages;
-      end;  
+      end
+    else if progressComesFrom = 'Playstation_Database' then
+      begin
+        if Started = True then
+          begin
+            Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Loading Playstation Database (Please Wait...)');
+            Application.ProcessMessages;
+          end
+        else
+          begin
+//            
+          end;
+      end;
 end;
 
 end.

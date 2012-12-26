@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MameConfig Active="true" SelectedMame="mame.exe" FullPathOfSelectedMame="D:\emulators\arcade\mame\" Selected="0">
+	<rowDir MameName="mame.exe" MamePath="D:\emulators\arcade\mame\" Cabinets="D:\emulators\arcade\mame\cabinets" Flyers="D:\emulators\arcade\mame\flyers" Marquees="D:\emulators\arcade\mame\marquees" Control_Panels="D:\emulators\arcade\mame\cpanel" PCBs="D:\emulators\arcade\mame\pcb" Artwork_Preview="D:\emulators\arcade\mame\artwork preview" Titles="D:\emulators\arcade\mame\titles" Select="D:\emulators\arcade\mame\select" Scores="D:\emulators\arcade\mame\scores" Bosses="D:\emulators\arcade\mame\bosses"/>
+	<rowPath MameName="mame.exe" PathId="1" RomPath="D:\emulators\arcade\mame\roms" RomsFound="26206"/>
+</MameConfig>

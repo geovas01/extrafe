@@ -140,7 +140,6 @@ begin
   fVK_Text.Layout := tlCenter;
 
   fPanelBack:= AddPanel('back_key');
-
 end;
 
 procedure TVirtualKeyboard.MainInitVK(Matlib: TGLMaterialLibrary;

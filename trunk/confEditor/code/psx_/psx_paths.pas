@@ -141,12 +141,22 @@ begin
         Conf.sEdit82.Text := Conf.Find_Files.FileName;
       pSX_Config.WriteString('Paths','FoundBIOS','ok');
       pSX_Config.WriteString('Paths','BiosName',Conf.sEdit82.Text);
+      if FileExists(Program_Path + 'media\emulators\consoles\playstation\database\playstation.xml') then
+        begin
+          pSX_Config.WriteBool('Paths','FoundDatabase',True);
+          pSX_Config.WriteString('Paths','DatabasePath',Program_Path + 'media\emulators\consoles\playstation\database\playstation.xml');
+        end
+      else
+        begin
+          pSX_Config.WriteBool('Paths','FoundDatabase',False);
+          pSX_Config.WriteString('Paths','DatabasePath',' ');
+        end;
       CreateDefault_pSXIni;
       SetpSX_PathsfrompSXIni;
       SetpSX_ScreenfrompSXIni;
       SetpSX_SoundfrompSXIni;
       SetpSX_OthersfrompSXIni;
-//      SetpSX_DatabasefrompSXIni;
+      SetpSX_DatabasefrompSXIni;
     end;
 end;
 

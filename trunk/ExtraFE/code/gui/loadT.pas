@@ -3,26 +3,44 @@ unit loadT;
 interface
 uses
   Classes,SysUtils,Controls,Windows,Forms,Graphics,Dialogs,
-  GLKeyboard, GLHUDObjects,GlFilePNG, GLWindowsFont,
+  GLKeyboard, GLHUDObjects,GlFilePNG, GLWindowsFont,GLObjects,
+  GLParticleFX, GLBlur, GLPerlinPFX,
   NativeXml,
   uMain_ListBox;
 
   procedure Intro(aTime: Double);
-  procedure Progress_Bar_Intro(Progresspercent: real);
+  procedure LoadTheProgressIcons;
+  procedure FreeIntroScene;
   procedure LoadTheMenuTexturesandSounds;
+
   procedure LoadTheMameContent;
+  procedure LoadTheZincContent;
+  procedure LoadTheHatariContent;
+  procedure LoadThePSXContent;
+  procedure LoadTheKigbContent;
 
 var
-  Mame_EmulatedRomSets, Mame_FoundRomSets: Integer;
+      
+  //ExtraFe Globals
+  ExtraFePath: string;
+
   fListBox: TSimpleListBox;
   fnonexistFont: TGLWindowsBitmapFont;
   fexistFont: TGLWindowsBitmapFont;
-  MameTotalRoms: Integer;
 
+  //Mame Global Vars
+  MameTotalRoms: Integer;
+  MameSnapPath: String;
   FXml_MameDatabase: TNativeXml;
   FXml_MameConfig: TNativeXml;
 
+  //
+  fExtraFeL,fMameL,fZincL,fHatariL,fpsxL,fKigbL: TGLHUDSprite;
+  fFireCube: TGLCube;
+
 implementation
+
+
 uses
   main,used_pro,
   bass;
@@ -32,6 +50,8 @@ procedure Intro(aTime: Double);
 begin
   if MainForm.Background_intro.Tag = 0 then
     begin
+      MainForm.GlCamera_intro.TargetObject := MainForm.Background_intro;
+      MainForm.GLCadencer.Scene := MainForm.GLS_Intro;
       AddMaterial(MatLib, 'media\extrafe\intro\splash.png', 'splash');
       MainForm.Background_intro.Material.Assign(MatLib.Materials.GetLibMaterialByName('splash').Material);
       MainForm.Background_intro.Height := MainForm.GLSceneViewer.Height;
@@ -39,38 +59,35 @@ begin
       MainForm.Background_intro.Position.X := CenterX;
       MainForm.Background_intro.Position.Y := CenterY;
       MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha := -0.8;
-      MainForm.Background_intro.Material.FrontProperties.Ambient.Red := 255;
-      MainForm.Background_intro.Material.FrontProperties.Ambient.Green := 255;
-      MainForm.Background_intro.Material.FrontProperties.Ambient.Blue := 255;
+
+      MainForm.GLHUDText_ExtraFE_Ver.Position.X := 72;
+      MainForm.GLHUDText_ExtraFE_Ver.Position.Y := 64;
+      MainForm.GLHUDText_ExtraFE_Ver.Text := GetVersionInfo('ExtraFE.exe');
+      MainForm.GLHUDText_ExtraFE_Ver.ModulateColor.Alpha := -0.8;
+      MainForm.GLHUDText_ExtraFE_Ver.Material.FrontProperties.Diffuse.Alpha := -0.8;
       MainForm.Background_intro.Tag := 1;
+      ExtraFePath := ExtractFilePath(Application.ExeName);
     end;
 
   if MainForm.Background_intro.Tag = 1 then
     if MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha < 1.5 then
-      MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha := MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha + 0.4 * dTime
+      begin
+        MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha := MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha + 0.4 * dTime;
+        MainForm.GLHUDText_ExtraFE_Ver.ModulateColor.Alpha := MainForm.GLHUDText_ExtraFE_Ver.ModulateColor.Alpha + 0.4 * dTime;
+      end
     else
-      MainForm.Background_intro.Tag := 2;
+      begin
+        MainForm.Background_intro.Tag := 2;
+      end;
 
   if MainForm.Background_intro.Tag = 2 then
     begin
-      MainForm.GLHUDText_ExtraFE_Ver.Position.X := 5;
-      MainForm.GLHUDText_ExtraFE_Ver.Position.Y := 710;
-      MainForm.GLHUDText_ExtraFE_Ver.Text := 'ExtraFE Ver     : '+ GetVersionInfo('ExtraFE.exe');
-      MainForm.GLHUDText_confEditor_Ver.Position.X := 5;
-      MainForm.GLHUDText_confEditor_Ver.Position.Y := 730;
-      MainForm.GLHUDText_confEditor_Ver.Text := 'confEditor Ver : '+ GetVersionInfo('confEditor.exe');
-      MainForm.GLHUDText_Progress_Info.Position.X := 380;
-      MainForm.GLHUDText_Progress_Info.Position.Y := CenterY - 30;
-      MainForm.GLHUDText_Progress_Info.Text := 'Start';
+      LoadTheProgressIcons;
       LoadTheMenuTexturesandSounds;
+      fExtraFeL.Visible := True;
+      Application.ProcessMessages;
       LoadTheMameContent;
-      MainForm.Progress.Visible := False;
-      MainForm.GLHUDText_Progress_Info.Visible := False;
-      MainForm.GLHUDText_ExtraFE_Ver.Visible := False;
-      MainForm.GLHUDText_confEditor_Ver.Visible := False;
-      AddMaterials(MatLib,'media\extrafe\main_menu\',['background','left_button','left_button_p','right_button','right_button_p'],['background','leftB','leftBP','rightB','rightBP']);
-      AddMaterials(MatLib,'media\extrafe\main_menu\',['mame_cab','zinc_cab','hatari_cab','psxemulator_cab','kigb_cab','widgets'],['mameC','zincC','hatariC','psxemulatorC','kigbC','widgets']);
-      AddMaterials(MatLib,'media\extrafe\main_menu\',['mame_cab_p','zinc_cab_p','hatari_cab_p','psxemulator_cab_p','kigb_cab_p'],['mameCA','ZincCA','hatariCA','psxemulatorCA','kigbCA']);
+      fMameL.Visible := True;
       Application.ProcessMessages;
       MainForm.Background_intro.Tag := 3;
       MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha := 2;
@@ -79,59 +96,17 @@ begin
     if MainForm.Background_intro.Tag = 3 then
       if MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha > 0.1 then
         begin
-          MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha := MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha - 0.01; // * dTime
-          Application.ProcessMessages;          
+          MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha := MainForm.Background_intro.Material.FrontProperties.Diffuse.Alpha - 0.01;
+          MainForm.GLHUDText_ExtraFE_Ver.ModulateColor.Alpha := MainForm.GLHUDText_ExtraFE_Ver.ModulateColor.Alpha - 0.01;
+          fExtraFeL.Material.FrontProperties.Diffuse.Alpha := fExtraFeL.Material.FrontProperties.Diffuse.Alpha - 0.1;
+          fMameL.Material.FrontProperties.Diffuse.Alpha := fMameL.Material.FrontProperties.Diffuse.Alpha - 0.1;
+          Application.ProcessMessages;
         end
       else
-        MainForm.ActiveScene(1);        
-
-end;
-
-procedure ProgresS_Bar_intro(Progresspercent: real);
-var
-  NMaskWidth: Single;
-begin
-  MainForm.Progress.Visible := True;
-  with MainForm do
-  begin
-    if Progresspercent < 100 then
-    begin
-      if Progress.Tag <> 1 then
-      begin
-        AddMaterial(MatLib, 'media\extrafe\intro\progress.png', 'Progress');
-        Progress.Material.Assign(MatLib.Materials.GetLibMaterialByName('Progress').Material);
-        Progress.Height := 57;
-        Progress.Width := 488;
-        Progress.Position.X := CenterX - 20;
-        Progress.Position.y := CenterY + 30;
-        Progress.Tag := 1;
-
-        AddMaterial(MatLib, 'media\extrafe\intro\mask.png', 'Mask');
-        mask.Material.Assign(MatLib.Materials.GetLibMaterialByName('Mask').Material);
-      end;
-
-      if Bar.Tag <> 1 then
-      begin
-        AddMaterial(MatLib, 'media\extrafe\intro\bar.png', 'bar');
-        bar.Material.Assign(MatLib.Materials.GetLibMaterialByName('bar').Material);
-        Bar.Height := 57;
-        Bar.Width := 488;
-        Bar.Position.X := CenterX - 20;
-        Bar.Position.y := CenterY + 30;
-        Bar.Tag := 1;
-      end;
-      mask.Width := (Bar.Width - 16);
-      mask.Height := (Bar.Height - 12);
-      mask.Position := Bar.Position;
-      mask.Position.X := mask.Position.X + ((mask.Width / 100 * Progresspercent)/2);
-      NMaskWidth:=mask.Width - mask.Width / 100 * Progresspercent;
-      mask.Width:=NMaskWidth;
-      MainForm.GLHUDText_Progress.Position.X := CenterX-20;
-      MainForm.GLHUDText_Progress.Position.Y := CenterY+18;
-      MainForm.GLHUDText_Progress.Text := FloatToStr(Progresspercent + 1) + '%';
-      Application.ProcessMessages;
-    end
-  end
+        begin
+          FreeIntroScene;
+          MainForm.ActiveScene(1);
+        end;
 end;
 
 procedure LoadTheMenuTexturesandSounds;
@@ -145,51 +120,72 @@ begin
   MainForm.BackGround.Width := MainForm.GLSceneViewer.Width;
   MainForm.BackGround.Position.X := CenterX;
   MainForm.BackGround.Position.Y := CenterY;
-  MainForm.GLHUDText_Progress_Info.Text := 'Load Menu Materials';
-  Progress_Bar_Intro(10);
+
   // load the fonts
   fexistFont := TGLWindowsBitmapFont.Create(MainForm);
   fexistFont.Font.Name := 'Norton';
   fexistFont.Font.Size := 12;
-  
+
   fnonexistFont := TGLWindowsBitmapFont.Create(MainForm);
   fnonexistFont.Font.Name := 'Norton';
   fnonexistFont.Font.Size := 10;
-  Progress_Bar_Intro(20);
+
+  AddMaterials(MatLib,'media\extrafe\main_menu\',['background','left_button','left_button_p','right_button','right_button_p'],['background','leftB','leftBP','rightB','rightBP']);
+  AddMaterials(MatLib,'media\extrafe\main_menu\',['mame_cab','zinc_cab','hatari_cab','psxemulator_cab','kigb_cab','widgets'],['mameC','zincC','hatariC','psxemulatorC','kigbC','widgets']);
+  AddMaterials(MatLib,'media\extrafe\main_menu\',['mame_cab_p','zinc_cab_p','hatari_cab_p','psxemulator_cab_p','kigb_cab_p'],['mameCA','ZincCA','hatariCA','psxemulatorCA','kigbCA']);
 end;
 
 procedure LoadTheMameContent;
 const
   MamePathDatabase : string = 'media\emulators\arcade\mame\database\';
   MameConfig : string = 'media\emulators\arcade\mame\config\config.xml';
-  MameMats: array [1..4] of String = ('front_list','back_list','selection_list','back_mame');
+  MameMats: array [1..4] of String = ('front_list','back_list','selection_list','back_mame2');
 
 var
-  Mame_Exe,MameData: string;
+  MameData: string;
+  Mame_EmulatedRomSets, Mame_FoundRomSets: Integer;
   count,i: Integer;
   gamename,trimgamename,gamezip,romid : string;
   node: TXmlNode;
 
+  MameIni: TextFile;
+  text,t1,t2: string;
+  Mame_Exe,Mame_Path: string;
+
 begin
 // Add the materials to library
-  MainForm.GLHUDText_Progress_Info.Text := 'Start Mame';
   AddMaterials(MatLib, 'media\emulators\arcade\mame\extrafe\', MameMats, MameMats);
-  MainForm.Mame_Background.Material.Assign(MatLib.Materials.GetLibMaterialByName('back_mame').Material);
-//  MainForm.Mame_Background.Height := MainForm.GLSceneViewer.Height;
-//  MainForm.Mame_Background.Width := MainForm.GLSceneViewer.Width;
-//  MainForm.Mame_Background.Position.X := CenterX;
-//  MainForm.Mame_Background.Position.Y := CenterY;
-  MainForm.GLPlane_Image.Position.X := -100;
-  MainForm.GLPlane_Image.Position.Y := -100;
-  MainForm.GLPlane_Image.Position.Z := 0;
-  Progress_Bar_Intro(30);
-  
+  MainForm.Mame_Background.Material.Assign(MatLib.Materials.GetLibMaterialByName('back_mame2').Material);
+  MainForm.Mame_Background.Height := MainForm.GLSceneViewer.Height;
+  MainForm.Mame_Background.Width := MainForm.GLSceneViewer.Width;
+  MainForm.Mame_Background.Position.X := CenterX;
+  MainForm.Mame_Background.Position.Y := CenterY;
+
 // Manipulate The XML Database
   if FileExists(MameConfig) then
     begin
       FXml_MameConfig := TNativeXml.CreateName('MameConfig');
       FXml_MameConfig.XmlFormat := xfReadable;
       FXml_MameConfig.LoadFromFile(MameConfig);
+      Mame_Path := FXml_MameConfig.Root.ReadAttributeString('FullPathOfSelectedMame');
+      AssignFile(MameIni,FXml_MameConfig.Root.ReadAttributeString('FullPathOfSelectedMame')+ 'mame.ini');
+      Reset(MameIni);
+      while not Eof(MameIni) do
+        begin
+          Readln(MameIni,text);
+          i := Pos(' ',text);
+          t1 := Trim(Copy(text,0,i + 1));
+          t2 := Trim(Copy(text,i,Length(text) - (i - 1)));
+          if t1 = 'snapshot_directory' then
+            begin
+              if t2 = 'snap' then
+                MameSnapPath := Mame_Path + t2 + '\'
+              else
+                MameSnapPath := t2;
+              Break;
+            end;
+        end;
+      CloseFile(MameIni);
       Mame_Exe := FXml_MameConfig.Root.ReadAttributeString('SelectedMame');
       Mame_Exe := Trim(Copy(Mame_Exe,0,Length(Mame_Exe)-4));
       MameData := MamePathDatabase + Mame_Exe + '_efuse.xml';
@@ -202,12 +198,9 @@ begin
             fListBox.AddItemTextNum(' ','',i,0);
           FXml_MameDatabase := TNativeXml.CreateName('MameInfo');
           FXml_MameDatabase.XmlFormat := xfReadable;
-          Progress_Bar_Intro(50);
-          Application.ProcessMessages;
           Fxml_MameDatabase.LoadFromFile(MameData);
           Mame_EmulatedRomSets := Fxml_MameDatabase.Root.ReadAttributeInteger('RomsEmulated');
           Mame_FoundRomSets := Fxml_MameDatabase.Root.ReadAttributeInteger('FinalRomsFound');
-          MainForm.GLHUDText_Progress_Info.Text := 'Get Mame Database';
           for count := 4 to Fxml_MameDatabase.Root.NodeCount - 1 do
             begin
               node := Fxml_MameDatabase.Root.Nodes[count];
@@ -223,7 +216,6 @@ begin
                 romid := '0';
               fListBox.AddItemTextNum(trimgamename,gamezip,(count + 6) -4,StrToInt(romid));
             end;
-          Progress_Bar_Intro(80);
           FXml_MameConfig.Free;
           Fxml_MameDatabase.Free;
           fListBox.fItems.Sort(CompareNames);
@@ -233,14 +225,115 @@ begin
     end;
 end;
 
+procedure FreeIntroScene;
+begin
+  MatLib.Materials.GetLibMaterialByName('splash').Free;
+  MainForm.GLS_Intro.Free;
+end;
+
+procedure LoadTheProgressIcons;
+const
+  Icons: array [0..5] of string = ('extrafeL','mameL','zincL','hatariL','psxL','kigbL');
+begin
+  AddMaterials(MatLib,'media\extrafe\intro\',Icons,Icons);
+
+  fExtraFeL := TGLHUDSprite.CreateAsChild(MainForm.GLDummyCube_Intro);
+  fExtraFeL.Material.MaterialLibrary := MatLib;
+  fExtraFeL.Material.LibMaterialName := 'extrafeL';
+  fExtraFeL.Width := fExtraFeL.Material.GetActualPrimaryTexture.Image.Width;
+  fExtraFeL.Height := fExtraFeL.Material.GetActualPrimaryTexture.Image.Height;
+  fExtraFeL.Position.X := 221;
+  fExtraFeL.Position.Y := 707;
+  fExtraFeL.Visible := False;
+
+  fMameL := TGLHUDSprite.CreateAsChild(MainForm.GLDummyCube_Intro);
+  fMameL.Material.MaterialLibrary := MatLib;
+  fMameL.Material.LibMaterialName := 'mameL';
+  fMameL.Width := fMameL.Material.GetActualPrimaryTexture.Image.Width;
+  fMameL.Height := fMameL.Material.GetActualPrimaryTexture.Image.Height;
+  fMameL.Position.X := 338;
+  fMameL.Position.Y := 706;
+  fMameL.Visible := False;
+
+  fZincL := TGLHUDSprite.CreateAsChild(MainForm.GLDummyCube_Intro);
+  fZincL.Material.MaterialLibrary := MatLib;
+  fZincL.Material.LibMaterialName := 'zincL';
+  fZincL.Width := fZincL.Material.GetActualPrimaryTexture.Image.Width;
+  fZincL.Height := fZincL.Material.GetActualPrimaryTexture.Image.Height;
+  fZincL.Position.X := 454;
+  fZincL.Position.Y := 708;
+  fZincL.Visible := False;
+
+  fHatariL := TGLHUDSprite.CreateAsChild(MainForm.GLDummyCube_Intro);
+  fHatariL.Material.MaterialLibrary := MatLib;
+  fHatariL.Material.LibMaterialName := 'hatariL';
+  fHatariL.Width := fHatariL.Material.GetActualPrimaryTexture.Image.Width;
+  fHatariL.Height := fHatariL.Material.GetActualPrimaryTexture.Image.Height;
+  fHatariL.Position.X := 548;
+  fHatariL.Position.Y := 710;
+  fHatariL.Visible := False;
+
+  fpsxL := TGLHUDSprite.CreateAsChild(MainForm.GLDummyCube_Intro);
+  fpsxL.Material.MaterialLibrary := MatLib;
+  fpsxL.Material.LibMaterialName := 'psxL';
+  fpsxL.Width := fpsxL.Material.GetActualPrimaryTexture.Image.Width;
+  fpsxL.Height := fpsxL.Material.GetActualPrimaryTexture.Image.Height;
+  fpsxL.Position.X := 656;
+  fpsxL.Position.Y := 710;
+  fpsxL.Visible := False;
+
+  fKigbL := TGLHUDSprite.CreateAsChild(MainForm.GLDummyCube_Intro);
+  fKigbL.Material.MaterialLibrary := MatLib;
+  fKigbL.Material.LibMaterialName := 'kigbL';
+  fKigbL.Width := fKigbL.Material.GetActualPrimaryTexture.Image.Width;
+  fKigbL.Height := fKigbL.Material.GetActualPrimaryTexture.Image.Height;
+  fKigbL.Position.X := 766;
+  fKigbL.Position.Y := 708;
+  fKigbL.Visible := False;
+
+  fFireCube := TGLCube.CreateAsChild(MainForm.GLDummyCube_Intro);
+  AddMaterial(MatLib,'media\extrafe\intro\cubeback.png','cubeback');
+  fFireCube.Material.MaterialLibrary := MatLib;
+  fFireCube.Material.LibMaterialName := 'cubeback';
+  fFireCube.Position.X := 0;
+  fFireCube.Position.Y := 0;
+  fFireCube.CubeWidth := 0.2;
+  fFireCube.CubeHeight := 0.2;
+  fFireCube.Visible := True;
+end;
+
+procedure LoadTheZincContent;
+const
+  ZincConfigIni: string = 'media\emulators\arcade\zinc\config\config.ini';
+  ZincDatabase: string = 'media\emulators\arcade\zinc\database\zinc_efuse.xml';
+begin
+  
+  if FileExists(ZincConfigIni) then
+    if FileExists(ZincDatabase) then
+      begin
+
+      end;  
+
+end;
+
+procedure LoadTheHatariContent;
+begin
+
+end;
+
+procedure LoadThePSXContent;
+begin
+
+end;
+
+procedure LoadTheKigbContent;
+begin
+
+end;
+
+
 end.
 
 
-//diadikasia emfanisis posostieas monadas poli agri omos...
-{              process_num := (count* 100) / (GameList.Length - 1);
-              if process_num < 1 then
-                process_str := '0'
-              else
-                process_str := FormatFloat('#####',process_num);
-              Progress_Bar_Intro(StrToFloat(process_str));}
+
 

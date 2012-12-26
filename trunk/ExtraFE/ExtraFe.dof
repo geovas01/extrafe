@@ -115,7 +115,7 @@ AutoIncBuild=1
 MajorVer=0
 MinorVer=2
 Release=5
-Build=71
+Build=81
 Debug=1
 PreRelease=0
 Special=0
@@ -126,7 +126,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=Az Creations
 FileDescription=ExtraFE - Frontend for Emulators and not only...
-FileVersion=0.2.5.71
+FileVersion=0.2.5.81
 InternalName=Mnimi
 LegalCopyright=Freeware
 LegalTrademarks=Azrael11

@@ -10,7 +10,6 @@ uses
   main in 'code\main\main.pas' {Conf},
   mainconf in 'code\main\mainconf.pas',
   FunctionX in 'code\others\FunctionX.pas',
-  psxdata in 'code\emulators\playstation\psxemulator\psxdata.pas',
   wizard in 'code\others\wizard.pas' {FormWizard},
   menu in 'code\main\menu.pas',
   ce_themes in 'code\ce_\ce_themes.pas',
@@ -49,7 +48,8 @@ uses
   hatari_paths in 'code\hatari_\hatari_paths.pas',
   hatari_database in 'code\hatari_\hatari_database.pas',
   psx_database in 'code\psx_\psx_database.pas',
-  kigb_database in 'code\kigb_\kigb_database.pas';
+  kigb_database in 'code\kigb_\kigb_database.pas',
+  AnalogClock in 'code\widgets_\AnalogClock.pas';
 
 var
   Map : THandle;
