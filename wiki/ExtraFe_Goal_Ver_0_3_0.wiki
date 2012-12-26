@@ -7,31 +7,42 @@
   * Master configuration for ExtraFE. (0% Done)
   * <font color='Blue'>Master Config Settings for Mame.</font> (90% Done)
   * ~~<font color='red'>Setting, creating and manipulating Mame Database in XML.</font>~~ (100% Done)
-  * ~~<font color='red'>Settings for mame builds, MamePlus and MamePlusXT.</font>~~ (100% Done)
+  * <font color='red'>Settings for mame builds, MamePlus and MamePlusXT.</font> (100% Done)
   * Tools Settings usefull for Mame. (20% Done)
   * ~~<font color=red>Master Config settings for Zinc.</font>~~ (100% Done)
   * ~~<font color=red>Creating, manipulating, setting zinc database in XML. </font>~~ (100% Done)
-  * <font color='Blue'>Master Config settings for Hatari.</font> (95% Done)
+  * <font color='red'>Master Config settings for Hatari.</font> (95% Done)
   * <font color='Blue'>Creating, manipulating, setting "Atari ST" database in xml.</font> (70% Done)
-  * <font color='Blue'>Master Config settings for pSX.</font> (90% Done)
+  * <font color='red'>Master Config settings for pSX.</font> (90% Done)
   * ~~<font color=red>Creating, manipulating, setting "Playstation" database in xml</font>~~ (100% Done)
   * Master Config settings for Kigb. (95% Done)
   * <font color='Blue'>Creating, manipulating, setting "GameBoy" database in xml.</font> (70% Done)
   * ~~<font color='red'>GUID, and Master Settings for Weather widget. (100% Done)</font>~~
-  * <font color='blue'>Time and Date, local and global settings widget. (75% Done)</font>
+  * <font color='blue'>Time and Date, local and global settings widget. (70% Done)</font>
 
 = Extrafe =
 
-  * ~~<font color='red'>Setup the GLScene and the bass sound library</font>~~ (100% Done)
+  * <font color='red'>Setup the GLScene and the bass sound library</font> (80% Done)
   * <font color='green'>Create intro and load the textures, sprites, fonts, emulators, widgets, sound, effects, cursors e.t.c.</font> (25% Done)
-  * <font color='blue'>Create the Main Menu (50% Done)</font>
+  * <font color='green'>Create the Main Menu.</font> (30% Done)
   * Mame panel creation gamelist, info, snaps, effects, animation, navigation (8% Done)
   * ZiNC panel creation gamelist, info, snaps, effects, animation, navigation (0% Done)
   * Hatari panel creation gamelist, info, snaps, effects, animation, navigation (0% Done)
   * pSX emulator panel creation gamelist, info, snaps, effects, animation, navigation (0% Done)
   * KiGB panel creation gamelist, info, snaps, effects, animation, navigation (0% Done)
-  * Add Widgets button to main menu and creation of widgets pages (0%done)
-  * Control the contents of ExtraFe by mouse,keyboard,joystick and other HID (10% done)
+  * Add Widgets button to main menu and creation of widgets pages (5% Done)
+  * Control the contents of ExtraFe by mouse,keyboard,joystick and other HID (10% Done)
+  * Virtual Keyboard (10% Done)
   
   Many more to come... ;)
+
+
+What the colors Means ****
+Black Text: Means the the concept is in thoughts or designed right now..
+<font color='green'>Green</font> Text: Means that the design is ready and have resources or start to coding the basics procedures or functions...
+<font color='blue'>Blue</font> Text: Means that the first results is here and some parts working ok but have a lot bugs and not all the procedures or functions is ready
+<font color='red'>Red</font> Text: Means that is it the perfect for me now and have some basic testing and working just perfect...
+~~Stikethrouth~~ Text: Means that is ready for stable release so no further changes for this part
+
+Sometimes you can see here that i downgrade the percent result that means that new ideas is comming or recoding the same code to be faster,more stable or smaller... 
    
