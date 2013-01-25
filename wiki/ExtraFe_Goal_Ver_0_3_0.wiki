@@ -18,20 +18,20 @@
   * Master Config settings for Kigb. (95% Done)
   * <font color='Blue'>Creating, manipulating, setting "GameBoy" database in xml.</font> (70% Done)
   * ~~<font color='red'>GUID, and Master Settings for Weather widget. (100% Done)</font>~~
-  * <font color='blue'>Time and Date, local and global settings widget. (70% Done)</font>
+  * <font color='red'>Time and Date, local and global settings widget. (92% Done)</font>
 
 = Extrafe =
 
-  * <font color='red'>Setup the GLScene and the bass sound library</font> (80% Done)
-  * <font color='green'>Create intro and load the textures, sprites, fonts, emulators, widgets, sound, effects, cursors e.t.c.</font> (25% Done)
+  * <font color='blue'>Setup the GLScene and the bass sound library</font> (50% Done)
+  * <font color='green'>Create intro and load the textures, sprites, fonts, emulators, widgets, sound, effects, cursors e.t.c.</font> (28% Done)
   * <font color='green'>Create the Main Menu.</font> (30% Done)
-  * Mame panel creation gamelist, info, snaps, effects, animation, navigation (8% Done)
-  * ZiNC panel creation gamelist, info, snaps, effects, animation, navigation (0% Done)
+  * Mame panel creation gamelist, info, snaps, effects, animation, navigation (15% Done)
+  * ZiNC panel creation gamelist, info, snaps, effects, animation, navigation (25% Done)
   * Hatari panel creation gamelist, info, snaps, effects, animation, navigation (0% Done)
   * pSX emulator panel creation gamelist, info, snaps, effects, animation, navigation (0% Done)
   * KiGB panel creation gamelist, info, snaps, effects, animation, navigation (0% Done)
   * Add Widgets button to main menu and creation of widgets pages (5% Done)
-  * Control the contents of ExtraFe by mouse,keyboard,joystick and other HID (10% Done)
+  * Control the contents of ExtraFe by mouse,keyboard,joystick and other HID (20% Done)
   * Virtual Keyboard (10% Done)
   
   Many more to come... ;)
