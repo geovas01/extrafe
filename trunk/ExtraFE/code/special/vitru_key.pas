@@ -3,11 +3,14 @@ unit vitru_key;
 interface
 
 uses
-  Classes,Graphics,
+  Classes,Graphics,SysUtils,
   GLScene,GLHUDObjects,GLObjects,GLMaterial,GLBitmapFont,
-  VectorGeometry,
+  VectorGeometry,GLRenderContextInfo,BaseClasses,
   uBaseButton,
   used_pro,main;
+
+const
+  fKeys: array [0..35] of string = ('1','2','3','4','5','6','7','8','9','0','Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Z','X','C','V','B','N','M');
 
 type
   TSimpleButton = class
@@ -21,7 +24,7 @@ type
   public
     property state: Boolean read fState;
     property CarryLetter: WideChar read fCarryLetter;
-    constructor Create(LetterName: WideChar);
+    constructor Create(LetterName: WideChar; width,height,PosX,PosY: Integer; PressedState: Boolean);
   end;
 
   TVirtualKeyboard = class(TGLBaseSceneObject)
@@ -29,6 +32,7 @@ type
     fMatlib: TGLMaterialLibrary;
     fKeyFont: TGLCustomBitmapFont;
     fVK_Text: TGLHUDText;
+    fVK_SearchText: TGLHUDText;
     fvisible: Boolean;
     fButtonsList: TList;
 
@@ -37,6 +41,8 @@ type
     fMainDummy: TGlDummyCube;
     fPanelBack: TGLHudSprite;
     fPanelSelection: TGLHudSprite;
+    fPanelSearch: TGLHUDSprite;
+
     procedure MainInitVK(Matlib: TGLMaterialLibrary; VKFont: TGLCustomBitmapFont);
     procedure InitHuds;
 
@@ -46,41 +52,27 @@ type
     function GetItemByIndex(aIndex: Integer): TSimpleButton;
     function GetIndexByItem(aItem: TSimpleButton): Integer;
 
-    procedure AddNewKey(matlib: TGLMaterialLibrary; KeyFont: TGLCustomBitmapFont; pX,pY: Integer; Kstate: Boolean; Letter: WideChar);
+    procedure CreteKeyboard;
+
+    procedure DoProgress(const progressTime: TProgressTimes); override;
+    Procedure DoRender(var ARci: TRenderContextInfo; ARenderSelf, ARenderChildren: Boolean); override;
     constructor Create(AOwner: TComponent; aMatLib: TGLMaterialLibrary; aVK_Key: TGLCustomBitmapFont); reintroduce;
     constructor CreateAsChild(aParentOwner: TGLBaseSceneObject; aMatLib: TGLMaterialLibrary; aVK_Key: TGLCustomBitmapFont);
     destructor Destroy; override;
 
   end;
 
-  procedure LoadTextForKey;
+var
+  MyButton: TGUIAlphaButton;
+  MyText: TGLHUDText;
 
 implementation
 
 uses
   GLCrossPlatform;
 
-procedure LoadTextForKey;
-begin
-//
-end;
-
-{ TSimpleButton }
-
-constructor TSimpleButton.Create(LetterName: WideChar);
-begin
-  inherited Create;
-  fCarryLetter := LetterName;
-end;
 
 { TVirtualKeyboard }
-
-procedure TVirtualKeyboard.AddNewKey(matlib: TGLMaterialLibrary;
-  KeyFont: TGLCustomBitmapFont; pX, pY: Integer; Kstate: Boolean;
-  Letter: WideChar);
-begin
-
-end;
 
 constructor TVirtualKeyboard.Create(AOwner: TComponent;
   aMatLib: TGLMaterialLibrary; aVK_Key: TGLCustomBitmapFont);
@@ -97,14 +89,82 @@ begin
   MainInitVK(aMatLib,aVK_Key);
 end;
 
+//procedure TVirtualKeyboard.CreateVKeyboard;
+//const
+//
+//begin
+//
+//end;
+
+procedure TVirtualKeyboard.CreteKeyboard;
+const
+  breakLines: array [0..2] of Integer = (9,19,28);
+var
+  i,x,y,k: integer;
+begin
+  for i := 0 to 35 do
+    begin
+      if i < breakLines[0] then
+        k := 0
+      else if i < breakLines[1] then
+        k := 1
+      else if i < breakLines[2] then
+        k := 2
+      else
+        k := 3;
+      case k of
+        0 : y := 2;
+        1 : y := 38;
+        2 : y := 74;
+        3 : y := 110;
+      end;
+      x := (i * 34) + (2 * i);
+      MyButton := TGUIAlphaButton.CreateAsChild(fMainDummy);
+      MyButton.Name := 'MyButton_' +  IntToStr(i); 
+      MyButton.SetMaterials('VK_ButtonUp','VK_ButtonDown',MatLib);
+      MyButton.Position.SetPoint(x,y,0);
+      MyButton.Visible := True;
+
+      y := y + 17;
+      x := x + 17;
+      MyText := TGLHUDText.CreateAsChild(fMainDummy);
+      MyText.Name := 'MyText_' + IntToStr(i);
+      MyText.Text := fkeys[i];
+      MyText.Position.SetPoint(x,y,0);
+      MyText.Visible := True;
+    end;
+end;
+
 destructor TVirtualKeyboard.Destroy;
+var
+  i: integer;
+  comp: TComponent;
 begin
   while fButtonsList.Count > 0 do
     begin
       GetItemByIndex(0).Free;
       fButtonsList.Delete(0);
     end;
+//  for i := 0 to 35 do
+//    begin
+//
+//    end;
   inherited Destroy;
+end;
+
+procedure TVirtualKeyboard.DoProgress(const progressTime: TProgressTimes);
+begin
+  inherited;
+  
+end;
+
+procedure TVirtualKeyboard.DoRender(var ARci: TRenderContextInfo;
+  ARenderSelf, ARenderChildren: Boolean);
+begin
+  inherited;
+  fPanelBack.Position.X := Position.X;
+  fPanelBack.Position.Y := Position.Y;
+  fPanelBack.DoRender(ARci,True,False);
 end;
 
 function TVirtualKeyboard.GetIndexByItem(aItem: TSimpleButton): Integer;
@@ -132,23 +192,42 @@ function AddPanel(aMaterial: AnsiString): TGLHudSprite;
   end;
 begin
   fMainDummy := TGLDummyCube.CreateAsChild(Self);
-  fMainDummy.Visible := False;
+  fMainDummy.Visible := True;
 
   fVK_Text := TGLHUDText.CreateAsChild(fMainDummy);
   fVK_Text.BitmapFont := fKeyFont;
   fVK_Text.ModulateColor.AsWinColor := clWhite;
   fVK_Text.Layout := tlCenter;
 
-  fPanelBack:= AddPanel('back_key');
+  fPanelBack:= AddPanel('VK_BackGround');
+  CreteKeyboard;
 end;
 
 procedure TVirtualKeyboard.MainInitVK(Matlib: TGLMaterialLibrary;
   VKFont: TGLCustomBitmapFont);
+var
+  i: integer;
 begin
   fButtonsList := TList.Create;
+  for i := 0 to 35 do
+    fButtonsList.Add(@fKeys[i]);
   fKeyFont := VKFont;
   fMatlib := MatLib;
-  InitHuds();  
+  InitHuds();
+end;
+
+{ TSimpleButton }
+
+constructor TSimpleButton.Create(LetterName: WideChar; width, height, PosX,
+  PosY: Integer; PressedState: Boolean);
+begin
+  inherited Create;
+  fWidth := width;
+  fHeight := height;
+  fPosX := PosX;
+  fPosY := PosY;
+  fState := PressedState;
+  fCarryLetter := LetterName;
 end;
 
 end.

@@ -94,7 +94,7 @@ type
 implementation
 uses
   GLCrossPlatform,
-  SysUtils,mame;
+  SysUtils,mame,zinc;
 //------------------------------------------------------------------------------
 Constructor TSimpleListItem.Create(aText: WideString);
 begin
@@ -239,7 +239,7 @@ Procedure TSimpleListBox.InitHuds;
   end;
 begin
   fMainDummy := TGLDummyCube.CreateAsChild(self);
-  fMainDummy.Visible := false;
+  fMainDummy.Visible := True;
 
   fItemExistText := TGlHudText.CreateAsChild(fMainDummy);
   fItemExistText.BitmapFont := yFont;
@@ -376,7 +376,7 @@ end;
 procedure TSimpleListBox.CancelClick;
 begin
   MyTimer.Enabled := False;
-  sleeping := 200;
+  sleeping := 120;
 end;
 
 function CompareNames(Item1, Item2: Pointer): Integer;
@@ -397,10 +397,10 @@ end;
 
 procedure TMyTimer.OnMyTimer(Sender: TObject);
 begin
-  if sleeping = 10 then
-    sleeping := 10
+  if sleeping = 5 then
+    sleeping := 5
   else
-    sleeping := sleeping - 10;
+    sleeping := sleeping - 5;
 end;
 
 
@@ -409,7 +409,7 @@ initialization
 MyTimer := TMyTimer.Create(nil);
 with MyTimer do
 begin
-  Interval := 200;
+  Interval := 100;
   OnTimer := OnMyTimer;
 end;
 

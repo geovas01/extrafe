@@ -72,11 +72,6 @@ begin
         Conf.sComboBox22.ItemIndex := Sound_Int;
       Conf.sComboBox21.Items.Clear;
       Conf.sComboBox21.Items.Add('None');
-      Sound_Int := 0;
-      repeat
-        Sound_Str := joysticks[Sound_Int];
-        Conf.sComboBox56.Items.Add(Sound_Str);
-      until Sound_Str = '';
       Sound_Str := pSX_Ini.ReadString('Input','JoystickDevice1',Sound_Str);
       if Sound_Str = 'NULL' then
         begin
@@ -303,11 +298,6 @@ begin
         Conf.sComboBox22.ItemIndex := Sound_Int;
       Conf.sComboBox21.Items.Clear;
       Conf.sComboBox21.Items.Add('None');
-      Sound_Int := 0;
-      repeat
-        Sound_Str := joysticks[Sound_Int];
-        Conf.sComboBox56.Items.Add(Sound_Str);
-      until Sound_Str = '';
       Sound_Str := pSX_Ini.ReadString('Input','JoystickDevice1',Sound_Str);
       if Sound_Str = 'NULL' then
         begin
@@ -363,11 +353,6 @@ begin
         Conf.sComboBox22.ItemIndex := Sound_Int;
       Conf.sComboBox21.Items.Clear;
       Conf.sComboBox21.Items.Add('None');
-      Sound_Int := 0;
-      repeat
-        Sound_Str := joysticks[Sound_Int];
-        Conf.sComboBox56.Items.Add(Sound_Str);
-      until Sound_Str = '';
       Sound_Str := pSX_Ini.ReadString('Input','JoystickDevice2',Sound_Str);
       if Sound_Str = 'NULL' then
         begin

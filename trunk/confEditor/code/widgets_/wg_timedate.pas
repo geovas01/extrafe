@@ -2,8 +2,12 @@ unit wg_timedate;
 
 interface
 uses
-  SysUtils,Classes,ExtCtrls,Windows,Forms,IdSNTP,IdException,
-  sPanel,sLabel,AsyncCalls,AnalogClock;
+  SysUtils,Classes,ExtCtrls,Windows,Forms,Controls,Dialogs,
+  IdSNTP,IdException,
+  DateUtils,IniFiles,
+  sPanel,sLabel,sBitBtn,
+  AsyncCalls,AnalogClock,
+  NativeXml;
 
 type
   TMyTimer = class(TTimer)
@@ -11,17 +15,26 @@ type
     procedure OnMyTimer(Sender: TObject);
   end;
 
+//Date Time world Panel
+  procedure CreateDateTimeIniFirstTime;
+  procedure SetDateTime_FromDateTimeIni;
+  procedure AddDateTimePanels_FromDateTimeIni(iPanels: Integer);
+
   procedure Press_AddTime;
   procedure Cancel_Add;
   procedure Get_DataOfCountry;
-  procedure Get_InternetTime;
-  procedure Set_ComputersTime;
   procedure AddSelection;
   procedure CreateDateTimePanel(num: Integer);
+  procedure SortOtherDateTimePanels(killed: Integer);
+  function GetTimeZone: string;
+
+  procedure DateTimeWheelAction(sWheelDelta: Integer; sHandled: Boolean);
+
+//Internet Panel
+  procedure Set_ComputersTime;
+  procedure Get_InternetTime;
   procedure ShowWorldClock;
   procedure ShowInternetTime;
-  function GetTimeZone: string;
-  function SetTimeForButton(C_GTM, C_Hour: string) : string;
 
 // Menu actions
   procedure Show_widget_timedate;
@@ -38,8 +51,59 @@ var
   freeCompsGetTimeZoneInfo: Boolean;
   MyTimer: TMyTimer;
   CDPanels: Integer;
-  Country,Capital,Hour: string;
-  
+  dtCountry,dtCapital,dtHour,dtPopulation,dtMyTimeZone: string;
+  dtTime,dtTime1: TTime;
+  fXmlCountries: TNativeXml;
+  node: TXmlNode;
+
+procedure CreateDateTimeIniFirstTime;
+begin
+  DateTimeIni := TIniFile.Create(Program_Path + 'media\widgets\datetime\datetime.ini');
+  DateTimeIni.WriteString('SelCount','Count','-1');
+  SetDateTime_FromDateTimeIni;
+end;
+
+procedure SetDateTime_FromDateTimeIni;
+var
+  i: Integer;
+begin
+  CDPanels := DateTimeIni.ReadInteger('SelCount','Count',CDPanels);
+  if CDPanels <> -1 then
+    begin
+      for i := 0 to CDPanels  do
+        AddDateTimePanels_FromDateTimeIni(i);
+      CDPanels := CDPanels + 1;
+    end;
+end;
+
+procedure AddDateTimePanels_FromDateTimeIni(iPanels: Integer);
+var
+  node: TXmlNode;
+  i: Integer;
+begin
+  fXmlCountries := TNativeXml.CreateName('Countries');
+  fXmlCountries.XmlFormat := xfReadable;
+  fXmlCountries.LoadFromFile(Program_Path + 'media\widgets\datetime\countries.xml');
+  dtCountry := DateTimeIni.ReadString('Countries','Country' + IntToStr(iPanels),dtCountry);
+  with fXmlCountries.Root do
+    for i := 0 to NodeCount - 1 do
+      begin
+        node := fXmlCountries.Root.Nodes[i];
+        if node.Name = 'row' then
+          begin
+            if node.ReadAttributeString('Country') = dtCountry then
+              begin
+                dtCapital := node.ReadAttributeString('Capital');
+                dtPopulation := node.ReadAttributeString('Population');
+                dtHour := node.ReadAttributeString('GTM');
+                Break;
+              end;
+          end;
+      end;
+  fXmlCountries.Free;
+  CreateDateTimePanel(iPanels + 1);
+end;
+
 procedure Press_AddTime;
 var
   comp: TComponent;
@@ -81,17 +145,16 @@ procedure Get_DataOfCountry;
 const
   picFlagNone = 'media\confeditor\images\timedate\flags\none.gif';
   picMapNone = 'media\confeditor\images\timedate\maps\none.gif';
+  xmlPath = 'media\widgets\datetime\countries.xml';
 var
-  TimeZone: TextFile;
-  Path,text,text1,text2: string;
-  picFlag,picMap: string;
+  cbText,picFlag,picMap: string;
+  comp : TComponent;
   i: Integer;
-  Comp: TComponent;
-  H, M, S, MS: Word;
 begin
-  Country := '';
-  Capital := '';
-  Hour := '';
+  dtCountry := '';
+  dtCapital := '';
+  dtHour := '';
+  dtPopulation := '';
   if freeCompsGetTimeZoneInfo = True then
     begin
       Comp := FindComponentEx('Conf.Pic_datetime1');
@@ -101,76 +164,166 @@ begin
       Comp := FindComponentEx('Conf.MyAnalogClock1');
       TAnalogClock(Comp).Free;
     end;
-  Path := Program_Path + 'media\widgets\datetime\cocaca.txt';
-  AssignFile(TimeZone,Path);
-  Reset(TimeZone);
-    while not Eof(TimeZone) do
+  fXmlCountries := TNativeXml.CreateName('Countries');
+  fXmlCountries.XmlFormat := xfReadable;
+  fXmlCountries.LoadFromFile(Program_Path + xmlPath);
+  cbText := SetCapitalTheFirstLetter(Conf.sComboBox42.Text);
+  with fXmlCountries.Root do
+    for i := 0 to NodeCount - 1 do
       begin
-        Readln(TimeZone,text);
-        i := Pos('=',text);
-        text1 := Trim(Copy(text,0,i-1));
-        text2 := Trim(Copy(text,i+1,Length(text) - i));
-        if text1 = SetCapitalTheFirstLetter(Conf.sComboBox42.Text) then
-          begin
-            picFlag := Program_Path + 'media\confeditor\images\timedate\flags\' + text1 + '.gif';
-            picMap := Program_Path + 'media\confeditor\images\timedate\maps\' + text1 + '.gif';
-            if FileExists(picFlag) then
-              begin
-                picFlag := 'media\confeditor\images\timedate\flags\' + text1 + '.gif';
-                Image_Comp(Conf.Ptimedate_worldclock,picFlag,376,152,100,80,1,'_datetime',True,True)
-              end
-            else
-              Image_Comp(Conf.Ptimedate_worldclock,picFlagNone,386,152,80,80,1,'_datetime',True,True);
-            if FileExists(picMap) then
-              begin
-                picMap := 'media\confeditor\images\timedate\maps\' + text1 + '.gif';
-                Image_Comp(Conf.Ptimedate_worldclock,picMap,480,104,225,161,2,'_datetime',True,True)
-              end
-            else
-              Image_Comp(Conf.Ptimedate_worldclock,picMapNone,480,104,215,161,2,'_datetime',True,True);
-            freeCompsGetTimeZoneInfo := True;
-            Country := text1;
-            i := Pos('(',text2);
-            Capital := Trim(Copy(text2,0,i-1));
-            hour := Trim(Copy(text2,i + 1,Length(text2)-i-1));
-            Break;
-          end;
+        node := fXmlCountries.Root.Nodes[i];
+        if node.Name = 'row' then
+          if node.ReadAttributeString('Country') = cbText then
+            begin
+              picFlag := Program_Path + 'media\confeditor\images\timedate\flags\' + cbText + '.gif';
+              picMap := Program_Path + 'media\confeditor\images\timedate\maps\' + cbText + '.gif';
+              if FileExists(picFlag) then
+                begin
+                  picFlag := 'media\confeditor\images\timedate\flags\' + cbText + '.gif';
+                  Image_Comp(Conf.Ptimedate_worldclock,picFlag,376,152,100,80,1,'_datetime',True,True)
+                end
+              else
+                Image_Comp(Conf.Ptimedate_worldclock,picFlagNone,386,152,80,80,1,'_datetime',True,True);
+              if FileExists(picMap) then
+                begin
+                  picMap := 'media\confeditor\images\timedate\maps\' + cbText + '.gif';
+                  Image_Comp(Conf.Ptimedate_worldclock,picMap,480,104,225,161,2,'_datetime',True,True)
+                end
+              else
+                Image_Comp(Conf.Ptimedate_worldclock,picMapNone,480,104,215,161,2,'_datetime',True,True);
+              freeCompsGetTimeZoneInfo := True;
+              dtCountry := node.ReadAttributeString('Country');
+              dtCapital := node.ReadAttributeString('Capital');
+              dtHour := node.ReadAttributeString('GTM');
+              dtPopulation := node.ReadAttributeString('Population');
+              dtPopulation := FormatFloat('#.##,', StrToInt(dtPopulation));
+              Break;
+            end;
       end;
-  CloseFile(TimeZone);
-  DecodeTime(Time,h,m,s,ms);
-//  AnalogClock_Comp(Conf.Parent,1,1,1,1,1,Time,StrToInt(Hour),False);
-  Comp := FindComponentEx('Conf.MyAnalogClock1');
+  fXmlCountries.Free;
+  dtMyTimeZone := GetTimeZone;
+  dtTime1 := Now;
+  dtTime1 := IncHour(dtTime1,StrToInt(dtHour));
+  dtTime1 := IncHour(dtTime1,StrToInt('-'+dtMyTimeZone));
   Conf.sButton24.Visible := True;
-  Conf.sButton24.Caption := IntToStr(H + StrToInt(Hour));
+  Conf.sButton24.Caption := 'Please Wait...';
   MyTimer.Enabled := True;
 end;
 
 procedure AddSelection;
 begin
-  if CDpanels = -1 then
-    CDPanels := 0;
-  CreateDateTimePanel(CDPanels+1);
-  Cancel_Add;
-  CDPanels := CDPanels + 1;
+  if CDPanels > 9 then
+    ShowMessage('Sorry only 10 selections you can do...'  + #13#10 + 'If you want this selection please erase one of your previous selections.')  
+  else
+    begin
+      if CDpanels = -1 then
+        CDPanels := 0;
+      CreateDateTimePanel(CDPanels+1);
+      Cancel_Add;
+      CDPanels := CDPanels + 1;
+    end;
 end;
 
 procedure CreateDateTimePanel(num: Integer);
 var
   comp: TComponent;
-  TTop: Integer;
+  TTop,CountC: Integer;
 begin
+  Conf.ScrollBox2.VertScrollBar.Position := 0;
   if num = 1 then
     TTop := 8
   else
     TTop := (70 * (num - 1)) + (8 * num);
+  dtMyTimeZone := GetTimeZone;
   Panel_Comp(Conf.ScrollBox2,'_datetime',(num - 1) + 11,8,TTop,70,322);
   Comp := FindComponentEx('Conf.MyPanel_datetime' + IntToStr((num - 1)+11));
-  BitBtn_Comp(TsPanel(Comp),(num - 1)+11,'datetime',304,2,16,16,33);
-//  AnalogClock_Comp(TsPanel(comp),num-1,5,10,50,60,StrToTime(Conf.sButton24.Caption));
-  Label_Comp(TsPanel(comp),'Country : ' + Country,70,10,(num * 3),'datetime',True,True,True);
-  Label_Comp(TsPanel(comp),'Capital : ' + Capital,70,30,(num * 3) + 1,'datetime',True,True,True);
-  Label_Comp(TsPanel(comp),'GTM : ' + Hour,260,50,(num * 3 ) + 2,'datetime',True,True,True);
+  BitBtn_Comp(TsPanel(Comp),(num - 1) + 11,'datetime',304,2,16,16,33);
+  dtHour := IntToStr(StrToInt(dtHour) - StrToInt(dtMyTimeZone));
+  if StrToInt(dtHour) > 0 then
+    AnalogClock_Comp(TsPanel(comp),num-1,5,10,50,60,StrToTime(dthour),True)
+  else
+    begin
+      Delete(dtHour,1,1);
+      AnalogClock_Comp(TsPanel(comp),num-1,5,10,50,60,-StrToTime(dthour),True);
+    end;
+  Label_Comp(TsPanel(comp),'Country : ' + dtCountry,70,10,((num - 1) * 4),'_datetime',True,True,True);
+  Label_Comp(TsPanel(comp),'Capital : ' + dtCapital,70,50,((num - 1) * 4) + 1,'_datetime',True,True,True);
+  Label_Comp(TsPanel(comp),'GTM : ' + dtHour,260,50,((num - 1) * 4) + 2,'_datetime',True,True,True);
+  Label_Comp(TsPanel(comp),'Population : ' + dtPopulation,70,30,((num - 1) * 4)+ 3,'_datetime',True,True,True);
+  if Started = False then
+    begin
+      CountC := DateTimeIni.ReadInteger('SelCount','Count',CountC);
+      DateTimeIni.WriteInteger('SelCount','Count',CountC + 1);
+      DateTimeIni.WriteString('Countries','Country' + IntToStr(CountC + 1),dtCountry);
+    end;
 end;
+
+procedure SortOtherDateTimePanels(killed: Integer);
+var
+  i,k: Integer;
+  comp: TComponent;
+  CCountry: string;
+begin
+  if killed = (CDPanels - 1) + 11  then
+    begin
+      DateTimeIni.WriteString('SelCount','Count',IntToStr((killed - 1)-11));
+      DateTimeIni.DeleteKey('Countries','Country' + IntToStr(killed - 11));
+      CDPanels := CDPanels - 1;
+    end
+  else if (killed - 11) >= 0 then
+    begin
+      CDPanels := CDPanels - 1;
+      for i := (killed - 11) to CDPanels - 1 do
+        begin
+          comp := FindComponentEx('Conf.MyPanel_datetime' + IntToStr(i + 1 + 11));
+          TsPanel(comp).Top := TsPanel(comp).Top - 78;
+          TsPanel(comp).Name := 'Mypanel_datetime' + IntToStr(i + 11);
+          comp := FindComponentEx('Conf.MyBitBtn' + IntToStr(i + 1 + 11));
+          TsBitBtn(comp).Name := 'MyBitBtn' + IntToStr(i + 11);
+          TsBitBtn(comp).Tag := i + 11;
+          comp := FindComponentEx('Conf.MyAnalogClock' + IntToStr(i + 1));
+          TAnalogClock(comp).Name := 'MyAnalogClock' + IntToStr(i);
+          for k := 0 to 3 do
+            begin
+              comp := FindComponentEx('Conf.Label_datetime' + IntToStr(((i + 1) * 4) + k ));
+              if i = 0 then
+                TsLabel(comp).Name := 'Label_datetime' + IntToStr(i + k)
+              else
+                TsLabel(comp).Name := 'Label_datetime' + IntToStr((i * 4) + k);
+            end;
+        end;
+      DateTimeIni.WriteString('SelCount','Count',IntToStr(CDPanels - 1));
+      DateTimeIni.DeleteKey('Countries','Country0');
+      for i := 0 to CDPanels do
+        begin
+          CCountry := DateTimeIni.ReadString('Countries','Country' + IntToStr(i + 1),CCountry);
+          DateTimeIni.WriteString('Countries','Country' + IntToStr(i),CCountry);
+        end;
+      DateTimeIni.DeleteKey('Countries','Country' + IntToStr(CDPanels));
+    end;
+end;
+
+{ TMyTimer }
+
+procedure TMyTimer.OnMyTimer(Sender: TObject);
+begin
+  dtMyTimeZone := GetTimeZone;
+  dtTime := Now;
+  dtTime := IncHour(dtTime,StrToInt(dtHour));
+  dtTime := IncHour(dtTime,StrToInt('-'+dtMyTimeZone));
+  Conf.sButton24.Caption := TimeToStr(dtTime);
+end;
+
+function GetTimeZone: string; 
+var 
+  TimeZone: TTimeZoneInformation;
+begin
+  GetTimeZoneInformation(TimeZone);
+  Result := IntToStr(TimeZone.Bias div -60); 
+end;
+
+//
+// Internet Panel
 
 procedure Get_InternetTime;
 var
@@ -233,12 +386,7 @@ begin
   
 end;
 
-{ TMyTimer }
 
-procedure TMyTimer.OnMyTimer(Sender: TObject);
-begin
-  
-end;
 
 procedure ShowWorldClock;
 begin
@@ -254,34 +402,27 @@ begin
   Conf.Ptimedate_internettime.BringToFront;
 end;
 
-function GetTimeZone: string; 
-var 
-  TimeZone: TTimeZoneInformation;
-begin
-  GetTimeZoneInformation(TimeZone);
-  Result := IntToStr(TimeZone.Bias div -60); 
-end;
-
-function SetTimeForButton(C_GTM, C_Hour: string) : string;
+procedure DateTimeWheelAction(sWheelDelta: Integer; sHandled: Boolean);
 var
-  i,k: Integer;
-  C_Time: string;
-
+  PosNumber: Integer;
 begin
-  i := Pos('-',C_GTM);
-  if i = 0 then
-    begin
-      C_Time := TimeToStr(now);
-      k := Pos('+',C_Hour);
-      if k <> 0 then
-        begin
-          C_Hour := Trim(Copy(C_Hour,1,Length(C_Hour) - 1));
-          if StrToInt(C_Hour) > StrToInt(C_GTM) then
-            begin
-
-            end;
-        end;
-    end;
+  if sWheelDelta > 0 then
+    with Conf.ScrollBox2.VertScrollBar do 
+      begin
+        PosNumber := Position - Conf.ScrollBox2.VertScrollBar.Increment;
+        if PosNumber < 0 then 
+          PosNumber := 0;
+        Position := PosNumber;
+      end;
+  if sWheelDelta < 0 then 
+    with Conf.ScrollBox2.VertScrollBar do
+      begin
+        PosNumber := Position + Conf.ScrollBox2.VertScrollBar.Increment;
+        if PosNumber >= Conf.ScrollBox2.VertScrollBar.Range then
+          PosNumber := Conf.ScrollBox2.VertScrollBar.Range - 1;
+        Position := PosNumber;
+      end;
+  sHandled := True;
 end;
 
 /////////////////////////////////////////////////////////////////////

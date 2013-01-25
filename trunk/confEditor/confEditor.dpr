@@ -2,6 +2,7 @@ program confEditor;
 
 {$R 'resfiles\bitbtn_glyphs\bitbtn_glyphs.res' 'resfiles\bitbtn_glyphs\bitbtn_glyphs.rc'}
 {$R 'resfiles\menu_images\menu_images.res' 'resfiles\menu_images\menu_images.rc'}
+{%ToDo 'confEditor.todo'}
 
 uses
   Forms,

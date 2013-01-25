@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Countries items="195">
+	<row Country="Algeria" Capital="Algiers" SummerTime="false" Population="37100000" GTM="1" Area_Km="2381741"/>
+	<row Country="Angola" Capital="Luanda" SummerTime="false" Population="18498000" GTM="1" Area_Km="1246700"/>
+	<row Country="Benin" Capital="Porto-Novo" SummerTime="false" Population="9598787" GTM="1" Area_Km="112622"/>
+	<row Country="Botswana" Capital="Gaborone" SummerTime="false" Population="2029307" GTM="2" Area_Km="581730"/>
+	<row Country="Burkina" Capital="Ouagadougou" SummerTime="false" Population="15730977" GTM="0" Area_Km="274200"/>
+	<row Country="Burundi" Capital="Bujumbura" SummerTime="false" Population="8749000" GTM="2" Area_Km="27834"/>
+	<row Country="Cameroon" Capital="Yaounde" SummerTime="false" Population="20129878" GTM="1" Area_Km="475442"/>
+	<row Country="Cape Verde" Capital="Praia" SummerTime="false" Population="567000" GTM="-1" Area_Km="4033"/>
+	<row Country="Central African Republic" Capital="Bangui" SummerTime="false" Population="4422000" GTM="1" Area_Km="622984"/>
+	<row Country="Chad" Capital="N&apos;Djamena" SummerTime="false" Population="10329208" GTM="1" Area_Km="1284000"/>
+	<row Country="Comoros" Capital="Moroni" SummerTime="false" Population="798000" GTM="3" Area_Km="2235"/>
+	<row Country="Congo" Capital="Brazzaville" SummerTime="false" Population="4366266" GTM="1" Area_Km="342000"/>
+	<row Country="Congo {Democratic Rep}" Capital="Kinshasa" SummerTime="true" Population="71712867" GTM="1" Area_Km="2345409"/>
+	<row Country="Ivory Coast" Capital="Yamoussoukro" SummerTime="false" Population="20617068" GTM="0" Area_Km="322463"/>
+	<row Country="Djibouti" Capital="Djibouti City" SummerTime="false" Population="923000" GTM="3" Area_Km="23200"/>
+	<row Country="Egypt" Capital="Cairo" SummerTime="false" Population="90000000" GTM="2" Area_Km="1002450"/>
+	<row Country="Equatorial Guinea" Capital="Malabo" SummerTime="false" Population="676000" GTM="1" Area_Km="28050"/>
+	<row Country="Eritrea" Capital="Asmara" SummerTime="false" Population="6086495" GTM="3" Area_Km="117600"/>
+	<row Country="Ethiopia" Capital="Addis Ababa" SummerTime="false" Population="84320987" GTM="3" Area_Km="1104300"/>
+	<row Country="Gabon" Capital="Libreville" SummerTime="false" Population="1475000" GTM="1" Area_Km="267667"/>
+	<row Country="Gambia" Capital="Banjul" SummerTime="false" Population="1782893" GTM="0" Area_Km="11295"/>
+	<row Country="Ghana" Capital="Accra" SummerTime="false" Population="24233431" GTM="0" Area_Km="238535"/>
+	<row Country="Guinea" Capital="Conakry" SummerTime="false" Population="10057975" GTM="0" Area_Km="245857"/>
+	<row Country="Guinea-Bissau" Capital="Bissau" SummerTime="false" Population="1647000" GTM="0" Area_Km="36125"/>
+	<row Country="Kenya" Capital="Nairobi" SummerTime="false" Population="43013341" GTM="3" Area_Km="580367"/>
+	<row Country="Lesotho" Capital="Maseru" SummerTime="false" Population="2067000" GTM="2" Area_Km="30355"/>
+	<row Country="Liberia" Capital="Monrovia" SummerTime="false" Population="4128572" GTM="0" Area_Km="111369"/>
+	<row Country="Libya" Capital="Tripoli" SummerTime="true" Population="5670688" GTM="1" Area_Km="1759541"/>
+	<row Country="Madagascar" Capital="Antananarivo" SummerTime="false" Population="22005222" GTM="3" Area_Km="587041"/>
+	<row Country="Malawi" Capital="Lilongwe" SummerTime="false" Population="14901000" GTM="2" Area_Km="118484"/>
+	<row Country="Mali" Capital="Bamako" SummerTime="false" Population="14517176" GTM="0" Area_Km="1240192"/>
+	<row Country="Mauritania" Capital="Nouakchott" SummerTime="false" Population="3359185" GTM="0" Area_Km="1030700"/>
+	<row Country="Mauritius" Capital="Port Louis" SummerTime="false" Population="1291456" GTM="4" Area_Km="1291456"/>
+	<row Country="Morocco" Capital="Rabat" SummerTime="true" Population="32644370" GTM="0" Area_Km="446550"/>
+	<row Country="Mozambique" Capital="Maputo" SummerTime="false" Population="22894000" GTM="2" Area_Km="801590"/>
+	<row Country="Namibia" Capital="Windhoek" SummerTime="true" Population="2100000" GTM="1" Area_Km="825418"/>
+	<row Country="Niger" Capital="Niamey" SummerTime="false" Population="16274738" GTM="1" Area_Km="1267000"/>
+	<row Country="Nigeria" Capital="Abuja" SummerTime="false" Population="170123740" GTM="1" Area_Km="923768"/>
+	<row Country="Rwanda" Capital="Kigali" SummerTime="false" Population="11689696" GTM="2" Area_Km="26338"/>
+	<row Country="Sao Tome &amp; Principe" Capital="Sao Tome" SummerTime="false" Population="183176" GTM="0" Area_Km="1001"/>
+	<row Country="Senegal" Capital="Dakar" SummerTime="false" Population="12855153" GTM="0" Area_Km="196723"/>
+	<row Country="Seychelles" Capital="Victoria" SummerTime="false" Population="84000" GTM="4" Area_Km="451"/>
+	<row Country="Sierra Leone" Capital="Freetown" SummerTime="false" Population="5485998" GTM="0" Area_Km="71740"/>
+	<row Country="Somalia" Capital="Mogadishu" SummerTime="false" Population="10085638" GTM="3" Area_Km="637657"/>
+	<row Country="South Africa" Capital="Cape Town" SummerTime="false" Population="51770560" GTM="2" Area_Km="1221037"/>
+	<row Country="Sudan" Capital="Khartoum" SummerTime="false" Population="30894000" GTM="3" Area_Km="1886068"/>
+	<row Country="Swaziland" Capital="Mbabane" SummerTime="false" Population="1185000" GTM="2" Area_Km="17364"/>
+	<row Country="Tanzania" Capital="Dodoma" SummerTime="false" Population="44929002" GTM="3" Area_Km="945203"/>
+	<row Country="Togo" Capital="Lome" SummerTime="false" Population="6619000" GTM="0" Area_Km="56785"/>
+	<row Country="Tunisia" Capital="Tunis" SummerTime="false" Population="10732900" GTM="1" Area_Km="163610"/>
+	<row Country="Uganda" Capital="Kampala" SummerTime="false" Population="35873253" GTM="3" Area_Km="236040"/>
+	<row Country="Zambia" Capital="Lusaka" SummerTime="false" Population="14309466" GTM="2" Area_Km="752618"/>
+	<row Country="Zimbabwe" Capital="Harare" SummerTime="false" Population="12619600" GTM="2" Area_Km="390757"/>
+	<row Country="Albania" Capital="Tirana" SummerTime="true" Population="2821977" GTM="1" Area_Km="28748"/>
+	<row Country="Andorra" Capital="Andorra la Vella" SummerTime="true" Population="85082" GTM="1" Area_Km="467"/>
+	<row Country="Armenia" Capital="Yerevan" SummerTime="false" Population="3262200" GTM="4" Area_Km="29743"/>
+	<row Country="Austria" Capital="Vienna" SummerTime="true" Population="8414638" GTM="1" Area_Km="83855"/>
+	<row Country="Azerbaijan" Capital="Baku" SummerTime="true" Population="9165000" GTM="4" Area_Km="86600"/>
+	<row Country="Belarus" Capital="Minsk" SummerTime="false" Population="9457500" GTM="3" Area_Km="207595"/>
+	<row Country="Belgium" Capital="Brussels" SummerTime="true" Population="11041266" GTM="1" Area_Km="30528"/>
+	<row Country="Bosnia Herzegovina" Capital="Sarajevo" SummerTime="true" Population="3839737" GTM="1" Area_Km="51197"/>
+	<row Country="Bulgaria" Capital="Sofia" SummerTime="true" Population="7364570" GTM="2" Area_Km="110994"/>
+	<row Country="Croatia" Capital="Zagreb" SummerTime="true" Population="4290612" GTM="1" Area_Km="56594"/>
+	<row Country="Cyprus" Capital="Nicosia" SummerTime="true" Population="1099341" GTM="2" Area_Km="9251"/>
+	<row Country="Czech Republic" Capital="Prague" SummerTime="true" Population="10513209" GTM="1" Area_Km="78866"/>
+	<row Country="Denmark" Capital="Copenhagen" SummerTime="true" Population="5580413" GTM="1" Area_Km="42894"/>
+	<row Country="Estonia" Capital="Tallinn" SummerTime="true" Population="1340194" GTM="2" Area_Km="45227"/>
+	<row Country="Finland" Capital="Helsinki" SummerTime="true" Population="5421827" GTM="2" Area_Km="338424"/>
+	<row Country="France" Capital="Paris" SummerTime="true" Population="65350000" GTM="1" Area_Km="674843"/>
+	<row Country="Georgia" Capital="Tbilisi" SummerTime="false" Population="4469200" GTM="4" Area_Km="69700"/>
+	<row Country="Germany" Capital="Berlin" SummerTime="true" Population="81799600" GTM="1" Area_Km="357021"/>
+	<row Country="Greece" Capital="Athens" SummerTime="true" Population="10815197" GTM="2" Area_Km="131957"/>
+	<row Country="Hungary" Capital="Budapest" SummerTime="true" Population="9942000" GTM="1" Area_Km="93030"/>
+	<row Country="Iceland" Capital="Reykjavik" SummerTime="false" Population="320060" GTM="0" Area_Km="103001"/>
+	<row Country="Ireland {Republic}" Capital="Dublin" SummerTime="true" Population="6399152" GTM="0" Area_Km="84421"/>
+	<row Country="Italy" Capital="Rome" SummerTime="false" Population="60813326" GTM="1" Area_Km="301338"/>
+	<row Country="Kosovo" Capital="Pristina" SummerTime="true" Population="1733872" GTM="1" Area_Km="10908"/>
+	<row Country="Latvia" Capital="Riga" SummerTime="true" Population="2217053" GTM="2" Area_Km="64589"/>
+	<row Country="Liechtenstein" Capital="Vaduz" SummerTime="true" Population="36281" GTM="1" Area_Km="160"/>
+	<row Country="Lithuania" Capital="Vilnius" SummerTime="true" Population="2986072" GTM="2" Area_Km="65300"/>
+	<row Country="Luxembourg" Capital="Luxembourg" SummerTime="true" Population="524853" GTM="1" Area_Km="2586"/>
+	<row Country="Malta" Capital="Valletta" SummerTime="true" Population="452515" GTM="1" Area_Km="316"/>
+	<row Country="Moldova" Capital="Chisinau" SummerTime="true" Population="3559500" GTM="2" Area_Km="33846"/>
+	<row Country="Monaco" Capital="Monaco" SummerTime="true" Population="36371" GTM="1" Area_Km="2"/>
+	<row Country="Montenegro" Capital="Podgorica" SummerTime="true" Population="625266" GTM="1" Area_Km="13812"/>
+	<row Country="Netherlands" Capital="Amsterdam" SummerTime="true" Population="16751323" GTM="1" Area_Km="41543"/>
+	<row Country="Norway" Capital="Oslo" SummerTime="true" Population="5033675" GTM="1" Area_Km="385252"/>
+	<row Country="Poland" Capital="Warsaw" SummerTime="true" Population="38186860" GTM="1" Area_Km="312685"/>
+	<row Country="Portugal" Capital="Lisbon" SummerTime="true" Population="10581949" GTM="0" Area_Km="92212"/>
+	<row Country="Romania" Capital="Bucharest" SummerTime="true" Population="19043767" GTM="2" Area_Km="238391"/>
+	<row Country="San Marino" Capital="San Marino" SummerTime="true" Population="32404" GTM="1" Area_Km="61"/>
+	<row Country="Serbia" Capital="Belgrade" SummerTime="true" Population="7186862" GTM="1" Area_Km="88361"/>
+	<row Country="Skopje" Capital="Skopje" SummerTime="true" Population="2058539" GTM="1" Area_Km="571"/>
+	<row Country="Slovakia" Capital="Bratislava" SummerTime="true" Population="5445324" GTM="1" Area_Km="49035"/>
+	<row Country="Slovenia" Capital="Ljubljana" SummerTime="true" Population="2055496" GTM="1" Area_Km="20273"/>
+	<row Country="Spain" Capital="Madrid" SummerTime="true" Population="47190493" GTM="1" Area_Km="505992"/>
+	<row Country="Sweden" Capital="Stockholm" SummerTime="true" Population="9540065" GTM="1" Area_Km="449964"/>
+	<row Country="Switzerland" Capital="Bernd" SummerTime="true" Population="8000000" GTM="1" Area_Km="41285"/>
+	<row Country="Ukraine" Capital="Kyiv" SummerTime="true" Population="44854065" GTM="2" Area_Km="603628"/>
+	<row Country="United Kingdom" Capital="London" SummerTime="true" Population="63181775" GTM="0" Area_Km="243610"/>
+	<row Country="Vatican City" Capital="Vatican City" SummerTime="true" Population="836" GTM="1" Area_Km="1"/>
+	<row Country="Afghanistan" Capital="Kabul" SummerTime="false" Population="30419928" GTM="4:30" Area_Km="0"/>
+	<row Country="Bahrain" Capital="Al-Manamah" SummerTime="false" Population="1234571" GTM="3" Area_Km="0"/>
+	<row Country="Bangladesh" Capital="Dhaka" SummerTime="false" Population="161083804" GTM="6" Area_Km="0"/>
+	<row Country="Bhutan" Capital="Thimphu" SummerTime="false" Population="742737" GTM="6" Area_Km="0"/>
+	<row Country="Brunei" Capital="Bandar Seri Begawan" SummerTime="false" Population="408786" GTM="8" Area_Km="0"/>
+	<row Country="Cambodia" Capital="Phnom Penh" SummerTime="false" Population="14952665" GTM="7" Area_Km="0"/>
+	<row Country="China" Capital="Beijing" SummerTime="false" Population="1347350000" GTM="8" Area_Km="0"/>
+	<row Country="East Timor" Capital="Dili" SummerTime="false" Population="1066582" GTM="9" Area_Km="0"/>
+	<row Country="India" Capital="New Delhi" SummerTime="false" Population="1210193422" GTM="5:30" Area_Km="0"/>
+	<row Country="Indonesia" Capital="Jakarta" SummerTime="false" Population="237424363" GTM="7" Area_Km="0"/>
+	<row Country="Iran" Capital="Tehran" SummerTime="true" Population="75149669" GTM="3:30" Area_Km="0"/>
+	<row Country="Iraq" Capital="Baghdad" SummerTime="false" Population="31129225" GTM="3" Area_Km="0"/>
+	<row Country="Israel" Capital="Jerusalem" SummerTime="true" Population="7956000" GTM="2" Area_Km="0"/>
+	<row Country="Japan" Capital="Tokyo" SummerTime="false" Population="126659683" GTM="9" Area_Km="0"/>
+	<row Country="Jordan" Capital="Amman" SummerTime="false" Population="6508271" GTM="3" Area_Km="0"/>
+	<row Country="Kazakhstan" Capital="Astana" SummerTime="false" Population="16600000" GTM="6" Area_Km="0"/>
+	<row Country="Korea North" Capital="Pyongyang" SummerTime="false" Population="24554000" GTM="9" Area_Km="0"/>
+	<row Country="Korea South" Capital="Seoul" SummerTime="false" Population="50004441" GTM="9" Area_Km="0"/>
+	<row Country="Kuwait" Capital="Kuwait City" SummerTime="false" Population="3566437" GTM="3" Area_Km="0"/>
+	<row Country="Kyrgyzstan" Capital="Bishkek" SummerTime="false" Population="5550239" GTM="6" Area_Km="0"/>
+	<row Country="Laos" Capital="Vientiane" SummerTime="false" Population="6500000" GTM="7" Area_Km="0"/>
+	<row Country="Lebanon" Capital="Beirut" SummerTime="true" Population="4224000" GTM="2" Area_Km="0"/>
+	<row Country="Malaysia" Capital="Kuala Lumpur" SummerTime="false" Population="28334135" GTM="8" Area_Km="0"/>
+	<row Country="Maldives" Capital="Male" SummerTime="false" Population="328536" GTM="5" Area_Km="0"/>
+	<row Country="Mongolia" Capital="Ulan Bator" SummerTime="false" Population="2854685" GTM="8" Area_Km="0"/>
+	<row Country="Myanmar {Burma}" Capital="Naypyidaw" SummerTime="false" Population="60280000" GTM="6:30" Area_Km="0"/>
+	<row Country="Nepal" Capital="Kathmandu" SummerTime="false" Population="26494504" GTM="5:45" Area_Km="0"/>
+	<row Country="Oman" Capital="Muscat" SummerTime="false" Population="2773479" GTM="4" Area_Km="0"/>
+	<row Country="Pakistan" Capital="Islamabad" SummerTime="true" Population="180440005" GTM="5" Area_Km="0"/>
+	<row Country="Philippines" Capital="Manila" SummerTime="false" Population="92337852" GTM="8" Area_Km="0"/>
+	<row Country="Qatar" Capital="Doha" SummerTime="false" Population="1853563" GTM="3" Area_Km="0"/>
+	<row Country="Russia" Capital="Moscow" SummerTime="false" Population="143300000" GTM="4" Area_Km="0"/>
+	<row Country="Saudi Arabia" Capital="Riyadh" SummerTime="false" Population="28376355" GTM="3" Area_Km="0"/>
+	<row Country="Singapore" Capital="Singapore" SummerTime="false" Population="5312400" GTM="8" Area_Km="0"/>
+	<row Country="Sri Lanka" Capital="Sri Jayewardenepura Kotte" SummerTime="false" Population="20277597" GTM="5:30" Area_Km="0"/>
+	<row Country="Syria" Capital="Damascus" SummerTime="true" Population="22530746" GTM="2" Area_Km="0"/>
+	<row Country="Taiwan" Capital="Taipei" SummerTime="false" Population="23305021" GTM="8" Area_Km="0"/>
+	<row Country="Tajikistan" Capital="Dushanbe" SummerTime="false" Population="7616000" GTM="5" Area_Km="0"/>
+	<row Country="Thailand" Capital="Bangkok" SummerTime="false" Population="66720153" GTM="7" Area_Km="0"/>
+	<row Country="Turkey" Capital="Ankara" SummerTime="true" Population="74724269" GTM="2" Area_Km="0"/>
+	<row Country="Turkmenistan" Capital="Ashgabat" SummerTime="false" Population="5125693" GTM="5" Area_Km="0"/>
+	<row Country="United Arab Emirates" Capital="Abu Dhabi" SummerTime="false" Population="8264070" GTM="4" Area_Km="0"/>
+	<row Country="Uzbekistan" Capital="Tashkent" SummerTime="false" Population="29559100" GTM="5" Area_Km="0"/>
+	<row Country="Vietnam" Capital="Hanoi" SummerTime="false" Population="90388000" GTM="7" Area_Km="0"/>
+	<row Country="Yemen" Capital="Sana&apos;a" SummerTime="false" Population="25130000" GTM="3" Area_Km="0"/>
+	<row Country="Antigua &amp; Deps" Capital="Saint John&apos;s" SummerTime="false" Population="80161" GTM="-4" Area_Km="0"/>
+	<row Country="Bahamas" Capital="Nassau" SummerTime="true" Population="353658" GTM="-5" Area_Km="0"/>
+	<row Country="Barbados" Capital="Bridgetown" SummerTime="false" Population="284589" GTM="-4" Area_Km="0"/>
+	<row Country="Belize" Capital="Belmopan" SummerTime="false" Population="312698" GTM="-6" Area_Km="0"/>
+	<row Country="Canada" Capital="Ottawa" SummerTime="true" Population="35027000" GTM="-5" Area_Km="0"/>
+	<row Country="Costa Rica" Capital="San Jose" SummerTime="false" Population="4301712" GTM="-6" Area_Km="0"/>
+	<row Country="Cuba" Capital="Havana" SummerTime="true" Population="11241161" GTM="-5" Area_Km="0"/>
+	<row Country="Dominica" Capital="Roseau" SummerTime="false" Population="72660" GTM="-4" Area_Km="0"/>
+	<row Country="Dominican Republic" Capital="Santo Domingo" SummerTime="false" Population="9445281" GTM="-4" Area_Km="0"/>
+	<row Country="El Salvador" Capital="San Salvador" SummerTime="false" Population="6134000" GTM="-6" Area_Km="0"/>
+	<row Country="Grenada" Capital="Saint George&apos;s" SummerTime="false" Population="110000" GTM="-4" Area_Km="0"/>
+	<row Country="Guatemala" Capital="Guatemala City" SummerTime="false" Population="13824463" GTM="-6" Area_Km="0"/>
+	<row Country="Haiti" Capital="Port-au-Prince" SummerTime="true" Population="9719932" GTM="-5" Area_Km="0"/>
+	<row Country="Honduras" Capital="Tegucigalpa" SummerTime="false" Population="8249574" GTM="-6" Area_Km="0"/>
+	<row Country="Jamaica" Capital="Kingston" SummerTime="false" Population="2889187" GTM="-5" Area_Km="0"/>
+	<row Country="Mexico" Capital="Mexico City" SummerTime="true" Population="113910608" GTM="-6" Area_Km="0"/>
+	<row Country="Nicaragua" Capital="Managua" SummerTime="false" Population="5891199" GTM="-6" Area_Km="0"/>
+	<row Country="Panama" Capital="Panama City" SummerTime="false" Population="3595490" GTM="-5" Area_Km="0"/>
+	<row Country="St Kitts &amp; Nevis" Capital="Basseterre" SummerTime="false" Population="51300" GTM="-4" Area_Km="0"/>
+	<row Country="St Lucia" Capital="Castries" SummerTime="false" Population="173765" GTM="-4" Area_Km="0"/>
+	<row Country="Saint Vincent &amp; the Grenadines" Capital="Kingstown" SummerTime="false" Population="120000" GTM="-4" Area_Km="0"/>
+	<row Country="Trinidad &amp; Tobago" Capital="Port-of-Spain" SummerTime="false" Population="1346350" GTM="-4" Area_Km="0"/>
+	<row Country="United States" Capital="Washington D.C." SummerTime="true" Population="315056000" GTM="-5" Area_Km="0"/>
+	<row Country="Argentina" Capital="Buenos Aires" SummerTime="false" Population="41281631" GTM="-3" Area_Km="0"/>
+	<row Country="Bolivia" Capital="La Paz" SummerTime="false" Population="10907778" GTM="-4" Area_Km="0"/>
+	<row Country="Brazil" Capital="Brasilia" SummerTime="true" Population="193946886" GTM="-3" Area_Km="0"/>
+	<row Country="Chile" Capital="Santiago" SummerTime="true" Population="16572475" GTM="-4" Area_Km="0"/>
+	<row Country="Colombia" Capital="Bogota" SummerTime="false" Population="46366364" GTM="-5" Area_Km="0"/>
+	<row Country="Ecuador" Capital="Quito" SummerTime="false" Population="15223680" GTM="-5" Area_Km="0"/>
+	<row Country="Guyana" Capital="Georgetown" SummerTime="false" Population="752940" GTM="-4" Area_Km="0"/>
+	<row Country="Paraguay" Capital="Asuncion" SummerTime="true" Population="6454548" GTM="-4" Area_Km="0"/>
+	<row Country="Peru" Capital="Lima" SummerTime="false" Population="30135875" GTM="-5" Area_Km="0"/>
+	<row Country="Suriname" Capital="Paramaribo" SummerTime="false" Population="560157" GTM="-3" Area_Km="0"/>
+	<row Country="Uruguay" Capital="Montevideo" SummerTime="true" Population="3318535" GTM="-3" Area_Km="0"/>
+	<row Country="Venezuela" Capital="Caracas" SummerTime="false" Population="28946101" GTM="-4:30" Area_Km="0"/>
+	<row Country="Australia" Capital="Canberra" SummerTime="true" Population="22861392" GTM="10" Area_Km="0"/>
+	<row Country="Fiji" Capital="Suva" SummerTime="true" Population="849000" GTM="12" Area_Km="0"/>
+	<row Country="Kiribati" Capital="Tarawa Atoll" SummerTime="false" Population="103500" GTM="12" Area_Km="0"/>
+	<row Country="Marshall Islands" Capital="Majuro" SummerTime="false" Population="68000" GTM="12" Area_Km="0"/>
+	<row Country="Micronesia" Capital="Palikir" SummerTime="false" Population="111000" GTM="11" Area_Km="0"/>
+	<row Country="Nauru" Capital="Yaren" SummerTime="false" Population="9378" GTM="12" Area_Km="0"/>
+	<row Country="New Zealand" Capital="Wellington" SummerTime="true" Population="4451017" GTM="12" Area_Km="0"/>
+	<row Country="Palau" Capital="Ngerulmud" SummerTime="false" Population="20956" GTM="9" Area_Km="0"/>
+	<row Country="Papua New Guinea" Capital="Port Moresby" SummerTime="false" Population="6310129" GTM="10" Area_Km="0"/>
+	<row Country="Samoa" Capital="Apia" SummerTime="true" Population="194320" GTM="13" Area_Km="0"/>
+	<row Country="Solomon Islands" Capital="Honiara" SummerTime="false" Population="523000" GTM="11" Area_Km="0"/>
+	<row Country="Tonga" Capital="Nuku&apos;alofa" SummerTime="false" Population="103036" GTM="13" Area_Km="0"/>
+	<row Country="Tuvalu" Capital="Funafuti" SummerTime="false" Population="10544" GTM="12" Area_Km="0"/>
+	<row Country="Vanuatu" Capital="Port-Vila" SummerTime="false" Population="224564" GTM="11" Area_Km="0"/>
+</Countries>

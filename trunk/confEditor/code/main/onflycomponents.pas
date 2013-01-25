@@ -12,7 +12,7 @@ uses
   procedure MemoEmu_Comp(Location: TWinControl; Name: string);
   procedure Panel_Comp(Location: TWinControl; NameOwn: string; NumOfComp: Integer; Left,Top,Height,Width: Integer);
   procedure BitBtn_Comp(Location: TWinControl; NumOfComp: Integer; Caption: string; Left,Top,Height,Width,ImageNum: Integer);
-  procedure AnalogClock_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width: Integer; NewTime: TTime; OffSet:Integer; Visible: Boolean);
+  procedure AnalogClock_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width: Integer; NewTime: TTime; Visible: Boolean);
 
 var
   MyImage: TImage;
@@ -31,7 +31,7 @@ procedure Image_Comp(Location: TWinControl; Picture_path: string; Pic_Left,Pic_T
 begin
   MyImage := TImage.Create(Conf);
   MyImage.Name := 'Pic' + NameOwn + IntToStr(Numofcomp);
-  MyImage.Picture.LoadFromFile(ExtractFilePath(Application.ExeName)+Picture_path);
+  MyImage.Picture.LoadFromFile(Program_Path + Picture_path);
   MyImage.Parent := Location;
   MyImage.Left := Pic_Left;
   MyImage.Top := Pic_Top;
@@ -85,6 +85,12 @@ begin
   MyPanel.Width := width;
   MyPanel.Cursor := Arrow; 
   MyPanel.Caption := '';
+  if (NameOwn = '_weather') then
+    begin
+      MyPanel.Color := clSkyBlue;
+      MyPanel.Tag := NumOfComp;
+      MyPanel.OnClick := Conf.ClickOnWidgetPanels;
+    end;
 end;
 
 procedure BitBtn_Comp(Location: TWinControl; NumOfComp: Integer; Caption: string; Left,Top,Height,Width,ImageNum: Integer);
@@ -102,12 +108,12 @@ begin
   MyBitBtn.Cursor := Arrow;
   if Caption = 'weather' then
     MyBitBtn.Tag := NumOfComp
-  else
-    MyBitBtn.Tag := NumOfComp + 11;
+  else if Caption = 'datetime' then
+    MyBitBtn.Tag := NumOfComp;
   MyBitBtn.OnClick := Conf.ClosePanel;
 end;
 
-procedure AnalogClock_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width: Integer; NewTime: TTime; OffSet:Integer; Visible: Boolean);
+procedure AnalogClock_Comp(Location: TWinControl; NumOfComp: Integer; Left,Top,Height,Width: Integer; NewTime: TTime; Visible: Boolean);
 begin
   MyAnalogClock := TAnalogClock.Create(Conf);
   MyAnalogClock.Name := 'MyAnalogClock' + IntToStr(NumOfComp);
@@ -117,11 +123,11 @@ begin
   MyAnalogClock.Height := Height;
   MyAnalogClock.Width := Width;
   MyAnalogClock.Style := acModern;
-  MyAnalogClock.Time := NewTime;
   MyAnalogClock.Tag := NumOfComp;
   MyAnalogClock.Visible := Visible;
-  MyAnalogClock.TimeOffset := OffSet;
   MyAnalogClock.Active := True;
+  MyAnalogClock.TimeOffset := NewTime;
+  MyAnalogClock.Cursor := Arrow;
 end;
 
 end.
