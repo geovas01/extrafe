@@ -15,7 +15,7 @@
   * <font color='Blue'>Creating, manipulating, setting "Atari ST" database in xml.</font> (70% Done)
   * <font color='red'>Master Config settings for pSX.</font> (90% Done)
   * ~~<font color=red>Creating, manipulating, setting "Playstation" database in xml</font>~~ (100% Done)
-  * Master Config settings for Kigb. (95% Done)
+  * <font color='red'>Master Config settings for Kigb.</font> (95% Done)
   * <font color='Blue'>Creating, manipulating, setting "GameBoy" database in xml.</font> (70% Done)
   * ~~<font color='red'>GUID, and Master Settings for Weather widget. (100% Done)</font>~~
   * <font color='red'>Time and Date, local and global settings widget. (92% Done)</font>
