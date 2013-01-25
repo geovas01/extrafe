@@ -113,7 +113,6 @@ uses
 procedure LSMainMenu(aTime: Double);
 var
   MPos: TPoint;
-  IsKeyP: Boolean;
 
   Function AddEmulator(aMatName: String; aAlpha: Single = 1): TEmu;
   begin
@@ -141,7 +140,7 @@ begin
         begin
           MainForm.GLCadencer.Scene := MainForm.GLS_MainMenu;
           MainForm.GLSceneViewer.Camera := MainForm.GlCamera_MainMenu;
-          MainForm.GLSceneViewer.Cursor := crDefault;
+          MainForm.GLSceneViewer.Cursor := crHandPoint;
 
           if fromback = False then
             begin
@@ -207,7 +206,6 @@ begin
             clickRightKey(910, 390);
           if IsKeyDown(VK_RETURN) then
             runSelectedEmu(fActiveEmulator);
-
           MainForm.GLSceneViewer.Invalidate;
         end;
     end;
@@ -231,15 +229,13 @@ begin
 end;
 
 procedure begin_Mame;
-var
-  i: Integer;
 begin
   MainForm.ActiveScene(2);
 end;
 
 procedure begin_Zinc;
 begin
-  
+  MainForm.ActiveScene(3);  
 end;
 
 procedure begin_Hatari;
@@ -259,14 +255,14 @@ end;
 
 procedure clickLeftKey(x,y:Integer);
 begin
-  MainForm.GLSceneViewer.Cursor := crNone;
+//  MainForm.GLSceneViewer.Cursor := crNone;
   fLeftBtn1.SetMouseState(x, y, IsKeyDown(VK_LEFT));
   Sleep(200);
 end;
 
 procedure clickRightKey(x,y:Integer);
 begin
-  MainForm.GLSceneViewer.Cursor := crNone;
+//  MainForm.GLSceneViewer.Cursor := crNone;
   fRightBtn1.SetMouseState(x, y, IsKeyDown(VK_RIGHT));
   Sleep(200);
 end;

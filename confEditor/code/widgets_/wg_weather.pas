@@ -2,7 +2,7 @@ unit wg_weather;
 
 interface
 uses
-  SysUtils,Classes,ExtCtrls,Controls,Forms,IniFiles,
+  SysUtils,Classes,ExtCtrls,Controls,Forms,IniFiles,Dialogs,Graphics,
   NativeXml,
   sBitBtn,sPanel,sLabel;
 
@@ -18,11 +18,20 @@ uses
   procedure onClickIn_Town(town: Integer);
   procedure OnClickCheckIn_Town;
   procedure CreateWeatherPanel(num: Integer);
-  procedure SortOtherPanels(killed: Integer);
+  procedure SortOtherWeatherPanels(killed: Integer);
+  procedure WeatherPanelClicked(PanelNum: Integer);
+  procedure ShowTheActButtonsAbove(Show: Boolean);
 
+  procedure GetWeatherData(num: Integer);
+  
   procedure Assigned_Weather;
   procedure Assigned_WeatherPosTowns;
 
+  procedure RefreshTheWeatherPanels;
+  procedure RefreshTheTempPanels(CorF: String);
+
+  procedure WeatherWheelAction(sWheelDelta: integer; sHandled: Boolean);
+  
 // Menu actions
   procedure Show_widget_weather;
   procedure wg_weather_ShowDynamicComps;
@@ -41,7 +50,10 @@ var
   WOEID_List: TStringList;
   CheckInTownInfo: array[0..8] of string;
   cPanels: Integer;
-  UN,WS,WS_ini: string;
+  UN,WS,WS_CorF: string;
+
+  GlobalyActionButtons: Boolean;
+  FromRButton,FromCorFButton,FromCOTButton: Boolean;
 
 procedure SetWeather_FromWeatherIni;
 var
@@ -53,6 +65,11 @@ begin
       for i := 0 to cPanels do
         AddWeatherPanels_FromWeatherIni(i);
       cPanels := cPanels + 1;
+      ShowTheActButtonsAbove(True);
+      GlobalyActionButtons := True;
+      FromRButton := False;
+      FromCorFButton := False;
+      FromCOTButton := False;
     end;
 end;
 
@@ -70,84 +87,17 @@ begin
 end;
 
 procedure AddWeatherPanels_FromWeatherIni(num: Integer);
-var
-  Town_Ans: TStringList;
-  UN_ini,TownHaveW: string;
-  i,k,l: Integer;
-  node: TXmlNode;
 begin
   if StBarInfo[3] = 'Internet Connected' then
-    begin
-      UN_ini := WeatherIni.ReadString('WOEID','town' + IntToStr(num),UN_ini);
-      WS_ini := WeatherIni.ReadString('Symbol','town' + IntToStr(num),WS_ini);
-      for i := 0 to 7 do
-        CheckInTownInfo[i] := '';
-      Town_Ans := TStringList.Create;
-      Town_Ans.Add(Conf.IdHTTP1.Get('http://weather.yahooapis.com/forecastrss?w='+ UN_ini +'&u=' + WS_ini));
-      Town_Ans.SaveToFile('media\widgets\weather\xml\'+UN_ini + 'town.xml');
-      Assigned_Weather;
-      FXml_Weather.LoadFromFile('media\widgets\weather\xml\'+UN_ini +'town.xml');
-      with FXml_Weather.Root do
-        for i := 0 to NodeCount - 1 do
-          for K := 0 to Nodes[i].NodeCount - 1 do
-            begin
-              node := FXml_Weather.Root.Nodes[i].Nodes[k];
-              if node.Name = 'title' then
-                begin
-                  TownHaveW := node.Value;
-                  Break;
-                end;
-            end;
-      if TownHaveW <> 'Yahoo! Weather - Error' then
-        begin
-          with FXml_Weather.Root do
-            for i := 0 to NodeCount - 1 do
-              for k := 0 to Nodes[i].NodeCount - 1 do
-                begin
-                  node := FXml_Weather.Root.Nodes[i].Nodes[k];
-                  if node.Name = 'yweather:location' then
-                    begin
-                      CheckInTownInfo[0] := node.ReadAttributeString('city');
-                      CheckInTownInfo[1] := node.ReadAttributeString('country');
-                    end
-                  else if node.Name = 'yweather:astronomy' then
-                    begin
-                      CheckInTownInfo[4] := node.ReadAttributeString('sunrise');
-                      CheckInTownInfo[5] := node.ReadAttributeString('sunset');
-                    end;
-                  for l := 0 to Nodes[i].Nodes[k].NodeCount - 1 do
-                    begin
-                      node := FXml_Weather.Root.Nodes[i].Nodes[k].Nodes[l];
-                      if node.Name = 'yweather:condition' then
-                        begin
-                          CheckInTownInfo[2] := node.ReadAttributeString('temp');
-                          CheckInTownInfo[3] := node.ReadAttributeString('date');
-                          CheckInTownInfo[6] := node.ReadAttributeString('text');
-                          CheckInTownInfo[7] := node.ReadAttributeString('code');
-                        end
-                    end;
-                end;
-          CreateWeatherPanel(num + 1);
-        end
-      else
-        begin
-          CheckInTownInfo[0] := 'Sorry No Forcast for this Town.';
-          CreateWeatherPanel(num + 1);
-        end;
-    end;
+    GetWeatherData(num);
 end;
 
 procedure CreateWeatherIniFirstTime;
-var
-  wIni: TStringList;
 begin
-  wIni := TStringList.Create;
-  wIni.Add('[SelCount]');
-  wIni.Add('count=-1');
-  wIni.Add('[WOEID]');
-  wIni.SaveToFile(ExtractFilePath(Application.ExeName) + 'media\widgets\weather\weather.ini');
-  wIni.Free;
-  WeatherIni := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'media\widgets\weather\weather.ini');
+  WeatherIni := TIniFile.Create(Program_Path + 'media\widgets\weather\weather.ini');
+  WeatherIni.WriteString('SelCount','count','-1');
+  WeatherIni.WriteString('WOEID','town',' ');
+  WeatherIni.WriteString('Symbol','town',' ');
   SetWeather_FromWeatherIni;
 end;
 
@@ -252,108 +202,23 @@ begin
 end;
 
 procedure onClickIn_Town(town: Integer);
-var
-  Town_Ans: TStringList;
-  TownHaveW: string;
-  i,k,l: Integer;
-  node: TXmlNode;
 begin
-  UN := WOEID_List.Strings[town];
-  for i := 0 to 7 do
-    CheckInTownInfo[i] := '';
-  if Conf.rb7.Checked then
-    WS := 'c'
-  else
-    WS := 'f';
-  Town_Ans := TStringList.Create;
-  Town_Ans.Add(Conf.IdHTTP1.Get('http://weather.yahooapis.com/forecastrss?w='+ un +'&u=' + ws));
-  Town_Ans.SaveToFile('media\widgets\weather\xml\'+UN + 'town.xml');
-  Assigned_Weather;
-//  XmlDoc := CreateXMLDoc;
-//  XmlDoc.PreserveWhiteSpace := True;
-  FXml_Weather.LoadFromFile('media\widgets\weather\xml\'+UN +'town.xml');
-//  XmlDoc.Load('media\widgets\weather\xml\'+UN +'town.xml');
-  with FXml_Weather.Root do
-    for i := 0 to NodeCount - 1 do
-      for k := 0 to Nodes[i].NodeCount - 1 do
-        begin
-          node := FXml_Weather.Root.Nodes[i].Nodes[k];
-          if node.Name = 'title' then
-            begin
-              TownHaveW := node.Value;
-              Break;
-            end;
-        end;
-//  node_XmlDoc := XmlDoc.SelectSingleNode('rss/channel/title');
-//  TownHaveW := GetNodeText(node_XmlDoc);
-  if TownHaveW <> 'Yahoo! Weather - Error' then
-    begin
-      Conf.sButton20.Visible := True;
-      with FXml_Weather.Root do
-        for i := 0 to NodeCount - 1 do
-          for k := 0 to Nodes[i].NodeCount - 1 do
-            begin
-              node := FXml_Weather.Root.Nodes[i].Nodes[k];
-              if node.Name = 'yweather:location' then
-                begin
-                  CheckInTownInfo[0] := node.ReadAttributeString('city');
-                  CheckInTownInfo[1] := node.ReadAttributeString('country');
-                  Conf.sButton20.Caption :=  'Town : "'+ CheckInTownInfo[0] +'"';
-                  Conf.sButton20.Caption := Conf.sButton20.Caption + #13#10 + 'Country : "'+ CheckInTownInfo[1] +'"';
-                  Conf.sButton20.Caption := Conf.sButton20.Caption + #13#10 + '-----------------------------------------------------------------------';
-                end
-              else if node.Name = 'yweather:astronomy' then
-                begin
-                  CheckInTownInfo[4] := node.ReadAttributeString('sunrise');
-                  CheckInTownInfo[5] := node.ReadAttributeString('sunset');
-                end;
-              for l := 0 to Nodes[i].Nodes[k].NodeCount - 1 do
-                begin
-                  node := FXml_Weather.Root.Nodes[i].Nodes[k].Nodes[l];
-                    if node.Name = 'yweather:condition' then
-                      begin
-                        CheckInTownInfo[2] := node.ReadAttributeString('temp');
-                        CheckInTownInfo[3] := node.ReadAttributeString('date');
-                        Conf.sButton20.Caption := Conf.sButton20.Caption + #13#10 + ' '+ #13#10 + 'DataTime : '+ CheckInTownInfo[3];
-                        Conf.sButton20.Caption := Conf.sButton20.Caption + #13#10 + 'Temp : ' + CheckInTownInfo[2] + #13#10 + ' '+ #13#10;
-                        CheckInTownInfo[6] := node.ReadAttributeString('text');
-                        CheckInTownInfo[7] := node.ReadAttributeString('code');
-                      end
-                end;
-            end;
-//      node_XmlDoc := XmlDoc.SelectSingleNode('rss/channel/yweather:location');
-//      CheckInTownInfo[0] := GetNodeAttrStr(node_XmlDoc,'city');
-//      CheckInTownInfo[1] := GetNodeAttrStr(node_XmlDoc,'country');
-//      Conf.sButton20.Caption :=  'Town : "'+ CheckInTownInfo[0] +'"';
-//      Conf.sButton20.Caption := Conf.sButton20.Caption + #13#10 + 'Country : "'+ CheckInTownInfo[1] +'"';
-//      Conf.sButton20.Caption := Conf.sButton20.Caption + #13#10 + '-----------------------------------------------------------------------';
-//      node_XmlDoc := XmlDoc.SelectSingleNode('rss/channel/item/yweather:condition');
-//      CheckInTownInfo[2] := GetNodeAttrStr(node_XmlDoc,'temp');
-//      CheckInTownInfo[3] := GetNodeAttrStr(node_XmlDoc,'date');
-//      Conf.sButton20.Caption := Conf.sButton20.Caption + #13#10 + ' '+ #13#10 + 'DataTime : '+ CheckInTownInfo[3];
-//      Conf.sButton20.Caption := Conf.sButton20.Caption + #13#10 + 'Temp : ' + CheckInTownInfo[2] + #13#10 + ' '+ #13#10;
-//      CheckInTownInfo[6] := GetNodeAttrStr(node_XmlDoc,'text');
-//      CheckInTownInfo[7] := GetNodeAttrStr(node_XmlDoc,'code');
-//      node_XmlDoc := XmlDoc.SelectSingleNode('rss/channel/yweather:astronomy');
-//      CheckInTownInfo[4] := GetNodeAttrStr(node_XmlDoc,'sunrise');
-//      CheckInTownInfo[5] := GetNodeAttrStr(node_XmlDoc,'sunset');
-    end
-  else
-    begin
-      Conf.sButton20.Visible := True;
-      Conf.sButton20.Caption := 'Sorry No Forcast for this Town.';
-      CheckInTownInfo[0] := 'Sorry No Forcast for this Town.'
-    end;
-//  XmlDoc := nil;
-//  FXml_Weather.Free;
+  FromCOTButton := True;
+  GetWeatherData(town);
+  FromCOTButton := False;
 end;
 
 procedure OnClickCheckIn_Town;
 begin
-  if cPanels = -1 then
-    cPanels := 0;
-  CreateWeatherPanel(cPanels+1);
-  PressCancel_Add;
+  if cPanels > 9 then
+    ShowMessage('Sorry only 10 selections you can do...'  + #13#10 + 'If you want this selection please erase one of your previous selections.')
+  else
+    begin
+      if cPanels = -1 then
+        cPanels := 0;
+      CreateWeatherPanel(cPanels+1);
+      PressCancel_Add;
+    end;
 end;
 
 procedure CreateWeatherPanel(num: Integer);
@@ -361,6 +226,7 @@ var
   Comp: TComponent;
   TTop: Integer;
 begin
+  Conf.ScrollBox1.VertScrollBar.Position := 0;
   if num = 1 then
     TTop := 8
   else
@@ -372,7 +238,7 @@ begin
   Label_Comp(TsPanel(Comp),CheckInTownInfo[0]+ ', ' + CheckInTownInfo[1],2,16,((num - 1) * 6) + 1,'_weather',True,True,True);
   Image_Comp(TsPanel(Comp),'media\confeditor\images\weather\wt_simple\'+ CheckInTownInfo[7] +'.png',2,32,32,32,num - 1,'_weather',True,True);
   Label_Comp(TsPanel(Comp),CheckInTownInfo[6],36,36,((num - 1) * 6) + 2,'_weather',True,True,True);
-  Label_Comp(TsPanel(Comp),CheckInTownInfo[2] + ' '+ UpperCase(WS) + Char(176) ,36,48,((num - 1) * 6) + 3,'_weather',True,True,True);
+  Label_Comp(TsPanel(Comp),CheckInTownInfo[2] + ' '+ Char(176) + UpperCase(WS),36,48,((num - 1) * 6) + 3,'_weather',True,True,True);
   Label_Comp(TsPanel(Comp),'Sunrise: ' + CheckInTownInfo[4],220,36,((num - 1) * 6) + 4,'_weather',True,True,True);
   Label_Comp(TsPanel(Comp),'Sunset : ' + CheckInTownInfo[5],220,48,((num - 1) * 6) + 5,'_weather',True,True,True);
   if Started = False then
@@ -384,7 +250,7 @@ begin
     end;
 end;
 
-procedure SortOtherPanels(killed: Integer);
+procedure SortOtherWeatherPanels(killed: Integer);
 var
   i,k: Integer;
   comp: TComponent;
@@ -409,8 +275,7 @@ begin
           TsBitBtn(comp).Name := 'MyBitBtn' + IntToStr(i);
           TsBitBtn(comp).Tag := i;
           comp := FindComponentEx('Conf.Pic_weather' + IntToStr(i + 1));
-          TImage(comp).Name := 'Pic_weather' + IntToStr(i + 1);
-          comp := FindComponentEx('Conf.Label' + IntToStr(i + 1));
+          TImage(comp).Name := 'Pic_weather' + IntToStr(i);
           for k := 0 to 5 do
             begin
               comp := FindComponentEx('Conf.Label_weather' + IntToStr(((i + 1) * 6)+ k ));
@@ -453,6 +318,326 @@ begin
     end;
 end;
 
+procedure WeatherPanelClicked(PanelNum: Integer);
+var
+  comp: TComponent;
+  temp: string;
+begin
+  comp := FindComponentEx('Conf.MyPanel_weather' + IntToStr(PanelNum));
+  TsPanel(comp).SkinData.CustomColor := not TsPanel(comp).SkinData.CustomColor;
+  TsPanel(comp).Repaint;
+  if TsPanel(comp).SkinData.CustomColor = true then
+    begin
+      comp := FindComponentEx('Conf.Label_weather' + IntToStr((PanelNum * 6) + 3));
+      temp := TsLabel(comp).Caption;
+      temp := temp[Length(temp)];
+      if GlobalyActionButtons = true then
+        begin
+          if temp = 'C' then
+            Conf.sBitBtn114.Enabled := False
+          else if temp = 'F' then 
+            Conf.sBitBtn115.Enabled := False
+        end
+      else
+        begin
+          if temp = 'C' then 
+            begin
+              if Conf.sBitBtn115.Enabled = false then
+                Conf.sBitBtn115.Enabled := True;
+            end
+          else if temp = 'F' then
+            begin
+              if Conf.sBitBtn114.Enabled = false then
+                Conf.sBitBtn114.Enabled := True;
+            end;
+        end;
+      GlobalyActionButtons := false;      
+    end
+  else
+    begin
+      comp := FindComponentEx('Conf.Label_weather' + IntToStr((PanelNum * 6) + 3));
+      temp := TsLabel(comp).Caption;
+      temp := temp[Length(temp)];
+      if temp = 'C' then 
+        Conf.sBitBtn114.Enabled := True
+      else if temp = 'F' then 
+        Conf.sBitBtn115.Enabled := True;
+    end;
+end;
+
+procedure ShowTheActButtonsAbove(Show: Boolean);
+begin
+  Conf.sBitBtn114.Visible := Show;
+  Conf.sBitBtn115.Visible := Show;
+  Conf.sBitBtn116.Visible := Show;
+end;
+
+procedure RefreshTheWeatherPanels;
+var
+  i,TownsNum: integer;
+  comp: TComponent;
+  TownsFind: array [0..9] of string;
+  GlobalOrNot: Boolean;
+
+  procedure RefreshCurrentPanel(panel: integer);
+  var
+    k: integer;
+  begin
+    FromRButton := True;
+    GetWeatherData(panel);
+    FromRButton := False;
+    for k := 0 to 5 do 
+      begin
+        comp := FindComponentEx('Conf.Label_weather' + IntToStr((panel * 6) + k));
+        case k of 
+          0 : TsLabel(comp).Caption := CheckInTownInfo[3];        
+          1 : TsLabel(comp).Caption := CheckInTownInfo[0];
+          2 : TsLabel(comp).Caption := CheckInTownInfo[6];
+          3 : TsLabel(comp).Caption := CheckInTownInfo[2] + ' '+ Char(176) + UpperCase(WS);  
+          4 : TsLabel(comp).Caption := 'Sunrise: ' + CheckInTownInfo[4];
+          5 : TsLabel(comp).Caption := 'Sunset : ' + CheckInTownInfo[5];
+        end;
+      end;
+    comp := FindComponentEx('Conf.Pic_weather' + IntToStr(panel));
+    TImage(Comp).Picture.LoadFromFile(Program_Path + 'media\confeditor\images\weather\wt_simple\' + CheckInTownInfo[7] +'.png');
+    comp := FindComponentEx('Conf.MyPanel_weather' + IntToStr(panel));
+    TsPanel(comp).SkinData.CustomColor := not TsPanel(comp).SkinData.CustomColor;
+    TsPanel(comp).Repaint;
+  end;
+begin
+  GlobalOrNot := False;
+  for i := 0 to 9 do 
+    TownsFind[i] := '0';
+  TownsNum := WeatherIni.ReadInteger('SelCount','Count',TownsNum);
+  if TownsNum <> -1 then
+    begin    
+      for i := 0 to TownsNum do
+        begin
+          comp := FindComponentEx('Conf.MyPanel_weather' + IntToStr(i));
+          if TsPanel(comp).SkinData.CustomColor = true then
+            begin
+              TownsFind[i] := '1';
+              GlobalOrNot := True;
+            end;
+        end;
+      if GlobalOrNot = true then 
+        begin
+          for i := 0 to TownsNum do 
+            if TownsFind[i] = '1' then
+              begin
+                RefreshCurrentPanel(i);            
+                Application.ProcessMessages;
+              end;
+        end
+      else
+        begin
+          for i := 0 to TownsNum do 
+            begin
+              comp := FindComponentEx('Conf.MyPanel_weather' + IntToStr(i));
+              TsPanel(comp).SkinData.CustomColor := not TsPanel(comp).SkinData.CustomColor;
+              TsPanel(comp).Repaint;
+              Application.ProcessMessages;
+            end;
+          for i := 0 to TownsNum do 
+            begin
+              RefreshCurrentPanel(i);
+              Application.ProcessMessages;
+            end;
+        end;
+    end;
+end;
+
+procedure RefreshTheTempPanels(CorF: String);
+var
+  i,TownsNum: integer;
+  comp: TComponent;
+  GlobalOrNot: Boolean;
+  TownsFind: array [0..9] of string;  
+
+  procedure RefreshCurrentTempInPanel(Panel: Integer; TempType: string);
+  begin
+    FromCorFButton := True;
+    GetWeatherData(Panel);
+    FromCorFButton := False;
+    comp := FindComponentEx('Conf.Label_weather' + IntToStr((Panel * 6) + 3));
+    TsLabel(comp).Caption := CheckInTownInfo[2] + ' '+ Char(176) + UpperCase(CorF);  
+    WeatherIni.WriteString('Symbol','town' + IntToStr(Panel),LowerCase(CorF));
+    comp := FindComponentEx('Conf.MyPanel_weather' + IntToStr(panel));
+    TsPanel(comp).SkinData.CustomColor := not TsPanel(comp).SkinData.CustomColor;
+    TsPanel(comp).Repaint;
+  end;
+  
+begin
+  WS_CorF := LowerCase(CorF);
+  GlobalOrNot := False;
+  for i := 0 to 9 do 
+    TownsFind[i] := '0';
+  TownsNum := WeatherIni.ReadInteger('SelCount','Count',TownsNum);
+  if TownsNum <> -1 then    
+    begin
+      for i := 0 to TownsNum do
+        begin
+          comp := FindComponentEx('Conf.MyPanel_weather' + IntToStr(i));
+          if TsPanel(comp).SkinData.CustomColor = true then
+            begin
+              TownsFind[i] := '1';
+              GlobalOrNot := True;
+            end;
+        end;
+      if GlobalOrNot = true then 
+        begin
+          for i := 0 to TownsNum do 
+            if TownsFind[i] = '1' then
+              begin
+                RefreshCurrentTempInPanel(i,CorF);            
+                Application.ProcessMessages;
+              end;
+        end
+      else
+        begin
+          for i := 0 to TownsNum do 
+            begin
+              comp := FindComponentEx('Conf.MyPanel_weather' + IntToStr(i));
+              TsPanel(comp).SkinData.CustomColor := not TsPanel(comp).SkinData.CustomColor;
+              TsPanel(comp).Repaint;
+              Application.ProcessMessages;
+            end;
+          for i := 0 to TownsNum do 
+            begin
+              RefreshCurrentTempInPanel(i,CorF);            
+              Application.ProcessMessages;
+            end;
+        end;
+    end;
+end;
+
+Procedure GetWeatherData(num: Integer);
+var
+  Town_Ans: TStringList;
+  TownHaveW: string;
+  i,k,l: Integer;
+  node: TXmlNode;
+begin
+  if FromCOTButton = true then
+    begin
+      UN := WOEID_List.Strings[num];
+      if Conf.rb7.Checked then
+        WS := 'c'
+      else
+        WS := 'f';
+    end;
+  if (Started = true) or ((Started = False) and (FromRButton = True))  then 
+    begin
+      UN := WeatherIni.ReadString('WOEID','town' + IntToStr(num),UN);
+      WS := WeatherIni.ReadString('Symbol','town' + IntToStr(num),WS);
+    end;
+  if ((Started = False) and (FromCorFButton = True)) then
+    begin
+      UN := WeatherIni.ReadString('WOEID','town' + IntToStr(num),UN);
+      WS := WS_CorF;    
+    end;
+  for i := 0 to 7 do
+    CheckInTownInfo[i] := '';
+  Town_Ans := TStringList.Create;
+  Town_Ans.Add(Conf.IdHTTP1.Get('http://weather.yahooapis.com/forecastrss?w='+ UN +'&u=' + WS));
+  Town_Ans.SaveToFile('media\widgets\weather\xml\'+UN + 'town.xml');
+  Assigned_Weather;
+  FXml_Weather.LoadFromFile('media\widgets\weather\xml\'+UN +'town.xml');
+    with FXml_Weather.Root do
+      for i := 0 to NodeCount - 1 do
+        for K := 0 to Nodes[i].NodeCount - 1 do
+          begin
+            node := FXml_Weather.Root.Nodes[i].Nodes[k];
+            if node.Name = 'title' then
+              begin
+                TownHaveW := node.Value;
+                Break;
+              end;
+          end;
+  if TownHaveW <> 'Yahoo! Weather - Error' then
+    begin
+      if FromCOTButton = True then
+        Conf.sButton20.Visible := True;
+      with FXml_Weather.Root do
+        for i := 0 to NodeCount - 1 do
+          for k := 0 to Nodes[i].NodeCount - 1 do
+            begin
+              node := FXml_Weather.Root.Nodes[i].Nodes[k];
+              if node.Name = 'yweather:location' then
+                begin
+                  CheckInTownInfo[0] := node.ReadAttributeString('city');
+                  CheckInTownInfo[1] := node.ReadAttributeString('country');
+                  if FromCOTButton = True then
+                    begin
+                      Conf.sButton20.Caption :=  'Town : "'+ CheckInTownInfo[0] +'"';
+                      Conf.sButton20.Caption := Conf.sButton20.Caption + #13#10 + 'Country : "'+ CheckInTownInfo[1] +'"';
+                      Conf.sButton20.Caption := Conf.sButton20.Caption + #13#10 + '-----------------------------------------------------------------------';
+                    end;
+                end
+              else if node.Name = 'yweather:astronomy' then
+                begin
+                  CheckInTownInfo[4] := node.ReadAttributeString('sunrise');
+                  CheckInTownInfo[5] := node.ReadAttributeString('sunset');
+                end;
+              for l := 0 to Nodes[i].Nodes[k].NodeCount - 1 do
+                begin
+                  node := FXml_Weather.Root.Nodes[i].Nodes[k].Nodes[l];
+                  if node.Name = 'yweather:condition' then
+                    begin
+                      CheckInTownInfo[2] := node.ReadAttributeString('temp');
+                      CheckInTownInfo[3] := node.ReadAttributeString('date');
+                      if FromCOTButton = True then 
+                        begin
+                          Conf.sButton20.Caption := Conf.sButton20.Caption + #13#10 + ' '+ #13#10 + 'DataTime : '+ CheckInTownInfo[3];
+                          Conf.sButton20.Caption := Conf.sButton20.Caption + #13#10 + 'Temp : ' + CheckInTownInfo[2] + #13#10 + ' '+ #13#10;
+                        end;                       
+                      CheckInTownInfo[6] := node.ReadAttributeString('text');
+                      CheckInTownInfo[7] := node.ReadAttributeString('code');  
+                    end
+                end;
+            end;
+      if Started = True then
+        CreateWeatherPanel(num + 1);
+    end
+  else
+    begin
+      if Started = True then
+        begin
+          CheckInTownInfo[0] := 'Sorry No Forcast for this Town.';
+          CreateWeatherPanel(num + 1);
+        end;
+      if FromCOTButton = True then 
+        begin
+          Conf.sButton20.Visible := True;
+          Conf.sButton20.Caption := 'Sorry No Forcast for this Town.';
+          CheckInTownInfo[0] := 'Sorry No Forcast for this Town.'
+        end;
+    end;
+end;
+
+procedure WeatherWheelAction(sWheelDelta: integer; sHandled: Boolean);
+var
+  PosNumber: Integer;
+begin
+  if sWheelDelta > 0 then
+    with Conf.ScrollBox1.VertScrollBar do 
+      begin
+        PosNumber := Position - Conf.ScrollBox1.VertScrollBar.Increment;
+        if PosNumber < 0 then 
+          PosNumber := 0;
+        Position := PosNumber;
+      end;
+  if sWheelDelta < 0 then 
+    with Conf.ScrollBox1.VertScrollBar do
+      begin
+        PosNumber := Position + Conf.ScrollBox1.VertScrollBar.Increment;
+        if PosNumber >= Conf.ScrollBox1.VertScrollBar.Range then
+          PosNumber := Conf.ScrollBox1.VertScrollBar.Range - 1;
+        Position := PosNumber;
+      end;
+  sHandled := True;
+end;
+  
 /////////////////////////////////////////////////////////////////////
 
 procedure Show_widget_weather;

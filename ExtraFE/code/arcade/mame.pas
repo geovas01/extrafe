@@ -2,21 +2,20 @@ unit mame;
 
 interface
 uses
-  SysUtils,Windows,Graphics,Classes,Forms,ExtCtrls,
-  used_pro,loadT,uMain_ListBox,
+  SysUtils,Windows,Graphics,Classes,Forms,ExtCtrls,Controls,
+  used_pro,loadT,uMain_ListBox,vitru_key,mame_res,
   GLScene,VectorGeometry,GLCrossPlatform,GLObjects,GLHUDObjects,
-  GLFilePNG;
+  GLFilePNG,GLMaterial;
 
   procedure MameMenu(aTime: Double);
   procedure ReturnToMainMenu;
 
   procedure ShowImage(ImgName: String);
-  procedure FogScene(active: Boolean);
-  procedure UpDateFog(sTime: Single);
   procedure RunGame(game: string);
   procedure DoNothing;
-  procedure UpDateImage(sTime,speed: Single);
   procedure ShowFPS;
+  procedure CheckFavIcon(x,y,tabNum: Integer);
+  procedure CheckRSideImages(x,y:Integer);
 
 const
   ExtraFeMamePath_images = 'media\emulators\arcade\mame\extrafe\';  
@@ -25,14 +24,19 @@ const
 var
   fMousePressed: Boolean;
   fNumOfGames: TGLHUDText;
-  fShowNum: TGLHUDText;
-  fInfoImageText: TGLHUDText;
+  fShowNum,fInfoImageText: TGLHUDText;
   fImgShow: TGLHUDSprite;
-  fImgFav: TGLHUDSprite;
+  fImgFav: TGLHUDSprite;  //UpBar
+  fBUp,fBdown: TGLHUDSprite;//Arrows
+  fMovie,fISnap,fICab,fIfly,fIMarq,fICPan,fIPcb,fITit,fIScor,fIbos: TGLHUDSprite; //Images and Video
+  fCube1: TGLCube;
 
-  IsImgShowed: Boolean;
-  dFog: Single;
-  fFog: Boolean;
+//  fImgShow: TGLPlane;
+
+  IsImgShowed,showPicWaiting: Boolean;
+  MTab: Integer;
+  SideStateImage: integer;
+
 
 
 implementation
@@ -53,94 +57,60 @@ begin
         begin
           MainForm.GLCadencer.Scene := MainForm.GLS_mame;
           MainForm.GLSceneViewer.Camera := MainForm.GlCamera_mame;
+          MainForm.GlCamera_mame.TargetObject := MainForm.Mame_background;
 
-          fListBox.fYPosition := 0;
+          loadText;
+          loadImages;
+//          load3dObjects;
+          fListBox_Mame.fYPosition := 0;
           sItem := 6;
-
-          if not Assigned(fNumOfGames) then
-            begin
-              fNumOfGames := TGLHUDText.CreateAsChild(MainForm.Dummy_mame);
-              fNumOfGames.BitmapFont := loadT.fnonexistFont;
-              fNumOfGames.ModulateColor.AsWinColor := clWhite;
-              fNumOfGames.Layout := tlCenter;
-              fNumOfGames.Alignment := taRightJustify;
-              fNumOfGames.Position.X := 440;
-              fNumOfGames.Position.Y := 20;
-            end;
-          if not Assigned(fShowNum) then
-            begin
-              fShowNum := TGLHUDText.CreateAsChild(MainForm.Dummy_mame);
-              fShowNum.BitmapFont := loadT.fexistFont;
-              fShowNum.ModulateColor.AsWinColor := clBlue;
-              fShowNum.Layout := tlCenter;
-              fShowNum.Alignment := taRightJustify;
-              fShowNum.Position.X := 980;
-              fShowNum.Position.Y := 20;
-            end;
-          if not Assigned(fInfoImageText) then
-            begin
-              fInfoImageText := TGLHUDText.CreateAsChild(MainForm.Dummy_mame);
-              fInfoImageText.BitmapFont := loadT.fexistFont;
-              fInfoImageText.ModulateColor.AsWinColor := clWhite;
-              fInfoImageText.Layout := tlCenter;
-              fInfoImageText.Rotation := 90;
-              fInfoImageText.Position.X := 940;
-              fInfoImageText.Position.Y := 360;
-            end;  
-          if not Assigned(fImgFav) then
-            begin
-              AddMaterial(MatLib,ExtraFePath + ExtraFeMamePath_images + 'fav.png','fav');
-              fImgFav := TGLHUDSprite.CreateAsChild(MainForm.Dummy_mame);
-              fImgFav.Material.MaterialLibrary := MatLib;
-              fImgFav.Material.LibMaterialName := 'fav';
-              fImgFav.Width := fImgFav.Material.GetActualPrimaryTexture.Image.Width;
-              fImgFav.Height := fImgFav.Material.GetActualPrimaryTexture.Image.Height;
-              fImgFav.SetSize(32,32);
-              fImgFav.Position.X := 60;
-              fImgFav.Position.Y := 16;
-            end;
+          MTab:= 0;
+          SideStateImage:= 1;
 
           if IsKeyDown(VK_RETURN) then
             DoNothing;
 
           IsImgShowed := False;
-          dFog := 0;
-          fFog := False;
-          
+          showPicWaiting := False;
+          fInfoImageText.Text := 'SNAPSHOTS';
           MainForm.Mame_Background.Tag := 1;
         end;
-// Start the loop
+
+        // Start the loop
       if MainForm.Mame_Background.Tag = 1 then
         begin
-          Game := fListBox.GetItemByIndex(sItem);
+          GetCursorPos(Mpos);
+          MPos := MainForm.GLSceneViewer.ScreenToClient(MPos);
+
+          Game := fListBox_Mame.GetItemByIndex(sItem);
           fNumOfGames.Text := IntToStr(sItem - 5) + '/' + IntToStr(MameTotalRoms);
-          fInfoImageText.Text := 'SNAPSHOTS';
           if IsKeyDown(VK_RETURN) then
             RunGame(Game.GameZip)
           else if IsKeyDown(VK_ESCAPE) then
             ReturnToMainMenu
-          else if IsKeyDown('i') then
-            begin
-              if fFog = True then
-                FogScene(False)
-              else
-                FogScene(True);
-            end
           else if IsKeyDown(VK_DOWN) then
-            fListBox.DoClickDown
+            fListBox_Mame.DoClickDown
           else if IsKeyDown(VK_UP ) then
-            fListBox.DOClickUp
+            fListBox_Mame.DOClickUp
           else if IsKeyDown(VK_LEFT) then
-            fListBox.DOClickLeft
+            fListBox_Mame.DOClickLeft
           else if IsKeyDown(VK_RIGHT) then
-            fListBox.DOClickRight
+            fListBox_Mame.DOClickRight
+          else if IsKeyDown(VK_TAB) then
+            begin
+              if MTab = 1 then
+                MTab := 0
+              else
+                MTab := MTab + 1;
+              Sleep(200);
+            end
           else
-            fListBox.CancelClick;
-          Game := fListBox.GetItemByIndex(sItem);
+            fListBox_Mame.CancelClick;
+          Game := fListBox_Mame.GetItemByIndex(sItem);
           if IsImgShowed = False then
             ShowImage(Game.GameZip);
-          UpDateImage(aTime,2);
-          UpDateFog(aTime * 2);
+          CheckFavIcon(Mpos.X,Mpos.Y,MTab);
+          CheckRSideImages(Mpos.X,Mpos.y);
           ShowFPS;
           MainForm.GLSceneViewer.Invalidate;
         end;
@@ -149,7 +119,9 @@ end;
 
 procedure RunGame(game: string);
 begin
-  ShellExecAndWait('mame.exe',game,'D:\emulators\arcade\mame',0);
+  MainForm.GLSceneViewer.Enabled := False;
+  ShellExecAndWait(Mame_exe,game,Mame_path,0);
+  MainForm.GLSceneViewer.Enabled := True;
 end;
 
 procedure DoNothing;
@@ -157,27 +129,10 @@ begin
   Sleep(200);
 end;
 
-procedure FogScene(active: Boolean);
-begin
-  MainForm.GLSceneViewer.Buffer.FogEnable := active;
-  fFog := active;
-end;
-
-procedure UpDateFog;
-begin
-  if fFog = True then
-    begin
-      with MainForm.GLSceneViewer.Buffer.FogEnvironment do
-        begin
-          FogStart := -600;
-          FogEnd := 600;
-        end;
-    end;
-end;
-
 procedure ShowImage(ImgName: String);
 const
   NoPicFoundPath = 'media\emulators\arcade\mame\extrafe\noimg.png';
+  PicWaitingPath = 'media\emulators\arcade\mame\extrafe\picwaiting.png';
 var
   SnapImg: string;
   ImgNum: Integer;
@@ -203,6 +158,9 @@ begin
       fImgShow.Width := fImgShow.Material.GetActualPrimaryTexture.Image.Width;
       fImgShow.Height := fImgShow.Material.GetActualPrimaryTexture.Image.Height;
 
+//      fCube1.Material.MaterialLibrary := MatLib;
+//      fCube1.Material.LibMaterialName := 'showImg';
+
       if fImgShow.Width > fImgShow.Height then
         fImgShow.SetSize(280,240)
       else
@@ -211,16 +169,39 @@ begin
       fImgShow.Position.Y := 300;
 
       IsImgShowed := True;
+      showPicWaiting := False;
+    end
+  else
+    begin
+      if showPicWaiting = False then
+        begin
+          ImgNum := MatLib.Materials.GetLibMaterialByName('showImg').Index;
+          MatLib.Materials.Delete(ImgNum);
+          fImgShow.Free;
+
+          SnapImg := ExtraFePath + PicWaitingPath;
+          AddMaterial(MatLib,SnapImg,'showImg');
+
+          fImgShow := TGLHUDSprite.CreateAsChild(MainForm.Dummy_mame);
+          fImgShow.Material.MaterialLibrary := MatLib;
+          fImgShow.Material.LibMaterialName := 'showImg';
+          fImgShow.Material.GetActualPrimaryTexture.Image.Width;
+          fImgShow.Width := fImgShow.Material.GetActualPrimaryTexture.Image.Width;
+          fImgShow.Height := fImgShow.Material.GetActualPrimaryTexture.Image.Height;
+
+          if fImgShow.Width > fImgShow.Height then
+            fImgShow.SetSize(280,240)
+          else
+            fImgShow.SetSize(220,260);
+          fImgShow.Position.X := 760;
+          fImgShow.Position.Y := 300;
+
+          IsImgShowed := True;
+          showPicWaiting := True;
+        end;
     end;
+    
 end;
-
-procedure UpDateImage(sTime,speed: Single);
-begin
-  fImgShow.Up.y := sTime * speed/ 1000;
-  fImgShow.Direction.Z := sTime * speed;
-//  fShowNum.Text := FloatToStr(fImgShow.TurnAngle);
-end;
-
 
 procedure ShowFPS;
 begin
@@ -235,6 +216,185 @@ begin
   Start := False;
   fromback := True;
   MainForm.Mame_Background.Tag := 0;
+end;
+
+procedure CheckFavIcon(x,y,tabNum: Integer);
+begin
+  if MTab <> 1 then
+    begin
+      if MainForm.IsMouseOverImage(fImgFav,x,y) then
+//        fImgFav.Material.BlendingMode := bmTransparency
+        fImgFav.Material.LibMaterialName := 'fav_glow'
+      else
+//        fImgFav.Material.BlendingMode := bmOpaque;
+        fImgFav.Material.LibMaterialName := 'fav';
+    end
+  else
+    fImgFav.Material.LibMaterialName := 'fav_glow'
+end;
+
+procedure CheckRSideImages(x,y:Integer);
+begin
+  if MainForm.IsMouseOverImage(fMovie,x,y) then
+    begin
+      fMovie.Position.X := 1002;
+      if IsKeyDown(VK_LBUTTON) then
+        begin
+          SideStateImage := 0;
+          fInfoImageText.Text := 'MOVIE TRAILER';
+        end;
+    end
+  else
+    begin
+      if SideStateImage = 0 then
+        fMovie.Position.X := 1002
+      else
+        fMovie.Position.X := 1032;
+    end;
+  if MainForm.IsMouseOverImage(fISnap,x,y) then
+    begin
+      fISnap.Position.X := 999;
+      if IsKeyDown(VK_LBUTTON) then
+        begin
+          SideStateImage := 1;
+          fInfoImageText.Text := 'SNAPSHOTS';
+        end;
+    end
+  else
+    begin
+      if SideStateImage = 1 then
+        fISnap.Position.X := 999
+      else
+        fISnap.Position.X := 1029;
+    end;
+  if MainForm.IsMouseOverImage(fICab,x,y) then
+    begin
+      fICab.Position.X := 999;
+      if IsKeyDown(VK_LBUTTON) then
+        begin
+          SideStateImage := 2;
+          fInfoImageText.Text := 'CABINETS';
+        end;
+    end
+  else
+    begin
+      if SideStateImage = 2 then
+        fICab.Position.X := 999
+      else
+        fICab.Position.X := 1029;
+    end;
+  if MainForm.IsMouseOverImage(fIfly,x,y) then
+    begin
+      fIfly.Position.X := 999;
+      if IsKeyDown(VK_LBUTTON) then
+        begin
+          SideStateImage := 3;
+          fInfoImageText.Text := 'FLYERS';
+        end;
+    end
+  else
+    begin
+      if SideStateImage = 3 then
+        fIfly.Position.X := 999
+      else
+        fIfly.Position.X := 1029;
+    end;
+  if MainForm.IsMouseOverImage(fIMarq,x,y) then
+    begin
+      fIMarq.Position.X := 999;
+      if IsKeyDown(VK_LBUTTON) then
+        begin
+          SideStateImage := 4;
+          fInfoImageText.Text := 'MARQUEES';
+        end;
+    end
+  else
+    begin
+      if SideStateImage = 4 then
+        fIMarq.Position.X := 999
+      else
+        fIMarq.Position.X := 1029;
+    end;
+  if MainForm.IsMouseOverImage(fICPan,x,y) then
+    begin
+      fICPan.Position.X := 999;
+      if IsKeyDown(VK_LBUTTON) then
+        begin
+          SideStateImage := 5;
+          fInfoImageText.Text := 'CONTROL PANELS';
+        end;
+    end
+  else
+    begin
+      if SideStateImage = 5 then
+        fICPan.Position.X := 999
+      else
+        fICPan.Position.X := 1029;
+    end;
+  if MainForm.IsMouseOverImage(fIPcb,x,y) then
+    begin
+      fIPcb.Position.X := 999;
+      if IsKeyDown(VK_LBUTTON) then
+        begin
+          SideStateImage := 6;
+          fInfoImageText.Text := 'PCBS';
+        end;
+    end
+  else
+    begin
+      if SideStateImage = 6 then
+        fIPcb.Position.X := 999
+      else
+        fIPcb.Position.X := 1029;
+    end;
+  if MainForm.IsMouseOverImage(fITit,x,y) then
+    begin
+      fITit.Position.X := 999;
+      if IsKeyDown(VK_LBUTTON) then
+        begin
+          SideStateImage := 7;
+          fInfoImageText.Text := 'TITLES';
+        end;
+    end
+  else
+    begin
+      if SideStateImage = 7 then
+        fITit.Position.X := 999
+      else
+        fITit.Position.X := 1029;
+    end;
+  if MainForm.IsMouseOverImage(fIScor,x,y) then
+    begin
+      fIScor.Position.X := 999;
+      if IsKeyDown(VK_LBUTTON) then
+        begin
+          SideStateImage := 8;
+          fInfoImageText.Text := 'SCORES';          
+        end;
+    end
+  else
+    begin
+      if SideStateImage = 8 then
+        fIScor.Position.X := 999
+      else
+        fIScor.Position.X := 1029;
+    end;
+  if MainForm.IsMouseOverImage(fIbos,x,y) then
+    begin
+      fIbos.Position.X := 999;
+      if IsKeyDown(VK_LBUTTON) then
+        begin
+          SideStateImage := 9;
+          fInfoImageText.Text := 'BOSSES';
+        end;
+    end
+  else
+    begin
+      if SideStateImage = 9 then
+        fIbos.Position.X := 999
+      else
+        fIbos.Position.X := 1029;
+    end;
 end;
 
 end.

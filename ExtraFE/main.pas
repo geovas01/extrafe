@@ -7,8 +7,9 @@ uses
   Dialogs,StdCtrls,
   GLCrossPlatform, BaseClasses, GLScene, GLWin32Viewer,GLCoordinates,
   GLObjects, GLHUDObjects, GLMaterial, GLTexture, GLCadencer, GLBitmapFont,
-  GLWindowsFont,uBaseButton,uTweener, ExtCtrls,
-  GLSpaceText, GLParticleFX, GLBlur;
+  GLWindowsFont,GLColor,
+  uBaseButton,uTweener, ExtCtrls,
+  GLSpaceText, GLParticleFX, GLBlur, AsyncTimer, BMDThread;
 
   type
   TMainForm = class(TForm)
@@ -26,7 +27,7 @@ uses
     GLS_mame: TGLScene;
     Dummy_mame: TGLDummyCube;
     GlCamera_mame: TGLCamera;
-    Mame_Background: TGLHUDSprite;
+    Mame_background: TGLHUDSprite;
     GLS_zinc: TGLScene;
     GLS_atarist: TGLScene;
     GLS_playstation: TGLScene;
@@ -50,11 +51,16 @@ uses
     GLLightSource1: TGLLightSource;
     GLLightSource2: TGLLightSource;
     GLDummyCube_Intro: TGLDummyCube;
-    GLCube1: TGLCube;
+    GLHUDText_Loading: TGLHUDText;
+    GLSprite_Cursor: TGLSprite;
+    GLLightSource3: TGLLightSource;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure GLCadencerProgress(Sender: TObject; const deltaTime,
       newTime: Double);
+    function IsMouseOverImage(const AButton: TGLHudSprite; const X, Y: Integer): Boolean;
+    procedure GLSceneViewerMouseMove(Sender: TObject; Shift: TShiftState;
+      X, Y: Integer);
   private
     { Private declarations }
   public
@@ -68,6 +74,7 @@ var
 
   EmuList: array [0..7] of Boolean;
   fromback: Boolean;
+  TurnNum: Integer;
 
   MainForm: TMainForm;
   Frequency,oldResolutionX,oldResolutionY: Integer;
@@ -77,6 +84,7 @@ var
 
   MatLib: TGLMaterialLibrary;
 
+  oldPick: TGLCustomSceneObject;
 
 implementation
 
@@ -84,18 +92,16 @@ implementation
 
 uses
   main_menu,used_pro,jpeg,loadT,
-  mame;
+  mame,zinc;
 
 procedure TMainForm.FormCreate(Sender: TObject);
-var
-  i: Integer;
 begin
   if MatLib=nil then
     MatLib := TGLMaterialLibrary.Create(MainForm);
   Frequency := GetDisplayFrequency;
   GLSceneViewer.Cursor := crNone;
   SetScreen(32,1024,768,Frequency);
-
+  TurnNum := 10;
   ActiveScene(0);
   fromback := False;
 end;
@@ -123,7 +129,9 @@ begin
   else if EmuList[1] = True then
     LSMainMenu(nTime)
   else if EmuList[2] = True then
-    MameMenu(nTime);
+    MameMenu(nTime)
+  else if EmuList[3] = True then
+    ZincMenu(nTime);
 end;
 
 procedure TMainForm.ActiveScene(scene: Integer);
@@ -134,5 +142,71 @@ begin
     EmuList[i] := False;
   EmuList[scene] := True;
 end;
+
+function TMainForm.IsMouseOverImage(const AButton: TGLHudSprite; const X, Y: Integer): Boolean;
+begin
+  Result := (X >= AButton.Position.X - AButton.Width / 2) and (X <= AButton.Position.X + AButton.Width / 2) and
+            (Y >= AButton.Position.Y - AButton.Height / 2) and (Y <= AButton.Position.Y + AButton.Height / 2);
+end;
+
+procedure TMainForm.GLSceneViewerMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+ var
+	pick : TGLCustomSceneObject;
+begin
+	// find what's under the mouse
+	pick:=(GLSceneViewer.Buffer.GetPickedObject(x, y) as TGLCustomSceneObject);
+	// if it has changed since last MouseMove...
+	if (pick<>oldPick)then begin
+		// ...turn to black previous "hot" object...
+		if Assigned(oldPick) then
+			oldPick.Material.FrontProperties.Emission.Color:=clrBlack;
+		// ...and heat up the new selection...
+		if Assigned(pick) then
+			pick.Material.FrontProperties.Emission.Color:=clrRed;
+		// ...and don't forget it !
+		oldPick:=pick;
+	end;
+
+//  if EmuList[1] = True then
+//    begin
+//      GLSprite_Cursor.Position.X := X;
+//      GLSprite_Cursor.Position.Y := Y;
+//      GLCadencer.Progress;
+//    end;
+end;
+{
+procedure TForm1.GLSceneViewer1MouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+var
+	pick : TGLCustomSceneObject;
+begin
+	// find what's under the mouse
+	pick:=(GLSceneViewer1.Buffer.GetPickedObject(x, y) as TGLCustomSceneObject);
+	// if it has changed since last MouseMove...
+	if (pick<>oldPick) then begin
+		// ...turn to black previous "hot" object...
+		if Assigned(oldPick) then
+			oldPick.Material.FrontProperties.Emission.Color:=clrBlack;
+		// ...and heat up the new selection...
+		if Assigned(pick) then
+			pick.Material.FrontProperties.Emission.Color:=clrRed;
+		// ...and don't forget it !
+		oldPick:=pick;
+	end;
+end;
+
+procedure TForm1.GLSceneViewer1MouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+	pick : TGLCustomSceneObject;
+begin
+	// if an object is picked...
+	pick:=(GLSceneViewer1.Buffer.GetPickedObject(x, y) as TGLCustomSceneObject);
+	if Assigned(pick) then begin
+		// ...turn it to yellow and show its name
+		pick.Material.FrontProperties.Emission.Color:=clrYellow;
+		ShowMessage('You clicked the '+pick.Name);
+	end;}
 
 end.

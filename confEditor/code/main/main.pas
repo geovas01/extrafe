@@ -26,7 +26,8 @@ uses
   wg_weather,wg_timedate,
   JvExExtCtrls, JvExtComponent, JvPanel, JvOfficeColorPanel,
   IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP,
-  IdUDPBase, IdUDPClient, IdSNTP, NLDJoystick;
+  IdUDPBase, IdUDPClient, IdSNTP, NLDJoystick, JvExControls, JvgCheckBox,
+  JvLED;
 
 
 const
@@ -35,6 +36,7 @@ const
   AniArrow3 = 15;AniText3 = 16;AniLink3 = 17;AniBusy3 = 18;AniHorizontal3 = 19;AniVertical3 = 20;AniPrecision3 = 21;
   AniArrow4 = 22;AniText4 = 23;AniLink4 = 24;AniBusy4 = 25;AniHorizontal4 = 26;AniVertical4 = 27;AniPrecision4 = 28;
   UM_DESTROYPANEL = WM_APP + 601;
+  UM_ONClICKEDPANELSACTIONS = WM_APP + 660;
 
 type
   TConf = class(TForm)
@@ -80,7 +82,7 @@ type
     Pem_kigb_paths: TsPanel;Pem_kigb_screen: TsPanel;Pem_kigb_sound: TsPanel;Pem_kigb_others: TsPanel;Pem_kigb_database: TsPanel;
 //  Widgets
     Pwg_weather: TsPanel;
-    Pwg_timedate: TsPanel;
+    Pwg_timedate: TsPanel;Ptimedate_worldclock: TsPanel;Ptimedate_internettime: TsPanel;
 //  other panels
     sPanel: TsPanel;sPanel2: TsPanel;sPanel3: TsPanel;sPanel4: TsPanel;sPanel5: TsPanel;sPanel6: TsPanel;sPanel7: TsPanel;sPanel8: TsPanel;sPanel9: TsPanel;sPanel10: TsPanel;
     sPanel11: TsPanel;sPanel12: TsPanel;sPanel13: TsPanel;sPanel14: TsPanel;sPanel15: TsPanel;sPanel16: TsPanel;sPanel17: TsPanel;sPanel18: TsPanel;sPanel19: TsPanel;sPanel20: TsPanel;
@@ -100,7 +102,7 @@ type
     grp52: TGroupBox;grp53: TGroupBox;grp54: TGroupBox;grp55: TGroupBox;grp56: TGroupBox;grp57: TGroupBox;grp58: TGroupBox;grp59: TGroupBox;grp60: TGroupBox;grp62: TGroupBox;grp63: TGroupBox;grp64: TGroupBox;grp65: TGroupBox;grp66: TGroupBox;grp67: TGroupBox;grp68: TGroupBox;grp69: TGroupBox;
     grp70: TGroupBox;grp71: TGroupBox;grp72: TGroupBox;grp73: TGroupBox;grp74: TGroupBox;grp75: TGroupBox;grp78: TGroupBox;grp79: TGroupBox;grp80: TGroupBox;
     grp81: TGroupBox;grp82: TGroupBox;grp83: TGroupBox;grp84: TGroupBox;grp85: TGroupBox;grp86: TGroupBox;grp87: TGroupBox;grp88: TGroupBox;grp89: TGroupBox;
-    grp90: TGroupBox;grp91: TGroupBox;grp92: TGroupBox;grp93: TGroupBox;grp94: TGroupBox;grp76: TGroupBox;grp77: TGroupBox;grp115: TGroupBox;grp102: TGroupBox;
+    grp90: TGroupBox;grp91: TGroupBox;grp92: TGroupBox;grp93: TGroupBox;grp94: TGroupBox;grp76: TGroupBox;grp77: TGroupBox;grp115: TGroupBox;grp102: TGroupBox;grp31: TGroupBox;grp32: TGroupBox;grp33: TGroupBox;grp34: TGroupBox;
 //  sLabel Components
     sLabel13: TsLabel;sLabel14: TsLabel;sLabel15: TsLabel;sLabel16: TsLabel;sLabel19: TsLabel;sLabel28: TsLabel;sLabel6: TsLabel;sLabel7: TsLabel;
     sLabel8: TsLabel;sLabel9: TsLabel;sLabel10: TsLabel;sLabel60: TsLabel;
@@ -117,7 +119,7 @@ type
     sLabel105: TsLabel;sLabel106: TsLabel;sLabel107: TsLabel;sLabel109: TsLabel;sLabel110: TsLabel;sLabel111: TsLabel;sLabel112: TsLabel;sLabel108: TsLabel;
     sLabel113: TsLabel;sLabel114: TsLabel;sLabel115: TsLabel;sLabel116: TsLabel;sLabel117: TsLabel;sLabel118: TsLabel;sLabel119: TsLabel;sLabel120: TsLabel;
     sLabel121: TsLabel;sLabel122: TsLabel;sLabel123: TsLabel;sLabel124: TsLabel;sLabel125: TsLabel;sLabel126: TsLabel;sLabel127: TsLabel;sLabel128: TsLabel;
-    sLabel129: TsLabel;
+    sLabel129: TsLabel;sLabel61: TsLabel;sLabel62: TsLabel;sLabel79: TsLabel;sLabel133: TsLabel;sLabel132: TsLabel;sLabel131: TsLabel;sLabel130: TsLabel;    
 //  sCheckBox Components
     sCheckBox26: TsCheckBox;sCheckBox16: TsCheckBox;sCheckBox17: TsCheckBox;sCheckBox35: TsCheckBox;sCheckBox36: TsCheckBox;sCheckBox37: TsCheckBox;
     sCheckBox38: TsCheckBox;sCheckBox39: TsCheckBox;sCheckBox3: TsCheckBox;sCheckBox4: TsCheckBox;sCheckBox5: TsCheckBox;sCheckBox6: TsCheckBox;sCheckBox7: TsCheckBox;
@@ -150,13 +152,14 @@ type
     sComboBox64: TsComboBox;sComboBox65: TsComboBox;sComboBox66: TsComboBox;sComboBox67: TsComboBox;sComboBox68: TsComboBox;sComboBox69: TsComboBox;
     sComboBox70: TsComboBox;sComboBox71: TsComboBox;sComboBox72: TsComboBox;sComboBox6: TsComboBox;sComboBox7: TsComboBox;sComboBox8: TsComboBox;
     sComboBox73: TsComboBox;sComboBox74: TsComboBox;sComboBox75: TsComboBox;sComboBox76: TsComboBox;sComboBox38: TsComboBox;sComboBox39: TsComboBox;sComboBox40: TsComboBox;sComboBox41: TsComboBox;
+    sComboBox77: TsComboBox;sComboBox42: TsComboBox;
 //  sEdit Components
     sEdit15: TsEdit;sEdit56: TsEdit;sEdit57: TsEdit;sEdit2: TsEdit;sEdit4: TsEdit;sEdit3: TsEdit;sEdit8: TsEdit;sEdit10: TsEdit;sEdit6: TsEdit;sEdit9: TsEdit;
     sEdit7: TsEdit;sEdit11: TsEdit;sEdit5: TsEdit;sEdit58: TsEdit;sEdit59: TsEdit;sEdit60: TsEdit;sEdit61: TsEdit;sEdit62: TsEdit;sEdit63: TsEdit;sEdit64: TsEdit;
     sEdit1: TsEdit;sEdit53: TsEdit;sEdit65: TsEdit;sEdit66: TsEdit;sEdit54: TsEdit;sEdit55: TsEdit;sEdit74: TsEdit;sEdit75: TsEdit;sEdit81: TsEdit;sEdit82: TsEdit;
     sEdit83: TsEdit;sEdit84: TsEdit;sEdit85: TsEdit;sEdit86: TsEdit;sEdit87: TsEdit;sEdit88: TsEdit;sEdit89: TsEdit;sEdit90: TsEdit;sEdit91: TsEdit;sEdit92: TsEdit;
     sEdit93: TsEdit;sEdit94: TsEdit;sEdit95: TsEdit;sEdit96: TsEdit;sEdit97: TsEdit;sEdit12: TsEdit;sEdit13: TsEdit;sEdit16: TsEdit;sEdit17: TsEdit;sEdit125: TsEdit;sEdit14: TsEdit;sEdit18: TsEdit;
-    sEdit19: TsEdit;sEdit20: TsEdit;sEdit21: TsEdit;sEdit22: TsEdit;sEdit23: TsEdit;sEdit24: TsEdit;sEdit25: TsEdit;sEdit26: TsEdit;sEdit27: TsEdit;sEdit28: TsEdit;sEdit29: TsEdit;sEdit30: TsEdit;
+    sEdit19: TsEdit;sEdit20: TsEdit;sEdit21: TsEdit;sEdit22: TsEdit;sEdit23: TsEdit;sEdit24: TsEdit;sEdit25: TsEdit;sEdit26: TsEdit;sEdit27: TsEdit;sEdit28: TsEdit;sEdit29: TsEdit;sEdit30: TsEdit;sEdit31: TsEdit;
 //  sBitBtn Components
     sBitBtn3: TsBitBtn;sBitBtn4: TsBitBtn;sBitBtn5: TsBitBtn;sBitBtn2: TsBitBtn;sBitBtn6: TsBitBtn;sBitBtn7: TsBitBtn;sBitBtn8: TsBitBtn;sBitBtn9: TsBitBtn;
     sBitBtn10: TsBitBtn;sBitBtn11: TsBitBtn;sBitBtn12: TsBitBtn;sBitBtn13: TsBitBtn;sBitBtn14: TsBitBtn;sBitBtn15: TsBitBtn;sBitBtn16: TsBitBtn;sBB_apply_ce_themes: TsBitBtn;
@@ -171,7 +174,7 @@ type
     sBitBtn92: TsBitBtn;sBitBtn93: TsBitBtn;sBitBtn96: TsBitBtn;sBitBtn97: TsBitBtn;sBitBtn94: TsBitBtn;sBitBtn95: TsBitBtn;sBitBtn1: TsBitBtn;sBitBtn98: TsBitBtn;
     sBitBtn99: TsBitBtn;sBitBtn100: TsBitBtn;sBitBtn101: TsBitBtn;sBitBtn103: TsBitBtn;sBitBtn104: TsBitBtn;sBitBtn102: TsBitBtn;sBitBtn105: TsBitBtn;sBitBtn106: TsBitBtn;
     sBitBtn50: TsBitBtn;sBitBtn51: TsBitBtn;sBitBtn52: TsBitBtn;sBitBtn53: TsBitBtn;sBitBtn54: TsBitBtn;sBitBtn55: TsBitBtn;sBitBtn56: TsBitBtn;sBitBtn57: TsBitBtn;sBitBtn58: TsBitBtn;
-    sBitBtn59: TsBitBtn;sBitBtn74: TsBitBtn;sBitBtn107: TsBitBtn;sBitBtn108: TsBitBtn;
+    sBitBtn59: TsBitBtn;sBitBtn74: TsBitBtn;sBitBtn107: TsBitBtn;sBitBtn108: TsBitBtn;sBitBtn109: TsBitBtn;sBitBtn110: TsBitBtn;sBitBtn111: TsBitBtn;sBitBtn112: TsBitBtn;sBitBtn113: TsBitBtn;sBitBtn114: TsBitBtn;sBitBtn115: TsBitBtn;sBitBtn116: TsBitBtn;
 //  image Components
     img1: TImage;img2: TImage;img_ce_theme: TImage;img86: TImage;img87: TImage;img88: TImage;
     Menu_Image: TLMDNImage;
@@ -182,7 +185,7 @@ type
     rb33: TRadioButton;rb39: TRadioButton;rb40: TRadioButton;rb41: TRadioButton;rb42: TRadioButton;rb43: TRadioButton;
     rb44: TRadioButton;rb45: TRadioButton;rb46: TRadioButton;rb47: TRadioButton;rb48: TRadioButton;rb49: TRadioButton;rb50: TRadioButton;rb51: TRadioButton;
     rb52: TRadioButton;rb53: TRadioButton;rb54: TRadioButton;rb55: TRadioButton;rb36: TRadioButton;rb37: TRadioButton;rb38: TRadioButton;rb56: TRadioButton;
-    rb57: TRadioButton;rb28: TRadioButton;rb29: TRadioButton;rb30: TRadioButton;
+    rb57: TRadioButton;rb28: TRadioButton;rb29: TRadioButton;rb30: TRadioButton;rb8: TRadioButton;rb7: TRadioButton;
 //  TsScrollBar Components
     sbar_mame_valumeattenuation: TsScrollBar;sbar_mame_audiolatency: TsScrollBar;sbar_mame_joysdeadzone: TsScrollBar;sbar_mame_threadpriority: TsScrollBar;
     sbar_mame_Fgamma: TsScrollBar;sbar_mame_Fbrightness: TsScrollBar;sbar_mame_Fcontrast: TsScrollBar;sbar_mame_pausebrightness: TsScrollBar;
@@ -194,62 +197,47 @@ type
 //  TsButton Components
     sButton22: TsButton;sButton1: TsButton;sButton2: TsButton;sButton3: TsButton;sButton4: TsButton;sButton5: TsButton;sButton6: TsButton;sButton7: TsButton;
     sButton8: TsButton;sButton9: TsButton;sButton10: TsButton;sButton11: TsButton;sButton12: TsButton;sButton13: TsButton;sButton14: TsButton;sButton15: TsButton;
-    sButton16: TsButton;sButton17: TsButton;
+    sButton16: TsButton;sButton17: TsButton;sButton18: TsButton;sButton19: TsButton;sButton20: TsButton;sButton25: TsButton;sButton23: TsButton;sButton21: TsButton;
+    sButton24: TsButton;sButton26: TsButton;
 //  TsAlphaImageList Components
     InBitBtn_Imagelist: TsAlphaImageList;
 //  TsLabelFX Components
     sLabelFX3: TsLabelFX;sLabelFX11: TsLabelFX;sLabelFX12: TsLabelFX;
 //  TsGauge Components
     sGauge1: TsGauge;sGauge2: TsGauge;sGauge_MameData: TsGauge;sGauge_IPSMamePlus: TsGauge;sGauge_IPSMameXT: TsGauge;
-    sGauge_MameChange: TsGauge;sGauge_HatariData: TsGauge;
+    sGauge_MameChange: TsGauge;sGauge_HatariData: TsGauge;sGauge_kigb: TsGauge;
 //  sWebLabel Components
     sWebLabel2: TsWebLabel;sWebLabel1: TsWebLabel;sWebLabel3: TsWebLabel;
 //  sCheckListBox Components
     sCheckListBox1: TsCheckListBox;
 //  ListBox Components
-    sLB_ce_themes: TsListBox;
+    sLB_ce_themes: TsListBox;sListBox1: TsListBox;
 //  spin Components
     se1: TSpinEdit;
 //  Font Components
     LMDFontComboBox1: TLMDFontComboBox;LMDFontSizeComboBox1: TLMDFontSizeComboBox;
 //  Pick Color Components
     JvOfficeColorPanel1: TJvOfficeColorPanel;    
+//  Led Components
+    JvLED1: TJvLED;JvLED2: TJvLED;JvLED3: TJvLED;JvLED4: TJvLED;JvLED5: TJvLED;
+//  JvgCheckBox Components
+    JvgCheckBox1: TJvgCheckBox;JvgCheckBox2: TJvgCheckBox;JvgCheckBox3: TJvgCheckBox;JvgCheckBox4: TJvgCheckBox;JvgCheckBox5: TJvgCheckBox;JvgCheckBox6: TJvgCheckBox;JvgCheckBox7: TJvgCheckBox;JvgCheckBox8: TJvgCheckBox;JvgCheckBox9: TJvgCheckBox;
+    JvgCheckBox10: TJvgCheckBox;JvgCheckBox11: TJvgCheckBox;JvgCheckBox12: TJvgCheckBox;JvgCheckBox13: TJvgCheckBox;JvgCheckBox14: TJvgCheckBox;JvgCheckBox15: TJvgCheckBox;JvgCheckBox16: TJvgCheckBox;JvgCheckBox17: TJvgCheckBox;JvgCheckBox18: TJvgCheckBox;JvgCheckBox19: TJvgCheckBox;
+    JvgCheckBox20: TJvgCheckBox;JvgCheckBox21: TJvgCheckBox;JvgCheckBox22: TJvgCheckBox;JvgCheckBox23: TJvgCheckBox;JvgCheckBox24: TJvgCheckBox;JvgCheckBox25: TJvgCheckBox;JvgCheckBox26: TJvgCheckBox;JvgCheckBox27: TJvgCheckBox;JvgCheckBox28: TJvgCheckBox;JvgCheckBox29: TJvgCheckBox;
+    JvgCheckBox30: TJvgCheckBox;JvgCheckBox31: TJvgCheckBox; JvgCheckBox32: TJvgCheckBox;
 //  UnKnow Panels
-//    sPanel1: TsPanel;
     pnl1: TPanel;pnl2: TPanel;pnl3: TPanel;pnl4: TPanel;
-    sButton18: TsButton;
-    ScrollBox1: TScrollBox;
+//  Labels Components
+    L_Joy1Buttons: TLabel;L_Joy1Axis: TLabel;L_Joy1POV: TLabel;L_Joy2Id: TLabel;L_Joy2Buttons: TLabel;L_Joy2Axis: TLabel;L_Joy2POV: TLabel;L_FoundJoy1: TLabel;L_FoundJoy2: TLabel;L_Joy1Id: TLabel;    
+//  Internet Components
     IdHTTP1: TIdHTTP;
-    sButton19: TsButton;
-    grp31: TGroupBox;
-    sEdit31: TsEdit;
-    rb8: TRadioButton;
-    rb7: TRadioButton;
-    sLabel61: TsLabel;
-    sListBox1: TsListBox;
-    sButton20: TsButton;
-    sLabel62: TsLabel;
+//  Scrolllbox Components
+    ScrollBox1: TScrollBox;ScrollBox2: TScrollBox;
+//  Joystick Components  
+    CEJoy1: TNLDJoystick;CEJoy2: TNLDJoystick;
+//  Button Components
     Button1: TButton;
-    NLDJoystick1: TNLDJoystick;
-    Ptimedate_internettime: TsPanel;
-    sLabel79: TsLabel;
-    sLabel133: TsLabel;
-    sLabel132: TsLabel;
-    sLabel131: TsLabel;
-    sLabel130: TsLabel;
-    sComboBox77: TsComboBox;
-    sButton25: TsButton;
-    sBitBtn109: TsBitBtn;
-    Ptimedate_worldclock: TsPanel;
-    ScrollBox2: TScrollBox;
-    sButton23: TsButton;
-    sButton21: TsButton;
-    sComboBox42: TsComboBox;
-    sButton24: TsButton;
-    sBitBtn110: TsBitBtn;
-    sBitBtn111: TsBitBtn;
-    sGauge_kigb: TsGauge;
-
+        
 //  Main form actions
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -317,13 +305,25 @@ type
     procedure Weather_Config(Sender: TObject);
 //  DateTime
     procedure DateTime_Config(Sender: TObject);
+    procedure CEJoy1ButtonDown(Sender: TNLDJoystick;
+      const Buttons: TJoyButtons);
+    procedure FormShow(Sender: TObject);
+    procedure CEJoy1ButtonUp(Sender: TNLDJoystick;
+      const Buttons: TJoyButtons);
+    procedure CEJoy1Move(Sender: TNLDJoystick; const JoyPos: TJoyRelPos;
+      const Buttons: TJoyButtons);
+    procedure CEJoy1Idle(Sender: TObject);
+    procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
 
   private
     { Private declarations }
     procedure UMDestroyPanel(var Message: TMessage); message UM_DESTROYPANEL;
+    procedure OnClickedPanelActions(var message: TMessage); message UM_ONClICKEDPANELSACTIONS; 
   public
     { Public declarations }
     procedure ClosePanel(Sender: TObject);
+    procedure ClickOnWidgetPanels(Sender: TObject);
   end;
 
 var
@@ -333,12 +333,17 @@ var
   Cmenustate,CurrentPanel,ConfEditor_ImagePath,CDirPath: string;
   gFindFiles,gFindDirs,gSaveFiles: string;
   progressComesFrom: string;
-  resolutions: TStringList; //List with all avialable graphic card resolutions
+//Joystick Vars
+  Joy1Active,Joy2Active: Boolean;
+  Joy1Buttons: array [0..31] of string;
+  Joy2Buttons: array [0..31] of string;  
+//List with all avialable graphic card resolutions  
+  resolutions: TStringList; 
+// Native progress XML Needed vars
   FGa: TGauseStream;
-
-  FFileName: UTF8String;  // Native progress
-  FFileSize: int64;       // Native progress 
-
+  FFileName: UTF8String;  
+  FFileSize: int64;      
+  
 implementation
 
 uses
@@ -543,7 +548,13 @@ begin
   else if TsComboBox(Sender).Hint = 'Window_effect_type' then
     WindowsEffectsType
   else if TButton(Sender).Hint = 'Make_Log' then
-    CreateLog_For_All;
+    CreateLog_For_All
+  else if TsButton(Sender).Hint = 'Refresh_Joystics' then
+    FoundAndSetJoystics
+  else if TsBitBtn(Sender).Hint = 'TestJoy1' then
+    ShowOrHideTestJoy1Area
+  else if TsBitBtn(Sender).Hint = 'TestJoy2' then
+    ShowOrHideTestJoy2Area;
 end;
 
 procedure TConf.confEditor_Themes_Set(Sender: TObject);
@@ -1000,12 +1011,29 @@ begin
   else if TsListBox(Sender).Hint = 'Weather_ClickedTownInfo' then
     onClickIn_Town(TsListBox(Sender).ItemIndex)
   else if TsButton(Sender).Hint = 'Weather_ClickToAddTownInfo' then
-    OnClickCheckIn_Town;
+    OnClickCheckIn_Town
+  else if TsButton(Sender).Hint = 'Weather_Refresh' then
+    RefreshTheWeatherPanels
+  else if TsButton(Sender).Hint = 'Weather_Celcius' then
+    RefreshTheTempPanels('C')
+  else if TsButton(Sender).Hint = 'Weather_Fahrenheit' then
+    RefreshTheTempPanels('F');
 end;
 
 procedure TConf.sEdit31KeyPress(Sender: TObject; var Key: Char);
 begin
   KeyPressedInEdit(Key);
+end;
+
+procedure TConf.ClickOnWidgetPanels(Sender: TObject);
+begin
+  PostMessage(Handle,UM_ONClICKEDPANELSACTIONS,TsPanel(Sender).Tag,0);
+end;
+
+procedure TConf.OnClickedPanelActions(var message: TMessage);
+begin
+  if message.WParam < 11 then
+    WeatherPanelClicked(message.WParam);
 end;
 
 procedure TConf.ClosePanel(Sender: TObject);
@@ -1018,11 +1046,17 @@ var
   panelComp: TComponent;
 begin
   if Message.WParam < 11 then
-    panelComp := FindComponentEx('Conf.MyPanel_weather' + IntToStr(Message.WParam))
+    begin
+      panelComp := FindComponentEx('Conf.MyPanel_weather' + IntToStr(Message.WParam));
+      panelComp.Destroy;
+      SortOtherWeatherPanels(Message.WParam);
+    end
   else if Message.WParam >= 11 then
-    panelComp := FindComponentEx('Conf.MyPanel_datetime' + IntToStr(Message.WParam));
-  panelComp.Destroy;
-  SortOtherPanels(Message.WParam);
+    begin
+      panelComp := FindComponentEx('Conf.MyPanel_datetime' + IntToStr(Message.WParam));
+      panelComp.Destroy;
+      SortOtherDateTimePanels(Message.WParam);
+    end;
 end;
 
 procedure TConf.DateTime_Config(Sender: TObject);
@@ -1048,6 +1082,59 @@ end;
 procedure TConf.XMLProgress(Sender: TObject; position: Int64);
 begin
   ProgressTgauge(position);
+end;
+
+procedure TConf.CEJoy1ButtonDown(Sender: TNLDJoystick;
+  const Buttons: TJoyButtons);
+begin
+  if Cmenustate = 'ce_configuration' then
+    TestPressButtonDownInAreaJoystics(Buttons,Sender.ID);
+end;
+
+procedure TConf.CEJoy1ButtonUp(Sender: TNLDJoystick;
+  const Buttons: TJoyButtons);
+begin
+  if Cmenustate = 'ce_configuration' then
+    TestPressButtonUpInAreaJoystics(Buttons,Sender.ID);
+end;
+
+procedure TConf.CEJoy1Move(Sender: TNLDJoystick; const JoyPos: TJoyRelPos;
+  const Buttons: TJoyButtons);
+begin
+  if Cmenustate = 'ce_configuration' then
+    TestJoyHandleInAreaJoystics(JoyPos);
+end;
+
+
+procedure TConf.FormShow(Sender: TObject);
+begin
+  FoundAndSetJoystics;
+end;
+
+procedure TConf.CEJoy1Idle(Sender: TObject);
+var
+  comp: TComponent;
+  i: Integer;
+begin
+  if Cmenustate = 'ce_configuration' then
+    begin
+      comp := FindComponentEx('Conf.JvLED1');
+      TJvLED(comp).Status := true;
+      for i := 2 to 5 do
+        begin
+          comp := FindComponentEx('Conf.JvLED' + IntToStr(i));
+          TJvLED(comp).Status := False;
+        end;
+    end;  
+end;
+
+procedure TConf.FormMouseWheel(Sender: TObject; Shift: TShiftState;
+  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+begin
+  if Cmenustate = 'wg_weather' then
+    WeatherWheelAction(WheelDelta,Handled)
+  else if Cmenustate = 'wg_datetime' then
+    DateTimeWheelAction(WheelDelta,Handled);    
 end;
 
 end.

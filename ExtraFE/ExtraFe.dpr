@@ -1,5 +1,7 @@
 program ExtraFe;
 
+{%ToDo 'ExtraFe.todo'}
+
 uses
   Forms,
   main in 'main.pas' {MainForm},
@@ -14,7 +16,10 @@ uses
   uSimpleButton in 'code\gui\uSimpleButton.pas',
   uBaseButton in 'code\gui\uBaseButton.pas',
   uMain_ListBox in 'code\arcade\uMain_ListBox.pas',
-  vitru_key in 'code\special\vitru_key.pas';
+  vitru_key in 'code\special\vitru_key.pas',
+  zinc in 'code\arcade\zinc.pas',
+  mame_res in 'code\arcade\mame_res.pas',
+  zinc_res in 'code\arcade\zinc_res.pas';
 
 {$R *.res}
 

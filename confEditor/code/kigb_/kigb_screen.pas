@@ -96,7 +96,7 @@ var
 begin
   if Kigb_Exe <> '' then
     begin
-      Comp := FindComponentEx('Conf.MemoEmu2');
+      Comp := FindComponentEx('Conf.MemoEmu_Kigb');
       for k:= 0 to TMemo(Comp).Lines.Count - 1 do
         begin
           Text := TMemo(Comp).Lines.Strings[k];

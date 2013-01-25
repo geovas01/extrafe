@@ -12,7 +12,7 @@ uses
   hatari_paths,hatari_system,hatari_roms,hatari_screen,hatari_joy,hatari_database,
   psx_paths,psx_screen,psx_sound,psx_others,psx_database,
   kigb_paths,kigb_screen,kigb_sound,kigb_others,kigb_database,
-  wg_weather,
+  wg_weather,wg_timedate,
   NativeXml;
 
 
@@ -61,6 +61,7 @@ var
 //Weather Vars
   WeatherIni: TIniFile;
 //TimeDate Vars
+  DateTimeIni: TIniFile;
 
 implementation
 
@@ -109,7 +110,7 @@ Begin
     0 : begin
           for k := 1 to 122 do
             begin
-              if (k <> 32) and (k <> 33) and (k <> 34) and (k <> 35)  then
+              if (k <> 35)  then
                 begin
                   component := FindComponentEx('Conf.grp'+inttostr(k));
                   TGroupBox(component).Color := $00e4eaed;
@@ -123,7 +124,7 @@ Begin
     1 : begin
           for k := 1 to 122 do
             begin
-              if (k <> 32) and (k <> 33) and (k <> 34) and (k <> 35)  then
+              if (k <> 35)  then
                 begin
                   component := FindComponentEx('Conf.grp'+inttostr(k));
                   TGroupBox(component).Color := $00bae5e8;
@@ -137,7 +138,7 @@ Begin
     2 : begin
           for k := 1 to 122 do
             begin
-              if (k <> 32) and (k <> 33) and (k <> 34) and (k <> 35) then
+              if (k <> 35) then
                 begin
                   component := FindComponentEx('Conf.grp'+inttostr(k));
                   TGroupBox(component).Color := $00e7e7e7;
@@ -253,6 +254,8 @@ begin
   Conf.Pem_kigb_database.Cursor := Arrow;
   Conf.Pwg_weather.Cursor := Arrow;
   Conf.Pwg_timedate.Cursor := Arrow;
+  Conf.Ptimedate_internettime.Cursor := Arrow;
+  Conf.Ptimedate_worldclock.Cursor := Arrow;
 
   //groupBoxes(grp)
   for i := 0 to 200 do
@@ -553,6 +556,7 @@ begin
   StartEmupSX;
   StartEmuKigb;
   StartWidget_Weather;
+  StartWidget_TimeDate;
   resolutions.Free;
 end;
 
@@ -746,8 +750,10 @@ begin
 end;
 
 procedure StartWidget_Weather;
+const
+  WeatherIniPath = 'media\widgets\weather\weather.ini';
 begin
-  if FileExists(ExtractFilePath(Application.ExeName) + 'media\widgets\weather\weather.ini') then
+  if FileExists(Program_Path + WeatherIniPath) then
     begin
       Started := True;
       if StBarInfo[3] = 'Internet Connected' then
@@ -764,8 +770,18 @@ begin
 end;
 
 procedure StartWidget_TimeDate;
+const
+  DateTimeIniPath = 'media\widgets\datetime\datetime.ini';
 begin
-//
+  if FileExists(Program_Path + DateTimeIniPath) then
+    begin
+      Started := True;
+      DateTimeIni := TIniFile.Create(Program_Path + DateTimeIniPath);
+      SetDateTime_FromDateTimeIni;
+      Started := False;
+    end
+  else
+    CreateDateTimeIniFirstTime;
 end;
 
 procedure CreateSTBarInfo;

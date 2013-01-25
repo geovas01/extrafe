@@ -53,11 +53,6 @@ begin
       Joy_Str :=  Hatari_ini.ReadString('Keyboard','bDisableKeyRepeat',Joy_Str);
       Conf.sCheckBox102.Checked := StrToBool(Joy_Str);
       Change_JoystickType(0);
-      Joy_Int := 0;
-      repeat
-        Joy_Str := joysticks[joy_int];
-        Conf.sComboBox56.Items.Add(Joy_Str);
-      until Joy_Str = '';
     end;
 end;
 

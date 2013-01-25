@@ -17,7 +17,6 @@ uses
 
 var
   CheckedTimes: Integer;
-  Joysticks : array [0..7] of string;
 
 implementation
 
