@@ -19,6 +19,8 @@
   * <font color='Blue'>Creating, manipulating, setting "GameBoy" database in xml.</font> (70% Done)
   * ~~<font color='red'>GUID, and Master Settings for Weather widget. (100% Done)</font>~~
   * <font color='red'>Time and Date, local and global settings widget. (92% Done)</font>
+  * Error handle system for all the above elements (0% Done)
+  * Log System for almost every move make inside. With logging and suggesting errors,proposal and make the error handling easier for me and the user... (0% Done)
 
 = Extrafe =
 
@@ -33,7 +35,9 @@
   * Add Widgets button to main menu and creation of widgets pages (5% Done)
   * Control the contents of ExtraFe by mouse,keyboard,joystick and other HID (20% Done)
   * Virtual Keyboard (10% Done)
-  
+  * Error Handle for above elements (0% Done)
+  * Small Log system only the basics for this version (0% Done)
+
   Many more to come... ;)
 
 
