@@ -8,7 +8,7 @@ uses
   NativeXml,
   slabel;
 
-  procedure CreateFirstTimeDatabase;
+  procedure CreateFirstTimeZincDatabase;
 
   procedure SetZinc_DatabaseFromZincIni;
   procedure SetUpTheGrid;
@@ -22,6 +22,8 @@ uses
 
 var
   FXml_Zinc: TNativeXml;
+  Zinc_Ver: String;
+  Zinc_RomsS,Zinc_RomsF: Integer;
 
 
 implementation
@@ -30,7 +32,7 @@ uses
   main,mainconf,menu,onflycomponents,FunctionX,
   zinc_paths,zinc_graphics,zinc_sound;
 
-procedure CreateFirstTimeDatabase;
+procedure CreateFirstTimeZincDatabase;
 var
   ZincFile: TextFile;
   text,t1,t2,t3: string;
@@ -40,6 +42,11 @@ var
   rec : TSearchRec;
   node: TXmlNode;
 begin
+  if Started = False then
+    begin
+      Conf.nxtgrd_zinc.ClearRows;
+      Conf.nxtgrd_zinc.Columns.Clear;
+    end;
   FXml_Zinc := TNativeXml.CreateName('Zinc');
   FXml_Zinc.XmlFormat := xfReadable;
   RunCaptured(ExtractFileDrive(FullPathZinc_Exe),FullPathZinc_Exe+Zinc_Exe,' --list-games',ZincDatabaseFile+'.txt');
@@ -49,6 +56,7 @@ begin
   Conf.nxtgrd_zinc.AddRow(71);
   Conf.nxtgrd_zinc.BeginUpdate;
   rownum := 0;
+  Zinc_RomsF := 0;
   while not Eof(ZincFile) do
     begin
       Readln(ZincFile,text);
@@ -93,6 +101,7 @@ begin
                                   Conf.nxtgrd_zinc.Cell[2,rownum].AsString := t1;
                                   Conf.nxtgrd_zinc.Cell[3,rownum].AsInteger := 32;
                                   GameFound := True;
+                                  Zinc_RomsF := Zinc_RomsF + 1;
                                   Break
                                 end
                             end;
@@ -138,6 +147,9 @@ begin
           r := Pos(' ',t1);
           t2 := Trim(Copy(t1,0,r));
           FXml_Zinc.Root.AttributeAdd('ZincVer',t2);
+          FXml_Zinc.Root.AttributeAdd('RomsSupported','71');
+          Zinc_Ver := t2;
+          Zinc_RomsS := 71;
         end;
     end;
   Conf.nxtgrd_zinc.EndUpdate;
@@ -151,15 +163,15 @@ begin
   Zinc_Config.WriteString('Zinc_Paths','Zinc_Snaps',FullPathZinc_Exe+'snaps');
   Zinc_Config.WriteString('Zinc_Paths','Zinc_Renderer',FullPathZinc_Exe+'renderer.cfg');
   Zinc_Config.WriteString('Zinc_Paths','Zinc_Sound',FullPathZinc_Exe+'zinc_sound.cfg');
-  if FileExists(ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\ogl_renderer.znc') then
+  if FileExists(FullPathZinc_Exe +'ogl_renderer.znc') then
     Zinc_Config.WriteBool('Zinc_Files','Zinc_OpenGL',True)
   else
     Zinc_Config.WriteBool('Zinc_Files','Zinc_OpenGL',False);
-  if FileExists(ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\d3d_renderer.znc') then
+  if FileExists(FullPathZinc_Exe + 'd3d_renderer.znc') then
     Zinc_Config.WriteBool('Zinc_Files','Zinc_D3D',True)
   else
     Zinc_Config.WriteBool('Zinc_Files','Zinc_D3D',False);
-  if FileExists(FullPathZinc_Exe+'s11player.dll') then
+  if FileExists(FullPathZinc_Exe + 's11player.dll') then
     Zinc_Config.WriteBool('Zinc_Files','Zinc_SoundDll',True)
   else
      Zinc_Config.WriteBool('Zing_Files','Zinc_SoundDll',False);
@@ -174,24 +186,27 @@ begin
   SetUpTheGrid;
   Count:= 0;
   Conf.nxtgrd_zinc.AddRow(71);
+  Zinc_RomsS := 71;
+  Zinc_RomsF := 0;
   Conf.nxtgrd_zinc.BeginUpdate;
   with FXml_Zinc.Root do
-    for i := 1 to NodeCount - 1 do
+    for i := 2 to NodeCount - 1 do
       begin
-//        if Nodes[i].Name <> 'ZincVer' then
-//          begin
-            Conf.nxtgrd_zinc.Cell[1,count].AsString := Nodes[i].Nodes[1].Value;
-            Conf.nxtgrd_zinc.Cell[2,count].AsString := Nodes[i].Nodes[2].Value;
-            if Nodes[i].Nodes[5].Value <> ' ' then
-              Conf.nxtgrd_zinc.Cell[3,count].AsInteger := 32
-            else
-              Conf.nxtgrd_zinc.Cell[3,count].AsInteger := 33;
-            Conf.nxtgrd_zinc.Cell[4,count].AsString := Nodes[i].Nodes[0].Value;
-            Conf.nxtgrd_zinc.Cell[5,count].AsString := Nodes[i].Nodes[3].Value;
-            Conf.nxtgrd_zinc.Cell[6,count].AsString := Nodes[i].Nodes[4].Value;
-            count := count + 1;
-//          end;
+        Conf.nxtgrd_zinc.Cell[1,count].AsString := Nodes[i].Nodes[1].Value;
+        Conf.nxtgrd_zinc.Cell[2,count].AsString := Nodes[i].Nodes[2].Value;
+        if Nodes[i].Nodes[5].Value <> ' ' then
+          begin
+            Conf.nxtgrd_zinc.Cell[3,count].AsInteger := 32;
+            Zinc_RomsF := Zinc_RomsF + 1;
+          end
+        else
+          Conf.nxtgrd_zinc.Cell[3,count].AsInteger := 33;
+        Conf.nxtgrd_zinc.Cell[4,count].AsString := Nodes[i].Nodes[0].Value;
+        Conf.nxtgrd_zinc.Cell[5,count].AsString := Nodes[i].Nodes[3].Value;
+        Conf.nxtgrd_zinc.Cell[6,count].AsString := Nodes[i].Nodes[4].Value;
+        count := count + 1;
       end;
+  Zinc_Ver := FXml_Zinc.Root.ReadAttributeString('ZincVer');
   BestFitForZincGrid;
   Conf.nxtgrd_zinc.EndUpdate;
 end;
@@ -258,11 +273,14 @@ begin
               576,2,151,71,i,'',True,False);
       end;
     end;
-  for i := 1 to 2 do
+  for i := 1 to 5 do
     begin
       case i of
-        1 : Label_Comp(Conf.Pem_zinc_database,'Rom Path:',24,30,i,'',True,True,True);
-        2 : Label_Comp(Conf.Pem_zinc_database,Conf.sEdit54.Text,30,50,i,'',True,True,True);
+        1 : Label_Comp(Conf.Pem_zinc_database,'Rom Path: ' + Conf.sEdit54.Text,20,50,i,'',True,True,True);
+        2 : Label_Comp(Conf.grp35,'Zinc Ver : ' + Zinc_Ver,10,30,i,'',True,True,True);
+        3 : Label_Comp(Conf.grp35,'Zinc Name : ' + Zinc_Exe,10,50,i,'',True,True,True);
+        4 : Label_Comp(Conf.grp35,'Zinc Roms Supported : ' + IntToStr(Zinc_RomsS),10,70,i,'',True,True,True);
+        5 : Label_Comp(Conf.grp35,'Zinc Roms Found : ' + IntToStr(Zinc_RomsF),10,90,i,'',True,True,True);
       end;
     end;
 end;
@@ -277,7 +295,7 @@ begin
       Comp := FindComponentEx('Conf.Pic'+IntToStr(i));
       TImage(Comp).Free;
     end;
-  for i := 1 to 2 do
+  for i := 1 to 5 do
     begin
       Comp := FindComponentEx('Conf.Label'+IntToStr(i));
       TsLabel(Comp).Free;

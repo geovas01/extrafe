@@ -50,14 +50,14 @@ uses
   procedure em_mame_dirs_FreeDynamicComps;
 
 Const
-  AllMameBuilds32: array [0..3] of string = ('mame.exe','mamepp.exe','mamep.exe','mamepuiXT_x86.exe');
-  AllMameBuilds64: array [0..5] of string = ('mame.exe','mamepp.exe','mame64.exe','mamep.exe','mamepuiXT_x86.exe','mamepuiXT_x64.exe');
+  AllMameBuilds32: array [0..2] of string = ('mame.exe','mamepp.exe','mamep.exe');
+  AllMameBuilds64: array [0..4] of string = ('mame.exe','mamepp.exe','mame64.exe','mamep.exe','mamep64.exe');
 
 var
   component: TComponent;
   FromMame_DirsToFindDirs,ArrowClick,FromArrows_Mamedirs,CreateNewMame: Boolean;
   NewRomDirectory: String;
-  SetupedMame: array [0..5] of string;
+  SetupedMame: array [0..4] of string;
   FXml_MameConfing,FXml_MameDatabase: TNativeXml;
   MameConfigFile,MameDatabaseFile,Mame_Exe,FullPathMame_Exe: String;
   SelectedMame: Shortint;
@@ -67,7 +67,8 @@ implementation
 
 uses
   main,mainconf,menu,global,onflycomponents,
-  mame_graphics,mame_sound,mame_others,mame_builds,mame_database;
+  mame_graphics,mame_sound,mame_others,mame_hlsl,mame_database,
+  ce_logsession;
 
 var
   node: TXmlNode;
@@ -78,8 +79,8 @@ begin
   Conf.sBitBtn18.Enabled := False;
   Conf.sBitBtn17.Enabled := True;
   repeat
-    Conf.panel_mame_page1.Left := Conf.panel_mame_page1.Left - 10;
-    Conf.panel_mame_page2.Left := conf.panel_mame_page2.Left - 10;
+    Conf.panel_mame_page1.Left := Conf.panel_mame_page1.Left - 20;
+    Conf.panel_mame_page2.Left := conf.panel_mame_page2.Left - 20;
     if conf.panel_mame_page2.Left < 8 then
       conf.panel_mame_page2.Left := 8;
   until conf.panel_mame_page2.Left = 8;
@@ -91,8 +92,8 @@ begin
   Conf.sBitBtn18.Enabled := True;
   Conf.sBitBtn17.Enabled := False;
   repeat
-    Conf.panel_mame_page2.Left := conf.panel_mame_page2.Left + 10;
-    Conf.panel_mame_page1.Left := Conf.panel_mame_page1.Left + 10;
+    Conf.panel_mame_page2.Left := conf.panel_mame_page2.Left + 20;
+    Conf.panel_mame_page1.Left := Conf.panel_mame_page1.Left + 20;
     if conf.panel_mame_page1.Left > 8 then
       conf.panel_mame_page1.Left := 8;
   until conf.panel_mame_page1.Left = 8;
@@ -110,7 +111,7 @@ begin
     end;
   if SelectedMame = 0 then
     conf.sBitBtn36.Enabled := False;
-  if FileExists(ExtractFilePath(Application.ExeName)+'media/emulators/arcade/mame/config/config.xml') then
+  if FileExists(Program_Path + 'media/emulators/arcade/mame/config/config.xml') then
     begin
       SearchForSelectedMame(SelectedMame);
       Conf.sCheckListBox1.Selected[SelectedMame] := True;
@@ -212,16 +213,9 @@ begin
         Result := 3
       else
         Result := 2
-      end
-  else if MameName = 'mamepuiXT_x86' then
-    begin
-      if IsWindows64 = True then
-        Result := 4
-      else
-        Result := 3
     end
-  else if MameName = 'mamepuiXT_x64' then
-    Result := 5;
+  else if MameName = 'mamep64.exe' then
+    Result := 4;
 end;
 
 procedure GetMame;
@@ -230,14 +224,14 @@ begin
   Conf.Find_Files.InitialDir := Program_Path+'emulators';
   if IsWindows64 = true then
     begin
-      Conf.Find_Files.Filter := 'mame.exe|mame.exe|mamepp.exe|mamepp.exe|mame64.exe|mame64.exe|mamep.exe|mamep.exe|mamepuiXT_x86.exe|mamepuiXT_x86.exe|mamepuiXT_x64.exe|mamepuiXT_x64.exe|'+
-      'Execution File Mame (exe)|mame.exe;mamepp.exe;mame64.exe;mamep.exe;mamepuiXT_x86.exe;mamepuiXT_x64.exe';
-      Conf.Find_Files.FilterIndex := 7;
+      Conf.Find_Files.Filter := 'mame.exe|mame.exe|mamepp.exe|mamepp.exe|mame64.exe|mame64.exe|mamep.exe|mamep.exe|mamep64.exe|mamep64.exe'+
+      'Execution File Mame (exe)|mame.exe;mamepp.exe;mame64.exe;mamep.exe;mamep64.exe;';
+      Conf.Find_Files.FilterIndex := 5;
     end
   else
     begin
-      Conf.Find_Files.Filter := 'mame.exe|mame.exe|mamepp.exe|mamepp.exe|mamep.exe|mamep.exe|mamepuiXT_x86.exe|mamepuiXT_x86.exe|Execution File Mame (exe)|mame.exe;mamepp.exe;mamep.exe;mamepuiXT_x86.exe';
-      Conf.Find_Files.FilterIndex := 5;
+      Conf.Find_Files.Filter := 'mame.exe|mame.exe|mamepp.exe|mamepp.exe|mamep.exe|mamep.exe|Execution File Mame (exe)|mame.exe;mamepp.exe;mamep.exe;';
+      Conf.Find_Files.FilterIndex := 4;
     end;
   Conf.Find_Files.Execute
 end;
@@ -315,8 +309,8 @@ end;
 procedure SetMame_DirsFromMameIni;
 var
   MameIniFile: TextFile;
-  value,text,t1,t2: string;
-  k,r,r1: Integer;
+  MameIniPath,text,t1,t2: string;
+  i,k,r,r1: Integer;
   RomsDirs: TStringList;
   node: TXmlNode;
 begin
@@ -325,30 +319,46 @@ begin
     CheckWin64ForListBox(SelectedMame);
   if Mame_Exe <> '' then
     begin
-      for k := 0 to 5 do
+      MameIniPath := FullPathMame_Exe + 'mame.ini';
+      if not FileExists(MameIniPath) then
+        begin
+          Log_ChangeFontColor(clRed);
+          Log_NewText(#9 + 'ERROR!!! ');
+          Log_ChangeFontColor(clBlack);           
+          Log_NewTextEnter('Mame.ini not found I create a new one and start with default settings.');
+          ShellExecute(0,'open',PChar(FullPathMame_Exe+Mame_Exe),PChar('-createconfig'),nil,0);
+          Log_NewTextEnter('Mame.ini created, continue with loading');
+        end
+      else
+         Log_NewTextEnter(#9 + 'Mame.ini found OK');         
+      for k := 0 to 3 do
         SetupedMame[k] := '';
+      k:= 0;
       with FXml_MameConfing.Root do
-        for k := 0 to NodeCount - 1 do
+        for i := 0 to NodeCount - 1 do
           begin
-            node := FXml_MameConfing.Root.NodeByName('rowdir');
-            if node.ReadAttributeString('MameName') = Mame_Exe then
+            node := FXml_MameConfing.Root.Nodes[i];
+            if node.Name = 'rowDir' then
               begin
-                Conf.sEdit3.Text := node.ReadAttributeString('Cabinets');
-                Conf.sEdit8.Text :=node.ReadAttributeString('Flyers');
-                Conf.sEdit10.Text := node.ReadAttributeString('Marquees');
-                Conf.sEdit6.Text := node.ReadAttributeString('Control_Panels');
-                Conf.sEdit9.Text := node.ReadAttributeString('Pcbs');
-                Conf.sEdit7.Text := node.ReadAttributeString('Artwork_Preview');
-                Conf.sEdit11.Text := node.ReadAttributeString('Titles');
-                Conf.sEdit5.Text := node.ReadAttributeString('Select');
-                Conf.sEdit58.Text := node.ReadAttributeString('Scores');
-                Conf.sEdit59.Text := node.ReadAttributeString('Bosses');
-              end;
-            SetupedMame[k] := node.ReadAttributeString('MameName');
+                if node.ReadAttributeString('MameName') = Mame_Exe then
+                  begin
+                    Conf.sEdit3.Text := node.ReadAttributeString('Cabinets');                
+                    Conf.sEdit8.Text :=node.ReadAttributeString('Flyers');
+                    Conf.sEdit10.Text := node.ReadAttributeString('Marquees');
+                    Conf.sEdit6.Text := node.ReadAttributeString('Control_Panels');
+                    Conf.sEdit9.Text := node.ReadAttributeString('Pcbs');
+                    Conf.sEdit7.Text := node.ReadAttributeString('Artwork_Preview');
+                    Conf.sEdit11.Text := node.ReadAttributeString('Titles');
+                    Conf.sEdit5.Text := node.ReadAttributeString('Select');
+                    Conf.sEdit58.Text := node.ReadAttributeString('Scores');
+                    Conf.sEdit59.Text := node.ReadAttributeString('Bosses');
+                  end;
+                SetupedMame[k] := node.ReadAttributeString('MameName');
+                k := k + 1;
+              end;            
           end;
       k:= 0;
-      value := FullPathMame_Exe + 'mame.ini';
-      AssignFile(MameIniFile,value);
+      AssignFile(MameIniFile,MameIniPath);
       Reset(MameIniFile);
       while not Eof(MameIniFile) do
         begin
@@ -431,15 +441,6 @@ begin
                 CreateDir(t2);
               k := k + 1;
             end
-          else if t1 = 'state_directory' then
-            begin
-              if t2 = 'sta' then
-                t2 := FullPathMame_Exe+'sta';
-              Conf.sEdit63.Text := t2;
-              if not DirectoryExists(t2) then
-                CreateDir(t2);
-              k := k + 1;
-            end
           else if t1 = 'snapshot_directory' then
             begin
               if t2 = 'snap' then
@@ -456,6 +457,7 @@ begin
     end;
   FromMame_DirsToFindDirs := False;
   ArrowClick := False;
+  Log_NewTextEnter(#9 + 'Directories is setting OK.');         
 end;
 
 procedure CheckWin64ForListBox(num:ShortInt);
@@ -465,12 +467,12 @@ begin
   Conf.sCheckListBox1.Clear;
   if IsWindows64 = False then
     begin
-      for ko := 0 to 3 do
+      for ko := 0 to 2 do
         Conf.sCheckListBox1.Items.Add(AllMameBuilds32[ko]);
     end
   else
     begin
-      for ko := 0 to 5 do
+      for ko := 0 to 3 do
         Conf.sCheckListBox1.Items.Add(AllMameBuilds64[ko]);
     end;
   if Mame_Exe <> '' then
@@ -504,26 +506,28 @@ var
 begin
   if FromDatabase = False then
     if Mame_Exe <> '' then
-      for i := 0 to FXml_MameConfing.Root.NodeCount - 1 do
-        begin
-          node := FXml_MameConfing.Root.Nodes[i];
-          if node.Name = 'rowDir' then
-            if node.ReadAttributeString('MameName') = Mame_Exe then
-              begin
-                node.WriteAttributeString('Cabinets',Conf.sEdit3.Text);
-                node.WriteAttributeString('Flyers',Conf.sEdit8.Text);
-                node.WriteAttributeString('Marquees',Conf.sEdit10.Text);
-                node.WriteAttributeString('Control_Panels',Conf.sEdit6.Text);
-                node.WriteAttributeString('PCBs',Conf.sEdit9.Text);
-                node.WriteAttributeString('Artwork_Preview',Conf.sEdit7.Text);
-                node.WriteAttributeString('Titles',Conf.sEdit11.Text);
-                node.WriteAttributeString('Select',Conf.sEdit5.Text);
-                node.WriteAttributeString('Scores',Conf.sEdit58.Text);
-                node.WriteAttributeString('Bosses',Conf.sEdit59.Text);
-              end;
-        end;
-  FXml_MameConfing.SaveToFile(MameConfigFile);
-  FromMame_DirsToFindDirs := False;
+      begin
+        for i := 0 to FXml_MameConfing.Root.NodeCount - 1 do
+          begin
+            node := FXml_MameConfing.Root.Nodes[i];
+            if node.Name = 'rowDir' then
+              if node.ReadAttributeString('MameName') = Mame_Exe then
+                begin
+                  node.WriteAttributeString('Cabinets',Conf.sEdit3.Text);
+                  node.WriteAttributeString('Flyers',Conf.sEdit8.Text);
+                  node.WriteAttributeString('Marquees',Conf.sEdit10.Text);
+                  node.WriteAttributeString('Control_Panels',Conf.sEdit6.Text);
+                  node.WriteAttributeString('PCBs',Conf.sEdit9.Text);
+                  node.WriteAttributeString('Artwork_Preview',Conf.sEdit7.Text);
+                  node.WriteAttributeString('Titles',Conf.sEdit11.Text);
+                  node.WriteAttributeString('Select',Conf.sEdit5.Text);
+                  node.WriteAttributeString('Scores',Conf.sEdit58.Text);
+                  node.WriteAttributeString('Bosses',Conf.sEdit59.Text);
+                end;
+          end;
+        FXml_MameConfing.SaveToFile(MameConfigFile);
+        FromMame_DirsToFindDirs := False;
+      end;
 end;
 
 procedure OldDirIs(name: string);
@@ -557,9 +561,7 @@ begin
   else if name = 'mameartwork' then
     OldDir := Conf.sEdit61.Text
   else if name = 'mameinputfiles' then
-    OldDir :=  Conf.sEdit62.Text
-  else if name = 'mamestate' then
-    OldDir := Conf.sEdit63.Text;
+    OldDir :=  Conf.sEdit62.Text;
 end;
 
 procedure GetMamePath(name:string);
@@ -603,9 +605,7 @@ begin
   else if name = 'mameartwork' then
     Conf.sEdit61.Text := NewDir
   else if name = 'mameinputfiles' then
-    Conf.sEdit62.Text := NewDir
-  else if name = 'mamestate' then
-    conf.sEdit63.Text := NewDir;
+    Conf.sEdit62.Text := NewDir;
   ChangeMemoForMame_Dirs(name);
   FromMame_DirsToFindDirs := False;
 end;
@@ -641,11 +641,6 @@ begin
     begin
       find := 'input_directory';
       value := Conf.sEdit62.Text;
-    end
-  else if find = 'mamestate' then
-    begin
-      find := 'state_directory';
-      value := Conf.sEdit63.Text;
     end;
   for k := 0 to TMemo(Comp).Lines.Count do
     begin
@@ -802,8 +797,6 @@ begin
   ChangeMemoForMame_Dirs('mameartwork');
   Conf.sEdit62.Text := FullPathMame_Exe+'inp';
   ChangeMemoForMame_Dirs('mameinputfiles');
-  Conf.sEdit63.Text := FullPathMame_Exe+'sta';
-  ChangeMemoForMame_Dirs('mamestate');
   Conf.sButton4.Enabled := False;
   CheckTopicsConfig;
 end;  
@@ -859,8 +852,6 @@ begin
         Conf.sButton4.Enabled := True;
       if LowerCase(Conf.sEdit62.Text) <> LowerCase(FullPathMame_Exe+'inp') then
         Conf.sButton4.Enabled := True;
-      if LowerCase(Conf.sEdit63.Text) <> LowerCase(FullPathMame_Exe+'sta') then
-        Conf.sButton4.Enabled := True;
     end;
 end;
 
@@ -909,10 +900,8 @@ begin
         SelectedMame := 2
       else if MameName = 'mamep.exe' then
         SelectedMame := 3
-      else if MameName = 'mamepuiXT_x86.exe' then
-        SelectedMame := 4
-      else if MameName = 'mamepuiXT_x64.exe' then
-        SelectedMame := 5;
+      else if MameName = 'mamep64.exe' then
+        SelectedMame := 4;
     end
   else
     begin
@@ -921,9 +910,7 @@ begin
       else if MameName = 'mamepp.exe' then
         SelectedMame := 1
       else if MameName = 'mamep.exe' then
-        SelectedMame := 2
-      else if MameName = 'mamepuiXT_x86.exe' then
-        SelectedMame := 3;
+        SelectedMame := 2;
     end;
 end;
 
@@ -946,8 +933,8 @@ begin
     em_mame_sound_FreeDynamicComps
   else if (Cmenustate = 'em_arcade_mame_others') then
     em_mame_others_FreeDynamicComps
-  else if (Cmenustate = 'em_arcade_mame_builds') then
-    em_mame_builds_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_hlsl') then
+    em_mame_hlsl_FreeDynamicComps
   else if (Cmenustate = 'em_arcade_mame_database') then
     em_mame_database_FreeDynamicComps;
   CurrentStateSave;

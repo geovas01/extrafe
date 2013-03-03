@@ -298,13 +298,15 @@ begin
 end;
 
 procedure CreateKigb_settings_firstTime;
+var
+  Kigb_confEditor_ini: string;
 begin
   if OldKigb_Exe <> Conf.Find_Files.FileName then
     begin
       Kigb_Exe := ExtractFileName(Conf.Find_Files.FileName);
       FullPathKigb_Exe := ExtractFilePath(Conf.Find_Files.FileName);
       Conf.sEdit89.Text := FullPathKigb_Exe + Kigb_Exe;
-      Kigb_confEditor_ini := ExtractFilePath(Application.ExeName) + 'media\emulators\handheld\nintendo\kigb\config\config.ini';
+      Kigb_confEditor_ini := Program_Path + 'media\emulators\handheld\nintendo\kigb\config\config.ini';
       Kigb_Config := TIniFile.Create(Kigb_confEditor_ini);
       Kigb_Config.WriteString('Paths','KigbExe',Kigb_Exe);
       Kigb_Config.WriteString('Paths','FullPathKigbExe',FullPathKigb_Exe);

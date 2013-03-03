@@ -27,7 +27,7 @@ var
 implementation
 
 uses
-  mame_builds;  
+  mame_others;  
 {$R *.dfm}
 
 procedure TFGeneral.sButton1Click(Sender: TObject);

@@ -128,7 +128,7 @@ begin
   ShowPathInCaption(CDirPath,Conf.sBitBtn10.Caption,False,True);
   Cmenustate := 'em_handheld_kigb_database';
   em_kigb_database_ShowDynamicComps;
-  ShowButtonDown(6,'EM_HANDHELDS_NINTENDO_KIGB_DATABASE');
+  ShowButtonDown(10,'EM_HANDHELDS_NINTENDO_KIGB_DATABASE');
   Conf.Pem_kigb_sound.Tag := 0;
   ShowHidePanel(CurrentPanel,'Pem_kigb_database');
 end;

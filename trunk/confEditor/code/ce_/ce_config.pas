@@ -3,7 +3,7 @@ unit ce_config;
 interface
 
 uses
-  SysUtils,Classes,ExtCtrls,Graphics,
+  SysUtils,Classes,ExtCtrls,Graphics,Dialogs,
   NativeXml,NLDJoystick,
   JvgCheckBox,JvLED;
 
@@ -16,6 +16,7 @@ type
 
 
   procedure FirstTimeStart;
+  function IsFirstTimeStart:boolean;
   procedure ReadConfiguration;
 
   procedure CheckShowHelpInFormCaption;
@@ -40,12 +41,14 @@ var
   CE_SHelpInCaption,CE_SHelpInMain: Boolean;
   WinEffectsType,Ce_XMLPath: string;
   WinEffectsTime,Inode_Ce,ThemeNumber: Integer;
+  WrongStart: array of string;
+  
 
 implementation
 
 uses
   main,mainconf,onflycomponents,FunctionX,menu,
-  ce_wizard,ce_themes,form_splash;
+  ce_wizard,ce_themes,ce_logsession,form_splash;
 
 var
   node: TXmlNode;
@@ -81,8 +84,95 @@ begin
   FXml_CE.SaveToFile(Ce_XMLPath);
 end;
 
-procedure FirstTimeStart;
+function IsFirstTimeStart:boolean;
+var
+  i: integer;
 begin
+  Result := True;
+  SetLength(WrongStart,10);
+  for i := 0 to 9 do 
+    WrongStart[i] := ' ';  
+  if (FileExists(Program_Path + 'media\emulators\arcade\mame\config\config.xml')) then
+    begin
+      WrongStart[0] := 'Mame Config File';
+      Result := false;
+    end;
+  if (FileExists(Program_Path + 'media\emulators\arcade\mame\database\mame_efuse.xml')) then
+    begin
+      WrongStart[1] := 'Mame Database File ("mame.exe" 32bit)';
+      Result := false;
+    end;    
+  if (FileExists(Program_Path + 'media\emulators\arcade\mame\database\mamepp_efuse.xml')) then
+    begin
+      WrongStart[2] := 'Mame Database File ("mamepp.exe" Special build"i686" 32bit)';
+      Result := false;
+    end;
+  if (FileExists(Program_Path + 'media\emulators\arcade\mame\database\mame64_efuse.xml')) then
+    begin
+      WrongStart[3] := 'Mame Database File ("mame64.exe" 64bit)';
+      Result := false;
+    end;
+  if (FileExists(Program_Path + 'media\emulators\arcade\mame\database\mamep_efuse.xml')) then    
+    begin
+      WrongStart[4] := 'Mame Database File ("mamep.exe" unofficial build)';
+      Result := false;
+    end;
+  if (FileExists(Program_Path + 'media\emulators\arcade\zinc\config\config.ini')) then
+    begin
+      WrongStart[5] := 'Zinc Config File';
+      Result := False;
+    end;
+  if (FileExists(Program_Path + 'media\emulators\arcade\zinc\database\zinc_efuse.xml')) then
+    begin
+      WrongStart[6] := 'Zinc Database File';
+      Result := False;
+    end;      
+  if (FileExists(Program_Path + 'media\emulators\computers\atari\hatari\config\config.ini')) then
+    begin
+      WrongStart[7] := 'Hatari Config File';
+      Result := False;
+    end;
+  if (FileExists(Program_Path + 'media\emulators\consoles\playstation\psxemulator\config\config.ini')) then
+    begin
+      WrongStart[8] := 'pSXEmulator Config File';
+      Result := False;
+    end;
+  if (FileExists(Program_Path + 'media\emulators\handheld\nintendo\kigb\config\config.ini')) then
+    begin
+      WrongStart[9] := 'KiGB Config File';
+      Result := False;
+    end;
+end;
+
+procedure FirstTimeStart;
+var
+  i: integer;
+begin
+  if IsFirstTimeStart = true then
+    begin
+      Log_NewTextEnter('This is Fisrt Time you Start the confEditor. First Time setting is set.');
+      Log_NewTextEnter('Now created the default settings for every components of confEditor');
+    end
+  else 
+    begin
+      Log_ChangeFontColor(clRed);
+      Log_NewTextEnter('The Xml file of the confEditor is Missing');
+      Log_ChangeFontColor(clBlack);
+      Log_NewTextEnter('But the below files is find that means an old installation exists or the xml file erased accidentally.');
+      Log_NewLine;
+      Log_Bullets(True);
+      for i := 0 to 6 do 
+        if WrongStart[i] <> ' ' then
+          begin
+            Log_NewText(WrongStart[i] + ' ');
+            Log_ChangeFontColor(clGreen);
+            Log_NewTextEnter('Found');
+            Log_ChangeFontColor(clBlack);
+          end;
+      Log_NewLine;
+      Log_Bullets(False);
+      Log_NewTextEnter('Because the program has no effect from this.I create a new xml file and continue the program loading');
+    end;
   FXml_CE := TNativeXml.CreateName('confEditor');
   FXml_CE.XmlFormat := xfReadable;
   FXml_CE.Root.WriteAttributeString('Ver',GetVersion(Program_Path + 'confeditor.exe'));
@@ -107,22 +197,33 @@ begin
   WindowsEffectsType;
   Conf.se1.Value := WinEffectsTime;
   FXml_CE.SaveToFile(Ce_XMLPath);
+  Log_NewTextEnter('New xml file with default setting is created.');
 end;
 
 procedure ReadConfiguration;
-begin
+begin  
   FXml_CE := TNativeXml.CreateName('confeditor');
-  FXml_CE.LoadFromFile(Ce_XMLPath);
   FXml_CE.XmlFormat := xfReadable;
+  FXml_CE.LoadFromFile(Ce_XMLPath);
+  Log_Bullets(True);      
+  Log_NewTextEnter('Xml file is found and parsing');
   if FXml_CE.Root.ReadAttributeString('Ver','') <> GetVersion(Program_Path + 'confeditor.exe') then
     FXml_CE.Root.WriteAttributeString('Ver',GetVersion(Program_Path + 'confeditor.exe'));
   STBarInfo[0] := FXml_CE.Root.ReadAttributeString('Ver');
   if FileExists(Program_Path + 'extrafe.exe') then
-    StBarInfo[1] := GetVersion('extrafe.exe')
+    begin
+      StBarInfo[1] := GetVersion('extrafe.exe');
+      Log_NewTextEnter('"ExtraFe.exe" Found and getting his version info');
+    end
   else
-    StBarInfo[1] := 'Not Found';
+    begin
+      Log_WarningMessage('"ExtraFe.exe" not Found. Or This is a test version or something bad is happend.');
+      ShowMessage('ERRROR!!! "ExtraFe.exe" not Found.'+ #13#10 + 'Or This is a test version or something bad is happend.');      
+      StBarInfo[1] := 'Not Found';
+    end;
   node := FXml_CE.Root.NodeByName('rowtheme');
   ThemeNumber := node.ReadAttributeInteger('ThemeNumber');
+  Log_NewTextEnter('The theme is set');
   node := FXml_CE.Root.NodeByName('rowconfig');
   CE_SHelpInCaption := node.ReadAttributeBool('HelpInCaption');
   CE_SHelpInMain := node.ReadAttributeBool('HelpInMainMenu');
@@ -131,10 +232,14 @@ begin
   conf.sCheckBox1.Checked := CE_SHelpInMain;
   Conf.sCheckBox2.Checked := CE_SHelpInCaption;
   Conf.sComboBox74.ItemIndex  := Conf.sComboBox74.IndexOf(WinEffectsType);
-  Conf.sComboBox74.Text := WinEffectsType;
+  Conf.sComboBox74.Text := WinEffectsType;  
   Started := True;
   WindowsEffectsType;
   Conf.se1.Value := WinEffectsTime;
+  Log_NewText('The checking and the effect is set');
+  Log_NewLine;
+  Log_Bullets(False);
+  Log_NewLine;
 end;
 
 procedure CheckShowHelpInFormCaption;
@@ -182,76 +287,85 @@ var
   LogFile: TStringList;
 begin
   LogFile := TStringList.Create;
+  LogFile.Add('[Results for GroupBox "grp"]');
+  for i := 0 to 200 do
+    begin
+      if FindComponentEx('Conf.grp' + IntToStr(i)) <> nil then
+        LogFile.Add('Conf.grp' + IntToStr(i) + ' is found')
+      else
+        LogFile.Add('Conf.grp' + IntToStr(i) + ' not found');        
+    end;
+  LogFile.Add(' ');
   LogFile.Add('[Results for sPanel]');
   for i := 0 to 200 do
     begin
       if FindComponentEx('Conf.sPanel' + IntToStr(i)) <> nil then
-        LogFile.Add('Conf.sPanel' + IntToStr(i) + ' is find')
+        LogFile.Add('Conf.sPanel' + IntToStr(i) + ' is found')
       else
-        LogFile.Add('Conf.sPanel' + IntToStr(i) + ' not find');
+        LogFile.Add('Conf.sPanel' + IntToStr(i) + ' not found');
     end;
   LogFile.Add(' ');
   LogFile.Add('Results for sLabel');
   for i := 0 to 200 do
     begin
       if FindComponentEx('Conf.sLabel' + IntToStr(i)) <> nil then
-        LogFile.Add('Conf.sLabel' + IntToStr(i) + ' is find')
+        LogFile.Add('Conf.sLabel' + IntToStr(i) + ' is found')
       else
-        LogFile.Add('Conf.slabel' + IntToStr(i) + ' not find');
+        LogFile.Add('Conf.slabel' + IntToStr(i) + ' not found');
     end;
   LogFile.Add(' ');
   LogFile.Add('Results for sCheckBox');
   for i := 0 to 200 do
     begin
       if FindComponentEx('Conf.sCheckBox' + IntToStr(i)) <> nil then
-        LogFile.Add('Conf.sCheckBox' + IntToStr(i) + ' is find')
+        LogFile.Add('Conf.sCheckBox' + IntToStr(i) + ' is found')
       else
-        LogFile.Add('Conf.sCheckBox' + IntToStr(i) + ' not find');
+        LogFile.Add('Conf.sCheckBox' + IntToStr(i) + ' not found');
     end;
   LogFile.Add(' ');
   LogFile.Add('Results for sComboBox');
   for i := 0 to 200 do
     begin
       if FindComponentEx('Conf.sComboBox' + IntToStr(i)) <> nil then
-        LogFile.Add('Conf.sComboBox' + IntToStr(i) + ' is find')
+        LogFile.Add('Conf.sComboBox' + IntToStr(i) + ' is found')
       else
-        LogFile.Add('Conf.sComboBox' + IntToStr(i) + ' not find');
+        LogFile.Add('Conf.sComboBox' + IntToStr(i) + ' not found');
     end;
   LogFile.Add(' ');
   LogFile.Add('Results for sEdit');
   for i := 0 to 200 do
     begin
       if FindComponentEx('Conf.sEdit' + IntToStr(i)) <> nil then
-        LogFile.Add('Conf.sEdit' + IntToStr(i) + ' is find')
+        LogFile.Add('Conf.sEdit' + IntToStr(i) + ' is found')
       else
-        LogFile.Add('Conf.sEdit' + IntToStr(i) + ' not find');
+        LogFile.Add('Conf.sEdit' + IntToStr(i) + ' not found');
     end;
   LogFile.Add(' ');
   LogFile.Add('Results for sBitBtn');
   for i := 0 to 200 do
     begin
       if FindComponentEx('Conf.sBitBtn' + IntToStr(i)) <> nil then
-        LogFile.Add('Conf.sBitBtn' + IntToStr(i) + ' is find')
+        LogFile.Add('Conf.sBitBtn' + IntToStr(i) + ' is found')
       else
-        LogFile.Add('Conf.sBitBtn' + IntToStr(i) + ' not find');
+        LogFile.Add('Conf.sBitBtn' + IntToStr(i) + ' not found');
     end;
   LogFile.Add(' ');
   LogFile.Add('Results for Radio Button');
   for i := 0 to 200 do
     begin
       if FindComponentEx('Conf.rb' + IntToStr(i)) <> nil then
-        LogFile.Add('Conf.rb' + IntToStr(i) + ' is find')
+        LogFile.Add('Conf.rb' + IntToStr(i) + ' is found')
       else
-        LogFile.Add('Conf.rb' + IntToStr(i) + ' not find');
+        LogFile.Add('Conf.rb' + IntToStr(i) + ' not found');
     end;
   LogFile.Add(' ');
   LogFile.Add('Results for sButton');
   for i := 0 to 200 do
     begin
       if FindComponentEx('Conf.sButton' + IntToStr(i)) <> nil then
-        LogFile.Add('Conf.sButton' + IntToStr(i) + ' is find')
+        LogFile.Add('Conf.sButton' + IntToStr(i) + ' is found')
       else
-        LogFile.Add('Conf.sButton' + IntToStr(i) + ' not find');
+        LogFile.Add('Conf.sButton' + IntToStr(i) + ' not found');
     end;
   LogFile.SaveToFile('log.txt');
   LogFile.Free;
@@ -417,16 +531,16 @@ var
   i: integer;
   comp: TComponent;
 begin
-  Conf.grp34.Visible := not Conf.grp34.Visible;
-  if  Conf.grp34.Visible = True then
+  Conf.grp103.Visible := not Conf.grp103.Visible;
+  if  Conf.grp103.Visible = True then
     begin
       for i := 0 to 31 do
       begin
-        comp := FindComponentEx('Conf.JvgCheckBox' + IntToStr(i + 1));
+        comp := FindComponentEx('Conf.JvLED' + IntToStr(i + 6));
         if Conf.CEJoy1.ButtonCount > i then
-          TJvgCheckBox(comp).Enabled := True
+          TJvLED(comp).Enabled := True
         else
-          TJvgCheckBox(comp).Enabled := False;
+          TJvLED(comp).Enabled := False;
       end;
     end
 end;
@@ -436,16 +550,16 @@ var
   i: integer;
   comp: TComponent;
 begin
-  Conf.grp34.Visible := not Conf.grp34.Visible;
-  if  Conf.grp34.Visible = True then
+  Conf.grp103.Visible := not Conf.grp103.Visible;
+  if  Conf.grp103.Visible = True then
     begin
       for i := 0 to 31 do
       begin
-        comp := FindComponentEx('Conf.JvgCheckBox' + IntToStr(i + 1));
+        comp := FindComponentEx('Conf.JvLED' + IntToStr(i + 6));
         if Conf.CEJoy2.ButtonCount > i then
-          TJvgCheckBox(comp).Enabled := True
+          TJvLED(comp).Enabled := True
         else
-          TJvgCheckBox(comp).Enabled := False;
+          TJvLED(comp).Enabled := False;
       end;
     end;
 end;
@@ -460,8 +574,8 @@ begin
     begin  
       if Joy1Buttons[i] = '1' then 
         begin
-          comp := FindComponentEx('Conf.JvgCheckBox' + IntToStr(i + 1));
-          TJvgCheckBox(comp).Checked := True;
+          comp := FindComponentEx('Conf.JvLED' + IntToStr(i + 6));
+          TJvLED(comp).Status := True;
         end;
     end;
 end;
@@ -476,8 +590,8 @@ begin
     begin  
       if Joy1Buttons[i] = '0' then 
         begin
-          comp := FindComponentEx('Conf.JvgCheckBox' + IntToStr(i + 1));
-          TJvgCheckBox(comp).Checked := false;
+          comp := FindComponentEx('Conf.JvLED' + IntToStr(i + 6));
+          TJvLED(comp).Status := False;
         end;
     end;
 end;
@@ -549,7 +663,9 @@ begin
   if Cmenustate = 'startwizard' then
     ce_wizard_FreeDynamicComps
   else if Cmenustate = 'ce_themes' then
-    ce_themes_FreeDynamicComps;
+    ce_themes_FreeDynamicComps
+  else if Cmenustate = 'ce_logsession' then
+    ce_logsession_FreeDynamicComps;
   CurrentStateSave;
   ShowPathInCaption(CDirPath,Conf.sBitBtn7.Caption,False,True);
   Cmenustate := 'ce_configuration';

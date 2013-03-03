@@ -20,7 +20,7 @@ implementation
 
 uses
   main,mainconf,menu,onflycomponents,FunctionX,
-  ce_config,ce_wizard;
+  ce_config,ce_wizard,ce_logsession;
 
 var
   node: TXmlNode;
@@ -58,7 +58,6 @@ begin
   Conf.sLabelFX3.Caption := Conf.sLB_ce_themes.Items.Strings[ThemeNumber];
   ThemeCreator(ThemeNumber+1);
   SetAllCursor(ThemeNumber+1);
-  GroupBoxColors(ThemeNumber);
 end;
 
 procedure ThemeCreator(num: Byte);
@@ -69,17 +68,33 @@ begin
           Conf.sLabelFX12.Caption := 'Opus';
         end;
     2 : begin
+          Conf.sLabelFX11.Caption := 'Graf Sascha';
+          Conf.sLabelFX12.Caption := 'Ubuntu';    
+        end;
+    3 : begin
           Conf.sLabelFX11.Caption := 'AC Team';
           Conf.sLabelFX12.Caption := 'The Frog';
         end;
-    3 : begin
+    4 : begin
+          Conf.sLabelFX11.Caption := 'Serge Goncharov';
+          Conf.sLabelFX12.Caption := 'Light Board';    
+        end;
+    5 : begin
+          Conf.sLabelFX11.Caption := 'Kolpakchi S.S.';
+          Conf.sLabelFX12.Caption := 'Heroes Style';    
+        end; 
+    6 : begin
           Conf.sLabelFX11.Caption := 'Serge Goncharov';
           Conf.sLabelFX12.Caption := 'Beijing Ext';
         end;
-    4 : begin
+    7 : begin
+          Conf.sLabelFX11.Caption := 'Serge Goncharov';
+          Conf.sLabelFX12.Caption := 'Mint';    
+        end; 
+    8 : begin
           Conf.sLabelFX11.Caption := 'AC Team';
           Conf.sLabelFX12.Caption := 'Calcium';
-        end;
+        end;       
   end;
 end;
 
@@ -89,7 +104,9 @@ begin
   if Cmenustate = 'ce_configuration' then
     ce_config_FreeDynamicComps
   else if  Cmenustate = 'startwizard' then
-    ce_wizard_FreeDynamicComps;
+    ce_wizard_FreeDynamicComps
+  else if Cmenustate = 'ce_logsession' then
+    ce_logsession_FreeDynamicComps;
   ShowPathInCaption(CDirPath,Conf.sBitBtn8.Caption,False,True);
   Cmenustate := 'ce_themes';
   ce_themes_ShowDynamicComps;
@@ -119,9 +136,9 @@ begin
       case i of
         1 : Label_Comp(Conf.Pce_themes,'Choose Theme :',23,51,i,'',True,True,True);
         2 : Label_Comp(Conf.Pce_themes,'Preview',238,51,i,'',True,True,True);
-        3 : Label_Comp(Conf.Pce_themes,'Theme used :',23,290,i,'',True,True,True);
-        4 : Label_Comp(Conf.Pce_themes,'Constructed by :',600,294,i,'',True,True,True);
-        5 : Label_Comp(Conf.Pce_themes,'Theme real name :',600,338,i,'',True,True,True);
+        3 : Label_Comp(Conf.Pce_themes,'Theme used :',23,302,i,'',True,True,True);
+        4 : Label_Comp(Conf.Pce_themes,'Constructed by :',600,304,i,'',True,True,True);
+        5 : Label_Comp(Conf.Pce_themes,'Theme real name :',600,346,i,'',True,True,True);
       end;
     end;
 end;

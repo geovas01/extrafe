@@ -112,7 +112,7 @@ begin
   ShowPathInCaption(CDirPath,Conf.sBitBtn10.Caption,False,True);
   Cmenustate := 'em_consoles_psx_database';
   em_psx_database_ShowDynamicComps;
-  ShowButtonDown(6,'EM_CONSOLES_SONY_PSX_DATABASE');
+  ShowButtonDown(10,'EM_CONSOLES_SONY_PSX_DATABASE');
   Conf.Pem_psx_sound.Tag := 0;
   Conf.Pem_psx_others.Tag := 0;
   ShowHidePanel(CurrentPanel,'Pem_psx_database');

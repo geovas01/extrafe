@@ -33,7 +33,8 @@ implementation
 
 uses
   main,mainconf,menu,onflycomponents,FunctionX,
-  mame_dirs,mame_graphics,mame_others,mame_builds,mame_database;
+  mame_dirs,mame_graphics,mame_others,mame_hlsl,mame_database,
+  ce_logsession;
 
 Procedure MameValumeAttenuationChange;
 Begin
@@ -170,6 +171,7 @@ begin
         end;
       CheckMameSound_TopicSettings;
       CheckTopicsConfig;
+      Log_NewTextEnter(#9 + 'Found all Settings OK');
     end;
   Started := False;
 end;
@@ -479,15 +481,15 @@ begin
     em_mame_dirs_FreeDynamicComps
   else if (Cmenustate = 'em_arcade_mame_others') then
     em_mame_others_FreeDynamicComps
-  else if (Cmenustate = 'em_arcade_mame_builds') then
-    em_mame_builds_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_hlsl') then
+    em_mame_hlsl_FreeDynamicComps
   else if (Cmenustate = 'em_arcade_mame_database') then
     em_mame_database_FreeDynamicComps;
   CurrentStateSave;
-  ShowPathInCaption(CDirPath,Conf.sBitBtn8.Caption,False,True);
+  ShowPathInCaption(CDirPath,Conf.sBitBtn9.Caption,False,True);
   Cmenustate := 'em_arcade_mame_sound';
   em_mame_sound_ShowDynamicComps;
-  ShowButtonDown(8,'EM_ARCADE_MAME_SOUND');
+  ShowButtonDown(9,'EM_ARCADE_MAME_SOUND');
   CheckButtonTopicsConfig_MameSound;
   ShowHidePanel(CurrentPanel,'Pem_mame_sound');
 end;

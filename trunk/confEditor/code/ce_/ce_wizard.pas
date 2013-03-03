@@ -13,7 +13,7 @@ implementation
 
 uses
   main,mainconf,onflycomponents,FunctionX,menu,
-  ce_config,ce_themes;
+  ce_config,ce_themes,ce_logsession;
 
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +22,9 @@ begin
   if Cmenustate = 'ce_configuration' then
     ce_config_FreeDynamicComps
   else if Cmenustate = 'ce_themes' then
-    ce_themes_FreeDynamicComps;
+    ce_themes_FreeDynamicComps
+  else if Cmenustate = 'ce_logsession' then
+    ce_logsession_FreeDynamicComps;
   ShowPathInCaption(CDirPath,Conf.sBitBtn6.Caption,False,True);
   Cmenustate := 'startwizard';
   ce_wizard_ShowDynamicComps;

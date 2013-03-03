@@ -4,6 +4,7 @@ interface
 uses
   SysUtils,Classes,ExtCtrls,Controls,Forms,IniFiles,Dialogs,Graphics,
   NativeXml,
+  ce_config,
   sBitBtn,sPanel,sLabel;
 
   procedure SetWeather_FromWeatherIni;
@@ -105,7 +106,7 @@ procedure PressPlus_Add;
 begin
   if StBarInfo[3] = 'Internet Connected' then
     begin
-      Conf.grp31.Visible := True;
+      Conf.sPanel89.Visible := True;
       Conf.sButton18.Enabled := False;
       Conf.sButton19.Visible := True;
       Conf.sEdit31.Visible := True;
@@ -124,7 +125,7 @@ begin
   Conf.sButton18.Enabled := True;
   Conf.sButton19.Visible := False;
   Conf.sEdit31.Text := '';
-  Conf.grp31.Visible := False;
+  Conf.sPanel89.Visible := False;
 end;
 
 procedure KeyPressedInEdit(aKey: Char);
@@ -247,6 +248,10 @@ begin
       WeatherIni.WriteInteger('WOEID','town' + IntToStr(cPanels),StrToInt(UN));
       WeatherIni.WriteString('Symbol','town' + IntToStr(cPanels),WS);
       cPanels := cPanels + 1;
+    end
+  else
+    begin
+      ShowProgressBar((num * 100) div cPanels,'Load Users Weather selections...','weather');
     end;
 end;
 
@@ -637,6 +642,7 @@ begin
       end;
   sHandled := True;
 end;
+
   
 /////////////////////////////////////////////////////////////////////
 
@@ -648,7 +654,7 @@ begin
   Cmenustate := 'wg_weather';
   wg_weather_ShowDynamicComps;
   ShowButtonDown(10,'WG_WEATHER');
-  ShowHidePanel(CurrentPanel,'Pwg_weather');
+  ShowHidePanel(CurrentPanel,'Pwg_weather');  
 end;
 
 procedure wg_weather_ShowDynamicComps;

@@ -5,9 +5,9 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,StdCtrls,
   sBitBtn,sPanel,pngimage,
-  ce_config,ce_themes,ce_wizard,
+  ce_config,ce_themes,ce_wizard,ce_logsession,
   exf_config,exf_themes,
-  mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
+  mame_dirs,mame_graphics,mame_sound,mame_others,mame_hlsl,mame_database,
   zinc_paths,zinc_graphics,zinc_sound,zinc_database,
   hatari_system,hatari_roms,hatari_screen,hatari_joy,hatari_paths,hatari_database,
   psx_screen,psx_sound,psx_others,psx_paths,psx_database,
@@ -83,7 +83,8 @@ begin
       MenuButtonsNames[0] := 'Start Wizard';
       MenuButtonsNames[1] := 'Configuration';
       MenuButtonsNames[2] := 'Themes';
-      for k := 0 to 2 do
+      MenuButtonsNames[3] := 'Log Session';
+      for k := 0 to 3 do
         MenuBitBtnIcons[k] := 'GLYF_CONFEDITOR';
     end
   else if MenuState = 'extrafe' then
@@ -115,9 +116,9 @@ begin
     begin
       MenuButtonsNames[0] := 'Directories';
       MenuButtonsNames[1] := 'Graphics';
-      MenuButtonsNames[2] := 'Controllers/Sound';
-      MenuButtonsNames[3] := 'Others';
-      MenuButtonsNames[4] := 'Builds Extra/Tools';
+      MenuButtonsNames[2] := 'Hlsl';
+      MenuButtonsNames[3] := 'Controllers/Sound';
+      MenuButtonsNames[4] := 'Others';
       MenuButtonsNames[5] := 'Database';
       for k := 0 to 5 do
         MenuBitBtnIcons[k] := 'GLYF_EM_ARCADE_MAME';
@@ -255,7 +256,7 @@ begin
           if (Cmenustate = '') then
             ShowMenuImage('CONFEDITOR')
           else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or (Cmenustate = 'ce_configuration') or
-            (Cmenustate = 'ce_themes') then
+            (Cmenustate = 'ce_themes') or (Cmenustate = 'ce_logsession') then
             ShowMenuImage('CONFEDITOR_WIZARD')
           else if (Cmenustate = 'extrafe') or (Cmenustate = 'exf_configuration') or (Cmenustate = 'exf_themes') then
             ShowMenuImage('EXTRAFE_CONFIG')
@@ -296,7 +297,7 @@ begin
           if (Cmenustate = '') then
             ShowMenuImage('EXTRAFE')
           else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or
-            (Cmenustate = 'ce_themes') then
+            (Cmenustate = 'ce_themes') or (Cmenustate = 'ce_logsession') then
             ShowMenuImage('CONFEDITOR_CONFIG')
           else if (Cmenustate = 'extrafe') or (Cmenustate = 'exf_configuration') or (Cmenustate = 'exf_themes') then
             ShowMenuImage('EXTRAFE_THEMES')
@@ -325,7 +326,7 @@ begin
           if (Cmenustate = '') then
             ShowMenuImage('EMULATORS')
           else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or
-            (Cmenustate = 'ce_configuration') then
+            (Cmenustate = 'ce_configuration') or (Cmenustate = 'ce_logsession') then
             ShowMenuImage('CONFEDITOR_THEMES')
           else if (Cmenustate = 'emulators') then
             ShowMenuImage('EM_CONSOLES')
@@ -345,7 +346,10 @@ begin
             ShowMenuImage('EM_HANDHELDS_NINTENDO_KIGB_SOUND');
         end;
     9 : begin
-          if (Cmenustate = '') then
+          if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or (Cmenustate = 'ce_themes')  or
+            (Cmenustate = 'ce_configuration') then
+            ShowMenuImage('CONFEDITOR_LOG')
+          else if (Cmenustate = '') then
             ShowMenuImage('WIDGETS')
           else if (Cmenustate = 'emulators') then
             ShowMenuImage('EM_HANDHELDS')
@@ -409,12 +413,14 @@ begin
             ShowMenuImage('WIDGETS')
           else if Cmenustate = 'wg_timedate' then
             ShowMenuImage('WG_TIMEDATE')
-          else if Cmenustate = 'confeditor' then
+          else if (Cmenustate = '') or (Cmenustate = 'confeditor') then
             ShowMenuImage('CONFEDITOR')
           else if (Cmenustate = 'ce_configuration') then
             ShowMenuImage('CONFEDITOR_CONFIG')
           else if (Cmenustate = 'ce_themes') then
             ShowMenuImage('CONFEDITOR_THEMES')
+          else if (Cmenustate = 'ce_logsession') then
+            ShowMenuImage('CONFEDITOR_LOG')
           else if Cmenustate = 'extrafe' then
             ShowMenuImage('EXTRAFE')
           else if Cmenustate = 'exf_themes' then
@@ -499,6 +505,8 @@ begin
             ShowMenuImage('CONFEDITOR_WIZARD')
           else if (Cmenustate = 'ce_themes') then
             ShowMenuImage('CONFEDITOR_THEMES')
+          else if (Cmenustate = 'ce_logsession') then
+            ShowMenuImage('CONFEDITOR_LOG')
           else if Cmenustate = 'extrafe' then
             ShowMenuImage('EXTRAFE')
           else if Cmenustate = 'exf_configuration' then
@@ -575,6 +583,8 @@ begin
             ShowMenuImage('CONFEDITOR_WIZARD')
           else if (Cmenustate = 'ce_configuration') then
             ShowMenuImage('CONFEDITOR_CONFIG')
+          else if (Cmenustate = 'ce_logsession') then
+            ShowMenuImage('CONFEDITOR_LOG')
           else if Cmenustate = 'emulators' then
             ShowMenuImage('EMULATORS')
           else if Cmenustate = 'em_arcade_mame' then
@@ -637,8 +647,14 @@ begin
     9 : begin
           if Cmenustate = 'timedate' then
             ShowMenuImage('TIMEDATE')
-          else if Cmenustate = '' then
+          else if (Cmenustate = '') or (Cmenustate = 'confeditor') then
             ShowMenuImage('CONFEDITOR')
+          else if (Cmenustate = 'startwizard') then
+            ShowMenuImage('CONFEDITOR_WIZARD')
+          else if (Cmenustate = 'ce_configuration') then
+            ShowMenuImage('CONFEDITOR_CONFIG')
+          else if (Cmenustate = 'ce_themes') then
+            ShowMenuImage('CONFEDITOR_THEMES')
           else if Cmenustate = 'emulators' then
             ShowMenuImage('EMULATORS')
           else if Cmenustate = 'em_arcade_mame' then
@@ -792,7 +808,7 @@ begin
   showHidePanel(CurrentPanel,'');
   if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or (Cmenustate = 'ce_configuration') or
     (Cmenustate = 'ce_themes') or (Cmenustate = 'extrafe') or (Cmenustate = 'exf_configuration') or
-    (Cmenustate = 'exf_themes') or (Cmenustate = 'emulators') or (Cmenustate = 'widgets') or
+    (Cmenustate = 'exf_themes') or (Cmenustate = 'ce_logsession') or (Cmenustate = 'emulators') or (Cmenustate = 'widgets') or
     (Cmenustate = 'wg_weather') or (Cmenustate = 'wg_timedate')then
     begin
       if Cmenustate = 'ce_configuration' then
@@ -801,6 +817,8 @@ begin
         ce_wizard_FreeDynamicComps
       else if Cmenustate = 'ce_themes' then
         ce_themes_FreeDynamicComps
+      else if Cmenustate = 'ce_logsession' then
+        ce_logsession_FreeDynamicComps
       else if Cmenustate = 'exf_configuration' then
         exf_config_FreeDynamicComps
       else if Cmenustate = 'exf_themes' then
@@ -841,7 +859,7 @@ begin
       else if Cmenustate = 'em_arcade_mame_others' then
         em_mame_others_FreeDynamicComps
       else if Cmenustate = 'em_arcade_mame_builds' then
-        em_mame_builds_FreeDynamicComps
+        em_mame_hlsl_FreeDynamicComps
       else if Cmenustate = 'em_arcade_mame_database' then
         em_mame_database_FreeDynamicComps;
       CurrentStateSave;
@@ -965,10 +983,10 @@ begin
       ShowPathInCaption(CDirPath,conf.sBitBtn6.Caption,False,False);
       ShowHidePanel(CurrentPanel,'');
       Cmenustate := 'confeditor';
-      ShowCurrentMenu(2,True,Cmenustate,0);
+      ShowCurrentMenu(3,True,Cmenustate,0);
       ShowButtonDown(16,'CONFEDITOR');
     end
-  else if (Cmenustate = 'confeditor') or (Cmenustate = 'ce_configuration') or (Cmenustate = 'ce_themes') then
+  else if (Cmenustate = 'confeditor') or (Cmenustate = 'ce_configuration') or (Cmenustate = 'ce_themes') or (Cmenustate = 'ce_logsession') then
     Show_confEditor_wizardpanel
   else if (Cmenustate = 'extrafe') or (Cmenustate = 'exf_themes') then
     Show_ExtraFe_configurationpanel
@@ -988,7 +1006,7 @@ begin
     (Cmenustate = 'em_arcade_zinc_database') then
     Show_zinc_pathspanel
   else if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or
-     (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database')  then
+     (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_hlsl') or (Cmenustate = 'em_arcade_mame_database')  then
     Show_mame_dirspanel
   else if (Cmenustate = 'em_computers') then
     begin
@@ -1049,7 +1067,7 @@ begin
       ShowCurrentMenu(1,True,Cmenustate,1);
       ShowButtonDown(16,'EXTRAFE');
     end
-  else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or (Cmenustate = 'ce_themes') then
+  else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or (Cmenustate = 'ce_themes') or (Cmenustate = 'ce_logsession') then
     Show_confEditor_configurationpanel
   else if (Cmenustate = 'extrafe') or (Cmenustate = 'exf_configuration') then
     Show_ExtraFe_themespanel
@@ -1063,7 +1081,7 @@ begin
     (Cmenustate = 'em_arcade_zinc_database') then
     Show_zinc_graphicspanel
   else if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_sound') or
-     (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database')  then
+     (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_hlsl') or (Cmenustate = 'em_arcade_mame_database')  then
     Show_mame_graphicspanel
   else if (Cmenustate = 'emulators') then
     begin
@@ -1094,14 +1112,14 @@ begin
       ShowCurrentMenu(3,True,Cmenustate,3);
       ShowButtonDown(16,'EMULATORS');
     end
-  else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or (Cmenustate = 'ce_configuration') then
+  else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or (Cmenustate = 'ce_configuration') or (Cmenustate = 'ce_logsession') then
     Show_confEditor_themespanel
   else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_paths') or
     (Cmenustate = 'em_arcade_zinc_database') then
     Show_zinc_soundpanel
-  else if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_paths') or
-     (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database')  then
-    Show_mame_soundpanel
+  else if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or
+     (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_database')  then
+    Show_mame_hlslpanel
   else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_screen') or (Cmenustate = 'em_computers_hatari_system') or
     (Cmenustate = 'em_computers_hatari_joy') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_database') then
     Show_hatari_romspanel
@@ -1129,9 +1147,11 @@ begin
       ShowCurrentMenu(1,True,Cmenustate,1);
       ShowButtonDown(16,'WIDGETS');
     end
-  else if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or
-     (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_database')  then
-    Show_mame_otherspanel
+  else if (Cmenustate = 'confeditor') or (Cmenustate = 'startwizard') or (Cmenustate = 'ce_configuration') or (Cmenustate = 'ce_themes') then
+    Show_confEditor_logsessionpanel
+  else if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_paths') or
+     (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_hlsl') or (Cmenustate = 'em_arcade_mame_database')  then
+    Show_mame_soundpanel
   else if (Cmenustate = 'em_arcade_zinc') or (Cmenustate = 'em_arcade_zinc_paths') or
    (Cmenustate = 'em_arcade_zinc_graphics') or (Cmenustate = 'em_arcade_zinc_sound') then
     Show_zinc_databasepanel
@@ -1155,8 +1175,8 @@ end;
 procedure MenuButton5;
 begin
   if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or
-     (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_database')  then
-    Show_mame_buildspanel
+     (Cmenustate = 'em_arcade_mame_paths') or (Cmenustate = 'em_arcade_mame_hlsl') or (Cmenustate = 'em_arcade_mame_database')  then
+    Show_mame_otherspanel
   else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_roms') or
     (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_screen') or (Cmenustate = 'em_computers_hatari_database') then
     Show_hatari_joypanel
@@ -1172,7 +1192,7 @@ end;
 procedure MenuButton6;
 begin
   if (Cmenustate = 'em_arcade_mame') or (Cmenustate = 'em_arcade_mame_graphics') or (Cmenustate = 'em_arcade_mame_sound') or
-     (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_builds') or (Cmenustate = 'em_arcade_mame_paths')  then
+     (Cmenustate = 'em_arcade_mame_others') or (Cmenustate = 'em_arcade_mame_hlsl') or (Cmenustate = 'em_arcade_mame_paths')  then
     Show_mame_databasepanel
   else if (Cmenustate = 'em_computers_hatari') or (Cmenustate = 'em_computers_hatari_paths') or (Cmenustate = 'em_computers_hatari_roms') or
     (Cmenustate = 'em_computers_hatari_system') or (Cmenustate = 'em_computers_hatari_screen') or (Cmenustate = 'em_computers_hatari_joy') then
@@ -1363,8 +1383,8 @@ begin
     SaveMame_SoundAtExit
   else if Cmenustate = 'em_arcade_mame_others' then
     SaveMame_OthersAtExit
-  else if Cmenustate = 'em_arcade_mame_builds' then
-    SaveMame_BuildsAtExit
+  else if Cmenustate = 'em_arcade_mame_hsls' then
+    SaveMame_HlslAtExit
 // ZiNC
   else if Cmenustate = 'em_arcade_zinc_paths' then
     SaveZinc_PathsAtExit

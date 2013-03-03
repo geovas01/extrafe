@@ -7,6 +7,7 @@ uses
   DateUtils,IniFiles,
   sPanel,sLabel,sBitBtn,
   AsyncCalls,AnalogClock,
+  ce_config,
   NativeXml;
 
 type
@@ -29,7 +30,8 @@ type
   function GetTimeZone: string;
 
   procedure DateTimeWheelAction(sWheelDelta: Integer; sHandled: Boolean);
-
+  
+  
 //Internet Panel
   procedure Set_ComputersTime;
   procedure Get_InternetTime;
@@ -255,6 +257,10 @@ begin
       CountC := DateTimeIni.ReadInteger('SelCount','Count',CountC);
       DateTimeIni.WriteInteger('SelCount','Count',CountC + 1);
       DateTimeIni.WriteString('Countries','Country' + IntToStr(CountC + 1),dtCountry);
+    end
+  else
+    begin
+      ShowProgressBar((num * 100) div CDPanels,'Load Users Datetime selections...','datetime');
     end;
 end;
 
@@ -437,6 +443,7 @@ begin
   ShowHidePanel(CurrentPanel,'Pwg_timedate');
   if Conf.sBitBtn111.Down = False then
     ShowWorldClock;
+  ScrollBoxTheme(ThemeNumber + 1);
 end;
 
 procedure wg_timedate_ShowDynamicComps;
