@@ -147,71 +147,7 @@ object Conf: TConf
       Width = 24
       Height = 24
       Center = True
-      Picture.Data = {
-        055449636F6E0000010002001010000001001800680300002600000010100000
-        01002000680400008E0300002800000010000000200000000100180000000000
-        40FFFFFF00000000000000000000000000000000000000000000000000000000
-        00B93D00B93D0000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000B93D16E72304C63100B93D00000000000000
-        000000000000000000000000000000000000000000000000000000B93D0AC939
-        16E72316E72304C63100B93D0000000000000000000000000000000000000000
-        0000000000000000000000B93D27EF3E1EEB301EEB3016E72300B93D00000000
-        000000000000000000000000000000000000000000000000B93D0DCA4130F34C
-        16D73E00B93D1EEB300CD32E00B93D0000000000000000000000000000000000
-        0000000000000000B93D38F75A30F34C00B93D00B93D27EF3E1EEB3000B93D00
-        000000000000000000000000000000000000000000B93D1AD44E41FC681FDC4D
-        00B93D00000000B93D27EF3E11D53600B93D0000000000000000000000000000
-        0000000000B93D48FF7348FF7300B93D00000000000000B93D13D14327EF3E00
-        B93D00000000000000000000000000000000000000000000B93D28E05B00B93D
-        00000000000000000000B93D30F34C16D73E00B93D0000000000000000000000
-        0000000000000000000000000000000000000000000000000000B93D1FDC4D30
-        F34C00B93D000000000000000000000000000000000000000000000000000000
-        00000000000000000000000000B93D38F75A1BDA4500B93D0000000000000000
-        0000000000000000000000000000000000000000000000000000000000B93D24
-        DF5538F75A00B93D000000000000000000000000000000000000000000000000
-        00000000000000000000000000000000B93D41FC6824DF5500B93D0000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        B93D28E05B41FC6800B93D000000000000000000000000000000000000000000
-        00000000000000000000000000000000000000B93D48FF7328E05B00B93D0000
-        0000000000000000000000000000000000000000000000000000000000000000
-        000000000000B93D00B93D000000000000000000F3FF0000E1FF0000C0FF0000
-        C0FF0000807F0000807F0000043F00000C3F00008E1F0000FE1F0000FF0F0000
-        FF0F0000FF870000FF870000FFC30000FFE70000280000001000000020000000
-        0100200000000000400000000000000000000000000000000000000000000000
-        00000000000000000000000F00B93DBF00B93DBF000000190000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        000000000000000F00B93DBF16E723FF04C631FF00B93DCB0000001900000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000B93DBF0AC939FF16E723FF16E723FF04C631FF00B93D9800000019
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000001100B93DC927EF3EFF1EEB30FF1EEB30FF16E723FF00B93DC100000025
-        0000000000000000000000000000000000000000000000000000000000000008
-        00B93DC40DCA41EE30F34CFF16D73EFF00B93DFF1EEB30FF0CD32EFF00B93D92
-        000000190000000000000000000000000000000000000000000000000000001F
-        00B93DE538F75AFF30F34CFF00B93DEA00B93DAF27EF3EFF1EEB30FF00B93DCE
-        0000002500000000000000000000000000000000000000000000000000B93DBF
-        1AD44EFF41FC68FF1FDC4DFF00B93D9D0000001900B93DD927EF3EFF11D536FF
-        00B93D9200000019000000000000000000000000000000000000000000B93DBF
-        48FF73FF48FF73FF00B93DBF000000170000000000B93DB313D143FF27EF3EFF
-        00B93DCE00000025000000000000000000000000000000000000000000000008
-        00B93DBF28E05BFF00B93D8A00000009000000000000001100B93DDB30F34CFF
-        16D73EFF00B93D92000000190000000000000000000000000000000000000000
-        0000000900B93D550000000000000000000000000000000000B93DB31FDC4DFF
-        30F34CFF00B93DCE000000250000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000001100B93DDB
-        38F75AFF1BDA45FF00B93D920000001900000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000B93DA5
-        24DF55FF38F75AFF00B93DCE0000002500000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000013
-        00B93DD541FC68FF24DF55FF00B93D9200000019000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        00B93DA528E05BFF41FC68FF00B93DCE00000025000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000B93DBF48FF73FF28E05BFF00B93D7F000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        000000000000000000B93DD800B93DDB000000000000000000000000E1FF0000
-        C0FF0000C07F0000807F0000003F0000003F0000001F0000041F0000040F0000
-        9E0F0000FE070000FF070000FF030000FF830000FFC30000FFE70000}
+      Picture.Data = {07544269746D617000000000}
       Visible = False
     end
     object sEdit56: TsEdit
@@ -1209,7 +1145,7 @@ object Conf: TConf
           TabOrder = 0
           Text = 'ST Joystick 0'
           OnChange = Hatari_ConfigJoy2
-          OnDropDown = Hatari_ConfigJoy
+          OnEnter = Hatari_ConfigJoy
           Items.Strings = (
             'ST Joystick 0'
             'ST Joystick 1'
@@ -1230,36 +1166,6 @@ object Conf: TConf
             Width = 212
             Height = 145
             TabOrder = 0
-            object rb28: TRadioButton
-              Left = 5
-              Top = 20
-              Width = 113
-              Height = 17
-              Hint = 'Joystick_disable'
-              Caption = 'Disable'
-              TabOrder = 0
-              OnClick = Hatari_ConfigJoy
-            end
-            object rb29: TRadioButton
-              Left = 5
-              Top = 40
-              Width = 113
-              Height = 17
-              Hint = 'Joystick_keyboard'
-              Caption = 'Use Keyboard'
-              TabOrder = 1
-              OnClick = Hatari_ConfigJoy
-            end
-            object rb30: TRadioButton
-              Left = 5
-              Top = 60
-              Width = 113
-              Height = 17
-              Hint = 'Joystick_real'
-              Caption = 'Real Joystick'
-              TabOrder = 2
-              OnClick = Hatari_ConfigJoy
-            end
             object sComboBox56: TsComboBox
               Left = 10
               Top = 113
@@ -1281,10 +1187,88 @@ object Conf: TConf
               Enabled = False
               ItemHeight = 15
               ItemIndex = 0
-              TabOrder = 3
+              TabOrder = 0
               Text = 'Choose Joystick...'
               Items.Strings = (
                 'Choose Joystick...')
+            end
+            object sPanel82: TsPanel
+              Left = 3
+              Top = 13
+              Width = 185
+              Height = 86
+              BevelOuter = bvNone
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 1
+              SkinData.SkinSection = 'PANEL'
+              object rb28: TLMDRadioButton
+                Left = 6
+                Top = 4
+                Width = 64
+                Height = 18
+                Hint = 'Joystick_disable'
+                Caption = 'Disable'
+                Alignment.Alignment = agTopLeft
+                Alignment.Spacing = 4
+                AutoSize = True
+                Checked = False
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = [fsBold]
+                ParentFont = False
+                TabOrder = 0
+                Transparent = True
+                OnClick = Hatari_ConfigJoy
+              end
+              object rb29: TLMDRadioButton
+                Left = 6
+                Top = 34
+                Width = 101
+                Height = 18
+                Hint = 'Joystick_keyboard'
+                Caption = 'Use Keyboard'
+                Alignment.Alignment = agTopLeft
+                Alignment.Spacing = 4
+                AutoSize = True
+                Checked = False
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = [fsBold]
+                ParentFont = False
+                TabOrder = 1
+                Transparent = True
+                OnClick = Hatari_ConfigJoy
+              end
+              object rb30: TLMDRadioButton
+                Left = 6
+                Top = 63
+                Width = 98
+                Height = 18
+                Hint = 'Joystick_real'
+                Caption = 'Real Joystick'
+                Alignment.Alignment = agTopLeft
+                Alignment.Spacing = 4
+                AutoSize = True
+                Checked = False
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'Tahoma'
+                Font.Style = [fsBold]
+                ParentFont = False
+                TabOrder = 2
+                Transparent = True
+                OnClick = Hatari_ConfigJoy
+              end
             end
           end
           object grp20: TGroupBox
@@ -1734,7 +1718,7 @@ object Conf: TConf
         ParentFont = False
         TabOrder = 1
         object sLabel13: TsLabel
-          Left = 1
+          Left = 4
           Top = 114
           Width = 113
           Height = 13
@@ -1747,7 +1731,7 @@ object Conf: TConf
           Font.Style = [fsBold]
         end
         object sLabel14: TsLabel
-          Left = 1
+          Left = 4
           Top = 152
           Width = 80
           Height = 13
@@ -1760,7 +1744,7 @@ object Conf: TConf
           Font.Style = [fsBold]
         end
         object sLabel15: TsLabel
-          Left = 169
+          Left = 166
           Top = 152
           Width = 24
           Height = 13
@@ -1774,7 +1758,7 @@ object Conf: TConf
           Font.Style = [fsBold]
         end
         object sLabel16: TsLabel
-          Left = 169
+          Left = 166
           Top = 114
           Width = 24
           Height = 13
@@ -2544,11 +2528,41 @@ object Conf: TConf
         ImgChecked = 0
         ImgUnchecked = 0
       end
-      object grp116: TGroupBox
-        Left = 18
-        Top = 99
-        Width = 447
-        Height = 68
+      object Button1: TButton
+        Left = 16
+        Top = 384
+        Width = 209
+        Height = 25
+        Hint = 'Make_Log'
+        Caption = 'Find All components in log.txt file'
+        TabOrder = 2
+        Visible = False
+        OnClick = confEditor_Config_Set
+      end
+      object sButton26: TsButton
+        Left = 140
+        Top = 268
+        Width = 24
+        Height = 24
+        Hint = 'Refresh_Joystics'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 3
+        OnClick = confEditor_Config_Set
+        SkinData.SkinSection = 'BUTTON'
+        Images = InBitBtn_Imagelist
+        ImageAlignment = iaCenter
+        ImageIndex = 37
+      end
+      object grp97: TGroupBox
+        Left = 16
+        Top = 100
+        Width = 450
+        Height = 70
         Caption = 'Panel Effects'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -2556,18 +2570,18 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 2
+        TabOrder = 4
         object sLabel32: TsLabel
-          Left = 256
+          Left = 376
           Top = 20
           Width = 28
           Height = 13
           Caption = 'Time'
         end
         object sComboBox74: TsComboBox
-          Left = 5
+          Left = 19
           Top = 34
-          Width = 225
+          Width = 318
           Height = 21
           Hint = 'Window_effect_type'
           Alignment = taLeftJustify
@@ -2608,7 +2622,7 @@ object Conf: TConf
             'Random')
         end
         object se1: TSpinEdit
-          Left = 255
+          Left = 375
           Top = 34
           Width = 48
           Height = 22
@@ -2618,18 +2632,7 @@ object Conf: TConf
           Value = 100
         end
       end
-      object Button1: TButton
-        Left = 360
-        Top = 624
-        Width = 209
-        Height = 25
-        Hint = 'Make_Log'
-        Caption = 'Find All components in log.txt file'
-        TabOrder = 3
-        Visible = False
-        OnClick = confEditor_Config_Set
-      end
-      object grp32: TGroupBox
+      object grp98: TGroupBox
         Left = 16
         Top = 200
         Width = 121
@@ -2641,7 +2644,21 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 5
+        object L_FoundJoy1: TLabel
+          Left = 8
+          Top = 32
+          Width = 37
+          Height = 13
+          Caption = 'Label1'
+        end
+        object L_Joy1Id: TLabel
+          Left = 8
+          Top = 80
+          Width = 37
+          Height = 13
+          Caption = 'Label1'
+        end
         object L_Joy1Buttons: TLabel
           Left = 8
           Top = 96
@@ -2659,20 +2676,6 @@ object Conf: TConf
         object L_Joy1POV: TLabel
           Left = 8
           Top = 128
-          Width = 37
-          Height = 13
-          Caption = 'Label1'
-        end
-        object L_FoundJoy1: TLabel
-          Left = 8
-          Top = 32
-          Width = 37
-          Height = 13
-          Caption = 'Label1'
-        end
-        object L_Joy1Id: TLabel
-          Left = 8
-          Top = 80
           Width = 37
           Height = 13
           Caption = 'Label1'
@@ -2945,7 +2948,7 @@ object Conf: TConf
           DrawOverBorder = False
         end
       end
-      object grp33: TGroupBox
+      object grp101: TGroupBox
         Left = 168
         Top = 200
         Width = 121
@@ -2957,7 +2960,14 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 6
+        object L_FoundJoy2: TLabel
+          Left = 8
+          Top = 32
+          Width = 37
+          Height = 13
+          Caption = 'Label1'
+        end
         object L_Joy2Id: TLabel
           Left = 8
           Top = 80
@@ -2982,13 +2992,6 @@ object Conf: TConf
         object L_Joy2POV: TLabel
           Left = 8
           Top = 128
-          Width = 37
-          Height = 13
-          Caption = 'Label1'
-        end
-        object L_FoundJoy2: TLabel
-          Left = 8
-          Top = 32
           Width = 37
           Height = 13
           Caption = 'Label1'
@@ -3258,26 +3261,7 @@ object Conf: TConf
           SkinData.SkinSection = 'BUTTON'
         end
       end
-      object sButton26: TsButton
-        Left = 140
-        Top = 268
-        Width = 24
-        Height = 24
-        Hint = 'Refresh_Joystics'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 6
-        OnClick = confEditor_Config_Set
-        SkinData.SkinSection = 'BUTTON'
-        Images = InBitBtn_Imagelist
-        ImageAlignment = iaCenter
-        ImageIndex = 37
-      end
-      object grp34: TGroupBox
+      object grp103: TGroupBox
         Left = 296
         Top = 200
         Width = 425
@@ -3291,430 +3275,24 @@ object Conf: TConf
         ParentFont = False
         TabOrder = 7
         Visible = False
-        object JvgCheckBox1: TJvgCheckBox
-          Left = 120
-          Top = 16
-          Width = 70
-          Height = 17
-          Caption = 'Button 1'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox2: TJvgCheckBox
-          Left = 120
-          Top = 32
-          Width = 70
-          Height = 17
-          Caption = 'Button 2'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox3: TJvgCheckBox
-          Left = 120
+        object JvLED2: TJvLED
+          Left = 40
           Top = 48
-          Width = 70
-          Height = 17
-          Caption = 'Button 3'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
+          Status = False
         end
-        object JvgCheckBox4: TJvgCheckBox
-          Left = 120
-          Top = 64
-          Width = 70
-          Height = 17
-          Caption = 'Button 4'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox5: TJvgCheckBox
-          Left = 120
-          Top = 80
-          Width = 70
-          Height = 17
-          Caption = 'Button 5'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox6: TJvgCheckBox
-          Left = 120
-          Top = 96
-          Width = 70
-          Height = 17
-          Caption = 'Button 6'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox7: TJvgCheckBox
-          Left = 120
-          Top = 112
-          Width = 70
-          Height = 17
-          Caption = 'Button 7'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox8: TJvgCheckBox
-          Left = 120
-          Top = 128
-          Width = 70
-          Height = 17
-          Caption = 'Button 8'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox9: TJvgCheckBox
-          Left = 192
-          Top = 16
-          Width = 70
-          Height = 17
-          Caption = 'Button 9'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox10: TJvgCheckBox
-          Left = 192
-          Top = 32
-          Width = 70
-          Height = 17
-          Caption = 'Button 10'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox11: TJvgCheckBox
-          Left = 192
-          Top = 48
-          Width = 70
-          Height = 17
-          Caption = 'Button 11'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox12: TJvgCheckBox
-          Left = 192
-          Top = 64
-          Width = 70
-          Height = 17
-          Caption = 'Button 12'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox13: TJvgCheckBox
-          Left = 192
-          Top = 80
-          Width = 70
-          Height = 17
-          Caption = 'Button 13'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox14: TJvgCheckBox
-          Left = 192
-          Top = 96
-          Width = 70
-          Height = 17
-          Caption = 'Button 14'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox15: TJvgCheckBox
-          Left = 192
-          Top = 112
-          Width = 70
-          Height = 17
-          Caption = 'Button 15'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox16: TJvgCheckBox
-          Left = 192
-          Top = 128
-          Width = 70
-          Height = 17
-          Caption = 'Button 16'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox17: TJvgCheckBox
-          Left = 264
-          Top = 16
-          Width = 70
-          Height = 17
-          Caption = 'Button 17'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox18: TJvgCheckBox
-          Left = 264
-          Top = 32
-          Width = 70
-          Height = 17
-          Caption = 'Button 18'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox19: TJvgCheckBox
-          Left = 264
-          Top = 48
-          Width = 70
-          Height = 17
-          Caption = 'Button 19'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox20: TJvgCheckBox
-          Left = 264
-          Top = 64
-          Width = 70
-          Height = 17
-          Caption = 'Button 20'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox21: TJvgCheckBox
-          Left = 264
-          Top = 80
-          Width = 70
-          Height = 17
-          Caption = 'Button 21'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox22: TJvgCheckBox
-          Left = 264
-          Top = 96
-          Width = 70
-          Height = 17
-          Caption = 'Button 22'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox23: TJvgCheckBox
-          Left = 264
-          Top = 112
-          Width = 70
-          Height = 17
-          Caption = 'Button 23'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox24: TJvgCheckBox
-          Left = 264
-          Top = 128
-          Width = 70
-          Height = 17
-          Caption = 'Button 24'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox25: TJvgCheckBox
-          Left = 336
-          Top = 16
-          Width = 70
-          Height = 17
-          Caption = 'Button 25'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox26: TJvgCheckBox
-          Left = 336
-          Top = 32
-          Width = 70
-          Height = 17
-          Caption = 'Button 26'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox27: TJvgCheckBox
-          Left = 336
-          Top = 48
-          Width = 70
-          Height = 17
-          Caption = 'Button 27'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox28: TJvgCheckBox
-          Left = 336
-          Top = 64
-          Width = 70
-          Height = 17
-          Caption = 'Button 28'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox29: TJvgCheckBox
-          Left = 336
-          Top = 80
-          Width = 70
-          Height = 17
-          Caption = 'Button 29'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox30: TJvgCheckBox
-          Left = 336
-          Top = 96
-          Width = 70
-          Height = 17
-          Caption = 'Button 30'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox31: TJvgCheckBox
-          Left = 336
-          Top = 112
-          Width = 70
-          Height = 17
-          Caption = 'Button 31'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
-        end
-        object JvgCheckBox32: TJvgCheckBox
-          Left = 336
-          Top = 128
-          Width = 70
-          Height = 17
-          Caption = 'Button 32'
-          GlyphShift.X = 0
-          GlyphShift.Y = 0
-          Colors.Shadow = 10986404
-          Options = [fcoIgnoreMouse, fcoFastDraw]
-          Gradient.Active = False
-          Gradient.Orientation = fgdHorizontal
+        object JvLED5: TJvLED
+          Left = 16
+          Top = 72
+          Status = False
         end
         object JvLED1: TJvLED
           Left = 40
           Top = 72
           Interval = 200
         end
-        object JvLED2: TJvLED
-          Left = 40
-          Top = 48
+        object JvLED4: TJvLED
+          Left = 64
+          Top = 72
           Status = False
         end
         object JvLED3: TJvLED
@@ -3722,15 +3300,429 @@ object Conf: TConf
           Top = 96
           Status = False
         end
-        object JvLED4: TJvLED
-          Left = 64
-          Top = 72
-          Status = False
-        end
-        object JvLED5: TJvLED
-          Left = 16
-          Top = 72
-          Status = False
+        object grp104: TGroupBox
+          Left = 136
+          Top = 8
+          Width = 249
+          Height = 137
+          Caption = 'Buttons'
+          TabOrder = 0
+          object JvLED6: TJvLED
+            Left = 8
+            Top = 24
+            Interval = 200
+            Status = False
+          end
+          object JvLED7: TJvLED
+            Left = 8
+            Top = 40
+            Interval = 200
+            Status = False
+          end
+          object JvLED8: TJvLED
+            Left = 8
+            Top = 56
+            Interval = 200
+            Status = False
+          end
+          object JvLED9: TJvLED
+            Left = 8
+            Top = 72
+            Interval = 200
+            Status = False
+          end
+          object JvLED10: TJvLED
+            Left = 8
+            Top = 88
+            Interval = 200
+            Status = False
+          end
+          object JvLED11: TJvLED
+            Left = 48
+            Top = 40
+            Interval = 200
+            Status = False
+          end
+          object JvLED12: TJvLED
+            Left = 8
+            Top = 104
+            Interval = 200
+            Status = False
+          end
+          object JvLED13: TJvLED
+            Left = 48
+            Top = 24
+            Interval = 200
+            Status = False
+          end
+          object JvLED14: TJvLED
+            Left = 48
+            Top = 56
+            Interval = 200
+            Status = False
+          end
+          object JvLED15: TJvLED
+            Left = 48
+            Top = 72
+            Interval = 200
+            Status = False
+          end
+          object JvLED16: TJvLED
+            Left = 48
+            Top = 88
+            Interval = 200
+            Status = False
+          end
+          object JvLED17: TJvLED
+            Left = 48
+            Top = 104
+            Interval = 200
+            Status = False
+          end
+          object JvLED18: TJvLED
+            Left = 88
+            Top = 24
+            Interval = 200
+            Status = False
+          end
+          object JvLED19: TJvLED
+            Left = 88
+            Top = 40
+            Interval = 200
+            Status = False
+          end
+          object JvLED20: TJvLED
+            Left = 88
+            Top = 56
+            Interval = 200
+            Status = False
+          end
+          object JvLED21: TJvLED
+            Left = 88
+            Top = 72
+            Interval = 200
+            Status = False
+          end
+          object JvLED22: TJvLED
+            Left = 88
+            Top = 88
+            Interval = 200
+            Status = False
+          end
+          object JvLED23: TJvLED
+            Left = 88
+            Top = 104
+            Interval = 200
+            Status = False
+          end
+          object JvLED24: TJvLED
+            Left = 128
+            Top = 24
+            Interval = 200
+            Status = False
+          end
+          object JvLED25: TJvLED
+            Left = 128
+            Top = 40
+            Interval = 200
+            Status = False
+          end
+          object JvLED26: TJvLED
+            Left = 128
+            Top = 56
+            Interval = 200
+            Status = False
+          end
+          object JvLED27: TJvLED
+            Left = 128
+            Top = 72
+            Interval = 200
+            Status = False
+          end
+          object JvLED28: TJvLED
+            Left = 128
+            Top = 88
+            Interval = 200
+            Status = False
+          end
+          object JvLED29: TJvLED
+            Left = 128
+            Top = 104
+            Interval = 200
+            Status = False
+          end
+          object JvLED30: TJvLED
+            Left = 168
+            Top = 24
+            Interval = 200
+            Status = False
+          end
+          object JvLED31: TJvLED
+            Left = 168
+            Top = 40
+            Interval = 200
+            Status = False
+          end
+          object JvLED32: TJvLED
+            Left = 168
+            Top = 56
+            Interval = 200
+            Status = False
+          end
+          object JvLED33: TJvLED
+            Left = 168
+            Top = 72
+            Interval = 200
+            Status = False
+          end
+          object JvLED34: TJvLED
+            Left = 168
+            Top = 88
+            Interval = 200
+            Status = False
+          end
+          object JvLED35: TJvLED
+            Left = 168
+            Top = 104
+            Interval = 200
+            Status = False
+          end
+          object JvLED36: TJvLED
+            Left = 208
+            Top = 24
+            Interval = 200
+            Status = False
+          end
+          object JvLED37: TJvLED
+            Left = 208
+            Top = 40
+            Interval = 200
+            Status = False
+          end
+          object lbl1: TLabel
+            Left = 29
+            Top = 26
+            Width = 7
+            Height = 13
+            Caption = '1'
+          end
+          object lbl31: TLabel
+            Left = 29
+            Top = 42
+            Width = 7
+            Height = 13
+            Caption = '2'
+          end
+          object lbl2: TLabel
+            Left = 29
+            Top = 58
+            Width = 7
+            Height = 13
+            Caption = '3'
+          end
+          object lbl3: TLabel
+            Left = 29
+            Top = 74
+            Width = 7
+            Height = 13
+            Caption = '4'
+          end
+          object lbl4: TLabel
+            Left = 29
+            Top = 90
+            Width = 7
+            Height = 13
+            Caption = '5'
+          end
+          object lbl5: TLabel
+            Left = 29
+            Top = 106
+            Width = 7
+            Height = 13
+            Caption = '6'
+          end
+          object lbl6: TLabel
+            Left = 69
+            Top = 26
+            Width = 7
+            Height = 13
+            Caption = '7'
+          end
+          object lbl7: TLabel
+            Left = 69
+            Top = 42
+            Width = 7
+            Height = 13
+            Caption = '8'
+          end
+          object lbl8: TLabel
+            Left = 69
+            Top = 58
+            Width = 7
+            Height = 13
+            Caption = '9'
+          end
+          object lbl9: TLabel
+            Left = 69
+            Top = 74
+            Width = 14
+            Height = 13
+            Caption = '10'
+          end
+          object lbl10: TLabel
+            Left = 69
+            Top = 90
+            Width = 14
+            Height = 13
+            Caption = '11'
+          end
+          object lbl11: TLabel
+            Left = 69
+            Top = 106
+            Width = 14
+            Height = 13
+            Caption = '12'
+          end
+          object lbl12: TLabel
+            Left = 109
+            Top = 26
+            Width = 14
+            Height = 13
+            Caption = '13'
+          end
+          object lbl13: TLabel
+            Left = 109
+            Top = 42
+            Width = 14
+            Height = 13
+            Caption = '14'
+          end
+          object lbl14: TLabel
+            Left = 109
+            Top = 58
+            Width = 14
+            Height = 13
+            Caption = '15'
+          end
+          object lbl15: TLabel
+            Left = 109
+            Top = 74
+            Width = 14
+            Height = 13
+            Caption = '16'
+          end
+          object lbl16: TLabel
+            Left = 109
+            Top = 90
+            Width = 14
+            Height = 13
+            Caption = '17'
+          end
+          object lbl17: TLabel
+            Left = 109
+            Top = 106
+            Width = 14
+            Height = 13
+            Caption = '18'
+          end
+          object lbl18: TLabel
+            Left = 149
+            Top = 26
+            Width = 14
+            Height = 13
+            Caption = '19'
+          end
+          object lbl19: TLabel
+            Left = 149
+            Top = 42
+            Width = 14
+            Height = 13
+            Caption = '20'
+          end
+          object lbl32: TLabel
+            Left = 149
+            Top = 58
+            Width = 14
+            Height = 13
+            Caption = '21'
+          end
+          object lbl20: TLabel
+            Left = 149
+            Top = 74
+            Width = 14
+            Height = 13
+            Caption = '22'
+          end
+          object lbl21: TLabel
+            Left = 149
+            Top = 90
+            Width = 14
+            Height = 13
+            Caption = '23'
+          end
+          object lbl22: TLabel
+            Left = 149
+            Top = 106
+            Width = 14
+            Height = 13
+            Caption = '24'
+          end
+          object lbl23: TLabel
+            Left = 189
+            Top = 26
+            Width = 14
+            Height = 13
+            Caption = '25'
+          end
+          object lbl24: TLabel
+            Left = 189
+            Top = 42
+            Width = 14
+            Height = 13
+            Caption = '26'
+          end
+          object lbl25: TLabel
+            Left = 189
+            Top = 58
+            Width = 14
+            Height = 13
+            Caption = '27'
+          end
+          object lbl26: TLabel
+            Left = 189
+            Top = 74
+            Width = 14
+            Height = 13
+            Caption = '28'
+          end
+          object lbl27: TLabel
+            Left = 189
+            Top = 90
+            Width = 14
+            Height = 13
+            Caption = '29'
+          end
+          object lbl28: TLabel
+            Left = 189
+            Top = 106
+            Width = 14
+            Height = 13
+            Caption = '30'
+          end
+          object lbl29: TLabel
+            Left = 229
+            Top = 26
+            Width = 14
+            Height = 13
+            Caption = '31'
+          end
+          object lbl30: TLabel
+            Left = 229
+            Top = 42
+            Width = 14
+            Height = 13
+            Caption = '32'
+          end
         end
       end
     end
@@ -3768,9 +3760,9 @@ object Conf: TConf
       object sLabel112: TsLabel
         Left = 8
         Top = 272
-        Width = 57
+        Width = 75
         Height = 13
-        Caption = 'sLabel112'
+        Caption = 'Please Wait...'
         ParentFont = False
         Visible = False
         Font.Charset = DEFAULT_CHARSET
@@ -3779,10 +3771,169 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
       end
-      object grp95: TGroupBox
-        Left = 257
-        Top = 85
-        Width = 295
+      object sButton22: TsButton
+        Left = 567
+        Top = 352
+        Width = 156
+        Height = 26
+        Hint = 'Mame_save_global_button'
+        Caption = 'Default Mame Settings'
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+        WordWrap = False
+        OnClick = Mame_GlobalOrTopicSave
+        SkinData.CustomColor = True
+        SkinData.CustomFont = True
+        SkinData.SkinSection = 'BUTTON'
+        ImageAlignment = iaCenter
+        Reflected = True
+      end
+      object sEdit64: TsEdit
+        Left = 15
+        Top = 50
+        Width = 503
+        Height = 21
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 1
+        SkinData.SkinSection = 'EDIT'
+        BoundLabel.Active = True
+        BoundLabel.Caption = 'Path to Mame execution file'
+        BoundLabel.Indent = 0
+        BoundLabel.Font.Charset = DEFAULT_CHARSET
+        BoundLabel.Font.Color = clWindowText
+        BoundLabel.Font.Height = -11
+        BoundLabel.Font.Name = 'Tahoma'
+        BoundLabel.Font.Style = [fsBold]
+        BoundLabel.Layout = sclTopLeft
+        BoundLabel.MaxWidth = 0
+        BoundLabel.UseSkinColor = True
+      end
+      object sBitBtn35: TsBitBtn
+        Left = 524
+        Top = 50
+        Width = 25
+        Height = 21
+        Hint = 'Find_Mame'
+        TabOrder = 2
+        OnClick = Mame_ManageDirectories
+        SkinData.SkinSection = 'BUTTON'
+        ImageIndex = 15
+        Images = InBitBtn_Imagelist
+      end
+      object sCheckListBox1: TsCheckListBox
+        Left = 15
+        Top = 99
+        Width = 197
+        Height = 103
+        Hint = 'Show_mame_builds'
+        Style = lbOwnerDrawFixed
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BorderStyle = bsSingle
+        Enabled = False
+        ExtendedSelect = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ItemHeight = 16
+        ParentFont = False
+        TabOrder = 3
+        OnDrawItem = sCheckListBox1DrawItem
+        BoundLabel.Indent = 0
+        BoundLabel.Font.Charset = DEFAULT_CHARSET
+        BoundLabel.Font.Color = clWindowText
+        BoundLabel.Font.Height = -11
+        BoundLabel.Font.Name = 'MS Sans Serif'
+        BoundLabel.Font.Style = [fsBold]
+        BoundLabel.Layout = sclTopCenter
+        BoundLabel.MaxWidth = 0
+        BoundLabel.UseSkinColor = True
+        SkinData.SkinSection = 'EDIT'
+      end
+      object sBitBtn36: TsBitBtn
+        Left = 215
+        Top = 99
+        Width = 25
+        Height = 21
+        Hint = 'Select_mame_button_up'
+        TabOrder = 4
+        OnClick = Mame_ManageDirectories
+        SkinData.SkinSection = 'BUTTON'
+        ImageIndex = 31
+        Images = InBitBtn_Imagelist
+      end
+      object sBitBtn37: TsBitBtn
+        Left = 215
+        Top = 181
+        Width = 25
+        Height = 21
+        Hint = 'Select_mame_button_down'
+        TabOrder = 5
+        OnClick = Mame_ManageDirectories
+        SkinData.SkinSection = 'BUTTON'
+        ImageIndex = 28
+        Images = InBitBtn_Imagelist
+      end
+      object sCheckBox127: TsCheckBox
+        Left = 15
+        Top = 207
+        Width = 188
+        Height = 20
+        Hint = 'Show Setuped Mame'
+        Caption = 'Show Only Setup Mame Builds'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 6
+        OnClick = Mame_ManageDirectories
+        SkinData.SkinSection = 'CHECKBOX'
+        ImgChecked = 0
+        ImgUnchecked = 0
+      end
+      object sButton4: TsButton
+        Left = 567
+        Top = 318
+        Width = 156
+        Height = 26
+        Hint = 'Mame_save_topic_dirs_button'
+        Caption = 'Default Topic Settings'
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 7
+        WordWrap = False
+        OnClick = Mame_GlobalOrTopicSave
+        SkinData.CustomColor = True
+        SkinData.CustomFont = True
+        SkinData.SkinSection = 'BUTTON'
+        ImageAlignment = iaCenter
+        Reflected = True
+      end
+      object grp31: TGroupBox
+        Left = 248
+        Top = 96
+        Width = 296
         Height = 369
         Caption = 'Directories'
         Font.Charset = DEFAULT_CHARSET
@@ -3791,7 +3942,7 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 0
+        TabOrder = 8
         object sLabel46: TsLabel
           Left = 142
           Top = 347
@@ -3833,29 +3984,17 @@ object Conf: TConf
             'Choose or Add directory...'
             'add...')
         end
-        object sBitBtn17: TsBitBtn
-          Left = 12
-          Top = 343
-          Width = 35
+        object sBitBtn42: TsBitBtn
+          Left = 7
+          Top = 21
+          Width = 25
           Height = 21
-          Hint = 'Left_page_of_mame_dirs'
-          Enabled = False
+          Hint = 'Show_results_from_rom_paths'
           TabOrder = 1
+          Visible = False
           OnClick = Mame_ManageDirectories
           SkinData.SkinSection = 'BUTTON'
-          ImageIndex = 29
-          Images = InBitBtn_Imagelist
-        end
-        object sBitBtn18: TsBitBtn
-          Left = 248
-          Top = 343
-          Width = 35
-          Height = 21
-          Hint = 'Right_page_of_mame_dirs'
-          TabOrder = 2
-          OnClick = Mame_ManageDirectories
-          SkinData.SkinSection = 'BUTTON'
-          ImageIndex = 30
+          ImageIndex = 20
           Images = InBitBtn_Imagelist
         end
         object panel_mame_page1: TsPanel
@@ -3864,7 +4003,7 @@ object Conf: TConf
           Width = 279
           Height = 285
           BevelOuter = bvNone
-          TabOrder = 3
+          TabOrder = 2
           SkinData.SkinSection = 'PANEL'
           object sEdit2: TsEdit
             Left = 6
@@ -4176,7 +4315,8 @@ object Conf: TConf
           Top = 55
           Width = 279
           Height = 285
-          TabOrder = 4
+          BevelOuter = bvNone
+          TabOrder = 3
           SkinData.SkinSection = 'PANEL'
           object sEdit11: TsEdit
             Left = 6
@@ -4360,52 +4500,13 @@ object Conf: TConf
             BoundLabel.MaxWidth = 0
             BoundLabel.UseSkinColor = True
           end
-          object sEdit63: TsEdit
-            Left = 6
-            Top = 259
-            Width = 240
-            Height = 21
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ParentFont = False
-            ReadOnly = True
-            TabOrder = 7
-            Visible = False
-            SkinData.SkinSection = 'EDIT'
-            BoundLabel.Active = True
-            BoundLabel.Caption = 'State'
-            BoundLabel.Indent = 0
-            BoundLabel.Font.Charset = DEFAULT_CHARSET
-            BoundLabel.Font.Color = clWindowText
-            BoundLabel.Font.Height = -11
-            BoundLabel.Font.Name = 'Tahoma'
-            BoundLabel.Font.Style = [fsBold]
-            BoundLabel.Layout = sclTopLeft
-            BoundLabel.MaxWidth = 0
-            BoundLabel.UseSkinColor = True
-          end
           object sBitBtn34: TsBitBtn
             Left = 248
             Top = 224
             Width = 25
             Height = 21
             Hint = 'Mame_input'
-            TabOrder = 8
-            OnClick = Mame_ManageDirectories
-            SkinData.SkinSection = 'BUTTON'
-            ImageIndex = 15
-            Images = InBitBtn_Imagelist
-          end
-          object sBitBtn33: TsBitBtn
-            Left = 248
-            Top = 255
-            Width = 25
-            Height = 21
-            Hint = 'Mame_state'
-            TabOrder = 9
+            TabOrder = 7
             OnClick = Mame_ManageDirectories
             SkinData.SkinSection = 'BUTTON'
             ImageIndex = 15
@@ -4417,7 +4518,7 @@ object Conf: TConf
             Width = 25
             Height = 21
             Hint = 'Mame_artwork'
-            TabOrder = 10
+            TabOrder = 8
             OnClick = Mame_ManageDirectories
             SkinData.SkinSection = 'BUTTON'
             ImageIndex = 15
@@ -4429,7 +4530,7 @@ object Conf: TConf
             Width = 25
             Height = 21
             Hint = 'Mame_crosshair'
-            TabOrder = 11
+            TabOrder = 9
             OnClick = Mame_ManageDirectories
             SkinData.SkinSection = 'BUTTON'
             ImageIndex = 15
@@ -4441,7 +4542,7 @@ object Conf: TConf
             Width = 25
             Height = 21
             Hint = 'Mame_bosses'
-            TabOrder = 12
+            TabOrder = 10
             OnClick = Mame_ManageDirectories
             SkinData.SkinSection = 'BUTTON'
             ImageIndex = 15
@@ -4453,7 +4554,7 @@ object Conf: TConf
             Width = 25
             Height = 21
             Hint = 'Mame_scores'
-            TabOrder = 13
+            TabOrder = 11
             OnClick = Mame_ManageDirectories
             SkinData.SkinSection = 'BUTTON'
             ImageIndex = 15
@@ -4465,7 +4566,7 @@ object Conf: TConf
             Width = 25
             Height = 21
             Hint = 'Mame_select'
-            TabOrder = 14
+            TabOrder = 12
             OnClick = Mame_ManageDirectories
             SkinData.SkinSection = 'BUTTON'
             ImageIndex = 15
@@ -4477,185 +4578,38 @@ object Conf: TConf
             Width = 25
             Height = 21
             Hint = 'Mame_titles'
-            TabOrder = 15
+            TabOrder = 13
             OnClick = Mame_ManageDirectories
             SkinData.SkinSection = 'BUTTON'
             ImageIndex = 15
             Images = InBitBtn_Imagelist
           end
         end
-        object sBitBtn42: TsBitBtn
-          Left = 7
-          Top = 21
-          Width = 25
+        object sBitBtn18: TsBitBtn
+          Left = 248
+          Top = 343
+          Width = 35
           Height = 21
-          Hint = 'Show_results_from_rom_paths'
-          TabOrder = 5
-          Visible = False
+          Hint = 'Right_page_of_mame_dirs'
+          TabOrder = 4
           OnClick = Mame_ManageDirectories
           SkinData.SkinSection = 'BUTTON'
-          ImageIndex = 20
+          ImageIndex = 30
           Images = InBitBtn_Imagelist
         end
-      end
-      object sButton22: TsButton
-        Left = 567
-        Top = 352
-        Width = 156
-        Height = 26
-        Hint = 'Mame_save_global_button'
-        Caption = 'Default Mame Settings'
-        Enabled = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 1
-        WordWrap = False
-        OnClick = Mame_GlobalOrTopicSave
-        SkinData.CustomColor = True
-        SkinData.CustomFont = True
-        SkinData.SkinSection = 'BUTTON'
-        ImageAlignment = iaCenter
-        Reflected = True
-      end
-      object sEdit64: TsEdit
-        Left = 15
-        Top = 50
-        Width = 503
-        Height = 21
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        ReadOnly = True
-        TabOrder = 2
-        SkinData.SkinSection = 'EDIT'
-        BoundLabel.Active = True
-        BoundLabel.Caption = 'Path to Mame execution file'
-        BoundLabel.Indent = 0
-        BoundLabel.Font.Charset = DEFAULT_CHARSET
-        BoundLabel.Font.Color = clWindowText
-        BoundLabel.Font.Height = -11
-        BoundLabel.Font.Name = 'Tahoma'
-        BoundLabel.Font.Style = [fsBold]
-        BoundLabel.Layout = sclTopLeft
-        BoundLabel.MaxWidth = 0
-        BoundLabel.UseSkinColor = True
-      end
-      object sBitBtn35: TsBitBtn
-        Left = 524
-        Top = 50
-        Width = 25
-        Height = 21
-        Hint = 'Find_Mame'
-        TabOrder = 3
-        OnClick = Mame_ManageDirectories
-        SkinData.SkinSection = 'BUTTON'
-        ImageIndex = 15
-        Images = InBitBtn_Imagelist
-      end
-      object sCheckListBox1: TsCheckListBox
-        Left = 15
-        Top = 99
-        Width = 197
-        Height = 103
-        Hint = 'Show_mame_builds'
-        Style = lbOwnerDrawFixed
-        BevelInner = bvNone
-        BevelOuter = bvNone
-        BorderStyle = bsSingle
-        Enabled = False
-        ExtendedSelect = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ItemHeight = 16
-        ParentFont = False
-        TabOrder = 4
-        OnDrawItem = sCheckListBox1DrawItem
-        BoundLabel.Indent = 0
-        BoundLabel.Font.Charset = DEFAULT_CHARSET
-        BoundLabel.Font.Color = clWindowText
-        BoundLabel.Font.Height = -11
-        BoundLabel.Font.Name = 'MS Sans Serif'
-        BoundLabel.Font.Style = [fsBold]
-        BoundLabel.Layout = sclTopCenter
-        BoundLabel.MaxWidth = 0
-        BoundLabel.UseSkinColor = True
-        SkinData.SkinSection = 'EDIT'
-      end
-      object sBitBtn36: TsBitBtn
-        Left = 215
-        Top = 99
-        Width = 25
-        Height = 21
-        Hint = 'Select_mame_button_up'
-        TabOrder = 5
-        OnClick = Mame_ManageDirectories
-        SkinData.SkinSection = 'BUTTON'
-        ImageIndex = 31
-        Images = InBitBtn_Imagelist
-      end
-      object sBitBtn37: TsBitBtn
-        Left = 215
-        Top = 181
-        Width = 25
-        Height = 21
-        Hint = 'Select_mame_button_down'
-        TabOrder = 6
-        OnClick = Mame_ManageDirectories
-        SkinData.SkinSection = 'BUTTON'
-        ImageIndex = 28
-        Images = InBitBtn_Imagelist
-      end
-      object sCheckBox127: TsCheckBox
-        Left = 15
-        Top = 207
-        Width = 188
-        Height = 20
-        Hint = 'Show Setuped Mame'
-        Caption = 'Show Only Setup Mame Builds'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 7
-        OnClick = Mame_ManageDirectories
-        SkinData.SkinSection = 'CHECKBOX'
-        ImgChecked = 0
-        ImgUnchecked = 0
-      end
-      object sButton4: TsButton
-        Left = 567
-        Top = 318
-        Width = 156
-        Height = 26
-        Hint = 'Mame_save_topic_dirs_button'
-        Caption = 'Default Topic Settings'
-        Enabled = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 8
-        WordWrap = False
-        OnClick = Mame_GlobalOrTopicSave
-        SkinData.CustomColor = True
-        SkinData.CustomFont = True
-        SkinData.SkinSection = 'BUTTON'
-        ImageAlignment = iaCenter
-        Reflected = True
+        object sBitBtn17: TsBitBtn
+          Left = 12
+          Top = 343
+          Width = 35
+          Height = 21
+          Hint = 'Left_page_of_mame_dirs'
+          Enabled = False
+          TabOrder = 5
+          OnClick = Mame_ManageDirectories
+          SkinData.SkinSection = 'BUTTON'
+          ImageIndex = 29
+          Images = InBitBtn_Imagelist
+        end
       end
     end
     object Pem_mame_graphics: TsPanel
@@ -4678,7 +4632,7 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 0
         SkinData.SkinSection = 'CHECKBOX'
         ImgChecked = 0
         ImgUnchecked = 0
@@ -4695,7 +4649,7 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 1
         SkinData.SkinSection = 'CHECKBOX'
         ImgChecked = 0
         ImgUnchecked = 0
@@ -4712,7 +4666,7 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 2
         SkinData.SkinSection = 'CHECKBOX'
         ImgChecked = 0
         ImgUnchecked = 0
@@ -4729,17 +4683,141 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 6
+        TabOrder = 3
         SkinData.SkinSection = 'CHECKBOX'
         ImgChecked = 0
         ImgUnchecked = 0
       end
-      object grp97: TGroupBox
-        Left = 209
+      object sButton1: TsButton
+        Left = 567
+        Top = 352
+        Width = 156
+        Height = 26
+        Hint = 'Mame_save_global_button'
+        Caption = 'Default Mame Settings'
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 4
+        WordWrap = False
+        OnClick = Mame_GlobalOrTopicSave
+        SkinData.CustomColor = True
+        SkinData.CustomFont = True
+        SkinData.SkinSection = 'BUTTON'
+        ImageAlignment = iaCenter
+        Reflected = True
+      end
+      object sButton5: TsButton
+        Left = 567
+        Top = 318
+        Width = 156
+        Height = 26
+        Hint = 'Mame_save_topic_graphics_button'
+        Caption = 'Default Topic Settings'
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 5
+        WordWrap = False
+        OnClick = Mame_GlobalOrTopicSave
+        SkinData.CustomColor = True
+        SkinData.CustomFont = True
+        SkinData.SkinSection = 'BUTTON'
+        ImageAlignment = iaCenter
+        Reflected = True
+      end
+      object grp2: TGroupBox
+        Left = 3
         Top = 185
         Width = 196
-        Height = 145
-        Caption = 'Fullscreen'
+        Height = 103
+        Caption = 'Rotation'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 6
+        object sComboBox20: TsComboBox
+          Left = 5
+          Top = 17
+          Width = 186
+          Height = 21
+          Hint = 'Change_rotation'
+          Alignment = taLeftJustify
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = []
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+          SkinData.SkinSection = 'COMBOBOX'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ItemHeight = 15
+          ItemIndex = 0
+          ParentFont = False
+          TabOrder = 0
+          Text = 'Default'
+          OnChange = Mame_ManageGraphics
+          Items.Strings = (
+            'Default'
+            'Clockwise'
+            'Anti-Clockwise'
+            'None'
+            'Auto Clockwise'
+            'Auto Anti-Clockwise')
+        end
+        object sCheckBox41: TsCheckBox
+          Left = 3
+          Top = 53
+          Width = 141
+          Height = 20
+          Caption = 'Flip Screen Left-Right'
+          Color = clBtnFace
+          Ctl3D = False
+          ParentColor = False
+          ParentCtl3D = False
+          TabOrder = 1
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
+        end
+        object sCheckBox40: TsCheckBox
+          Left = 3
+          Top = 78
+          Width = 158
+          Height = 20
+          Caption = 'Flip Screen Upside-Down'
+          Color = clBtnFace
+          ParentColor = False
+          TabOrder = 2
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
+        end
+      end
+      object GroupBox1: TGroupBox
+        Left = 3
+        Top = 289
+        Width = 196
+        Height = 43
+        Caption = 'Pause Brightness'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -4747,9 +4825,9 @@ object Conf: TConf
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 7
-        object sLabel6: TsLabel
+        object sLabel3: TsLabel
           Left = 168
-          Top = 88
+          Top = 7
           Width = 24
           Height = 13
           Alignment = taRightJustify
@@ -4761,61 +4839,53 @@ object Conf: TConf
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
         end
-        object sLabel7: TsLabel
-          Left = 168
-          Top = 58
-          Width = 24
-          Height = 13
-          Alignment = taRightJustify
-          Caption = '1.00'
-          ParentFont = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-        end
-        object sLabel8: TsLabel
-          Left = 168
-          Top = 24
-          Width = 24
-          Height = 13
-          Alignment = taRightJustify
-          Caption = '1.00'
-          ParentFont = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-        end
-        object sLabel48: TsLabel
-          Left = 3
-          Top = 24
-          Width = 44
-          Height = 13
-          Caption = 'Gamma'
-        end
-        object sLabel49: TsLabel
-          Left = 3
-          Top = 58
-          Width = 60
-          Height = 13
-          Caption = 'Brightness'
-        end
-        object sLabel50: TsLabel
-          Left = 3
-          Top = 88
-          Width = 49
-          Height = 13
-          Caption = 'Contrast'
-        end
-        object sbar_mame_Fgamma: TsScrollBar
+        object sbar_mame_pausebrightness: TsScrollBar
           Left = 4
-          Top = 40
+          Top = 23
           Width = 186
           Height = 13
-          Hint = 'Change_fullscreen_gamma'
+          Hint = 'Change_pause_brightness'
+          Ctl3D = True
+          PageSize = 0
+          ParentCtl3D = False
+          TabOrder = 0
+          OnChange = Mame_ManageGraphics
+          SkinManager = SkinM
+        end
+      end
+      object grp3: TGroupBox
+        Left = 3
+        Top = 332
+        Width = 196
+        Height = 43
+        Caption = 'Gamma Correction'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 8
+        object sLabel4: TsLabel
+          Left = 168
+          Top = 7
+          Width = 24
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '1.00'
+          ParentFont = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+        end
+        object sbar_mame_gammacorrection: TsScrollBar
+          Left = 4
+          Top = 23
+          Width = 186
+          Height = 13
+          Hint = 'Change_gamma'
           Ctl3D = True
           Max = 300
           Min = 10
@@ -4826,51 +4896,202 @@ object Conf: TConf
           OnChange = Mame_ManageGraphics
           SkinManager = SkinM
         end
-        object sbar_mame_Fbrightness: TsScrollBar
+      end
+      object grp4: TGroupBox
+        Left = 3
+        Top = 375
+        Width = 196
+        Height = 43
+        Caption = 'Brightness Correction'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 9
+        object sLabel5: TsLabel
+          Left = 168
+          Top = 7
+          Width = 24
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '1.00'
+          ParentFont = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+        end
+        object sbar_mame_brightnesscorrection: TsScrollBar
           Left = 4
-          Top = 71
+          Top = 23
           Width = 186
           Height = 13
-          Hint = 'Change_fullscreen_brightness'
+          Hint = 'Change_brightness'
           Ctl3D = True
           Max = 200
           Min = 10
           PageSize = 0
           ParentCtl3D = False
           Position = 10
-          TabOrder = 1
+          TabOrder = 0
           OnChange = Mame_ManageGraphics
           SkinManager = SkinM
         end
-        object sbar_mame_Fcontrast: TsScrollBar
+      end
+      object grp5: TGroupBox
+        Left = 3
+        Top = 418
+        Width = 196
+        Height = 43
+        Caption = 'Contrast Correction'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 10
+        object sLabel2: TsLabel
+          Left = 168
+          Top = 7
+          Width = 24
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '1.00'
+          ParentFont = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+        end
+        object sbar_mame_contrastcorrection: TsScrollBar
           Left = 4
-          Top = 104
+          Top = 22
           Width = 186
           Height = 13
-          Hint = 'Change_fullscreen_contrast'
+          Hint = 'Change_contrast'
           Ctl3D = True
           Max = 200
           Min = 10
           PageSize = 0
           ParentCtl3D = False
           Position = 10
-          TabOrder = 2
+          TabOrder = 0
           OnChange = Mame_ManageGraphics
           SkinManager = SkinM
         end
-        object sCheckBox9: TsCheckBox
-          Left = 2
-          Top = 122
-          Width = 156
+      end
+      object grp6: TGroupBox
+        Left = 3
+        Top = 119
+        Width = 196
+        Height = 43
+        Caption = 'Gameplay Speed'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 11
+        object sLabel11: TsLabel
+          Left = 168
+          Top = 10
+          Width = 24
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '1.00'
+          ParentFont = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+        end
+        object sbar_mame_emulatrionspeed: TsScrollBar
+          Left = 4
+          Top = 24
+          Width = 186
+          Height = 13
+          Hint = 'Change_emulation_speed'
+          Max = 10000
+          Min = 1
+          PageSize = 0
+          Position = 10
+          TabOrder = 0
+          OnChange = Mame_ManageGraphics
+          SkinManager = SkinM
+        end
+      end
+      object grp32: TGroupBox
+        Left = 3
+        Top = 472
+        Width = 196
+        Height = 65
+        Caption = 'Frame Skipping'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 12
+        object sCheckBox15: TsCheckBox
+          Left = 138
+          Top = 8
+          Width = 47
           Height = 20
-          Caption = 'Switch Resolutions to fit'
-          TabOrder = 3
+          Caption = 'Auto'
+          TabOrder = 0
           SkinData.SkinSection = 'CHECKBOX'
           ImgChecked = 0
           ImgUnchecked = 0
         end
+        object sComboBox9: TsComboBox
+          Left = 5
+          Top = 32
+          Width = 186
+          Height = 21
+          Alignment = taLeftJustify
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = []
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+          SkinData.SkinSection = 'COMBOBOX'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ItemHeight = 15
+          ItemIndex = -1
+          ParentFont = False
+          TabOrder = 1
+          Text = 'Draw Every Frame'
+          Items.Strings = (
+            'Draw Every Frame'
+            'Skip 1 of 10 Frames'
+            'Skip 2 of 10 Frames'
+            'Skip 3 of 10 Frames'
+            'Skip 4 of 10 Frames'
+            'Skip 5 of 10 Frames'
+            'Skip 6 of 10 Frames'
+            'Skip 7 of 10 Frames'
+            'Skip 8 of 10 Frames'
+            'Skip 9 of 10 Frames'
+            'Skip 10 of 10 Frames')
+        end
       end
-      object grp98: TGroupBox
+      object grp33: TGroupBox
         Left = 209
         Top = 10
         Width = 196
@@ -4882,7 +5103,7 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 13
         object sComboBox2: TsComboBox
           Left = 5
           Top = 16
@@ -5003,7 +5224,336 @@ object Conf: TConf
           end
         end
       end
-      object grp101: TGroupBox
+      object grp34: TGroupBox
+        Left = 209
+        Top = 185
+        Width = 196
+        Height = 145
+        Caption = 'Fullscreen'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 14
+        object sLabel48: TsLabel
+          Left = 3
+          Top = 24
+          Width = 44
+          Height = 13
+          Caption = 'Gamma'
+        end
+        object sLabel8: TsLabel
+          Left = 168
+          Top = 24
+          Width = 24
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '1.00'
+          ParentFont = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+        end
+        object sLabel7: TsLabel
+          Left = 168
+          Top = 58
+          Width = 24
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '1.00'
+          ParentFont = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+        end
+        object sLabel49: TsLabel
+          Left = 3
+          Top = 58
+          Width = 60
+          Height = 13
+          Caption = 'Brightness'
+        end
+        object sLabel6: TsLabel
+          Left = 168
+          Top = 88
+          Width = 24
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '1.00'
+          ParentFont = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+        end
+        object sLabel50: TsLabel
+          Left = 3
+          Top = 88
+          Width = 49
+          Height = 13
+          Caption = 'Contrast'
+        end
+        object sbar_mame_Fgamma: TsScrollBar
+          Left = 4
+          Top = 40
+          Width = 186
+          Height = 13
+          Hint = 'Change_fullscreen_gamma'
+          Ctl3D = True
+          Max = 300
+          Min = 10
+          PageSize = 0
+          ParentCtl3D = False
+          Position = 10
+          TabOrder = 0
+          OnChange = Mame_ManageGraphics
+          SkinManager = SkinM
+        end
+        object sbar_mame_Fbrightness: TsScrollBar
+          Left = 4
+          Top = 71
+          Width = 186
+          Height = 13
+          Hint = 'Change_fullscreen_brightness'
+          Ctl3D = True
+          Max = 200
+          Min = 10
+          PageSize = 0
+          ParentCtl3D = False
+          Position = 10
+          TabOrder = 1
+          OnChange = Mame_ManageGraphics
+          SkinManager = SkinM
+        end
+        object sbar_mame_Fcontrast: TsScrollBar
+          Left = 4
+          Top = 104
+          Width = 186
+          Height = 13
+          Hint = 'Change_fullscreen_contrast'
+          Ctl3D = True
+          Max = 200
+          Min = 10
+          PageSize = 0
+          ParentCtl3D = False
+          Position = 10
+          TabOrder = 2
+          OnChange = Mame_ManageGraphics
+          SkinManager = SkinM
+        end
+        object sCheckBox9: TsCheckBox
+          Left = 2
+          Top = 122
+          Width = 156
+          Height = 20
+          Caption = 'Switch Resolutions to fit'
+          TabOrder = 3
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
+        end
+      end
+      object grp95: TGroupBox
+        Left = 209
+        Top = 334
+        Width = 196
+        Height = 279
+        Caption = 'Advanced'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 15
+        object sCheckBox11: TsCheckBox
+          Left = 3
+          Top = 18
+          Width = 118
+          Height = 20
+          Caption = 'Triple Buffering'
+          AutoSize = False
+          TabOrder = 0
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
+        end
+        object sCheckBox13: TsCheckBox
+          Left = 3
+          Top = 38
+          Width = 158
+          Height = 20
+          Caption = 'Wait For Vertical Sync'
+          AutoSize = False
+          TabOrder = 1
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
+        end
+        object sCheckBox12: TsCheckBox
+          Left = 3
+          Top = 58
+          Width = 174
+          Height = 20
+          Caption = 'Sync to monitor Refresh'
+          AutoSize = False
+          TabOrder = 2
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
+        end
+        object sCheckBox14: TsCheckBox
+          Left = 3
+          Top = 78
+          Width = 126
+          Height = 20
+          Caption = 'Refresh Speed'
+          AutoSize = False
+          TabOrder = 3
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
+        end
+        object grp7: TGroupBox
+          Left = 3
+          Top = 101
+          Width = 190
+          Height = 43
+          Caption = 'Seconds To Run'
+          TabOrder = 4
+          object sLabel12: TsLabel
+            Left = 169
+            Top = 7
+            Width = 7
+            Height = 13
+            Alignment = taRightJustify
+            Caption = '0'
+            ParentFont = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+          end
+          object sbar_mame_secondstorun: TsScrollBar
+            Left = 4
+            Top = 23
+            Width = 180
+            Height = 13
+            Hint = 'Change_seconds_to_run'
+            Max = 60
+            PageSize = 0
+            TabOrder = 0
+            OnChange = Mame_ManageGraphics
+            SkinManager = SkinM
+          end
+        end
+        object grp8: TGroupBox
+          Left = 3
+          Top = 144
+          Width = 190
+          Height = 43
+          Caption = 'Scale Screen'
+          TabOrder = 5
+          object sLabel1: TsLabel
+            Left = 169
+            Top = 7
+            Width = 7
+            Height = 13
+            Alignment = taRightJustify
+            Caption = '1'
+            ParentFont = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+          end
+          object sbar_mame_scalescreen: TsScrollBar
+            Left = 4
+            Top = 23
+            Width = 180
+            Height = 13
+            Hint = 'Change_scale_screen'
+            Ctl3D = True
+            Max = 10
+            Min = 1
+            PageSize = 0
+            ParentCtl3D = False
+            Position = 1
+            TabOrder = 0
+            OnChange = Mame_ManageGraphics
+            SkinManager = SkinM
+          end
+        end
+        object grp9: TGroupBox
+          Left = 3
+          Top = 191
+          Width = 190
+          Height = 72
+          Caption = 'Visual Effects'
+          TabOrder = 6
+          object sEdit1: TsEdit
+            Left = 5
+            Top = 20
+            Width = 180
+            Height = 21
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            ReadOnly = True
+            TabOrder = 0
+            Text = 'none'
+            SkinData.SkinSection = 'EDIT'
+            BoundLabel.Caption = 'Effect'
+            BoundLabel.Indent = 0
+            BoundLabel.Font.Charset = DEFAULT_CHARSET
+            BoundLabel.Font.Color = clWindowText
+            BoundLabel.Font.Height = -11
+            BoundLabel.Font.Name = 'MS Sans Serif'
+            BoundLabel.Font.Style = []
+            BoundLabel.Layout = sclLeft
+            BoundLabel.MaxWidth = 0
+            BoundLabel.UseSkinColor = True
+          end
+          object sBitBtn38: TsBitBtn
+            Left = 123
+            Top = 45
+            Width = 25
+            Height = 21
+            Hint = 'Choose_effect'
+            TabOrder = 1
+            OnClick = Mame_ManageGraphics
+            Style = bsNew
+            SkinData.SkinSection = 'BUTTON'
+            ImageIndex = 15
+            Images = InBitBtn_Imagelist
+          end
+          object sBitBtn39: TsBitBtn
+            Left = 154
+            Top = 44
+            Width = 25
+            Height = 21
+            Hint = 'Reset_effect'
+            TabOrder = 2
+            OnClick = Mame_ManageGraphics
+            SkinData.SkinSection = 'BUTTON'
+            ImageIndex = 10
+            Images = InBitBtn_Imagelist
+          end
+        end
+      end
+      object grp96: TGroupBox
         Left = 414
         Top = 69
         Width = 196
@@ -5015,7 +5565,7 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 0
+        TabOrder = 16
         object sComboBox4: TsComboBox
           Left = 5
           Top = 21
@@ -5192,596 +5742,6 @@ object Conf: TConf
             'coctail')
         end
       end
-      object grp103: TGroupBox
-        Left = 209
-        Top = 334
-        Width = 196
-        Height = 279
-        Caption = 'Advanced'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 8
-        object sCheckBox11: TsCheckBox
-          Left = 3
-          Top = 18
-          Width = 118
-          Height = 20
-          Caption = 'Triple Buffering'
-          AutoSize = False
-          TabOrder = 0
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
-        object sCheckBox12: TsCheckBox
-          Left = 3
-          Top = 58
-          Width = 174
-          Height = 20
-          Caption = 'Sync to monitor Refresh'
-          AutoSize = False
-          TabOrder = 1
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
-        object sCheckBox13: TsCheckBox
-          Left = 3
-          Top = 38
-          Width = 158
-          Height = 20
-          Caption = 'Wait For Vertical Sync'
-          AutoSize = False
-          TabOrder = 2
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
-        object sCheckBox14: TsCheckBox
-          Left = 3
-          Top = 78
-          Width = 126
-          Height = 20
-          Caption = 'Refresh Speed'
-          AutoSize = False
-          TabOrder = 3
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
-        object grp7: TGroupBox
-          Left = 3
-          Top = 101
-          Width = 190
-          Height = 43
-          Caption = 'Seconds To Run'
-          TabOrder = 4
-          object sLabel12: TsLabel
-            Left = 169
-            Top = 4
-            Width = 7
-            Height = 13
-            Alignment = taRightJustify
-            Caption = '0'
-            ParentFont = False
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-          end
-          object sbar_mame_secondstorun: TsScrollBar
-            Left = 4
-            Top = 20
-            Width = 180
-            Height = 13
-            Hint = 'Change_seconds_to_run'
-            Max = 60
-            PageSize = 0
-            TabOrder = 0
-            OnChange = Mame_ManageGraphics
-            SkinManager = SkinM
-          end
-        end
-        object grp8: TGroupBox
-          Left = 3
-          Top = 144
-          Width = 190
-          Height = 43
-          Caption = 'Scale Screen'
-          TabOrder = 5
-          object sLabel1: TsLabel
-            Left = 169
-            Top = 4
-            Width = 7
-            Height = 13
-            Alignment = taRightJustify
-            Caption = '1'
-            ParentFont = False
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-          end
-          object sbar_mame_scalescreen: TsScrollBar
-            Left = 4
-            Top = 20
-            Width = 180
-            Height = 13
-            Hint = 'Change_scale_screen'
-            Ctl3D = True
-            Max = 10
-            Min = 1
-            PageSize = 0
-            ParentCtl3D = False
-            Position = 1
-            TabOrder = 0
-            OnChange = Mame_ManageGraphics
-            SkinManager = SkinM
-          end
-        end
-        object grp9: TGroupBox
-          Left = 3
-          Top = 191
-          Width = 190
-          Height = 72
-          Caption = 'Visual Effects'
-          TabOrder = 6
-          object sEdit1: TsEdit
-            Left = 5
-            Top = 20
-            Width = 180
-            Height = 21
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ParentFont = False
-            ReadOnly = True
-            TabOrder = 0
-            Text = 'none'
-            SkinData.SkinSection = 'EDIT'
-            BoundLabel.Caption = 'Effect'
-            BoundLabel.Indent = 0
-            BoundLabel.Font.Charset = DEFAULT_CHARSET
-            BoundLabel.Font.Color = clWindowText
-            BoundLabel.Font.Height = -11
-            BoundLabel.Font.Name = 'MS Sans Serif'
-            BoundLabel.Font.Style = []
-            BoundLabel.Layout = sclLeft
-            BoundLabel.MaxWidth = 0
-            BoundLabel.UseSkinColor = True
-          end
-          object sBitBtn38: TsBitBtn
-            Left = 123
-            Top = 45
-            Width = 25
-            Height = 21
-            Hint = 'Choose_effect'
-            TabOrder = 1
-            OnClick = Mame_ManageGraphics
-            SkinData.SkinSection = 'BUTTON'
-            ImageIndex = 15
-            Images = InBitBtn_Imagelist
-          end
-          object sBitBtn39: TsBitBtn
-            Left = 154
-            Top = 44
-            Width = 25
-            Height = 21
-            Hint = 'Reset_effect'
-            TabOrder = 2
-            OnClick = Mame_ManageGraphics
-            SkinData.SkinSection = 'BUTTON'
-            ImageIndex = 10
-            Images = InBitBtn_Imagelist
-          end
-        end
-      end
-      object grp104: TGroupBox
-        Left = 3
-        Top = 472
-        Width = 196
-        Height = 65
-        Caption = 'Frame Skipping'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 9
-        object sCheckBox15: TsCheckBox
-          Left = 138
-          Top = 8
-          Width = 47
-          Height = 20
-          Caption = 'Auto'
-          TabOrder = 0
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
-        object sComboBox9: TsComboBox
-          Left = 5
-          Top = 32
-          Width = 186
-          Height = 21
-          Alignment = taLeftJustify
-          BoundLabel.Indent = 0
-          BoundLabel.Font.Charset = DEFAULT_CHARSET
-          BoundLabel.Font.Color = clWindowText
-          BoundLabel.Font.Height = -11
-          BoundLabel.Font.Name = 'Tahoma'
-          BoundLabel.Font.Style = []
-          BoundLabel.Layout = sclLeft
-          BoundLabel.MaxWidth = 0
-          BoundLabel.UseSkinColor = True
-          SkinData.SkinSection = 'COMBOBOX'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ItemHeight = 15
-          ItemIndex = -1
-          ParentFont = False
-          TabOrder = 1
-          Text = 'Draw Every Frame'
-          Items.Strings = (
-            'Draw Every Frame'
-            'Skip 1 of 10 Frames'
-            'Skip 2 of 10 Frames'
-            'Skip 3 of 10 Frames'
-            'Skip 4 of 10 Frames'
-            'Skip 5 of 10 Frames'
-            'Skip 6 of 10 Frames'
-            'Skip 7 of 10 Frames'
-            'Skip 8 of 10 Frames'
-            'Skip 9 of 10 Frames'
-            'Skip 10 of 10 Frames')
-        end
-      end
-      object grp96: TGroupBox
-        Left = 3
-        Top = 185
-        Width = 196
-        Height = 103
-        Caption = 'Rotation'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 2
-        object sComboBox20: TsComboBox
-          Left = 5
-          Top = 17
-          Width = 186
-          Height = 21
-          Hint = 'Change_rotation'
-          Alignment = taLeftJustify
-          BoundLabel.Indent = 0
-          BoundLabel.Font.Charset = DEFAULT_CHARSET
-          BoundLabel.Font.Color = clWindowText
-          BoundLabel.Font.Height = -11
-          BoundLabel.Font.Name = 'Tahoma'
-          BoundLabel.Font.Style = []
-          BoundLabel.Layout = sclLeft
-          BoundLabel.MaxWidth = 0
-          BoundLabel.UseSkinColor = True
-          SkinData.SkinSection = 'COMBOBOX'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ItemHeight = 15
-          ItemIndex = 0
-          ParentFont = False
-          TabOrder = 2
-          Text = 'Default'
-          OnChange = Mame_ManageGraphics
-          Items.Strings = (
-            'Default'
-            'Clockwise'
-            'Anti-Clockwise'
-            'None'
-            'Auto Clockwise'
-            'Auto Anti-Clockwise')
-        end
-        object sCheckBox40: TsCheckBox
-          Left = 3
-          Top = 78
-          Width = 158
-          Height = 20
-          Caption = 'Flip Screen Upside-Down'
-          TabOrder = 0
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
-        object sCheckBox41: TsCheckBox
-          Left = 3
-          Top = 53
-          Width = 141
-          Height = 20
-          Caption = 'Flip Screen Left-Right'
-          TabOrder = 1
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
-      end
-      object grp2: TGroupBox
-        Left = 3
-        Top = 332
-        Width = 196
-        Height = 43
-        Caption = 'Gamma Correction'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 10
-        Visible = False
-        object sLabel4: TsLabel
-          Left = 168
-          Top = 4
-          Width = 24
-          Height = 13
-          Alignment = taRightJustify
-          Caption = '1.00'
-          ParentFont = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-        end
-        object sbar_mame_gammacorrection: TsScrollBar
-          Left = 4
-          Top = 20
-          Width = 186
-          Height = 13
-          Hint = 'Change_gamma'
-          Ctl3D = True
-          Max = 300
-          Min = 10
-          PageSize = 0
-          ParentCtl3D = False
-          Position = 10
-          TabOrder = 0
-          OnChange = Mame_ManageGraphics
-          SkinManager = SkinM
-        end
-      end
-      object grp3: TGroupBox
-        Left = 3
-        Top = 289
-        Width = 196
-        Height = 43
-        Caption = 'Pause Brightness'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 11
-        object sLabel3: TsLabel
-          Left = 168
-          Top = 4
-          Width = 24
-          Height = 13
-          Alignment = taRightJustify
-          Caption = '1.00'
-          ParentFont = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-        end
-        object sbar_mame_pausebrightness: TsScrollBar
-          Left = 4
-          Top = 20
-          Width = 186
-          Height = 13
-          Hint = 'Change_pause_brightness'
-          Ctl3D = True
-          PageSize = 0
-          ParentCtl3D = False
-          TabOrder = 0
-          OnChange = Mame_ManageGraphics
-          SkinManager = SkinM
-        end
-      end
-      object grp4: TGroupBox
-        Left = 3
-        Top = 375
-        Width = 196
-        Height = 43
-        Caption = 'Brightness Correction'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 12
-        object sLabel5: TsLabel
-          Left = 168
-          Top = 4
-          Width = 24
-          Height = 13
-          Alignment = taRightJustify
-          Caption = '1.00'
-          ParentFont = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-        end
-        object sbar_mame_brightnesscorrection: TsScrollBar
-          Left = 4
-          Top = 20
-          Width = 186
-          Height = 13
-          Hint = 'Change_brightness'
-          Ctl3D = True
-          Max = 200
-          Min = 10
-          PageSize = 0
-          ParentCtl3D = False
-          Position = 10
-          TabOrder = 0
-          OnChange = Mame_ManageGraphics
-          SkinManager = SkinM
-        end
-      end
-      object grp5: TGroupBox
-        Left = 3
-        Top = 418
-        Width = 196
-        Height = 43
-        Caption = 'Contrast Correction'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 13
-        object sLabel2: TsLabel
-          Left = 168
-          Top = 4
-          Width = 24
-          Height = 13
-          Alignment = taRightJustify
-          Caption = '1.00'
-          ParentFont = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-        end
-        object sbar_mame_contrastcorrection: TsScrollBar
-          Left = 4
-          Top = 19
-          Width = 186
-          Height = 13
-          Hint = 'Change_contrast'
-          Ctl3D = True
-          Max = 200
-          Min = 10
-          PageSize = 0
-          ParentCtl3D = False
-          Position = 10
-          TabOrder = 0
-          OnChange = Mame_ManageGraphics
-          SkinManager = SkinM
-        end
-      end
-      object grp6: TGroupBox
-        Left = 3
-        Top = 119
-        Width = 196
-        Height = 43
-        Caption = 'Gameplay Speed'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 14
-        object sLabel11: TsLabel
-          Left = 168
-          Top = 4
-          Width = 24
-          Height = 13
-          Alignment = taRightJustify
-          Caption = '1.00'
-          ParentFont = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-        end
-        object sbar_mame_emulatrionspeed: TsScrollBar
-          Left = 4
-          Top = 20
-          Width = 186
-          Height = 13
-          Hint = 'Change_emulation_speed'
-          Max = 10000
-          Min = 1
-          PageSize = 0
-          Position = 10
-          TabOrder = 0
-          OnChange = Mame_ManageGraphics
-          SkinManager = SkinM
-        end
-      end
-      object sButton1: TsButton
-        Left = 567
-        Top = 352
-        Width = 156
-        Height = 26
-        Hint = 'Mame_save_global_button'
-        Caption = 'Default Mame Settings'
-        Enabled = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 15
-        WordWrap = False
-        OnClick = Mame_GlobalOrTopicSave
-        SkinData.CustomColor = True
-        SkinData.CustomFont = True
-        SkinData.SkinSection = 'BUTTON'
-        ImageAlignment = iaCenter
-        Reflected = True
-      end
-      object sButton5: TsButton
-        Left = 567
-        Top = 318
-        Width = 156
-        Height = 26
-        Hint = 'Mame_save_topic_graphics_button'
-        Caption = 'Default Topic Settings'
-        Enabled = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 16
-        WordWrap = False
-        OnClick = Mame_GlobalOrTopicSave
-        SkinData.CustomColor = True
-        SkinData.CustomFont = True
-        SkinData.SkinSection = 'BUTTON'
-        ImageAlignment = iaCenter
-        Reflected = True
-      end
     end
     object Pem_mame_others: TsPanel
       Left = 727
@@ -5791,383 +5751,6 @@ object Conf: TConf
       Align = alCustom
       TabOrder = 5
       SkinData.SkinSection = 'PANEL'
-      object grp110: TGroupBox
-        Left = 3
-        Top = 184
-        Width = 196
-        Height = 43
-        Caption = 'Thread Priority'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 0
-        object sLabel28: TsLabel
-          Left = 169
-          Top = 7
-          Width = 24
-          Height = 13
-          Alignment = taRightJustify
-          Caption = '1.00'
-          ParentFont = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-        end
-        object sbar_mame_threadpriority: TsScrollBar
-          Left = 4
-          Top = 20
-          Width = 186
-          Height = 13
-          Hint = 'Change_thread_priority'
-          Max = 1
-          Min = -15
-          PageSize = 0
-          TabOrder = 0
-          OnChange = Mame_ManageOthers
-          SkinManager = SkinM
-        end
-      end
-      object grp111: TGroupBox
-        Left = 204
-        Top = 10
-        Width = 196
-        Height = 180
-        Caption = 'Snapshot'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 2
-        object grp112: TGroupBox
-          Left = 3
-          Top = 93
-          Width = 190
-          Height = 65
-          Caption = 'Snapshot View'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 0
-          object sComboBox19: TsComboBox
-            Left = 5
-            Top = 24
-            Width = 180
-            Height = 21
-            Alignment = taLeftJustify
-            BoundLabel.Indent = 0
-            BoundLabel.Font.Charset = DEFAULT_CHARSET
-            BoundLabel.Font.Color = clWindowText
-            BoundLabel.Font.Height = -11
-            BoundLabel.Font.Name = 'Tahoma'
-            BoundLabel.Font.Style = []
-            BoundLabel.Layout = sclLeft
-            BoundLabel.MaxWidth = 0
-            BoundLabel.UseSkinColor = True
-            SkinData.SkinSection = 'COMBOBOX'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ItemHeight = 15
-            ItemIndex = -1
-            ParentFont = False
-            TabOrder = 0
-            Text = 'internal'
-            Items.Strings = (
-              'internal'
-              'auto'
-              'standard'
-              'pixel aspect'
-              'coctail')
-          end
-        end
-        object grp102: TGroupBox
-          Left = 3
-          Top = 19
-          Width = 190
-          Height = 65
-          Caption = 'Snapshot Size'
-          TabOrder = 1
-          object sComboBox73: TsComboBox
-            Left = 5
-            Top = 24
-            Width = 180
-            Height = 21
-            Alignment = taLeftJustify
-            BoundLabel.Indent = 0
-            BoundLabel.Font.Charset = DEFAULT_CHARSET
-            BoundLabel.Font.Color = clWindowText
-            BoundLabel.Font.Height = -11
-            BoundLabel.Font.Name = 'MS Sans Serif'
-            BoundLabel.Font.Style = []
-            BoundLabel.Layout = sclLeft
-            BoundLabel.MaxWidth = 0
-            BoundLabel.UseSkinColor = True
-            SkinData.SkinSection = 'COMBOBOX'
-            ItemHeight = 15
-            ItemIndex = 0
-            TabOrder = 0
-            Text = 'auto'
-            Items.Strings = (
-              'auto'
-              '320X240'
-              '640X480'
-              '800X600'
-              '1024X768'
-              '1024X1024')
-          end
-        end
-      end
-      object grp113: TGroupBox
-        Left = 405
-        Top = 10
-        Width = 196
-        Height = 121
-        Caption = 'Artwork Options'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 1
-        object sCheckBox35: TsCheckBox
-          Left = 3
-          Top = 24
-          Width = 79
-          Height = 20
-          Caption = 'Backdrops'
-          TabOrder = 0
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
-        object sCheckBox36: TsCheckBox
-          Left = 3
-          Top = 48
-          Width = 56
-          Height = 20
-          Caption = 'Bezels'
-          TabOrder = 1
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
-        object sCheckBox37: TsCheckBox
-          Left = 3
-          Top = 72
-          Width = 70
-          Height = 20
-          Caption = 'Overlays'
-          TabOrder = 2
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
-        object sCheckBox38: TsCheckBox
-          Left = 3
-          Top = 96
-          Width = 95
-          Height = 20
-          Caption = 'Crop Artwork'
-          TabOrder = 3
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
-      end
-      object grp114: TGroupBox
-        Left = 3
-        Top = 232
-        Width = 196
-        Height = 156
-        Caption = 'Vector'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 3
-        object sCheckBox39: TsCheckBox
-          Left = 28
-          Top = 20
-          Width = 161
-          Height = 20
-          Caption = 'Draw Antialiased Vectors'
-          TabOrder = 0
-          SkinData.SkinSection = 'CHECKBOX'
-          ImgChecked = 0
-          ImgUnchecked = 0
-        end
-        object grp15: TGroupBox
-          Left = 3
-          Top = 50
-          Width = 190
-          Height = 43
-          Caption = 'Beam Width'
-          TabOrder = 1
-          object sLabel18: TsLabel
-            Left = 158
-            Top = 7
-            Width = 24
-            Height = 13
-            Alignment = taRightJustify
-            Caption = '1.00'
-            ParentFont = False
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-          end
-          object sbar_mame_beamwidth: TsScrollBar
-            Left = 4
-            Top = 20
-            Width = 180
-            Height = 13
-            Hint = 'Change_beam_width'
-            Max = 1000
-            Min = 10
-            PageSize = 0
-            Position = 10
-            TabOrder = 0
-            OnChange = Mame_ManageOthers
-            SkinManager = SkinM
-          end
-        end
-        object grp16: TGroupBox
-          Left = 3
-          Top = 100
-          Width = 190
-          Height = 43
-          Caption = 'Flicker'
-          TabOrder = 2
-          object sLabel20: TsLabel
-            Left = 158
-            Top = 7
-            Width = 24
-            Height = 13
-            Alignment = taRightJustify
-            Caption = '1.00'
-            ParentFont = False
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-          end
-          object sbar_mame_flicker: TsScrollBar
-            Left = 4
-            Top = 20
-            Width = 180
-            Height = 13
-            Hint = 'Change_flicker'
-            Max = 10000
-            PageSize = 0
-            TabOrder = 0
-            OnChange = Mame_ManageOthers
-            SkinManager = SkinM
-          end
-        end
-      end
-      object sCheckBox24: TsCheckBox
-        Left = 3
-        Top = 20
-        Width = 135
-        Height = 20
-        Caption = 'Enable Game Cheats'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 4
-        SkinData.SkinSection = 'CHECKBOX'
-        ImgChecked = 0
-        ImgUnchecked = 0
-      end
-      object sCheckBox27: TsCheckBox
-        Left = 3
-        Top = 40
-        Width = 135
-        Height = 20
-        Caption = 'Sleep When Possible'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 5
-        Visible = False
-        SkinData.SkinSection = 'CHECKBOX'
-        ImgChecked = 0
-        ImgUnchecked = 0
-      end
-      object sCheckBox28: TsCheckBox
-        Left = 3
-        Top = 60
-        Width = 106
-        Height = 20
-        Caption = 'Skip Game Info'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 6
-        SkinData.SkinSection = 'CHECKBOX'
-        ImgChecked = 0
-        ImgUnchecked = 0
-      end
-      object sCheckBox30: TsCheckBox
-        Left = 3
-        Top = 100
-        Width = 171
-        Height = 20
-        Caption = 'Multi-Threading Rendering'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 7
-        SkinData.SkinSection = 'CHECKBOX'
-        ImgChecked = 0
-        ImgUnchecked = 0
-      end
-      object sCheckBox31: TsCheckBox
-        Left = 3
-        Top = 120
-        Width = 92
-        Height = 20
-        Caption = 'Coin Lockout'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 8
-        SkinData.SkinSection = 'CHECKBOX'
-        ImgChecked = 0
-        ImgUnchecked = 0
-      end
       object sButton3: TsButton
         Left = 567
         Top = 352
@@ -6182,7 +5765,7 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 9
+        TabOrder = 0
         WordWrap = False
         OnClick = Mame_GlobalOrTopicSave
         SkinData.CustomColor = True
@@ -6205,7 +5788,7 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 10
+        TabOrder = 1
         WordWrap = False
         OnClick = Mame_GlobalOrTopicSave
         SkinData.CustomColor = True
@@ -6214,76 +5797,793 @@ object Conf: TConf
         ImageAlignment = iaCenter
         Reflected = True
       end
-      object sCheckBox29: TsCheckBox
-        Left = 3
-        Top = 80
-        Width = 159
-        Height = 20
-        Caption = 'Save Game State on Exit'
+      object sBitBtn43: TsBitBtn
+        Left = 160
+        Top = 24
+        Width = 75
+        Height = 25
+        Hint = 'Others_Others'
+        Caption = 'Others'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 11
-        SkinData.SkinSection = 'CHECKBOX'
-        ImgChecked = 0
-        ImgUnchecked = 0
+        TabOrder = 2
+        OnClick = Mame_ManageOthers
+        SkinData.SkinSection = 'BUTTON'
       end
-      object sComboBox75: TsComboBox
-        Left = 3
-        Top = 157
-        Width = 196
-        Height = 21
-        Alignment = taLeftJustify
-        BoundLabel.Active = True
-        BoundLabel.Caption = 'User Interface Font'
-        BoundLabel.Indent = 0
-        BoundLabel.Font.Charset = DEFAULT_CHARSET
-        BoundLabel.Font.Color = clWindowText
-        BoundLabel.Font.Height = -11
-        BoundLabel.Font.Name = 'Tahoma'
-        BoundLabel.Font.Style = [fsBold]
-        BoundLabel.Layout = sclTopLeft
-        BoundLabel.MaxWidth = 0
-        BoundLabel.UseSkinColor = True
-        SkinData.SkinSection = 'COMBOBOX'
+      object sBitBtn99: TsBitBtn
+        Left = 232
+        Top = 24
+        Width = 75
+        Height = 25
+        Hint = 'Others_MamePlus'
+        Caption = 'Mame Plus'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
-        ItemHeight = 15
-        ItemIndex = 0
         ParentFont = False
-        TabOrder = 12
-        Text = 'default'
-        Items.Strings = (
-          'default')
-      end
-    end
-    object Pem_mame_builds: TsPanel
-      Left = 727
-      Top = 0
-      Width = 727
-      Height = 661
-      Align = alCustom
-      TabOrder = 7
-      SkinData.SkinSection = 'PANEL'
-      object PBuilds_MameTools: TsPanel
-        Left = 10
-        Top = 50
-        Width = 550
-        Height = 524
-        BevelOuter = bvNone
-        Ctl3D = True
-        ParentCtl3D = False
         TabOrder = 3
+        OnClick = Mame_ManageOthers
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sBitBtn100: TsBitBtn
+        Left = 304
+        Top = 24
+        Width = 75
+        Height = 25
+        Hint = 'Others_Tools'
+        Caption = 'Tools'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 4
+        OnClick = Mame_ManageOthers
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sPanel83: TsPanel
+        Left = 8
+        Top = 46
+        Width = 545
+        Height = 554
+        BevelOuter = bvNone
+        TabOrder = 5
+        SkinData.SkinSection = 'PANEL'
+        object grp119: TGroupBox
+          Left = 8
+          Top = 8
+          Width = 233
+          Height = 241
+          Caption = 'Extra'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 0
+          object sCheckBox24: TsCheckBox
+            Left = 8
+            Top = 16
+            Width = 135
+            Height = 20
+            Caption = 'Enable Game Cheats'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 0
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sCheckBox27: TsCheckBox
+            Left = 8
+            Top = 52
+            Width = 135
+            Height = 20
+            Caption = 'Sleep When Possible'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 1
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sCheckBox28: TsCheckBox
+            Left = 8
+            Top = 72
+            Width = 106
+            Height = 20
+            Caption = 'Skip Game Info'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 2
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sCheckBox29: TsCheckBox
+            Left = 8
+            Top = 92
+            Width = 159
+            Height = 20
+            Caption = 'Save Game State on Exit'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 3
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sCheckBox30: TsCheckBox
+            Left = 8
+            Top = 112
+            Width = 171
+            Height = 20
+            Caption = 'Multi-Threading Rendering'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 4
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sCheckBox31: TsCheckBox
+            Left = 8
+            Top = 132
+            Width = 92
+            Height = 20
+            Caption = 'Coin Lockout'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 5
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sComboBox75: TsComboBox
+            Left = 8
+            Top = 196
+            Width = 216
+            Height = 21
+            Alignment = taLeftJustify
+            BoundLabel.Active = True
+            BoundLabel.Caption = 'User Interface Font'
+            BoundLabel.Indent = 0
+            BoundLabel.Font.Charset = DEFAULT_CHARSET
+            BoundLabel.Font.Color = clWindowText
+            BoundLabel.Font.Height = -11
+            BoundLabel.Font.Name = 'Tahoma'
+            BoundLabel.Font.Style = [fsBold]
+            BoundLabel.Layout = sclTopCenter
+            BoundLabel.MaxWidth = 0
+            BoundLabel.UseSkinColor = True
+            SkinData.SkinSection = 'COMBOBOX'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ItemHeight = 15
+            ItemIndex = 0
+            ParentFont = False
+            TabOrder = 6
+            Text = 'default'
+            Items.Strings = (
+              'default')
+          end
+        end
+        object grp111: TGroupBox
+          Left = 252
+          Top = 10
+          Width = 196
+          Height = 167
+          BiDiMode = bdLeftToRight
+          Caption = 'Snapshot'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentBiDiMode = False
+          ParentFont = False
+          TabOrder = 1
+          object grp112: TGroupBox
+            Left = 3
+            Top = 93
+            Width = 190
+            Height = 65
+            Caption = 'Snapshot View'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 0
+            object sComboBox19: TsComboBox
+              Left = 5
+              Top = 24
+              Width = 180
+              Height = 21
+              Alignment = taLeftJustify
+              BoundLabel.Indent = 0
+              BoundLabel.Font.Charset = DEFAULT_CHARSET
+              BoundLabel.Font.Color = clWindowText
+              BoundLabel.Font.Height = -11
+              BoundLabel.Font.Name = 'Tahoma'
+              BoundLabel.Font.Style = []
+              BoundLabel.Layout = sclLeft
+              BoundLabel.MaxWidth = 0
+              BoundLabel.UseSkinColor = True
+              SkinData.SkinSection = 'COMBOBOX'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ItemHeight = 15
+              ItemIndex = -1
+              ParentFont = False
+              TabOrder = 0
+              Text = 'internal'
+              Items.Strings = (
+                'internal'
+                'auto'
+                'standard'
+                'pixel aspect'
+                'coctail')
+            end
+          end
+          object grp102: TGroupBox
+            Left = 3
+            Top = 19
+            Width = 190
+            Height = 65
+            BiDiMode = bdLeftToRight
+            Caption = 'Snapshot Size'
+            ParentBiDiMode = False
+            TabOrder = 1
+            object sComboBox73: TsComboBox
+              Left = 5
+              Top = 24
+              Width = 180
+              Height = 21
+              Alignment = taLeftJustify
+              BoundLabel.Indent = 0
+              BoundLabel.Font.Charset = DEFAULT_CHARSET
+              BoundLabel.Font.Color = clWindowText
+              BoundLabel.Font.Height = -11
+              BoundLabel.Font.Name = 'MS Sans Serif'
+              BoundLabel.Font.Style = []
+              BoundLabel.Layout = sclLeft
+              BoundLabel.MaxWidth = 0
+              BoundLabel.UseSkinColor = True
+              SkinData.SkinSection = 'COMBOBOX'
+              ItemHeight = 15
+              ItemIndex = 0
+              TabOrder = 0
+              Text = 'auto'
+              Items.Strings = (
+                'auto'
+                '320X240'
+                '640X480'
+                '800X600'
+                '1024X768'
+                '1024X1024')
+            end
+          end
+        end
+        object grp110: TGroupBox
+          Left = 252
+          Top = 195
+          Width = 196
+          Height = 43
+          Caption = 'Thread Priority'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 2
+          object sLabel28: TsLabel
+            Left = 169
+            Top = 7
+            Width = 24
+            Height = 13
+            Alignment = taRightJustify
+            Caption = '1.00'
+            ParentFont = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+          end
+          object sbar_mame_threadpriority: TsScrollBar
+            Left = 4
+            Top = 20
+            Width = 186
+            Height = 13
+            Hint = 'Change_thread_priority'
+            Max = 1
+            Min = -15
+            PageSize = 0
+            TabOrder = 0
+            OnChange = Mame_ManageOthers
+            SkinManager = SkinM
+          end
+        end
+        object grp113: TGroupBox
+          Left = 253
+          Top = 266
+          Width = 196
+          Height = 121
+          Caption = 'Artwork Options'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 3
+          object sCheckBox35: TsCheckBox
+            Left = 3
+            Top = 24
+            Width = 79
+            Height = 20
+            Caption = 'Backdrops'
+            TabOrder = 0
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sCheckBox36: TsCheckBox
+            Left = 3
+            Top = 48
+            Width = 56
+            Height = 20
+            Caption = 'Bezels'
+            TabOrder = 1
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sCheckBox37: TsCheckBox
+            Left = 3
+            Top = 72
+            Width = 70
+            Height = 20
+            Caption = 'Overlays'
+            TabOrder = 2
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sCheckBox38: TsCheckBox
+            Left = 3
+            Top = 96
+            Width = 95
+            Height = 20
+            Caption = 'Crop Artwork'
+            TabOrder = 3
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+        end
+        object grp114: TGroupBox
+          Left = 8
+          Top = 264
+          Width = 233
+          Height = 177
+          Caption = 'Vector'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 4
+          object sCheckBox39: TsCheckBox
+            Left = 68
+            Top = 18
+            Width = 161
+            Height = 20
+            Caption = 'Draw Antialiased Vectors'
+            TabOrder = 0
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object grp15: TGroupBox
+            Left = 8
+            Top = 42
+            Width = 214
+            Height = 43
+            Caption = 'Beam Width'
+            TabOrder = 1
+            object sLabel18: TsLabel
+              Left = 178
+              Top = 7
+              Width = 24
+              Height = 13
+              Alignment = taRightJustify
+              Caption = '1.00'
+              ParentFont = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+            end
+            object sbar_mame_beamwidth: TsScrollBar
+              Left = 4
+              Top = 20
+              Width = 200
+              Height = 13
+              Hint = 'Change_beam_width'
+              Max = 1000
+              Min = 10
+              PageSize = 0
+              Position = 10
+              TabOrder = 0
+              OnChange = Mame_ManageOthers
+              SkinManager = SkinM
+            end
+          end
+          object grp16: TGroupBox
+            Left = 8
+            Top = 116
+            Width = 214
+            Height = 43
+            Caption = 'Flicker'
+            TabOrder = 2
+            object sLabel20: TsLabel
+              Left = 178
+              Top = 7
+              Width = 24
+              Height = 13
+              Alignment = taRightJustify
+              Caption = '1.00'
+              ParentFont = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+            end
+            object sbar_mame_flicker: TsScrollBar
+              Left = 4
+              Top = 20
+              Width = 200
+              Height = 13
+              Hint = 'Change_flicker'
+              Max = 10000
+              PageSize = 0
+              TabOrder = 0
+              OnChange = Mame_ManageOthers
+              SkinManager = SkinM
+            end
+          end
+        end
+      end
+      object sPanel84: TsPanel
+        Left = 8
+        Top = 46
+        Width = 545
+        Height = 554
+        BevelOuter = bvNone
+        TabOrder = 6
+        SkinData.SkinSection = 'PANEL'
+        object grp120: TGroupBox
+          Left = 4
+          Top = 3
+          Width = 535
+          Height = 105
+          Caption = 'Extra Plus'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 0
+          object sLabel33: TsLabel
+            Left = 211
+            Top = 65
+            Width = 163
+            Height = 13
+            Caption = 'User Interface Transparency'
+            ParentFont = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+          end
+          object sLabel34: TsLabel
+            Left = 509
+            Top = 64
+            Width = 21
+            Height = 13
+            Caption = '215'
+            ParentFont = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+          end
+          object sCheckBox32: TsCheckBox
+            Left = 13
+            Top = 33
+            Width = 161
+            Height = 20
+            Caption = 'Quit Confirutation on Exit'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 0
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sCheckBox10: TsCheckBox
+            Left = 13
+            Top = 56
+            Width = 122
+            Height = 20
+            Caption = 'Enable Audio Sync'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 1
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sbar_Mame_UITransparent_MamePlus: TsScrollBar
+            Left = 210
+            Top = 81
+            Width = 319
+            Height = 13
+            Hint = 'Mplus_change_ui_transparent'
+            Max = 255
+            PageSize = 0
+            Position = 215
+            TabOrder = 2
+            OnChange = Mame_ManageOthers
+            SkinManager = SkinM
+          end
+        end
+        object grp117: TGroupBox
+          Left = 4
+          Top = 116
+          Width = 535
+          Height = 64
+          Caption = 'HiScore.Dat'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 1
+          object sLabel102: TsLabel
+            Left = 174
+            Top = 16
+            Width = 133
+            Height = 13
+            Caption = 'HiScore.dat not Found!!!'
+            Color = clBtnFace
+            ParentColor = False
+            ParentFont = False
+            Visible = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clRed
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            UseSkinColor = False
+          end
+          object sCheckBox33: TsCheckBox
+            Left = 380
+            Top = 8
+            Width = 151
+            Height = 20
+            Hint = 'Mplus_check_hiscore'
+            Caption = 'Enable HiScore Support'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 0
+            OnClick = Mame_ManageOthers
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sEdit12: TsEdit
+            Left = 8
+            Top = 34
+            Width = 490
+            Height = 21
+            TabOrder = 1
+            SkinData.SkinSection = 'EDIT'
+            BoundLabel.Active = True
+            BoundLabel.Caption = 'Hiscore.dat Directory'
+            BoundLabel.Indent = 0
+            BoundLabel.Font.Charset = DEFAULT_CHARSET
+            BoundLabel.Font.Color = clWindowText
+            BoundLabel.Font.Height = -11
+            BoundLabel.Font.Name = 'Tahoma'
+            BoundLabel.Font.Style = [fsBold]
+            BoundLabel.Layout = sclTopLeft
+            BoundLabel.MaxWidth = 0
+            BoundLabel.UseSkinColor = True
+          end
+          object sBitBtn1: TsBitBtn
+            Left = 503
+            Top = 34
+            Width = 25
+            Height = 21
+            Hint = 'Mplus_find_hiscore'
+            TabOrder = 2
+            OnClick = Mame_ManageOthers
+            SkinData.SkinSection = 'BUTTON'
+            ImageIndex = 15
+            Images = InBitBtn_Imagelist
+          end
+        end
+        object grp118: TGroupBox
+          Left = 4
+          Top = 187
+          Width = 535
+          Height = 353
+          Caption = 'IPS!'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 2
+          object sLabel35: TsLabel
+            Left = 215
+            Top = 74
+            Width = 77
+            Height = 13
+            Caption = 'IPS Collection'
+          end
+          object sGauge_IPSMamePlus: TsGauge
+            Left = 71
+            Top = 12
+            Width = 298
+            Height = 15
+            Visible = False
+            SkinData.SkinSection = 'GAUGE'
+            ForeColor = clBlack
+            Progress = 0
+            Suffix = '%'
+          end
+          object sLabel110: TsLabel
+            Left = 192
+            Top = 26
+            Width = 57
+            Height = 13
+            Caption = 'sLabel110'
+            Visible = False
+          end
+          object nxtgrd_ips_mameplus: TNextGrid
+            Left = 7
+            Top = 88
+            Width = 522
+            Height = 257
+            Caption = 'I Have no Data to Show'
+            Options = [goGrid, goHeader, goRowResizing]
+            TabOrder = 0
+            TabStop = True
+            OnCellClick = nxtgrd_ips_mameplusCellClick
+            OnExpand = nxtgrd_ips_mameplusExpand
+          end
+          object sCheckBox34: TsCheckBox
+            Left = 380
+            Top = 11
+            Width = 137
+            Height = 20
+            Hint = 'Mplus_enable_ips'
+            Caption = 'Enable IPS Collection'
+            TabOrder = 1
+            OnClick = Mame_ManageOthers
+            SkinData.SkinSection = 'CHECKBOX'
+            ImgChecked = 0
+            ImgUnchecked = 0
+          end
+          object sEdit13: TsEdit
+            Left = 8
+            Top = 42
+            Width = 490
+            Height = 21
+            ReadOnly = True
+            TabOrder = 2
+            SkinData.SkinSection = 'EDIT'
+            BoundLabel.Active = True
+            BoundLabel.Caption = 'IPS Directory'
+            BoundLabel.Indent = 0
+            BoundLabel.Font.Charset = DEFAULT_CHARSET
+            BoundLabel.Font.Color = clWindowText
+            BoundLabel.Font.Height = -11
+            BoundLabel.Font.Name = 'Tahoma'
+            BoundLabel.Font.Style = [fsBold]
+            BoundLabel.Layout = sclTopLeft
+            BoundLabel.MaxWidth = 0
+            BoundLabel.UseSkinColor = True
+          end
+          object sBitBtn98: TsBitBtn
+            Left = 503
+            Top = 42
+            Width = 25
+            Height = 21
+            Hint = 'Mplus_find_ips'
+            TabOrder = 3
+            OnClick = Mame_ManageOthers
+            SkinData.SkinSection = 'BUTTON'
+            ImageIndex = 15
+            Images = InBitBtn_Imagelist
+          end
+        end
+      end
+      object sPanel85: TsPanel
+        Left = 8
+        Top = 46
+        Width = 545
+        Height = 554
+        BevelOuter = bvNone
+        TabOrder = 7
         SkinData.SkinSection = 'PANEL'
         object grp122: TGroupBox
-          Left = 10
-          Top = 21
+          Left = 7
+          Top = 17
           Width = 530
           Height = 105
           Caption = 'Create New Font For Mame'
@@ -10559,7 +10859,6 @@ object Conf: TConf
             Height = 21
             Hint = 'Tools_find_font'
             TabOrder = 1
-            OnClick = Mame_ManageBuilds
             SkinData.SkinSection = 'BUTTON'
             ImageIndex = 15
             Images = InBitBtn_Imagelist
@@ -10572,7 +10871,6 @@ object Conf: TConf
             Hint = 'Tools_create_font'
             Caption = 'Create Font'
             TabOrder = 2
-            OnClick = Mame_ManageBuilds
             SkinData.SkinSection = 'BUTTON'
             ImageIndex = 19
             Images = InBitBtn_Imagelist
@@ -10587,7 +10885,6 @@ object Conf: TConf
             ExampleText = 'Abc'
             Options = [foScreenFonts, foTrueTypeOnly, foDisplaySymbol, foDisplaySelectedFont]
             TabOrder = 3
-            OnChange = Mame_ManageBuilds
           end
           object LMDFontSizeComboBox1: TLMDFontSizeComboBox
             Left = 293
@@ -10597,7 +10894,6 @@ object Conf: TConf
             Hint = 'Tools_change_font_size'
             Color = clWhite
             TabOrder = 4
-            OnChange = Mame_ManageBuilds
           end
           object rb56: TRadioButton
             Left = 5
@@ -10606,7 +10902,6 @@ object Conf: TConf
             Height = 17
             Hint = 'System font'
             TabOrder = 5
-            OnClick = Mame_ManageBuilds
           end
           object rb57: TRadioButton
             Left = 5
@@ -10615,641 +10910,24 @@ object Conf: TConf
             Height = 17
             Hint = 'Directory font'
             TabOrder = 6
-            OnClick = Mame_ManageBuilds
           end
         end
       end
-      object PBuilds_MameBuilds: TsPanel
-        Left = 10
-        Top = 50
-        Width = 550
-        Height = 524
-        TabOrder = 0
-        SkinData.SkinSection = 'PANEL'
-        object PBuilds_MameXT: TPanel
-          Left = 10
-          Top = 26
-          Width = 530
-          Height = 485
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 3
-          object sLabel36: TsLabel
-            Left = 11
-            Top = 100
-            Width = 163
-            Height = 13
-            Caption = 'User Interface Transparency'
-            ParentFont = False
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-          end
-          object sLabel37: TsLabel
-            Left = 234
-            Top = 99
-            Width = 21
-            Height = 13
-            Caption = '215'
-            ParentFont = False
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-          end
-          object sCheckBox44: TsCheckBox
-            Left = 5
-            Top = 20
-            Width = 161
-            Height = 20
-            Caption = 'Quit Confirutation on Exit'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ParentFont = False
-            TabOrder = 0
-            SkinData.SkinSection = 'CHECKBOX'
-            ImgChecked = 0
-            ImgUnchecked = 0
-          end
-          object sCheckBox128: TsCheckBox
-            Left = 5
-            Top = 40
-            Width = 122
-            Height = 20
-            Caption = 'Enable Audio Sync'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ParentFont = False
-            TabOrder = 1
-            SkinData.SkinSection = 'CHECKBOX'
-            ImgChecked = 0
-            ImgUnchecked = 0
-          end
-          object grp119: TGroupBox
-            Left = 184
-            Top = 9
-            Width = 340
-            Height = 88
-            Caption = 'HiScore.Dat'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ParentFont = False
-            TabOrder = 2
-            object sLabel103: TsLabel
-              Left = 198
-              Top = 72
-              Width = 133
-              Height = 13
-              Caption = 'HiScore.dat not Found!!!'
-              Color = clBtnFace
-              ParentColor = False
-              ParentFont = False
-              Visible = False
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clRed
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = [fsBold]
-              UseSkinColor = False
-            end
-            object sCheckBox129: TsCheckBox
-              Left = 177
-              Top = 15
-              Width = 151
-              Height = 20
-              Hint = 'Mxt_check_hiscore'
-              Caption = 'Enable HiScore Support'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = [fsBold]
-              ParentFont = False
-              TabOrder = 0
-              OnClick = Mame_ManageBuilds
-              SkinData.SkinSection = 'CHECKBOX'
-              ImgChecked = 0
-              ImgUnchecked = 0
-            end
-            object sEdit16: TsEdit
-              Left = 7
-              Top = 50
-              Width = 293
-              Height = 21
-              TabOrder = 1
-              SkinData.SkinSection = 'EDIT'
-              BoundLabel.Active = True
-              BoundLabel.Caption = 'Hiscore.dat Directory'
-              BoundLabel.Indent = 0
-              BoundLabel.Font.Charset = DEFAULT_CHARSET
-              BoundLabel.Font.Color = clWindowText
-              BoundLabel.Font.Height = -11
-              BoundLabel.Font.Name = 'Tahoma'
-              BoundLabel.Font.Style = [fsBold]
-              BoundLabel.Layout = sclTopLeft
-              BoundLabel.MaxWidth = 0
-              BoundLabel.UseSkinColor = True
-            end
-            object sBitBtn99: TsBitBtn
-              Left = 305
-              Top = 50
-              Width = 25
-              Height = 21
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = [fsBold]
-              ParentFont = False
-              TabOrder = 2
-              OnClick = Mame_ManageBuilds
-              SkinData.SkinSection = 'BUTTON'
-              ImageIndex = 15
-              Images = InBitBtn_Imagelist
-            end
-          end
-          object sbar_Mame_UITransparent_MameXT: TsScrollBar
-            Left = 10
-            Top = 116
-            Width = 245
-            Height = 13
-            Hint = 'Mxt_change_ui_transparent'
-            Max = 255
-            PageSize = 0
-            Position = 215
-            TabOrder = 3
-            OnChange = Mame_ManageBuilds
-            SkinManager = SkinM
-          end
-          object grp120: TGroupBox
-            Left = 8
-            Top = 144
-            Width = 518
-            Height = 248
-            Caption = 'IPS!'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ParentFont = False
-            TabOrder = 4
-            object sLabel38: TsLabel
-              Left = 7
-              Top = 68
-              Width = 77
-              Height = 13
-              Caption = 'IPS Collection'
-            end
-            object sGauge_IPSMameXT: TsGauge
-              Left = 7
-              Top = 40
-              Width = 180
-              Height = 21
-              Visible = False
-              SkinData.SkinSection = 'GAUGE'
-              ForeColor = clBlack
-              Progress = 0
-              Suffix = '%'
-            end
-            object sLabel111: TsLabel
-              Left = 8
-              Top = 24
-              Width = 57
-              Height = 13
-              Caption = 'sLabel111'
-              Visible = False
-            end
-            object nxtgrd_ips_mamext: TNextGrid
-              Left = 7
-              Top = 85
-              Width = 502
-              Height = 155
-              Caption = 'I Have no Data to Show'
-              TabOrder = 0
-              TabStop = True
-              OnCellClick = nxtgrd_ips_mamextCellClick
-              OnExpand = nxtgrd_ips_mamextExpand
-            end
-            object sCheckBox130: TsCheckBox
-              Left = 370
-              Top = 11
-              Width = 137
-              Height = 20
-              Hint = 'Mxt_enable_ips'
-              Caption = 'Enable IPS Collection'
-              TabOrder = 1
-              OnClick = Mame_ManageBuilds
-              SkinData.SkinSection = 'CHECKBOX'
-              ImgChecked = 0
-              ImgUnchecked = 0
-            end
-            object sEdit17: TsEdit
-              Left = 193
-              Top = 40
-              Width = 285
-              Height = 21
-              TabOrder = 2
-              SkinData.SkinSection = 'EDIT'
-              BoundLabel.Active = True
-              BoundLabel.Caption = 'IPS Directory'
-              BoundLabel.Indent = 0
-              BoundLabel.Font.Charset = DEFAULT_CHARSET
-              BoundLabel.Font.Color = clWindowText
-              BoundLabel.Font.Height = -11
-              BoundLabel.Font.Name = 'Tahoma'
-              BoundLabel.Font.Style = [fsBold]
-              BoundLabel.Layout = sclTopLeft
-              BoundLabel.MaxWidth = 0
-              BoundLabel.UseSkinColor = True
-            end
-            object sBitBtn100: TsBitBtn
-              Left = 483
-              Top = 40
-              Width = 25
-              Height = 21
-              Hint = 'Mxt_find_ips'
-              TabOrder = 3
-              OnClick = Mame_ManageBuilds
-              SkinData.SkinSection = 'BUTTON'
-              ImageIndex = 15
-              Images = InBitBtn_Imagelist
-            end
-          end
-          object grp121: TGroupBox
-            Left = 8
-            Top = 395
-            Width = 518
-            Height = 78
-            Caption = 'Game Info'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ParentFont = False
-            TabOrder = 5
-            object sLabel39: TsLabel
-              Left = 345
-              Top = 24
-              Width = 76
-              Height = 13
-              Caption = 'Play Count : 0'
-            end
-            object sLabel40: TsLabel
-              Left = 345
-              Top = 48
-              Width = 71
-              Height = 13
-              Caption = 'Play Time : 0'
-            end
-            object sComboBox76: TsComboBox
-              Left = 16
-              Top = 35
-              Width = 272
-              Height = 21
-              Hint = 'Mxt_get_games_count_times'
-              Alignment = taLeftJustify
-              BoundLabel.Active = True
-              BoundLabel.Caption = 'Game'
-              BoundLabel.Indent = 0
-              BoundLabel.Font.Charset = DEFAULT_CHARSET
-              BoundLabel.Font.Color = clWindowText
-              BoundLabel.Font.Height = -11
-              BoundLabel.Font.Name = 'Tahoma'
-              BoundLabel.Font.Style = [fsBold]
-              BoundLabel.Layout = sclTopLeft
-              BoundLabel.MaxWidth = 0
-              BoundLabel.UseSkinColor = True
-              SkinData.SkinSection = 'COMBOBOX'
-              ItemHeight = 15
-              ItemIndex = -1
-              TabOrder = 0
-              OnChange = Mame_ManageBuilds
-            end
-            object sBitBtn101: TsBitBtn
-              Left = 484
-              Top = 33
-              Width = 25
-              Height = 21
-              Hint = 'Mxt_zero_games_count_times'
-              Enabled = False
-              TabOrder = 1
-              OnClick = Mame_ManageBuilds
-              SkinData.SkinSection = 'BUTTON'
-              ImageIndex = 10
-              Images = InBitBtn_Imagelist
-            end
-          end
-        end
-        object PBuilds_MamePlus: TPanel
-          Left = 10
-          Top = 26
-          Width = 530
-          Height = 485
-          Alignment = taRightJustify
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 2
-          object sLabel33: TsLabel
-            Left = 11
-            Top = 100
-            Width = 163
-            Height = 13
-            Caption = 'User Interface Transparency'
-            ParentFont = False
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-          end
-          object sLabel34: TsLabel
-            Left = 234
-            Top = 99
-            Width = 21
-            Height = 13
-            Caption = '215'
-          end
-          object grp118: TGroupBox
-            Left = 8
-            Top = 144
-            Width = 518
-            Height = 248
-            Caption = 'IPS!'
-            TabOrder = 4
-            object sLabel35: TsLabel
-              Left = 7
-              Top = 68
-              Width = 77
-              Height = 13
-              Caption = 'IPS Collection'
-            end
-            object sGauge_IPSMamePlus: TsGauge
-              Left = 7
-              Top = 40
-              Width = 180
-              Height = 21
-              Visible = False
-              SkinData.SkinSection = 'GAUGE'
-              ForeColor = clBlack
-              Progress = 0
-              Suffix = '%'
-            end
-            object sLabel110: TsLabel
-              Left = 8
-              Top = 24
-              Width = 57
-              Height = 13
-              Caption = 'sLabel110'
-              Visible = False
-            end
-            object nxtgrd_ips_mameplus: TNextGrid
-              Left = 7
-              Top = 85
-              Width = 502
-              Height = 155
-              Caption = 'I Have no Data to Show'
-              Options = [goGrid, goHeader, goRowResizing]
-              TabOrder = 0
-              TabStop = True
-              OnCellClick = nxtgrd_ips_mameplusCellClick
-              OnExpand = nxtgrd_ips_mameplusExpand
-            end
-            object sCheckBox34: TsCheckBox
-              Left = 370
-              Top = 11
-              Width = 137
-              Height = 20
-              Hint = 'Mplus_enable_ips'
-              Caption = 'Enable IPS Collection'
-              TabOrder = 1
-              OnClick = Mame_ManageBuilds
-              SkinData.SkinSection = 'CHECKBOX'
-              ImgChecked = 0
-              ImgUnchecked = 0
-            end
-            object sEdit13: TsEdit
-              Left = 193
-              Top = 40
-              Width = 285
-              Height = 21
-              ReadOnly = True
-              TabOrder = 2
-              SkinData.SkinSection = 'EDIT'
-              BoundLabel.Active = True
-              BoundLabel.Caption = 'IPS Directory'
-              BoundLabel.Indent = 0
-              BoundLabel.Font.Charset = DEFAULT_CHARSET
-              BoundLabel.Font.Color = clWindowText
-              BoundLabel.Font.Height = -11
-              BoundLabel.Font.Name = 'Tahoma'
-              BoundLabel.Font.Style = [fsBold]
-              BoundLabel.Layout = sclTopLeft
-              BoundLabel.MaxWidth = 0
-              BoundLabel.UseSkinColor = True
-            end
-            object sBitBtn98: TsBitBtn
-              Left = 483
-              Top = 40
-              Width = 25
-              Height = 21
-              Hint = 'Mplus_find_ips'
-              TabOrder = 3
-              OnClick = Mame_ManageBuilds
-              SkinData.SkinSection = 'BUTTON'
-              ImageIndex = 15
-              Images = InBitBtn_Imagelist
-            end
-          end
-          object sCheckBox10: TsCheckBox
-            Left = 5
-            Top = 40
-            Width = 122
-            Height = 20
-            Caption = 'Enable Audio Sync'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ParentFont = False
-            TabOrder = 0
-            SkinData.SkinSection = 'CHECKBOX'
-            ImgChecked = 0
-            ImgUnchecked = 0
-          end
-          object sCheckBox32: TsCheckBox
-            Left = 5
-            Top = 20
-            Width = 161
-            Height = 20
-            Caption = 'Quit Confirutation on Exit'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = [fsBold]
-            ParentFont = False
-            TabOrder = 1
-            SkinData.SkinSection = 'CHECKBOX'
-            ImgChecked = 0
-            ImgUnchecked = 0
-          end
-          object sbar_Mame_UITransparent_MamePlus: TsScrollBar
-            Left = 10
-            Top = 116
-            Width = 245
-            Height = 13
-            Hint = 'Mplus_change_ui_transparent'
-            Max = 255
-            PageSize = 0
-            Position = 215
-            TabOrder = 2
-            OnChange = Mame_ManageBuilds
-            SkinManager = SkinM
-          end
-          object grp117: TGroupBox
-            Left = 184
-            Top = 9
-            Width = 340
-            Height = 88
-            Caption = 'HiScore.Dat'
-            TabOrder = 3
-            object sLabel102: TsLabel
-              Left = 198
-              Top = 72
-              Width = 133
-              Height = 13
-              Caption = 'HiScore.dat not Found!!!'
-              Color = clBtnFace
-              ParentColor = False
-              ParentFont = False
-              Visible = False
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clRed
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = [fsBold]
-              UseSkinColor = False
-            end
-            object sCheckBox33: TsCheckBox
-              Left = 177
-              Top = 15
-              Width = 151
-              Height = 20
-              Hint = 'Mplus_check_hiscore'
-              Caption = 'Enable HiScore Support'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -11
-              Font.Name = 'Tahoma'
-              Font.Style = [fsBold]
-              ParentFont = False
-              TabOrder = 0
-              OnClick = Mame_ManageBuilds
-              SkinData.SkinSection = 'CHECKBOX'
-              ImgChecked = 0
-              ImgUnchecked = 0
-            end
-            object sEdit12: TsEdit
-              Left = 7
-              Top = 50
-              Width = 293
-              Height = 21
-              TabOrder = 1
-              SkinData.SkinSection = 'EDIT'
-              BoundLabel.Active = True
-              BoundLabel.Caption = 'Hiscore.dat Directory'
-              BoundLabel.Indent = 0
-              BoundLabel.Font.Charset = DEFAULT_CHARSET
-              BoundLabel.Font.Color = clWindowText
-              BoundLabel.Font.Height = -11
-              BoundLabel.Font.Name = 'Tahoma'
-              BoundLabel.Font.Style = [fsBold]
-              BoundLabel.Layout = sclTopLeft
-              BoundLabel.MaxWidth = 0
-              BoundLabel.UseSkinColor = True
-            end
-            object sBitBtn1: TsBitBtn
-              Left = 305
-              Top = 50
-              Width = 25
-              Height = 21
-              Hint = 'Mplus_find_hiscore'
-              TabOrder = 2
-              OnClick = Mame_ManageBuilds
-              SkinData.SkinSection = 'BUTTON'
-              ImageIndex = 15
-              Images = InBitBtn_Imagelist
-            end
-          end
-        end
-        object sBitBtn45: TsBitBtn
-          Left = 13
-          Top = 9
-          Width = 75
-          Height = 18
-          Hint = 'MamePlus'
-          Caption = 'MamePlus'
-          TabOrder = 0
-          OnClick = Mame_ManageBuilds
-          SkinData.SkinSection = 'BUTTON'
-        end
-        object sBitBtn46: TsBitBtn
-          Left = 88
-          Top = 9
-          Width = 75
-          Height = 18
-          Hint = 'MameXT'
-          Caption = 'MameXT'
-          TabOrder = 1
-          OnClick = Mame_ManageBuilds
-          SkinData.SkinSection = 'BUTTON'
-        end
-      end
-      object sBitBtn43: TsBitBtn
-        Left = 280
-        Top = 26
-        Width = 75
-        Height = 25
-        Hint = 'Tools'
-        Caption = 'Tools'
-        TabOrder = 1
-        OnClick = Mame_ManageBuilds
-        SkinData.SkinSection = 'BUTTON'
-      end
-      object sBitBtn44: TsBitBtn
-        Left = 205
-        Top = 26
-        Width = 75
-        Height = 25
-        Hint = 'Builds'
-        Caption = 'Builds'
-        TabOrder = 2
-        OnClick = Mame_ManageBuilds
-        SkinData.SkinSection = 'BUTTON'
-      end
+    end
+    object Pem_mame_hlsl: TsPanel
+      Left = 1
+      Top = 1
+      Width = 727
+      Height = 661
+      Align = alCustom
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 7
+      SkinData.SkinSection = 'PANEL'
       object sButton8: TsButton
         Left = 567
         Top = 318
@@ -11264,7 +10942,7 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 0
         WordWrap = False
         SkinData.CustomColor = True
         SkinData.CustomFont = True
@@ -11286,7 +10964,7 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 1
         WordWrap = False
         OnClick = Mame_GlobalOrTopicSave
         SkinData.CustomColor = True
@@ -11294,6 +10972,1899 @@ object Conf: TConf
         SkinData.SkinSection = 'BUTTON'
         ImageAlignment = iaCenter
         Reflected = True
+      end
+      object sCheckBox44: TsCheckBox
+        Left = 224
+        Top = 8
+        Width = 87
+        Height = 20
+        Hint = 'HLSL_Enable'
+        Caption = 'Enable HLSL'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 2
+        OnClick = Mame_ManageHlsl
+        SkinData.SkinSection = 'CHECKBOX'
+        ImgChecked = 0
+        ImgUnchecked = 0
+      end
+      object sBitBtn44: TsBitBtn
+        Left = 14
+        Top = 40
+        Width = 125
+        Height = 25
+        Hint = 'HLSL_Switches'
+        Caption = 'HLSL Enable Switches'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 3
+        OnClick = Mame_ManageHlsl
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sBitBtn45: TsBitBtn
+        Left = 138
+        Top = 40
+        Width = 225
+        Height = 25
+        Hint = 'HLSL_Surface/Color'
+        Caption = 'Surface/Color Processing Parameters'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 4
+        OnClick = Mame_ManageHlsl
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sBitBtn46: TsBitBtn
+        Left = 362
+        Top = 40
+        Width = 177
+        Height = 25
+        Hint = 'HLSL_NTSC'
+        Caption = 'NTSC Processing Parameters'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 5
+        OnClick = Mame_ManageHlsl
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sPanel86: TsPanel
+        Left = 8
+        Top = 63
+        Width = 537
+        Height = 524
+        BevelOuter = bvNone
+        TabOrder = 6
+        SkinData.SkinSection = 'PANEL'
+        object sEdit16: TsEdit
+          Left = 8
+          Top = 72
+          Width = 401
+          Height = 21
+          TabOrder = 0
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'HLSL Path To .FX'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sCheckBox66: TsCheckBox
+          Left = 8
+          Top = 136
+          Width = 97
+          Height = 20
+          Caption = 'HLSL Ini Read'
+          TabOrder = 1
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
+        end
+        object sCheckBox67: TsCheckBox
+          Left = 8
+          Top = 160
+          Width = 99
+          Height = 20
+          Caption = 'HLSL Ini Write'
+          TabOrder = 2
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
+        end
+        object sBitBtn33: TsBitBtn
+          Left = 416
+          Top = 72
+          Width = 25
+          Height = 21
+          TabOrder = 3
+          SkinData.SkinSection = 'BUTTON'
+          ImageIndex = 15
+          Images = InBitBtn_Imagelist
+        end
+        object sComboBox76: TsComboBox
+          Left = 320
+          Top = 144
+          Width = 57
+          Height = 21
+          Alignment = taLeftJustify
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Preset'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+          SkinData.SkinSection = 'COMBOBOX'
+          ItemHeight = 15
+          ItemIndex = 0
+          TabOrder = 4
+          Text = 'None'
+          Items.Strings = (
+            'None'
+            '0'
+            '1'
+            '2'
+            '3')
+        end
+        object sCheckBox68: TsCheckBox
+          Left = 8
+          Top = 224
+          Width = 104
+          Height = 20
+          Caption = 'HLSL AVI Write'
+          TabOrder = 5
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
+        end
+        object sEdit17: TsEdit
+          Left = 8
+          Top = 304
+          Width = 97
+          Height = 21
+          TabOrder = 6
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'HLSL Snap Width'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit32: TsEdit
+          Left = 120
+          Top = 304
+          Width = 97
+          Height = 21
+          TabOrder = 7
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'HLSL Snap Height'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+      end
+      object sPanel87: TsPanel
+        Left = 8
+        Top = 63
+        Width = 537
+        Height = 524
+        BevelOuter = bvNone
+        TabOrder = 7
+        SkinData.SkinSection = 'PANEL'
+        object lbl34: TLabel
+          Left = 8
+          Top = 8
+          Width = 112
+          Height = 13
+          Caption = 'Shadow Mask Alpha'
+        end
+        object lbl35: TLabel
+          Left = 208
+          Top = 8
+          Width = 17
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '0.0'
+        end
+        object lbl37: TLabel
+          Left = 208
+          Top = 96
+          Width = 17
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '0.0'
+        end
+        object lbl36: TLabel
+          Left = 8
+          Top = 96
+          Width = 111
+          Height = 13
+          Caption = 'Shadow Mask USize'
+        end
+        object lbl38: TLabel
+          Left = 8
+          Top = 128
+          Width = 110
+          Height = 13
+          Caption = 'Shadow Mask VSize'
+        end
+        object lbl39: TLabel
+          Left = 208
+          Top = 128
+          Width = 17
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '0.0'
+        end
+        object lbl41: TLabel
+          Left = 208
+          Top = 160
+          Width = 17
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '0.0'
+        end
+        object lbl40: TLabel
+          Left = 8
+          Top = 160
+          Width = 57
+          Height = 13
+          Caption = 'Curvature'
+        end
+        object lbl43: TLabel
+          Left = 208
+          Top = 192
+          Width = 17
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '0.0'
+        end
+        object lbl42: TLabel
+          Left = 8
+          Top = 192
+          Width = 60
+          Height = 13
+          Caption = 'Pincushion'
+        end
+        object lbl45: TLabel
+          Left = 208
+          Top = 224
+          Width = 17
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '0.0'
+        end
+        object lbl44: TLabel
+          Left = 8
+          Top = 224
+          Width = 82
+          Height = 13
+          Caption = 'Scanline Alpha'
+        end
+        object lbl47: TLabel
+          Left = 208
+          Top = 256
+          Width = 17
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '0.0'
+        end
+        object lbl46: TLabel
+          Left = 8
+          Top = 256
+          Width = 73
+          Height = 13
+          Caption = 'Scanline Size'
+        end
+        object lbl48: TLabel
+          Left = 8
+          Top = 344
+          Width = 117
+          Height = 13
+          Caption = 'Scanline Bright Scale'
+        end
+        object lbl49: TLabel
+          Left = 208
+          Top = 344
+          Width = 17
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '0.0'
+        end
+        object lbl50: TLabel
+          Left = 8
+          Top = 376
+          Width = 121
+          Height = 13
+          Caption = 'Scanline Bright Offset'
+        end
+        object lbl51: TLabel
+          Left = 208
+          Top = 376
+          Width = 17
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '0.0'
+        end
+        object lbl52: TLabel
+          Left = 8
+          Top = 408
+          Width = 81
+          Height = 13
+          Caption = 'Scanline Jitter'
+        end
+        object lbl53: TLabel
+          Left = 208
+          Top = 408
+          Width = 17
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '0.0'
+        end
+        object lbl55: TLabel
+          Left = 208
+          Top = 476
+          Width = 17
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '0.0'
+        end
+        object lbl54: TLabel
+          Left = 8
+          Top = 476
+          Width = 60
+          Height = 13
+          Caption = 'Saturation'
+        end
+        object lbl33: TsLabel
+          Left = 288
+          Top = 24
+          Width = 67
+          Height = 13
+          Caption = 'Converge X '
+        end
+        object sLabel36: TsLabel
+          Left = 288
+          Top = 56
+          Width = 64
+          Height = 13
+          Caption = 'Converge Y'
+        end
+        object sLabel37: TsLabel
+          Left = 288
+          Top = 88
+          Width = 102
+          Height = 13
+          Caption = 'Radial Converge X'
+        end
+        object sLabel38: TsLabel
+          Left = 288
+          Top = 120
+          Width = 102
+          Height = 13
+          Caption = 'Radial Converge Y'
+        end
+        object sLabel39: TsLabel
+          Left = 288
+          Top = 200
+          Width = 55
+          Height = 13
+          Caption = 'Red Ratio'
+        end
+        object sLabel40: TsLabel
+          Left = 288
+          Top = 232
+          Width = 67
+          Height = 13
+          Caption = 'Green Ratio'
+        end
+        object sLabel103: TsLabel
+          Left = 288
+          Top = 264
+          Width = 57
+          Height = 13
+          Caption = 'Blue Ratio'
+        end
+        object sLabel111: TsLabel
+          Left = 288
+          Top = 344
+          Width = 34
+          Height = 13
+          Caption = 'Offset'
+        end
+        object sLabel134: TsLabel
+          Left = 288
+          Top = 376
+          Width = 30
+          Height = 13
+          Caption = 'Scale'
+        end
+        object sLabel135: TsLabel
+          Left = 288
+          Top = 408
+          Width = 35
+          Height = 13
+          Caption = 'Power'
+        end
+        object sLabel136: TsLabel
+          Left = 288
+          Top = 440
+          Width = 28
+          Height = 13
+          Caption = 'Floor'
+        end
+        object sLabel137: TsLabel
+          Left = 288
+          Top = 472
+          Width = 76
+          Height = 13
+          Caption = 'Phosphor Life'
+        end
+        object sScrollBar1: TsScrollBar
+          Left = 8
+          Top = 24
+          Width = 217
+          Height = 12
+          Hint = 'Change_ShadowMaskAlpha'
+          PageSize = 0
+          TabOrder = 0
+          OnChange = Mame_ManageHlsl
+          SkinManager = SkinM
+        end
+        object sBitBtn0: TsBitBtn
+          Left = 204
+          Top = 51
+          Width = 21
+          Height = 21
+          TabOrder = 1
+          SkinData.SkinSection = 'BUTTON'
+          ImageIndex = 15
+          Images = InBitBtn_Imagelist
+        end
+        object sEdit35: TsEdit
+          Left = 8
+          Top = 51
+          Width = 193
+          Height = 21
+          TabOrder = 2
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Shadow Mask Texture Path'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sScrollBar2: TsScrollBar
+          Left = 8
+          Top = 112
+          Width = 217
+          Height = 12
+          Hint = 'Change_ShadowMaskUSize'
+          Max = 1000000
+          PageSize = 0
+          TabOrder = 3
+          OnChange = Mame_ManageHlsl
+          SkinManager = SkinM
+        end
+        object sScrollBar3: TsScrollBar
+          Left = 8
+          Top = 144
+          Width = 217
+          Height = 12
+          Hint = 'Change_ShadowMaskVSize'
+          Max = 1000000
+          PageSize = 0
+          TabOrder = 4
+          OnChange = Mame_ManageHlsl
+          SkinManager = SkinM
+        end
+        object sScrollBar4: TsScrollBar
+          Left = 8
+          Top = 176
+          Width = 217
+          Height = 12
+          Hint = 'Change_Curvature'
+          PageSize = 0
+          TabOrder = 5
+          OnChange = Mame_ManageHlsl
+          SkinManager = SkinM
+        end
+        object sScrollBar5: TsScrollBar
+          Left = 8
+          Top = 208
+          Width = 217
+          Height = 12
+          Hint = 'Change_Pincushion'
+          PageSize = 0
+          TabOrder = 6
+          OnChange = Mame_ManageHlsl
+          SkinManager = SkinM
+        end
+        object sScrollBar6: TsScrollBar
+          Left = 8
+          Top = 240
+          Width = 217
+          Height = 12
+          Hint = 'Change_ScanlineAlpha'
+          PageSize = 0
+          TabOrder = 7
+          OnChange = Mame_ManageHlsl
+          SkinManager = SkinM
+        end
+        object sScrollBar7: TsScrollBar
+          Left = 8
+          Top = 272
+          Width = 217
+          Height = 12
+          Hint = 'Change_ScanlineSize'
+          Max = 400
+          PageSize = 0
+          TabOrder = 8
+          OnChange = Mame_ManageHlsl
+          SkinManager = SkinM
+        end
+        object sScrollBar8: TsScrollBar
+          Left = 8
+          Top = 360
+          Width = 217
+          Height = 12
+          Hint = 'Change_ScanlineBrightScale'
+          Max = 200
+          PageSize = 0
+          TabOrder = 9
+          OnChange = Mame_ManageHlsl
+          SkinManager = SkinM
+        end
+        object sScrollBar9: TsScrollBar
+          Left = 8
+          Top = 392
+          Width = 217
+          Height = 12
+          Hint = 'Change_ScanlineBrightOffset'
+          PageSize = 0
+          TabOrder = 10
+          OnChange = Mame_ManageHlsl
+          SkinManager = SkinM
+        end
+        object sScrollBar10: TsScrollBar
+          Left = 8
+          Top = 424
+          Width = 217
+          Height = 12
+          Hint = 'Change_ScanlineJitter'
+          Max = 200
+          PageSize = 0
+          TabOrder = 11
+          OnChange = Mame_ManageHlsl
+          SkinManager = SkinM
+        end
+        object sScrollBar11: TsScrollBar
+          Left = 8
+          Top = 492
+          Width = 217
+          Height = 12
+          Hint = 'Change_Saturation'
+          Max = 400
+          PageSize = 0
+          TabOrder = 12
+          OnChange = Mame_ManageHlsl
+          SkinManager = SkinM
+        end
+        object sEdit33: TsEdit
+          Left = 496
+          Top = 20
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 13
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Blue'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit34: TsEdit
+          Left = 456
+          Top = 20
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 14
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Green'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit36: TsEdit
+          Left = 416
+          Top = 20
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 15
+          Text = '-150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Red'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit37: TsEdit
+          Left = 416
+          Top = 52
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 16
+          Text = '-150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Red'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit38: TsEdit
+          Left = 456
+          Top = 52
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 17
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Green'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit39: TsEdit
+          Left = 496
+          Top = 52
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 18
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Blue'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit40: TsEdit
+          Left = 416
+          Top = 84
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 19
+          Text = '-150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Red'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit41: TsEdit
+          Left = 456
+          Top = 84
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 20
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Green'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit42: TsEdit
+          Left = 496
+          Top = 84
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 21
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Blue'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit43: TsEdit
+          Left = 416
+          Top = 116
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 22
+          Text = '-150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Red'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit44: TsEdit
+          Left = 456
+          Top = 116
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 23
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Green'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit45: TsEdit
+          Left = 496
+          Top = 116
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 24
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Blue'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit46: TsEdit
+          Left = 416
+          Top = 196
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 25
+          Text = '-150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Red'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit47: TsEdit
+          Left = 456
+          Top = 196
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 26
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Green'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit48: TsEdit
+          Left = 496
+          Top = 196
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 27
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Blue'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit49: TsEdit
+          Left = 416
+          Top = 228
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 28
+          Text = '-150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Red'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit50: TsEdit
+          Left = 456
+          Top = 228
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 29
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Green'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit51: TsEdit
+          Left = 496
+          Top = 228
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 30
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Blue'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit52: TsEdit
+          Left = 416
+          Top = 260
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 31
+          Text = '-150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Red'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit63: TsEdit
+          Left = 456
+          Top = 260
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 32
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Green'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit67: TsEdit
+          Left = 496
+          Top = 260
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 33
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Blue'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit68: TsEdit
+          Left = 416
+          Top = 340
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 34
+          Text = '-150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Red'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit69: TsEdit
+          Left = 456
+          Top = 340
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 35
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Green'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit70: TsEdit
+          Left = 496
+          Top = 340
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 36
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Blue'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit71: TsEdit
+          Left = 416
+          Top = 372
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 37
+          Text = '-150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Red'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit72: TsEdit
+          Left = 456
+          Top = 372
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 38
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Green'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit73: TsEdit
+          Left = 496
+          Top = 372
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 39
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Blue'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit76: TsEdit
+          Left = 416
+          Top = 404
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 40
+          Text = '-150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Red'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit77: TsEdit
+          Left = 456
+          Top = 404
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 41
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Green'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit78: TsEdit
+          Left = 496
+          Top = 404
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 42
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Blue'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit79: TsEdit
+          Left = 416
+          Top = 436
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 43
+          Text = '-150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Red'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit80: TsEdit
+          Left = 456
+          Top = 436
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 44
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Green'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit98: TsEdit
+          Left = 496
+          Top = 436
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 45
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Blue'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit99: TsEdit
+          Left = 416
+          Top = 468
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 46
+          Text = '-150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Red'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit100: TsEdit
+          Left = 456
+          Top = 468
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGreen
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 47
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Green'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit101: TsEdit
+          Left = 496
+          Top = 468
+          Width = 35
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 48
+          Text = '150'
+          SkinData.CustomFont = True
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Blue'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclTopCenter
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit113: TsEdit
+          Left = 100
+          Top = 296
+          Width = 60
+          Height = 21
+          TabOrder = 49
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Scanline Height'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit114: TsEdit
+          Left = 72
+          Top = 448
+          Width = 60
+          Height = 21
+          TabOrder = 50
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Defocus X'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit115: TsEdit
+          Left = 164
+          Top = 448
+          Width = 60
+          Height = 21
+          TabOrder = 51
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'Y'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+      end
+      object sPanel90: TsPanel
+        Left = 8
+        Top = 63
+        Width = 537
+        Height = 524
+        BevelOuter = bvNone
+        TabOrder = 8
+        SkinData.SkinSection = 'PANEL'
+        object sLabel138: TsLabel
+          Left = 24
+          Top = 8
+          Width = 389
+          Height = 13
+          Caption = 
+            'Warning!!! IF you don'#39't know what is going here PLEASE don'#39't tou' +
+            'ch it.'
+          Color = clBtnFace
+          ParentColor = False
+        end
+        object sEdit112: TsEdit
+          Left = 240
+          Top = 480
+          Width = 80
+          Height = 21
+          TabOrder = 0
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'YIQ Phase Count'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit111: TsEdit
+          Left = 240
+          Top = 432
+          Width = 80
+          Height = 21
+          TabOrder = 1
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'YIQ Horizontal Scanline Duration'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit110: TsEdit
+          Left = 240
+          Top = 384
+          Width = 80
+          Height = 21
+          TabOrder = 2
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'YIQ Q Filter Cutoff Frequency'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit109: TsEdit
+          Left = 240
+          Top = 360
+          Width = 80
+          Height = 21
+          TabOrder = 3
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'YIQ I Filter Cutoff Frequency'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit108: TsEdit
+          Left = 240
+          Top = 336
+          Width = 80
+          Height = 21
+          TabOrder = 4
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'YIQ Y Filter Cutoff Frequency'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit107: TsEdit
+          Left = 240
+          Top = 288
+          Width = 80
+          Height = 21
+          TabOrder = 5
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'YIQ Y Filter Notch Width'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit106: TsEdit
+          Left = 240
+          Top = 240
+          Width = 80
+          Height = 21
+          TabOrder = 6
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'YIQ Incoming Pixel Clock Scaling'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit105: TsEdit
+          Left = 240
+          Top = 216
+          Width = 80
+          Height = 21
+          TabOrder = 7
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'YIQ Outgoing Color Carrier'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit104: TsEdit
+          Left = 240
+          Top = 160
+          Width = 80
+          Height = 21
+          TabOrder = 8
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'YIQ Signal Processing B'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit103: TsEdit
+          Left = 240
+          Top = 136
+          Width = 80
+          Height = 21
+          TabOrder = 9
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'YIQ Signal Processing A'
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sEdit102: TsEdit
+          Left = 240
+          Top = 85
+          Width = 80
+          Height = 21
+          TabOrder = 10
+          SkinData.SkinSection = 'EDIT'
+          BoundLabel.Active = True
+          BoundLabel.Caption = 'YIQ Color Carrier '
+          BoundLabel.Indent = 0
+          BoundLabel.Font.Charset = DEFAULT_CHARSET
+          BoundLabel.Font.Color = clWindowText
+          BoundLabel.Font.Height = -11
+          BoundLabel.Font.Name = 'Tahoma'
+          BoundLabel.Font.Style = [fsBold]
+          BoundLabel.Layout = sclLeft
+          BoundLabel.MaxWidth = 0
+          BoundLabel.UseSkinColor = True
+        end
+        object sCheckBox65: TsCheckBox
+          Left = 88
+          Top = 40
+          Width = 80
+          Height = 20
+          Hint = 'HLSL_EnableYIQ'
+          Caption = 'YIQ Enable'
+          TabOrder = 11
+          OnClick = Mame_ManageHlsl
+          SkinData.SkinSection = 'CHECKBOX'
+          ImgChecked = 0
+          ImgUnchecked = 0
+        end
       end
     end
     object Pem_mame_database: TsPanel
@@ -11458,7 +13029,7 @@ object Conf: TConf
       end
     end
     object Pwg_weather: TsPanel
-      Left = 1
+      Left = 727
       Top = 1
       Width = 727
       Height = 661
@@ -11466,7 +13037,7 @@ object Conf: TConf
       TabOrder = 9
       SkinData.SkinSection = 'PANEL'
       object sLabel61: TsLabel
-        Left = 16
+        Left = 10
         Top = 38
         Width = 96
         Height = 13
@@ -11492,13 +13063,105 @@ object Conf: TConf
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
       end
-      object grp31: TGroupBox
-        Left = 368
-        Top = 48
-        Width = 353
-        Height = 336
+      object sButton18: TsButton
+        Left = 688
+        Top = 24
+        Width = 20
+        Height = 20
+        Hint = 'Weather_AddSelection'
+        Caption = '+'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+        OnClick = Weather_Config
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sButton19: TsButton
+        Left = 632
+        Top = 24
+        Width = 50
+        Height = 20
+        Hint = 'Weather_CancelAdd'
+        Caption = 'Cancel'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 1
+        Visible = False
+        OnClick = Weather_Config
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sBitBtn114: TsBitBtn
+        Left = 288
+        Top = 30
+        Width = 25
+        Height = 25
+        Hint = 'Weather_Celcius'
+        Caption = 'C'
+        TabOrder = 2
+        Visible = False
+        OnClick = Weather_Config
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sBitBtn115: TsBitBtn
+        Left = 320
+        Top = 30
+        Width = 25
+        Height = 25
+        Hint = 'Weather_Fahrenheit'
+        Caption = 'F'
+        TabOrder = 4
+        Visible = False
+        OnClick = Weather_Config
+        SkinData.SkinSection = 'BUTTON'
+      end
+      object sBitBtn116: TsBitBtn
+        Left = 232
+        Top = 30
+        Width = 25
+        Height = 25
+        Hint = 'Weather_Refresh'
         TabOrder = 3
         Visible = False
+        OnClick = Weather_Config
+        SkinData.SkinSection = 'BUTTON'
+        ImageIndex = 37
+        Images = InBitBtn_Imagelist
+      end
+      object ScrollBox1: TJvScrollBox
+        Left = 10
+        Top = 56
+        Width = 350
+        Height = 410
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BorderStyle = bsNone
+        Color = clBtnFace
+        ParentColor = False
+        TabOrder = 5
+      end
+      object sPanel89: TsPanel
+        Left = 368
+        Top = 52
+        Width = 353
+        Height = 330
+        BevelOuter = bvNone
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 6
+        Visible = False
+        SkinData.SkinSection = 'PANEL'
         object sEdit31: TsEdit
           Left = 8
           Top = 24
@@ -11528,25 +13191,43 @@ object Conf: TConf
           BoundLabel.MaxWidth = 0
           BoundLabel.UseSkinColor = True
         end
-        object rb8: TRadioButton
-          Left = 315
-          Top = 24
-          Width = 30
-          Height = 17
-          Caption = 'F'
-          TabOrder = 1
-          Visible = False
-        end
-        object rb7: TRadioButton
+        object rb7: TLMDRadioButton
           Left = 275
           Top = 24
           Width = 30
-          Height = 17
+          Height = 18
           Caption = 'C'
-          Checked = True
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 1
+          Transparent = True
+        end
+        object rb8: TLMDRadioButton
+          Left = 315
+          Top = 24
+          Width = 29
+          Height = 18
+          Caption = 'F'
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
           TabOrder = 2
-          TabStop = True
-          Visible = False
+          Transparent = True
         end
         object sListBox1: TsListBox
           Left = 8
@@ -11580,90 +13261,6 @@ object Conf: TConf
           OnClick = Weather_Config
           SkinData.SkinSection = 'BUTTON'
         end
-      end
-      object sButton18: TsButton
-        Left = 688
-        Top = 24
-        Width = 20
-        Height = 20
-        Hint = 'Weather_AddSelection'
-        Caption = '+'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 0
-        OnClick = Weather_Config
-        SkinData.SkinSection = 'BUTTON'
-      end
-      object ScrollBox1: TScrollBox
-        Left = 16
-        Top = 56
-        Width = 350
-        Height = 425
-        VertScrollBar.ParentColor = False
-        VertScrollBar.Size = 4
-        BevelInner = bvNone
-        BevelOuter = bvNone
-        BorderStyle = bsNone
-        TabOrder = 1
-      end
-      object sButton19: TsButton
-        Left = 632
-        Top = 24
-        Width = 50
-        Height = 20
-        Hint = 'Weather_CancelAdd'
-        Caption = 'Cancel'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 2
-        Visible = False
-        OnClick = Weather_Config
-        SkinData.SkinSection = 'BUTTON'
-      end
-      object sBitBtn114: TsBitBtn
-        Left = 288
-        Top = 30
-        Width = 25
-        Height = 25
-        Hint = 'Weather_Celcius'
-        Caption = 'C'
-        TabOrder = 4
-        Visible = False
-        OnClick = Weather_Config
-        SkinData.SkinSection = 'BUTTON'
-      end
-      object sBitBtn115: TsBitBtn
-        Left = 320
-        Top = 30
-        Width = 25
-        Height = 25
-        Hint = 'Weather_Fahrenheit'
-        Caption = 'F'
-        TabOrder = 5
-        Visible = False
-        OnClick = Weather_Config
-        SkinData.SkinSection = 'BUTTON'
-      end
-      object sBitBtn116: TsBitBtn
-        Left = 232
-        Top = 30
-        Width = 25
-        Height = 25
-        Hint = 'Weather_Refresh'
-        TabOrder = 6
-        Visible = False
-        OnClick = Weather_Config
-        SkinData.SkinSection = 'BUTTON'
-        ImageIndex = 37
-        Images = InBitBtn_Imagelist
       end
     end
     object Pwg_timedate: TsPanel
@@ -12517,14 +14114,6 @@ object Conf: TConf
         Height = 400
         TabOrder = 1
         SkinData.SkinSection = 'PANEL'
-        object ScrollBox2: TScrollBox
-          Left = 8
-          Top = 40
-          Width = 350
-          Height = 356
-          BorderStyle = bsNone
-          TabOrder = 0
-        end
         object sButton23: TsButton
           Left = 688
           Top = 8
@@ -12538,7 +14127,7 @@ object Conf: TConf
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
-          TabOrder = 1
+          TabOrder = 0
           OnClick = DateTime_Config
           SkinData.SkinSection = 'BUTTON'
         end
@@ -12555,7 +14144,7 @@ object Conf: TConf
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
-          TabOrder = 2
+          TabOrder = 1
           Visible = False
           OnClick = DateTime_Config
           SkinData.SkinSection = 'BUTTON'
@@ -12801,10 +14390,20 @@ object Conf: TConf
           Font.Name = 'Arial Black'
           Font.Style = [fsBold]
           ParentFont = False
-          TabOrder = 4
+          TabOrder = 2
           Visible = False
           OnClick = DateTime_Config
           SkinData.SkinSection = 'BUTTON'
+        end
+        object ScrollBox2: TJvScrollBox
+          Left = 8
+          Top = 16
+          Width = 361
+          Height = 377
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BorderStyle = bsNone
+          TabOrder = 4
         end
       end
       object sBitBtn111: TsBitBtn
@@ -12992,22 +14591,6 @@ object Conf: TConf
           Height = 139
           Caption = 'Screen'
           TabOrder = 0
-          object rb3: TRadioButton
-            Left = 3
-            Top = 20
-            Width = 79
-            Height = 17
-            Caption = 'Fullscreen'
-            TabOrder = 0
-          end
-          object rb4: TRadioButton
-            Left = 170
-            Top = 20
-            Width = 66
-            Height = 17
-            Caption = 'Window'
-            TabOrder = 1
-          end
           object sComboBox26: TsComboBox
             Left = 5
             Top = 50
@@ -13026,7 +14609,7 @@ object Conf: TConf
             SkinData.SkinSection = 'COMBOBOX'
             ItemHeight = 15
             ItemIndex = 9
-            TabOrder = 2
+            TabOrder = 0
             Text = '640X480_32bit Color'
             Items.Strings = (
               '320X240_16bit Color'
@@ -13052,7 +14635,7 @@ object Conf: TConf
             Width = 72
             Height = 20
             Caption = 'Dithering'
-            TabOrder = 3
+            TabOrder = 1
             SkinData.SkinSection = 'CHECKBOX'
             ImgChecked = 0
             ImgUnchecked = 0
@@ -13077,7 +14660,7 @@ object Conf: TConf
             SkinData.SkinSection = 'COMBOBOX'
             ItemHeight = 15
             ItemIndex = 0
-            TabOrder = 4
+            TabOrder = 2
             Text = '0'
             Items.Strings = (
               '0'
@@ -13104,12 +14687,49 @@ object Conf: TConf
             SkinData.SkinSection = 'COMBOBOX'
             ItemHeight = 15
             ItemIndex = 0
-            TabOrder = 5
+            TabOrder = 3
             Text = '0'
             Items.Strings = (
               '0'
               '1'
               '2')
+          end
+          object sPanel77: TsPanel
+            Left = 4
+            Top = 15
+            Width = 236
+            Height = 28
+            BevelOuter = bvNone
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 4
+            SkinData.SkinSection = 'PANEL'
+            object rb3: TLMDRadioButton
+              Left = 3
+              Top = 4
+              Width = 105
+              Height = 17
+              Caption = 'Fullscreen'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              Checked = False
+              TabOrder = 0
+            end
+            object rb4: TLMDRadioButton
+              Left = 161
+              Top = 4
+              Width = 71
+              Height = 17
+              Caption = 'Window'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              Checked = False
+              TabOrder = 1
+            end
           end
         end
         object grp22: TGroupBox
@@ -13315,23 +14935,6 @@ object Conf: TConf
           Height = 139
           Caption = 'Screen'
           TabOrder = 0
-          Visible = False
-          object rb5: TRadioButton
-            Left = 3
-            Top = 20
-            Width = 79
-            Height = 17
-            Caption = 'Fullscreen'
-            TabOrder = 0
-          end
-          object rb6: TRadioButton
-            Left = 170
-            Top = 20
-            Width = 66
-            Height = 17
-            Caption = 'Window'
-            TabOrder = 1
-          end
           object sComboBox32: TsComboBox
             Left = 5
             Top = 50
@@ -13350,7 +14953,7 @@ object Conf: TConf
             SkinData.SkinSection = 'COMBOBOX'
             ItemHeight = 15
             ItemIndex = 9
-            TabOrder = 2
+            TabOrder = 0
             Text = '640X480_32bit Color'
             Items.Strings = (
               '320X240_16bit Color'
@@ -13376,7 +14979,7 @@ object Conf: TConf
             Width = 72
             Height = 20
             Caption = 'Dithering'
-            TabOrder = 3
+            TabOrder = 1
             SkinData.SkinSection = 'CHECKBOX'
             ImgChecked = 0
             ImgUnchecked = 0
@@ -13401,7 +15004,7 @@ object Conf: TConf
             SkinData.SkinSection = 'COMBOBOX'
             ItemHeight = 15
             ItemIndex = 0
-            TabOrder = 4
+            TabOrder = 2
             Text = '0'
             Items.Strings = (
               '0'
@@ -13428,12 +15031,49 @@ object Conf: TConf
             SkinData.SkinSection = 'COMBOBOX'
             ItemHeight = 15
             ItemIndex = 0
-            TabOrder = 5
+            TabOrder = 3
             Text = '0'
             Items.Strings = (
               '0'
               '1'
               '2')
+          end
+          object sPanel78: TsPanel
+            Left = 4
+            Top = 15
+            Width = 236
+            Height = 28
+            BevelOuter = bvNone
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 4
+            SkinData.SkinSection = 'PANEL'
+            object rb5: TLMDRadioButton
+              Left = 3
+              Top = 4
+              Width = 105
+              Height = 17
+              Caption = 'Fullscreen'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              Checked = False
+              TabOrder = 0
+            end
+            object rb6: TLMDRadioButton
+              Left = 161
+              Top = 4
+              Width = 71
+              Height = 17
+              Caption = 'Window'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              Checked = False
+              TabOrder = 1
+            end
           end
         end
         object grp27: TGroupBox
@@ -13623,7 +15263,7 @@ object Conf: TConf
         Left = 139
         Top = 6
         Width = 294
-        Height = 43
+        Height = 51
         Caption = 'Graphics State'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -13632,13 +15272,12 @@ object Conf: TConf
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 2
-        object rb9: TRadioButton
-          Left = 5
-          Top = 20
-          Width = 68
-          Height = 17
-          Hint = 'OpenGL'
-          Caption = 'OpenGL'
+        object sPanel76: TsPanel
+          Left = 6
+          Top = 15
+          Width = 282
+          Height = 24
+          BevelOuter = bvNone
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -13646,23 +15285,35 @@ object Conf: TConf
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
-          OnClick = Zinc_ClickGraphicsState
-        end
-        object rb10: TRadioButton
-          Left = 189
-          Top = 20
-          Width = 68
-          Height = 17
-          Hint = 'D3D'
-          Caption = 'Direct3D'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 1
-          OnClick = Zinc_ClickGraphicsState
+          SkinData.SkinSection = 'PANEL'
+          object rb9: TLMDRadioButton
+            Left = 16
+            Top = 6
+            Width = 105
+            Height = 17
+            Hint = 'OpenGL'
+            Caption = 'OpenGL'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            Checked = False
+            TabOrder = 0
+            Transparent = True
+            OnClick = Zinc_ClickGraphicsState
+          end
+          object rb10: TLMDRadioButton
+            Left = 177
+            Top = 6
+            Width = 105
+            Height = 17
+            Hint = 'D3D'
+            Caption = 'Direct3D'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            Checked = False
+            TabOrder = 1
+            Transparent = True
+            OnClick = Zinc_ClickGraphicsState
+          end
         end
       end
     end
@@ -13707,37 +15358,96 @@ object Conf: TConf
           Height = 125
           Caption = 'Machine'
           TabOrder = 0
-          object rb13: TRadioButton
-            Left = 5
-            Top = 25
-            Width = 113
-            Height = 17
-            Caption = 'Atari ST/STFM'
+          object sPanel79: TsPanel
+            Left = 3
+            Top = 17
+            Width = 121
+            Height = 100
+            BevelOuter = bvNone
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
             TabOrder = 0
-          end
-          object rb14: TRadioButton
-            Left = 5
-            Top = 50
-            Width = 113
-            Height = 17
-            Caption = 'Atari STE'
-            TabOrder = 1
-          end
-          object rb15: TRadioButton
-            Left = 5
-            Top = 75
-            Width = 113
-            Height = 17
-            Caption = 'Atari TT*'
-            TabOrder = 2
-          end
-          object rb16: TRadioButton
-            Left = 5
-            Top = 100
-            Width = 113
-            Height = 17
-            Caption = 'Atari Falcon*'
-            TabOrder = 3
+            SkinData.SkinSection = 'PANEL'
+            object rb13: TLMDRadioButton
+              Left = 6
+              Top = 1
+              Width = 104
+              Height = 18
+              Caption = 'Atari ST/STFM'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 0
+              Transparent = True
+            end
+            object rb14: TLMDRadioButton
+              Left = 6
+              Top = 26
+              Width = 74
+              Height = 18
+              Caption = 'Atari STE'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 1
+              Transparent = True
+            end
+            object rb15: TLMDRadioButton
+              Left = 6
+              Top = 51
+              Width = 75
+              Height = 18
+              Caption = 'Atari TT*'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 2
+              Transparent = True
+            end
+            object rb16: TLMDRadioButton
+              Left = 6
+              Top = 74
+              Width = 97
+              Height = 18
+              Caption = 'Atari Falcon*'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 3
+              Transparent = True
+            end
           end
         end
         object grp39: TGroupBox
@@ -13747,45 +15457,115 @@ object Conf: TConf
           Height = 150
           Caption = 'Cpu Type'
           TabOrder = 1
-          object rb17: TRadioButton
-            Left = 5
-            Top = 25
-            Width = 113
-            Height = 17
-            Caption = '68000'
+          object sPanel80: TsPanel
+            Left = 4
+            Top = 14
+            Width = 128
+            Height = 128
+            BevelOuter = bvNone
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
             TabOrder = 0
-          end
-          object rb18: TRadioButton
-            Left = 5
-            Top = 50
-            Width = 113
-            Height = 17
-            Caption = '68010'
-            TabOrder = 1
-          end
-          object rb19: TRadioButton
-            Left = 5
-            Top = 75
-            Width = 113
-            Height = 17
-            Caption = '68020'
-            TabOrder = 2
-          end
-          object rb20: TRadioButton
-            Left = 5
-            Top = 100
-            Width = 113
-            Height = 17
-            Caption = '68EC030 + FPU'
-            TabOrder = 3
-          end
-          object rb21: TRadioButton
-            Left = 5
-            Top = 128
-            Width = 125
-            Height = 17
-            Caption = '68040'
-            TabOrder = 4
+            SkinData.SkinSection = 'PANEL'
+            object rb17: TLMDRadioButton
+              Left = 6
+              Top = 9
+              Width = 58
+              Height = 18
+              Caption = '68000'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 0
+              Transparent = True
+            end
+            object rb18: TLMDRadioButton
+              Left = 6
+              Top = 34
+              Width = 58
+              Height = 18
+              Caption = '68010'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 1
+              Transparent = True
+            end
+            object rb19: TLMDRadioButton
+              Left = 6
+              Top = 59
+              Width = 58
+              Height = 18
+              Caption = '68020'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 2
+              Transparent = True
+            end
+            object rb20: TLMDRadioButton
+              Left = 6
+              Top = 84
+              Width = 107
+              Height = 18
+              Caption = '68EC030 + FPU'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 3
+              Transparent = True
+            end
+            object rb21: TLMDRadioButton
+              Left = 6
+              Top = 108
+              Width = 58
+              Height = 18
+              Caption = '68040'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 4
+              Transparent = True
+            end
           end
         end
         object grp40: TGroupBox
@@ -13926,53 +15706,128 @@ object Conf: TConf
           Height = 93
           Caption = 'Ram - Size'
           TabOrder = 0
-          object rb22: TRadioButton
-            Left = 5
-            Top = 20
-            Width = 70
-            Height = 17
-            Caption = '512 (Kb)'
+          object sPanel81: TsPanel
+            Left = 8
+            Top = 17
+            Width = 169
+            Height = 68
+            BevelOuter = bvNone
             TabOrder = 0
-          end
-          object rb23: TRadioButton
-            Left = 5
-            Top = 45
-            Width = 70
-            Height = 17
-            Caption = '1 (Mb)'
-            TabOrder = 1
-          end
-          object rb24: TRadioButton
-            Left = 5
-            Top = 70
-            Width = 70
-            Height = 17
-            Caption = '2 (Mb)'
-            TabOrder = 2
-          end
-          object rb25: TRadioButton
-            Left = 90
-            Top = 20
-            Width = 70
-            Height = 17
-            Caption = '4 (Mb)'
-            TabOrder = 3
-          end
-          object rb26: TRadioButton
-            Left = 90
-            Top = 45
-            Width = 70
-            Height = 17
-            Caption = '8(Mb)'
-            TabOrder = 4
-          end
-          object rb27: TRadioButton
-            Left = 90
-            Top = 70
-            Width = 70
-            Height = 17
-            Caption = '14(Mb)'
-            TabOrder = 5
+            SkinData.SkinSection = 'PANEL'
+            object rb22: TLMDRadioButton
+              Left = 6
+              Top = 2
+              Width = 71
+              Height = 18
+              Caption = '512 (Kb)'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 0
+              Transparent = True
+            end
+            object rb23: TLMDRadioButton
+              Left = 6
+              Top = 27
+              Width = 60
+              Height = 18
+              Caption = '1 (Mb)'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 1
+              Transparent = True
+            end
+            object rb24: TLMDRadioButton
+              Left = 6
+              Top = 48
+              Width = 60
+              Height = 18
+              Caption = '2 (Mb)'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 2
+              Transparent = True
+            end
+            object rb25: TLMDRadioButton
+              Left = 90
+              Top = 2
+              Width = 60
+              Height = 18
+              Caption = '4 (Mb)'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 3
+              Transparent = True
+            end
+            object rb26: TLMDRadioButton
+              Left = 90
+              Top = 27
+              Width = 57
+              Height = 18
+              Caption = '8(Mb)'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 4
+              Transparent = True
+            end
+            object rb27: TLMDRadioButton
+              Left = 90
+              Top = 48
+              Width = 64
+              Height = 18
+              Caption = '14(Mb)'
+              Alignment.Alignment = agTopLeft
+              Alignment.Spacing = 4
+              AutoSize = True
+              Checked = False
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 5
+              Transparent = True
+            end
           end
         end
         object grp42: TGroupBox
@@ -16380,7 +18235,7 @@ object Conf: TConf
           Caption = 'Type Setup'
           TabOrder = 0
           object sCheckBox110: TsCheckBox
-            Left = 5
+            Left = 6
             Top = 25
             Width = 74
             Height = 20
@@ -16391,7 +18246,7 @@ object Conf: TConf
             ImgUnchecked = 0
           end
           object sCheckBox111: TsCheckBox
-            Left = 5
+            Left = 6
             Top = 50
             Width = 106
             Height = 20
@@ -16402,7 +18257,7 @@ object Conf: TConf
             ImgUnchecked = 0
           end
           object sCheckBox112: TsCheckBox
-            Left = 5
+            Left = 6
             Top = 75
             Width = 110
             Height = 20
@@ -16412,22 +18267,6 @@ object Conf: TConf
             ImgChecked = 0
             ImgUnchecked = 0
           end
-          object rb1: TRadioButton
-            Left = 50
-            Top = 95
-            Width = 70
-            Height = 17
-            Caption = 'SBG'
-            TabOrder = 3
-          end
-          object rb2: TRadioButton
-            Left = 50
-            Top = 115
-            Width = 70
-            Height = 17
-            Caption = 'SBG2'
-            TabOrder = 4
-          end
         end
         object grp72: TGroupBox
           Left = 160
@@ -16436,30 +18275,6 @@ object Conf: TConf
           Height = 142
           Caption = 'Preference'
           TabOrder = 1
-          object rb31: TRadioButton
-            Left = 5
-            Top = 25
-            Width = 128
-            Height = 17
-            Caption = 'GBC (SGB Border)'
-            TabOrder = 0
-          end
-          object rb32: TRadioButton
-            Left = 5
-            Top = 50
-            Width = 137
-            Height = 17
-            Caption = 'GBC -> SGB -> GB'
-            TabOrder = 1
-          end
-          object rb33: TRadioButton
-            Left = 5
-            Top = 75
-            Width = 143
-            Height = 17
-            Caption = 'SGB -> GBC -> BG'
-            TabOrder = 2
-          end
         end
         object sCheckBox113: TsCheckBox
           Left = 5
@@ -16542,7 +18357,7 @@ object Conf: TConf
           end
           object sCheckBox64: TsCheckBox
             Left = 88
-            Top = 56
+            Top = 45
             Width = 42
             Height = 20
             Caption = 'GBC'
@@ -16570,6 +18385,119 @@ object Conf: TConf
         ImgChecked = 0
         ImgUnchecked = 0
       end
+      object sPanel70: TsPanel
+        Left = 72
+        Top = 464
+        Width = 65
+        Height = 41
+        BevelOuter = bvNone
+        TabOrder = 6
+        SkinData.SkinSection = 'PANEL'
+        object rb1: TLMDRadioButton
+          Left = 4
+          Top = 1
+          Width = 45
+          Height = 18
+          Caption = 'SBG'
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 0
+          Transparent = True
+        end
+        object rb2: TLMDRadioButton
+          Left = 4
+          Top = 23
+          Width = 52
+          Height = 18
+          Caption = 'SBG2'
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 1
+          Transparent = True
+        end
+      end
+      object sPanel71: TsPanel
+        Left = 185
+        Top = 392
+        Width = 137
+        Height = 97
+        BevelOuter = bvNone
+        TabOrder = 7
+        SkinData.SkinSection = 'PANEL'
+        object rb31: TLMDRadioButton
+          Left = 6
+          Top = 17
+          Width = 121
+          Height = 18
+          Caption = 'GBC (SGB Border)'
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 0
+          Transparent = True
+        end
+        object rb32: TLMDRadioButton
+          Left = 6
+          Top = 42
+          Width = 122
+          Height = 18
+          Caption = 'GBC -> SGB -> GB'
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 1
+          Transparent = True
+        end
+        object rb33: TLMDRadioButton
+          Left = 6
+          Top = 67
+          Width = 122
+          Height = 18
+          Caption = 'SGB -> GBC -> BG'
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 2
+          Transparent = True
+        end
+      end
     end
     object Pem_kigb_screen: TsPanel
       Left = 727
@@ -16592,38 +18520,6 @@ object Conf: TConf
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
-        object rb39: TRadioButton
-          Left = 5
-          Top = 30
-          Width = 80
-          Height = 17
-          Caption = '1x1'
-          TabOrder = 0
-        end
-        object rb40: TRadioButton
-          Left = 5
-          Top = 55
-          Width = 80
-          Height = 17
-          Caption = '2x2'
-          TabOrder = 1
-        end
-        object rb41: TRadioButton
-          Left = 5
-          Top = 80
-          Width = 80
-          Height = 17
-          Caption = '3x3'
-          TabOrder = 2
-        end
-        object rb42: TRadioButton
-          Left = 5
-          Top = 105
-          Width = 80
-          Height = 17
-          Caption = 'Fullscreen'
-          TabOrder = 3
-        end
       end
       object grp79: TGroupBox
         Left = 131
@@ -16714,63 +18610,13 @@ object Conf: TConf
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 2
-        object rb43: TRadioButton
-          Left = 5
-          Top = 30
-          Width = 80
-          Height = 17
-          Hint = 'Kigb_otherthancustom'
-          Caption = 'Classic GB'
-          TabOrder = 0
-          OnClick = Kigb_ConfigScreen
-        end
-        object rb44: TRadioButton
-          Left = 85
-          Top = 31
-          Width = 80
-          Height = 17
-          Hint = 'Kigb_otherthancustom'
-          Caption = 'GB Pocket'
-          TabOrder = 1
-          OnClick = Kigb_ConfigScreen
-        end
-        object rb45: TRadioButton
-          Left = 165
-          Top = 32
-          Width = 80
-          Height = 17
-          Hint = 'Kigb_otherthancustom'
-          Caption = 'No$GMB'
-          TabOrder = 2
-          OnClick = Kigb_ConfigScreen
-        end
-        object rb46: TRadioButton
-          Left = 237
-          Top = 33
-          Width = 80
-          Height = 17
-          Hint = 'Kigb_otherthancustom'
-          Caption = 'Bgb'
-          TabOrder = 3
-          OnClick = Kigb_ConfigScreen
-        end
-        object rb47: TRadioButton
-          Left = 397
-          Top = 34
-          Width = 80
-          Height = 17
-          Hint = 'Kigb_custom'
-          Caption = 'Costum'
-          TabOrder = 4
-          OnClick = Kigb_ConfigScreen
-        end
         object grp81: TGroupBox
           Left = 6
           Top = 64
           Width = 475
           Height = 81
           Caption = 'Costumize'
-          TabOrder = 5
+          TabOrder = 0
           Visible = False
           object sLabel94: TsLabel
             Left = 270
@@ -16860,7 +18706,7 @@ object Conf: TConf
           HotTrackFont.Height = -11
           HotTrackFont.Name = 'MS Sans Serif'
           HotTrackFont.Style = []
-          TabOrder = 6
+          TabOrder = 1
           Visible = False
           Properties.NoneColorCaption = 'No Color'
           Properties.DefaultColorCaption = 'Automatic'
@@ -16885,6 +18731,120 @@ object Conf: TConf
           Properties.CustomColorFont.Style = []
           OnColorChange = Kigb_ConfigScreen
         end
+        object sPanel72: TsPanel
+          Left = 6
+          Top = 24
+          Width = 475
+          Height = 41
+          BevelOuter = bvNone
+          TabOrder = 2
+          SkinData.SkinSection = 'PANEL'
+          object rb43: TLMDRadioButton
+            Left = 6
+            Top = 7
+            Width = 79
+            Height = 18
+            Hint = 'Kigb_otherthancustom'
+            Caption = 'Classic GB'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 0
+            Transparent = True
+            OnClick = Kigb_ConfigScreen
+          end
+          object rb44: TLMDRadioButton
+            Left = 90
+            Top = 7
+            Width = 80
+            Height = 18
+            Hint = 'Kigb_otherthancustom'
+            Caption = 'GB Pocket'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 1
+            Transparent = True
+            OnClick = Kigb_ConfigScreen
+          end
+          object rb45: TLMDRadioButton
+            Left = 175
+            Top = 7
+            Width = 69
+            Height = 18
+            Hint = 'Kigb_otherthancustom'
+            Caption = 'No$GMB'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 2
+            Transparent = True
+            OnClick = Kigb_ConfigScreen
+          end
+          object rb46: TLMDRadioButton
+            Left = 250
+            Top = 7
+            Width = 44
+            Height = 18
+            Hint = 'Kigb_otherthancustom'
+            Caption = 'Bgb'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 3
+            Transparent = True
+            OnClick = Kigb_ConfigScreen
+          end
+          object rb47: TLMDRadioButton
+            Left = 409
+            Top = 7
+            Width = 66
+            Height = 18
+            Hint = 'Kigb_custom'
+            Caption = 'Costum'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 4
+            Transparent = True
+            OnClick = Kigb_ConfigScreen
+          end
+        end
       end
       object grp82: TGroupBox
         Left = 340
@@ -16899,53 +18859,213 @@ object Conf: TConf
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 3
-        object rb48: TRadioButton
-          Left = 5
-          Top = 30
-          Width = 113
-          Height = 17
-          Caption = 'None'
+        object sPanel73: TsPanel
+          Left = 4
+          Top = 18
+          Width = 177
+          Height = 161
+          BevelOuter = bvNone
           TabOrder = 0
+          SkinData.SkinSection = 'PANEL'
+          object rb48: TLMDRadioButton
+            Left = 6
+            Top = 14
+            Width = 51
+            Height = 18
+            Caption = 'None'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 0
+            Transparent = True
+          end
+          object rb49: TLMDRadioButton
+            Left = 6
+            Top = 39
+            Width = 90
+            Height = 18
+            Caption = 'Super 2xSai'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 1
+            Transparent = True
+          end
+          object rb50: TLMDRadioButton
+            Left = 6
+            Top = 64
+            Width = 89
+            Height = 18
+            Caption = 'Super Eagle'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 2
+            Transparent = True
+          end
+          object rb51: TLMDRadioButton
+            Left = 6
+            Top = 89
+            Width = 113
+            Height = 18
+            Caption = 'Scanlines 100%'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 3
+            Transparent = True
+          end
+          object rb52: TLMDRadioButton
+            Left = 6
+            Top = 114
+            Width = 106
+            Height = 18
+            Caption = 'Scanlines 50%'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 4
+            Transparent = True
+          end
+          object rb53: TLMDRadioButton
+            Left = 6
+            Top = 137
+            Width = 65
+            Height = 18
+            Caption = 'Bilinear'
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 5
+            Transparent = True
+          end
         end
-        object rb49: TRadioButton
-          Left = 5
-          Top = 55
-          Width = 113
-          Height = 17
-          Caption = 'Super 2xSai'
+      end
+      object sPanel74: TsPanel
+        Left = 26
+        Top = 56
+        Width = 91
+        Height = 137
+        BevelOuter = bvNone
+        TabOrder = 4
+        SkinData.SkinSection = 'PANEL'
+        object rb39: TLMDRadioButton
+          Left = 6
+          Top = 6
+          Width = 44
+          Height = 18
+          Caption = '1x1'
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 0
+          Transparent = True
+        end
+        object rb40: TLMDRadioButton
+          Left = 6
+          Top = 36
+          Width = 44
+          Height = 18
+          Caption = '2x2'
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
           TabOrder = 1
+          Transparent = True
         end
-        object rb50: TRadioButton
-          Left = 5
-          Top = 80
-          Width = 113
-          Height = 17
-          Caption = 'Super Eagle'
+        object rb41: TLMDRadioButton
+          Left = 6
+          Top = 66
+          Width = 44
+          Height = 18
+          Caption = '3x3'
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
           TabOrder = 2
+          Transparent = True
         end
-        object rb51: TRadioButton
-          Left = 5
-          Top = 105
-          Width = 113
-          Height = 17
-          Caption = 'Scanlines 100%'
+        object rb42: TLMDRadioButton
+          Left = 6
+          Top = 95
+          Width = 80
+          Height = 18
+          Caption = 'Fullscreen'
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
           TabOrder = 3
-        end
-        object rb52: TRadioButton
-          Left = 5
-          Top = 130
-          Width = 113
-          Height = 17
-          Caption = 'Scanlines 50%'
-          TabOrder = 4
-        end
-        object rb53: TRadioButton
-          Left = 5
-          Top = 155
-          Width = 113
-          Height = 17
-          Caption = 'Bilinear'
-          TabOrder = 5
+          Transparent = True
         end
       end
     end
@@ -16970,43 +19090,13 @@ object Conf: TConf
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
-        object rb36: TRadioButton
-          Left = 13
-          Top = 30
-          Width = 113
-          Height = 17
-          Hint = 'Kigb_GBD_None'
-          Caption = 'None'
-          TabOrder = 0
-          OnClick = Kigb_ConfigOthers
-        end
-        object rb37: TRadioButton
-          Left = 13
-          Top = 60
-          Width = 113
-          Height = 17
-          Hint = 'Kigb_GBD_BGPrinter'
-          Caption = 'BG Printer'
-          TabOrder = 1
-          OnClick = Kigb_ConfigOthers
-        end
-        object rb38: TRadioButton
-          Left = 13
-          Top = 90
-          Width = 113
-          Height = 17
-          Hint = 'Kigb_GBD_BarcodeBoy'
-          Caption = 'Barcode Boy'
-          TabOrder = 2
-          OnClick = Kigb_ConfigOthers
-        end
         object grp77: TGroupBox
           Left = 164
           Top = 20
           Width = 298
           Height = 110
           Caption = 'Barcode Options'
-          TabOrder = 3
+          TabOrder = 0
           object sCheckBox114: TsCheckBox
             Left = 130
             Top = 12
@@ -17077,6 +19167,93 @@ object Conf: TConf
             Images = InBitBtn_Imagelist
           end
         end
+        object sPanel69: TsPanel
+          Left = 9
+          Top = 22
+          Width = 137
+          Height = 105
+          BevelOuter = bvNone
+          TabOrder = 1
+          SkinData.SkinSection = 'PANEL'
+          object rb36: TLMDRadioButton
+            Left = 6
+            Top = 14
+            Width = 51
+            Height = 18
+            Hint = 'Kigb_GBD_None'
+            Caption = 'None'
+            ThemeGlobalMode = True
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Flat = True
+            FocusStyle = fcControl
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            Font3D.LightDepth = 0
+            Font3D.Style = tdRaised
+            GlyphTransparent = False
+            ParentFont = False
+            TabOrder = 0
+            OnClick = Kigb_ConfigOthers
+          end
+          object rb37: TLMDRadioButton
+            Left = 6
+            Top = 44
+            Width = 80
+            Height = 18
+            Hint = 'Kigb_GBD_BGPrinter'
+            Caption = 'BG Printer'
+            ThemeGlobalMode = True
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Flat = True
+            FocusStyle = fcControl
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            Font3D.LightDepth = 0
+            Font3D.Style = tdRaised
+            GlyphTransparent = False
+            ParentFont = False
+            TabOrder = 1
+            OnClick = Kigb_ConfigOthers
+          end
+          object rb38: TLMDRadioButton
+            Left = 6
+            Top = 74
+            Width = 93
+            Height = 18
+            Hint = 'Kigb_GBD_BarcodeBoy'
+            Caption = 'Barcode Boy'
+            ThemeGlobalMode = True
+            Alignment.Alignment = agTopLeft
+            Alignment.Spacing = 4
+            AutoSize = True
+            Checked = False
+            Flat = True
+            FocusStyle = fcControl
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            Font3D.LightDepth = 0
+            Font3D.Style = tdRaised
+            GlyphTransparent = False
+            ParentFont = False
+            TabOrder = 2
+            OnClick = Kigb_ConfigOthers
+          end
+        end
       end
     end
     object Pem_kigb_sound: TsPanel
@@ -17115,29 +19292,13 @@ object Conf: TConf
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
-        object rb54: TRadioButton
-          Left = 340
-          Top = 10
-          Width = 40
-          Height = 17
-          Caption = 'On'
-          TabOrder = 0
-        end
-        object rb55: TRadioButton
-          Left = 385
-          Top = 10
-          Width = 40
-          Height = 17
-          Caption = 'Off'
-          TabOrder = 1
-        end
         object grp84: TGroupBox
           Left = 5
           Top = 28
           Width = 420
           Height = 133
           Caption = 'Options'
-          TabOrder = 2
+          TabOrder = 0
           object grp85: TGroupBox
             Left = 230
             Top = 10
@@ -17746,6 +19907,53 @@ object Conf: TConf
           SkinData.SkinSection = 'PANEL'
         end
       end
+      object sPanel75: TsPanel
+        Left = 344
+        Top = 40
+        Width = 100
+        Height = 18
+        BevelOuter = bvNone
+        TabOrder = 6
+        SkinData.SkinSection = 'PANEL'
+        object rb54: TLMDRadioButton
+          Left = 6
+          Top = 1
+          Width = 38
+          Height = 18
+          Caption = 'On'
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 0
+          Transparent = True
+        end
+        object rb55: TLMDRadioButton
+          Left = 56
+          Top = 1
+          Width = 39
+          Height = 18
+          Caption = 'Off'
+          Alignment.Alignment = agTopLeft
+          Alignment.Spacing = 4
+          AutoSize = True
+          Checked = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 1
+          Transparent = True
+        end
+      end
     end
     object Pce_themes: TsPanel
       Left = 727
@@ -17756,10 +19964,10 @@ object Conf: TConf
       TabOrder = 0
       SkinData.SkinSection = 'PANEL'
       object sLabelFX3: TsLabelFX
-        Left = 99
-        Top = 285
-        Width = 64
-        Height = 16
+        Left = 119
+        Top = 308
+        Width = 70
+        Height = 22
         Caption = 'sLabelFX3'
         ParentFont = False
         Font.Charset = ANSI_CHARSET
@@ -17774,10 +19982,10 @@ object Conf: TConf
         Shadow.Distance = 3
       end
       object sLabelFX11: TsLabelFX
-        Left = 600
-        Top = 308
-        Width = 64
-        Height = 16
+        Left = 619
+        Top = 333
+        Width = 70
+        Height = 22
         Caption = 'sLabelFX3'
         ParentFont = False
         Font.Charset = ANSI_CHARSET
@@ -17792,10 +20000,10 @@ object Conf: TConf
         Shadow.Distance = 3
       end
       object sLabelFX12: TsLabelFX
-        Left = 600
-        Top = 352
-        Width = 64
-        Height = 16
+        Left = 619
+        Top = 377
+        Width = 70
+        Height = 22
         Caption = 'sLabelFX3'
         ParentFont = False
         Font.Charset = ANSI_CHARSET
@@ -17811,7 +20019,7 @@ object Conf: TConf
       end
       object sBB_apply_ce_themes: TsBitBtn
         Left = 138
-        Top = 150
+        Top = 220
         Width = 75
         Height = 25
         Hint = 'Apply_themes'
@@ -17827,7 +20035,7 @@ object Conf: TConf
         Left = 23
         Top = 77
         Width = 191
-        Height = 69
+        Height = 135
         Hint = 'Select_Themes'
         BevelInner = bvNone
         BevelOuter = bvNone
@@ -17864,6 +20072,7 @@ object Conf: TConf
           Width = 334
           Height = 235
           Align = alClient
+          Picture.Data = {07544269746D617000000000}
           Stretch = True
         end
       end
@@ -17883,6 +20092,20 @@ object Conf: TConf
         Options = [goHeader, goSelectFullRow]
         TabOrder = 0
         TabStop = True
+      end
+      object grp35: TGroupBox
+        Left = 192
+        Top = 512
+        Width = 297
+        Height = 121
+        Caption = 'Zinc Informarion'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 1
       end
     end
     object Pem_hatari_paths: TsPanel
@@ -18616,6 +20839,35 @@ object Conf: TConf
         Enabled = False
         TabOrder = 3
         SkinData.SkinSection = 'BUTTON'
+      end
+    end
+    object Pce_logsession: TsPanel
+      Left = 727
+      Top = 1
+      Width = 727
+      Height = 661
+      TabOrder = 33
+      SkinData.SkinSection = 'PANEL'
+      object RE_Log: TJvRichEdit
+        Left = 16
+        Top = 72
+        Width = 577
+        Height = 505
+        AutoSize = False
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BorderStyle = bsNone
+        Color = clBtnHighlight
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        HideScrollBars = False
+        ParentFont = False
+        ReadOnly = True
+        ScrollBars = ssVertical
+        TabOrder = 0
       end
     end
   end
@@ -24315,6 +26567,7 @@ object Conf: TConf
     Top = 10
   end
   object SkinM: TsSkinManager
+    Active = False
     InternalSkins = <>
     MenuSupport.IcoLineSkin = 'ICOLINE'
     MenuSupport.ExtraLineFont.Charset = DEFAULT_CHARSET
@@ -24325,25 +26578,24 @@ object Conf: TConf
     SkinDirectory = 'c:\Skins'
     SkinInfo = 'N/A'
     ThirdParty.ThirdEdits = 
-      'TEdit'#13#10'TMemo'#13#10'TMaskEdit'#13#10'TSpinEdit'#13#10'TLabeledEdit'#13#10'THotKey'#13#10'TList' +
-      'Box'#13#10'TCheckListBox'#13#10'TRichEdit'#13#10'TDateTimePicker'#13#10'TCategoryButtons' +
-      #13#10'TFileListBox'#13#10
+      'TEdit'#13#10'TMemo'#13#10'THotKey'#13#10'TCheckListBox'#13#10'TCategoryButtons'#13#10'TFileLis' +
+      'tBox'#13#10
     ThirdParty.ThirdButtons = 'TButton'#13#10
-    ThirdParty.ThirdBitBtns = ' '#13#10
-    ThirdParty.ThirdCheckBoxes = ' '#13#10
-    ThirdParty.ThirdGroupBoxes = ' '#13#10
+    ThirdParty.ThirdBitBtns = 'TBitBtn'#13#10
+    ThirdParty.ThirdCheckBoxes = 'TCheckBox'#13#10'TGroupButton'#13#10
+    ThirdParty.ThirdGroupBoxes = 'TGroupBox'#13#10
     ThirdParty.ThirdListViews = 'TListView'#13#10
-    ThirdParty.ThirdPanels = ' '#13#10
-    ThirdParty.ThirdGrids = 'TStringGrid'#13#10'TDrawGrid'#13#10'TValueListEditor'#13#10
-    ThirdParty.ThirdTreeViews = 'TTreeView'#13#10
-    ThirdParty.ThirdComboBoxes = ' '#13#10
+    ThirdParty.ThirdPanels = 'TPage'#13#10'TGridPanel'#13#10
+    ThirdParty.ThirdGrids = 'TDrawGrid'#13#10
+    ThirdParty.ThirdTreeViews = ' '
+    ThirdParty.ThirdComboBoxes = 'TComboBox'#13#10'TComboBoxEx'#13#10'TColorBox'#13#10
     ThirdParty.ThirdWWEdits = ' '#13#10
     ThirdParty.ThirdVirtualTrees = ' '#13#10
     ThirdParty.ThirdGridEh = ' '#13#10
     ThirdParty.ThirdPageControl = ' '#13#10
     ThirdParty.ThirdTabControl = ' '#13#10
     ThirdParty.ThirdToolBar = ' '#13#10
-    ThirdParty.ThirdStatusBar = 'TStatusBar'#13#10
+    ThirdParty.ThirdStatusBar = ' '
     ThirdParty.ThirdSpeedButton = ' '#13#10
     ThirdParty.ThirdScrollControl = ' '#13#10
     ThirdParty.ThirdUpDown = ' '#13#10
@@ -24393,7 +26645,7 @@ object Conf: TConf
     Top = 40
   end
   object CEJoy2: TNLDJoystick
-    PollingInterval = -1
+    Advanced = True
     Left = 104
     Top = 40
   end

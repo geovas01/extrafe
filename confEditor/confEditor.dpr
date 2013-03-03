@@ -20,7 +20,7 @@ uses
   mame_graphics in 'code\mame_\mame_graphics.pas',
   mame_sound in 'code\mame_\mame_sound.pas',
   mame_others in 'code\mame_\mame_others.pas',
-  mame_builds in 'code\mame_\mame_builds.pas',
+  mame_hlsl in 'code\mame_\mame_hlsl.pas',
   zinc_paths in 'code\zinc_\zinc_paths.pas',
   zinc_graphics in 'code\zinc_\zinc_graphics.pas',
   zinc_sound in 'code\zinc_\zinc_sound.pas',
@@ -50,7 +50,9 @@ uses
   hatari_database in 'code\hatari_\hatari_database.pas',
   psx_database in 'code\psx_\psx_database.pas',
   kigb_database in 'code\kigb_\kigb_database.pas',
-  AnalogClock in 'code\widgets_\AnalogClock.pas';
+  AnalogClock in 'code\widgets_\AnalogClock.pas',
+  ce_logsession in 'code\ce_\ce_logsession.pas',
+  VCLFixes in 'code\mame_\VCLFixes.pas';
 
 var
   Map : THandle;

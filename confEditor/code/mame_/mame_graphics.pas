@@ -2,23 +2,18 @@ unit mame_graphics;
 
 interface
 uses
-  SysUtils,StdCtrls,Controls,Classes,ExtCtrls;
+  SysUtils,StdCtrls,Controls,Classes,ExtCtrls,
+  sScrollbar,sLabel;
 
   procedure SetMame_GraphicsFromMameIni;
   procedure SaveMame_GraphicsAtExit;
 
-  procedure MamePauseChange;
-  procedure MameContrastChange;
-  procedure MameBrightnessChange;
-  procedure MameGammaChange;
-  procedure MameEmulationSpeedChange;
   procedure MameSecondsToRunChange;
   procedure MameScaleScreenChange;
-  procedure MameFullscreenContrastChange;
-  procedure MameFullscreenBrightnessChange;
-  procedure MameFullscreenGammaChange;
   procedure MameChooseEffect;
   procedure MameResetEffects;
+  
+  procedure Graphics_MovingScrollbar(strScrollbar,strLabel,strPerCent: string; dia: integer);
   procedure MameVideomodeChange(VideoMode: string);
   procedure MamePerWindowVideoChange(Which_Screen,FromType: string;Save:Boolean);
 
@@ -38,46 +33,18 @@ var
 implementation
 uses
   main,mainconf,menu,FunctionX,onflycomponents,
-  mame_dirs,mame_sound,mame_others,mame_database,mame_builds;
+  mame_dirs,mame_sound,mame_others,mame_database,mame_hlsl,
+  ce_logsession;
 
-Procedure MamePauseChange;
+procedure Graphics_MovingScrollbar(strScrollbar,strLabel,strPerCent: string; dia: integer);
 var
   PosNum: Single;
-Begin
-  PosNum := Conf.sbar_mame_pausebrightness.Position;
-  Conf.sLabel3.Caption := FormatFloat('0.00',(PosNum / 100));
-End;
-
-ProCedure MameContrastChange;
-var
-  PosNum: Single;
-Begin
-  PosNum := Conf.sbar_mame_contrastcorrection.Position;
-  Conf.sLabel2.Caption := FormatFloat('0.00',(PosNum / 100));
-end;
-
-Procedure MameBrightnessChange;
-var
-  PosNum: Single;
-Begin
-  PosNum := Conf.sbar_mame_brightnesscorrection.Position;
-  Conf.sLabel5.Caption := FormatFloat('0.00',(PosNum / 100));
-end;
-
-Procedure MameGammaChange;
-var
-  PosNum: Single;
-Begin
-  PosNum := Conf.sbar_mame_gammacorrection.Position;
-  Conf.sLabel4.Caption := FormatFloat('0.00',(PosNum / 100));
-end;
-
-Procedure MameEmulationSpeedChange;
-var
-  PosNum: Single;
-Begin
-  PosNum := Conf.sbar_mame_emulatrionspeed.Position;
-  Conf.sLabel11.Caption := FormatFloat('0.00',(PosNum / 100));
+  comp: Tcomponent;
+begin
+  comp := FindComponentEx('Conf.' + strScrollbar);
+  PosNum := TsScrollBar(comp).Position;
+  comp := FindComponentEx('Conf.' + strLabel);
+  TsLabel(comp).Caption := FormatFloat(strPerCent,(PosNum / dia));
 end;
 
 Procedure MameSecondsToRunChange;
@@ -89,30 +56,6 @@ Procedure MameScaleScreenChange;
 Begin
   Conf.sLabel1.Caption := IntToStr(Conf.sbar_mame_scalescreen.Position);
 End;
-
-Procedure MameFullscreenGammaChange;
-var
-  PosNum: Single;
-Begin
-  PosNum := Conf.sbar_mame_Fgamma.Position;
-  Conf.sLabel8.Caption := FormatFloat('0.00',(PosNum / 100));
-end;
-
-Procedure MameFullscreenContrastChange;
-var
-  PosNum: Single;
-Begin
-  PosNum := Conf.sbar_mame_Fcontrast.Position;
-  Conf.sLabel6.Caption := FormatFloat('0.00',(PosNum / 100));
-end;
-
-Procedure MameFullscreenBrightnessChange;
-var
-  PosNum: Single;
-Begin
-  PosNum := Conf.sbar_mame_Fbrightness.Position;
-  Conf.sLabel7.Caption := FormatFloat('0.00',(PosNum / 100));
-end;
 
 Procedure MameResetEffects;
 Begin
@@ -336,6 +279,7 @@ begin
       Conf.sComboBox7.Items.Add('auto');
       for k := 0 to resolutions.Count - 1 do
         Conf.sComboBox7.Items.Add(resolutions.Strings[k]);
+      Log_NewTextEnter(#9 + 'Display resolutions of your pc is found and setup OK');
       Conf.sComboBox7.ItemIndex := 0;
       Conf.DMI1.Active := True;
       Conf.sComboBox5.Clear;
@@ -386,7 +330,7 @@ begin
                   DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) * 100;
                   Conf.sbar_mame_emulatrionspeed.Position := Round(DiffNum);
-                  MameEmulationSpeedChange;
+                  Graphics_MovingScrollbar('sbar_mame_emulatrionspeed','sLabel11','0.00',100);
                 end
               else if t1 = 'rotate' then
                 begin
@@ -404,28 +348,28 @@ begin
                   DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) * 100;
                   Conf.sbar_mame_pausebrightness.Position := Round(DiffNum);
-                  MamePauseChange;
+                  Graphics_MovingScrollbar('sbar_mame_pausebrightness','sLabel3','0.00',100);
                 end
               else if t1 = 'gamma' then
                 begin
                   DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_gammacorrection.Position := Round(DiffNum);
-                  MameGammaChange;
+                  Graphics_MovingScrollbar('sbar_mame_gammacorrection','sLabel4','0.00',100);
                 end
               else if t1 = 'brightness' then
                 begin
                   DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_brightnesscorrection.Position := Round(DiffNum);
-                  MameBrightnessChange;
+                  Graphics_MovingScrollbar('sbar_mame_brightnesscorrection','sLabel5','0.00',100);
                 end
               else if t1 = 'contrast' then
                 begin
                   DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_contrastcorrection.Position := Round(DiffNum);
-                  MameContrastChange;
+                  Graphics_MovingScrollbar('sbar_mame_contrastcorrection','sLabel2','0.00',100);
                 end
               else if t1 = 'autoframeskip' then
                 Conf.sCheckBox15.Checked := StrToBool(t2)
@@ -454,21 +398,21 @@ begin
                   DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_Fgamma.Position := Round(DiffNum);
-                  MameFullscreenGammaChange;
+                  Graphics_MovingScrollbar('sbar_mame_Fgamma','sLabel8','0.00',100);
                 end
               else if t1 = 'full_screen_brightness' then
                 begin
                   DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_Fbrightness.Position := Round(DiffNum);
-                  MameFullscreenBrightnessChange;
+                  Graphics_MovingScrollbar('sbar_mame_Fbrightness','sLabel7','0.00',100);
                 end
               else if t1 = 'full_screen_contrast' then
                 begin
                   DecimalSeparator := '.';
                   DiffNum := StrToFloat(t2) *100;
                   Conf.sbar_mame_Fcontrast.Position := Round(DiffNum);
-                  MameFullscreenContrastChange;
+                  Graphics_MovingScrollbar('sbar_mame_Fcontrast','sLabel6','0.00',100);
                 end
               else if t1 = 'switchres' then
                 Conf.sCheckBox9.Checked := StrToBool(t2)
@@ -496,10 +440,10 @@ begin
           CloseFile(MameIniFile);
         end;
       MamePerWindowVideoChange('All Screens','',False);
-      CheckMameGraphics_TopicSettings;
+      CheckMameGraphics_TopicSettings;      
       CheckTopicsConfig;
+      Log_NewTextEnter(#9 + 'Found all Settings OK');
     end;
-  Started := False;
 end;
 
 procedure SaveMame_GraphicsAtExit;
@@ -818,18 +762,18 @@ begin
   Conf.sCheckBox5.Checked := True;
   Conf.sCheckBox6.Checked := True;
   Conf.sbar_mame_emulatrionspeed.Position := 100;
-  MameEmulationSpeedChange;
+  Graphics_MovingScrollbar('sbar_mame_emulatrionspeed','sLabel11','0.00',100);
   Conf.sComboBox20.Text := 'Default';
   Conf.sCheckBox41.Checked := False;
   Conf.sCheckBox40.Checked := False;
   Conf.sbar_mame_pausebrightness.Position := 65;
-  MamePauseChange;
+  Graphics_MovingScrollbar('sbar_mame_pausebrightness','sLabel3','0.00',100);
   Conf.sbar_mame_gammacorrection.Position := 100;
-  MameGammaChange;
+  Graphics_MovingScrollbar('sbar_mame_gammacorrection','sLabel4','0.00',100);
   Conf.sbar_mame_brightnesscorrection.Position := 100;
-  MameBrightnessChange;
+  Graphics_MovingScrollbar('sbar_mame_brightnesscorrection','sLabel5','0.00',100);
   Conf.sbar_mame_contrastcorrection.Position := 100;
-  MameContrastChange;
+  Graphics_MovingScrollbar('sbar_mame_contrastcorrection','sLabel2','0.00',100);
   Conf.sCheckBox15.Checked := False;
   Conf.sComboBox9.Text := 'Draw Every Frame';
   Conf.sComboBox2.Text := 'Direct 3D';
@@ -837,11 +781,11 @@ begin
   Conf.sComboBox3.Text := 'Version 9';
   Conf.sCheckBox8.Checked := True;
   Conf.sbar_mame_Fgamma.Position := 100;
-  MameFullscreenGammaChange;
+  Graphics_MovingScrollbar('sbar_mame_Fgamma','sLabel8','0.00',100);
   Conf.sbar_mame_Fbrightness.Position := 100;
-  MameFullscreenBrightnessChange;
+  Graphics_MovingScrollbar('sbar_mame_Fbrightness','sLabel7','0.00',100);
   Conf.sbar_mame_Fcontrast.Position := 100;
-  MameFullscreenContrastChange;
+  Graphics_MovingScrollbar('sbar_mame_Fcontrast','sLabel6','0.00',100);
   Conf.sCheckBox9.Checked := False;
   Conf.sCheckBox11.Checked := False;
   Conf.sCheckBox12.Checked := False;
@@ -949,8 +893,8 @@ begin
     em_mame_sound_FreeDynamicComps
   else if (Cmenustate = 'em_arcade_mame_others') then
     em_mame_others_FreeDynamicComps
-  else if (Cmenustate = 'em_arcade_mame_builds') then
-    em_mame_builds_FreeDynamicComps
+  else if (Cmenustate = 'em_arcade_mame_hlsl') then
+    em_mame_hlsl_FreeDynamicComps
   else if (Cmenustate = 'em_arcade_mame_database') then
     em_mame_database_FreeDynamicComps;
   CurrentStateSave;
@@ -992,3 +936,4 @@ begin
 end;
 
 end.
+

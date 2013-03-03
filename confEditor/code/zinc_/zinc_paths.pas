@@ -35,17 +35,17 @@ var
 procedure AddZincExe_Path;
 begin
   gFindFiles := 'zinc';
-  Conf.Find_Files.InitialDir := Program_Path+'emulators';
+  Conf.Find_Files.InitialDir := Program_Path + 'emulators';
   Conf.Find_Files.Filter := 'ZiNc.exe|ZiNc.exe';
   Conf.Find_Files.Execute;
 end;
 
 procedure SetUpTheNewZincExe;
 begin
-  ZincDatabaseFile := ExtractFilePath(Application.ExeName) + 'media\emulators\arcade\zinc\database\zinc_efuse';
+  ZincDatabaseFile := Program_Path + 'media\emulators\arcade\zinc\database\zinc_efuse';
   Zinc_Exe := ExtractFileName(Conf.Find_Files.FileName);
   FullPathZinc_Exe := ExtractFilePath(Conf.Find_Files.FileName);
-  Zinc_ini := ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\config.ini';
+  Zinc_ini := Program_Path + 'media\emulators\arcade\zinc\config\config.ini';
   if not FileExists(Zinc_ini) then
     Zinc_Config := TIniFile.Create(Zinc_ini);
   Conf.sEdit53.Text := FullPathZinc_Exe+Zinc_Exe;
@@ -59,7 +59,7 @@ begin
   CreateRender_cfgFile;
   SetUpZincGraphicsFirstTime;
   SetUpZincSoundFirstTime;
-  CreateFirstTimeDatabase;
+  CreateFirstTimeZincDatabase;
 end;
 
 procedure AddZincRoms_Path;
@@ -77,11 +77,7 @@ procedure SetTheNewZincRomDirectory;
 begin
   Conf.sEdit54.Text := newpath;
   Zinc_RomsPath := newpath;
-  DeleteFile(ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\database\zinc_efuse.xml');
-  Conf.nxtgrd_zinc.ClearRows;
-  Zinc_Exe := ExtractFileName(Conf.Find_Files.FileName);
-  FullPathZinc_Exe := ExtractFilePath(Conf.Find_Files.FileName);
-  CreateFirstTimeDatabase;
+  CreateFirstTimeZincDatabase;
   Zinc_Config.WriteString('Zinc_Paths','Zinc_Roms',newpath);
 end;
 
@@ -153,8 +149,10 @@ begin
   rf.Add('EnableKeys      = 1;');
   rf.Add('FastExcel         = 0;');
   rf.SaveToFile(FullPathZinc_Exe + 'renderer.cfg');
-  rf.SaveToFile(ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\opengl_renderer.cfg');
-  rf.SaveToFile(ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\d3d_renderer.cfg');
+  rf.SaveToFile(Program_Path + 'media\emulators\arcade\zinc\config\opengl_renderer.cfg');
+  rf.SaveToFile(Program_Path + 'media\emulators\arcade\zinc\config\d3d_renderer.cfg');
+  Zinc_Config.WriteBool('Zinc_Files','Zinc_OpenGL',True);
+  Zinc_Config.WriteBool('Zinc_Files','Zinc_D3D',True);
   rf.Free;
   //Create the zinc sound cfg
   sf := TStringList.Create;
@@ -208,19 +206,16 @@ end;
 
 procedure SetZinc_PathsFromZincIni;
 begin
-  Conf.sEdit53.Text := FullPathZinc_Exe + '\'+ Zinc_Exe;
+  Conf.sEdit53.Text := FullPathZinc_Exe + Zinc_Exe;
   Conf.sEdit54.Text := Zinc_Config.ReadString('Zinc_Paths','Zinc_Roms',Conf.sEdit54.Text);
   Conf.sEdit55.Text := Zinc_Config.ReadString('Zinc_Paths','Zinc_Snaps',Conf.sEdit55.Text);
 end;
 
 procedure SaveZinc_PathsAtExit;
-var
-  Zpath: string;
 begin
   if Zinc_Exe <> '' then
     begin
-      Zpath := Trim(Copy(Conf.sEdit53.Text,0,Length(Conf.sEdit53.Text)- 9));
-      Zinc_Config.WriteString('Zinc_Paths','Zinc_Path',Zpath);
+      Zinc_Config.WriteString('Zinc_Paths','Zinc_Path',FullPathZinc_Exe);
       Zinc_Config.WriteString('Zinc_Paths','Zinc_Roms',Conf.sEdit54.Text);
       Zinc_Config.WriteString('Zinc_Paths','Zinc_Snaps',Conf.sEdit55.Text);
     end;

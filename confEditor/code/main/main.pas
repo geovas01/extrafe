@@ -7,27 +7,27 @@ uses
   Dialogs, StdCtrls, shellapi, ComCtrls, Buttons, inifiles, ExtCtrls,ImgList, //Delphi units
   sSkinProvider,sSkinManager, sEdit, sPanel,sBitBtn,sGauge,sCheckListBox, sButton, sListBox, sScrollBar, sCheckBox, sComboBox, sLabel,acPNG,acAlphaImageList, //Alphaskin units
   CDesktopMonitorInfo, CWMIBase, CSoundDeviceInfo, //Info Devices Units
-  LMDBaseControl,LMDBaseGraphicControl, LMDGraphicControl, LMDBaseImage, LMDCustomLImage,LMDLImage, //LMD Units
-  JvBaseDlg, JvSelectDirectory, JvDialogs,JvAppInst, //Jvcl units
-  NxScrollControl, NxCustomGridControl, NxCustomGrid, NxGrid,NxColumnClasses, NxColumns,
-  LMDFontSizeComboBox,LMDThemedComboBox, LMDCustomComboBox,LMDFontComboBox,//NextGrid Units
-  FunctionX,global, // functions units
-  LMDCustomNImage, LMDNImage,
-  GLKeyboard,
+  LMDBaseControl,LMDBaseGraphicControl, LMDGraphicControl, LMDBaseImage, LMDCustomLImage,LMDLImage,LMDFontSizeComboBox,LMDThemedComboBox, LMDCustomComboBox,LMDFontComboBox,
+  LMDCustomNImage, LMDNImage,LMDControl,LMDCustomControl, LMDRadioButton,LMDCustomPanel,LMDButtonControl, // LMND Units
+  JvBaseDlg, JvSelectDirectory, JvDialogs,JvAppInst,JvLED, JvExControls,
+  JvExStdCtrls, JvRichEdit, JvExForms, JvScrollBox,
+  JvExExtCtrls, JvExtComponent, JvPanel, JvOfficeColorPanel,//Jvcl units
+  NxScrollControl, NxCustomGridControl, NxCustomGrid, NxGrid,NxColumnClasses, NxColumns,//NextGrid Units
+  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP,
+  IdUDPBase, IdUDPClient, IdSNTP, //Indy units
+  FunctionX,global, // functions units  
+  NLDJoystick, // Joystick units
+  GLKeyboard, // Glsnene Units
   Spin,
   //my units
   menu,
   ce_themes,ce_config,
-  mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
+  mame_dirs,mame_graphics,mame_sound,mame_others,mame_hlsl,mame_database,
   zinc_paths,zinc_graphics,zinc_sound,zinc_database,
   hatari_system,hatari_roms,hatari_screen,hatari_joy,hatari_paths,hatari_database,
   psx_paths,psx_screen,psx_sound,psx_others,psx_database,
   kigb_paths,kigb_screen,kigb_sound,kigb_others,kigb_database,
-  wg_weather,wg_timedate,
-  JvExExtCtrls, JvExtComponent, JvPanel, JvOfficeColorPanel,
-  IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP,
-  IdUDPBase, IdUDPClient, IdSNTP, NLDJoystick, JvExControls, JvgCheckBox,
-  JvLED;
+  wg_weather,wg_timedate;
 
 
 const
@@ -35,13 +35,18 @@ const
   AniArrow2 = 8;AniText2 = 9;AniLink2 = 10;AniBusy2 = 11;AniHorizontal2 = 12;AniVertical2 = 13;AniPrecision2 = 14;
   AniArrow3 = 15;AniText3 = 16;AniLink3 = 17;AniBusy3 = 18;AniHorizontal3 = 19;AniVertical3 = 20;AniPrecision3 = 21;
   AniArrow4 = 22;AniText4 = 23;AniLink4 = 24;AniBusy4 = 25;AniHorizontal4 = 26;AniVertical4 = 27;AniPrecision4 = 28;
+  AniArrow5 = 29;AniText5 = 30;AniLink5 = 31;AniBusy5 = 32;AniHorizontal5 = 33;AniVertical5 = 34;AniPrecision5 = 35;
+  AniArrow6 = 36;AniText6 = 37;AniLink6 = 38;AniBusy6 = 39;AniHorizontal6 = 40;AniVertical6 = 41;AniPrecision6 = 42;
+  AniArrow7 = 43;AniText7 = 44;AniLink7 = 45;AniBusy7 = 46;AniHorizontal7 = 47;AniVertical7 = 48;AniPrecision7 = 49;
+  AniArrow8 = 50;AniText8 = 51;AniLink8 = 52;AniBusy8 = 53;AniHorizontal8 = 54;AniVertical8 = 55;AniPrecision8 = 56;
   UM_DESTROYPANEL = WM_APP + 601;
   UM_ONClICKEDPANELSACTIONS = WM_APP + 660;
 
 type
   TConf = class(TForm)
 //  StringGrid Components
-    nxtgrd_mame: TNextGrid;nxtgrd_ips_mameplus: TNextGrid;nxtgrd_ips_mamext: TNextGrid;
+    nxtgrd_mame: TNextGrid;
+    nxtgrd_ips_mameplus: TNextGrid;
     nxtgrd_zinc: TNextGrid;
     nxtgrd_hatari: TNextGrid;
     nxtgrd_pSX: TNextGrid;
@@ -63,14 +68,12 @@ type
     Main_Panel: TsPanel;
     Menu_Panel: TsPanel;
 //  ConfEditor Panels
-    Pce_wizard: TsPanel;Pce_config: TsPanel;Pce_themes: TsPanel;
+    Pce_wizard: TsPanel;Pce_config: TsPanel;Pce_themes: TsPanel;Pce_logsession: TsPanel;
 //  ExtraFe Panels
     Pexf_configuration: TsPanel;Pexf_themes: TsPanel;
 //  Mame Panels
     Pem_mame_dirs: TsPanel;Pem_mame_graphics: TsPanel;Pem_mame_sound: TsPanel;Pem_mame_others: TsPanel;
-    Pem_mame_builds: TsPanel;Pem_mame_database: TsPanel;PTools: TsPanel;
-    PBuilds_MameBuilds: TsPanel;PBuilds_MameTools: TsPanel;PBuilds_MameXT: TPanel;PBuilds_MamePlus: TPanel;
-    panel_mame_page1: TsPanel;panel_mame_page2: TsPanel;
+    Pem_mame_hlsl: TsPanel;Pem_mame_database: TsPanel;PTools: TsPanel;panel_mame_page1: TsPanel;panel_mame_page2: TsPanel;    
 //  Zinc Panels
     Pem_zinc_paths: TsPanel;Pem_zinc_graphics: TsPanel;Pem_zinc_sound: TsPanel; Pem_zinc_database: TsPanel;
 //  Hatari Panels
@@ -90,59 +93,49 @@ type
     sPanel31: TsPanel;sPanel32: TsPanel;sPanel33: TsPanel;sPanel34: TsPanel;sPanel35: TsPanel;sPanel36: TsPanel;sLabel45: TsLabel;sLabel44: TsLabel;sLabel31: TsLabel;sLabel30: TsLabel;
     sLabel29: TsLabel;sLabel63: TsLabel;sPanel37: TsPanel;sPanel38: TsPanel;sPanel39: TsPanel;sPanel40: TsPanel;sPanel41: TsPanel;sPanel44: TsPanel;sPanel45: TsPanel;sPanel46: TsPanel;
     sPanel47: TsPanel;sPanel48: TsPanel;sPanel49: TsPanel;sPanel50: TsPanel;sPanel51: TsPanel;sPanel52: TsPanel;sPanel53: TsPanel;sPanel54: TsPanel;sPanel55: TsPanel;sPanel56: TsPanel;
-    sPanel57: TsPanel;sPanel58: TsPanel;sPanel59: TsPanel;sPanel60: TsPanel;sPanel61: TsPanel;sPanel62: TsPanel;sPanel63: TsPanel;sPanel64: TsPanel;sPanel65: TsPanel;sPanel66: TsPanel;
-    sPanel67: TsPanel;sPanel68: TsPanel;sPanel42: TsPanel;sPanel43: TsPanel;
+    sPanel57: TsPanel;sPanel58: TsPanel;sPanel59: TsPanel;sPanel60: TsPanel;sPanel61: TsPanel;sPanel62: TsPanel;sPanel63: TsPanel;sPanel64: TsPanel;sPanel65: TsPanel;sPanel66: TsPanel;    
+    sPanel67: TsPanel;sPanel68: TsPanel;sPanel42: TsPanel;sPanel43: TsPanel;sPanel69: TsPanel;sPanel70: TsPanel;sPanel71: TsPanel;sPanel72: TsPanel;sPanel73: TsPanel;sPanel74: TsPanel;    
+    sPanel75: TsPanel;sPanel76: TsPanel;sPanel77: TsPanel;sPanel78: TsPanel;sPanel79: TsPanel;sPanel80: TsPanel;sPanel81: TsPanel;sPanel82: TsPanel;sPanel89: TsPanel;sPanel83: TsPanel;
+    sPanel84: TsPanel;sPanel85: TsPanel;sPanel86: TsPanel;sPanel87: TsPanel;sPanel90: TsPanel;
 //  grp Components
-    grp105: TGroupBox;grp106: TGroupBox;grp107: TGroupBox;grp108: TGroupBox;grp109: TGroupBox;grp110: TGroupBox;grp111: TGroupBox;grp112: TGroupBox;grp17: TGroupBox;grp18: TGroupBox;grp30: TGroupBox;grp61: TGroupBox;grp20: TGroupBox;
-    grp113: TGroupBox;grp114: TGroupBox;grp97: TGroupBox;grp98: TGroupBox;grp99: TGroupBox;grp100: TGroupBox;grp101: TGroupBox;grp103: TGroupBox;grp104: TGroupBox;grp96: TGroupBox;grp95: TGroupBox;grp2: TGroupBox;grp3: TGroupBox;
-    grp4: TGroupBox;grp5: TGroupBox;grp6: TGroupBox;grp7: TGroupBox;grp8: TGroupBox;grp9: TGroupBox;grp10: TGroupBox;grp11: TGroupBox;grp12: TGroupBox;grp13: TGroupBox;grp14: TGroupBox;grp15: TGroupBox;grp16: TGroupBox;
-    grp19: TGroupBox;grp21: TGroupBox;grp22: TGroupBox;grp23: TGroupBox;grp24: TGroupBox;grp25: TGroupBox;grp26: TGroupBox;grp116: TGroupBox;grp117: TGroupBox;grp118: TGroupBox;grp119: TGroupBox;grp120: TGroupBox;grp121: TGroupBox;
-    grp27: TGroupBox;grp28: TGroupBox;grp29: TGroupBox;grp1: TGroupBox;grp36: TGroupBox;grp37: TGroupBox;grp38: TGroupBox;grp39: TGroupBox;grp40: TGroupBox;grp41: TGroupBox;grp42: TGroupBox;grp122: TGroupBox;
-    grp43: TGroupBox;grp44: TGroupBox;grp49: TGroupBox;grp45: TGroupBox;grp46: TGroupBox;grp47: TGroupBox;grp48: TGroupBox;grp50: TGroupBox;grp51: TGroupBox;
+    grp105: TGroupBox;grp106: TGroupBox;grp107: TGroupBox;grp108: TGroupBox;grp109: TGroupBox;grp17: TGroupBox;grp18: TGroupBox;grp30: TGroupBox;grp61: TGroupBox;grp20: TGroupBox;grp10: TGroupBox;grp11: TGroupBox;grp12: TGroupBox;grp13: TGroupBox;grp14: TGroupBox;
+    grp19: TGroupBox;grp21: TGroupBox;grp22: TGroupBox;grp23: TGroupBox;grp24: TGroupBox;grp25: TGroupBox;grp26: TGroupBox;grp35: TGroupBox;grp2: TGroupBox;GroupBox1: TGroupBox;grp3: TGroupBox;grp4: TGroupBox;grp5: TGroupBox;grp6: TGroupBox;grp32: TGroupBox;grp33: TGroupBox;    
+    grp99: TGroupBox;grp100: TGroupBox;grp34: TGroupBox;grp95: TGroupBox;grp7: TGroupBox;grp8: TGroupBox;grp9: TGroupBox;grp96: TGroupBox;grp97: TGroupBox;grp98: TGroupBox;grp101: TGroupBox;grp103: TGroupBox;grp104: TGroupBox;grp119: TGroupBox;grp111: TGroupBox;    
+    grp27: TGroupBox;grp28: TGroupBox;grp29: TGroupBox;grp1: TGroupBox;grp36: TGroupBox;grp37: TGroupBox;grp38: TGroupBox;grp39: TGroupBox;grp40: TGroupBox;grp41: TGroupBox;grp42: TGroupBox;grp112: TGroupBox;grp102: TGroupBox;grp110: TGroupBox;grp113: TGroupBox;grp114: TGroupBox;
+    grp43: TGroupBox;grp44: TGroupBox;grp49: TGroupBox;grp45: TGroupBox;grp46: TGroupBox;grp47: TGroupBox;grp48: TGroupBox;grp50: TGroupBox;grp51: TGroupBox;grp15: TGroupBox;grp16: TGroupBox;grp120: TGroupBox;grp117: TGroupBox;grp118: TGroupBox;grp122: TGroupBox;grp31: TGroupBox;
     grp52: TGroupBox;grp53: TGroupBox;grp54: TGroupBox;grp55: TGroupBox;grp56: TGroupBox;grp57: TGroupBox;grp58: TGroupBox;grp59: TGroupBox;grp60: TGroupBox;grp62: TGroupBox;grp63: TGroupBox;grp64: TGroupBox;grp65: TGroupBox;grp66: TGroupBox;grp67: TGroupBox;grp68: TGroupBox;grp69: TGroupBox;
     grp70: TGroupBox;grp71: TGroupBox;grp72: TGroupBox;grp73: TGroupBox;grp74: TGroupBox;grp75: TGroupBox;grp78: TGroupBox;grp79: TGroupBox;grp80: TGroupBox;
     grp81: TGroupBox;grp82: TGroupBox;grp83: TGroupBox;grp84: TGroupBox;grp85: TGroupBox;grp86: TGroupBox;grp87: TGroupBox;grp88: TGroupBox;grp89: TGroupBox;
-    grp90: TGroupBox;grp91: TGroupBox;grp92: TGroupBox;grp93: TGroupBox;grp94: TGroupBox;grp76: TGroupBox;grp77: TGroupBox;grp115: TGroupBox;grp102: TGroupBox;grp31: TGroupBox;grp32: TGroupBox;grp33: TGroupBox;grp34: TGroupBox;
+    grp90: TGroupBox;grp91: TGroupBox;grp92: TGroupBox;grp93: TGroupBox;grp94: TGroupBox;grp76: TGroupBox;grp77: TGroupBox;grp115: TGroupBox;
 //  sLabel Components
-    sLabel13: TsLabel;sLabel14: TsLabel;sLabel15: TsLabel;sLabel16: TsLabel;sLabel19: TsLabel;sLabel28: TsLabel;sLabel6: TsLabel;sLabel7: TsLabel;
-    sLabel8: TsLabel;sLabel9: TsLabel;sLabel10: TsLabel;sLabel60: TsLabel;
-    sLabel46: TsLabel;sLabel47: TsLabel;sLabel3: TsLabel;sLabel4: TsLabel;sLabel5: TsLabel;sLabel2: TsLabel;sLabel48: TsLabel;sLabel49: TsLabel;
-    sLabel50: TsLabel;sLabel11: TsLabel;sLabel12: TsLabel;sLabel1: TsLabel;sLabel51: TsLabel;sLabel52: TsLabel;sLabel17: TsLabel;sLabel18: TsLabel;
-    sLabel20: TsLabel;sLabel21: TsLabel;sLabel22: TsLabel;sLabel58: TsLabel;sLabel59: TsLabel;sLabel64: TsLabel;sLabel65: TsLabel;sLabel66: TsLabel;sLabel67: TsLabel;sLabel68: TsLabel;sLabel69: TsLabel;sLabel23: TsLabel;
-    sLabel24: TsLabel;sLabel25: TsLabel;sLabel26: TsLabel;sLabel27: TsLabel;sLabel53: TsLabel;sLabel54: TsLabel;sLabel55: TsLabel;sLabel56: TsLabel;
-    sLabel57: TsLabel;sLabel70: TsLabel;sLabel71: TsLabel;sLabel72: TsLabel;sLabel73: TsLabel;sLabel74: TsLabel;sLabel75: TsLabel;sLabel76: TsLabel;
-    sLabel77: TsLabel;sLabel78: TsLabel;sLabel80: TsLabel;sLabel81: TsLabel;sLabel82: TsLabel;sLabel83: TsLabel;sLabel84: TsLabel;
-    sLabel85: TsLabel;sLabel86: TsLabel;sLabel87: TsLabel;sLabel88: TsLabel;sLabel89: TsLabel;sLabel90: TsLabel;sLabel91: TsLabel;sLabel93: TsLabel;
-    sLabel92: TsLabel;sLabel94: TsLabel;sLabel95: TsLabel;sLabel96: TsLabel;sLabel97: TsLabel;sLabel98: TsLabel;sLabel99: TsLabel;sLabel100: TsLabel;
-    sLabel101: TsLabel;sLabel32: TsLabel;sLabel33: TsLabel;sLabel34: TsLabel;sLabel35: TsLabel;sLabel36: TsLabel;sLabel37: TsLabel;sLabel38: TsLabel;
-    sLabel39: TsLabel;sLabel40: TsLabel;sLabel41: TsLabel;sLabel42: TsLabel;sLabel43: TsLabel;sLabel102: TsLabel;sLabel103: TsLabel;sLabel104: TsLabel;
-    sLabel105: TsLabel;sLabel106: TsLabel;sLabel107: TsLabel;sLabel109: TsLabel;sLabel110: TsLabel;sLabel111: TsLabel;sLabel112: TsLabel;sLabel108: TsLabel;
+    sLabel13: TsLabel;sLabel14: TsLabel;sLabel15: TsLabel;sLabel16: TsLabel;sLabel19: TsLabel;sLabel9: TsLabel;sLabel10: TsLabel;sLabel60: TsLabel;sLabel47: TsLabel;sLabel17: TsLabel;sLabel21: TsLabel;sLabel22: TsLabel;sLabel58: TsLabel;sLabel59: TsLabel;sLabel64: TsLabel;sLabel65: TsLabel;sLabel66: TsLabel;sLabel67: TsLabel;sLabel68: TsLabel;sLabel69: TsLabel;sLabel23: TsLabel;
+    sLabel24: TsLabel;sLabel25: TsLabel;sLabel26: TsLabel;sLabel27: TsLabel;sLabel53: TsLabel;sLabel54: TsLabel;sLabel55: TsLabel;sLabel56: TsLabel;sLabel3: TsLabel;sLabel4: TsLabel;sLabel5: TsLabel;sLabel2: TsLabel;sLabel11: TsLabel;sLabel51: TsLabel; sLabel52: TsLabel; sLabel48: TsLabel;sLabel8: TsLabel;sLabel7: TsLabel;
+    sLabel57: TsLabel;sLabel70: TsLabel;sLabel71: TsLabel;sLabel72: TsLabel;sLabel73: TsLabel;sLabel74: TsLabel;sLabel75: TsLabel;sLabel76: TsLabel;sLabel49: TsLabel;sLabel6: TsLabel;sLabel50: TsLabel;sLabel12: TsLabel;sLabel1: TsLabel;sLabel32: TsLabel;lbl33: TsLabel;sLabel36: TsLabel;sLabel37: TsLabel;sLabel38: TsLabel;
+    sLabel77: TsLabel;sLabel78: TsLabel;sLabel80: TsLabel;sLabel81: TsLabel;sLabel82: TsLabel;sLabel83: TsLabel;sLabel84: TsLabel;sLabel39: TsLabel;sLabel40: TsLabel;sLabel103: TsLabel;sLabel111: TsLabel;sLabel134: TsLabel;sLabel135: TsLabel;sLabel136: TsLabel;sLabel137: TsLabel;    
+    sLabel85: TsLabel;sLabel86: TsLabel;sLabel87: TsLabel;sLabel88: TsLabel;sLabel89: TsLabel;sLabel90: TsLabel;sLabel91: TsLabel;sLabel93: TsLabel;sLabel46: TsLabel;     
+    sLabel92: TsLabel;sLabel94: TsLabel;sLabel95: TsLabel;sLabel96: TsLabel;sLabel97: TsLabel;sLabel98: TsLabel;sLabel99: TsLabel;sLabel100: TsLabel;    
+    sLabel105: TsLabel;sLabel106: TsLabel;sLabel107: TsLabel;sLabel109: TsLabel;sLabel112: TsLabel;sLabel108: TsLabel;sLabel101: TsLabel;sLabel104: TsLabel;
     sLabel113: TsLabel;sLabel114: TsLabel;sLabel115: TsLabel;sLabel116: TsLabel;sLabel117: TsLabel;sLabel118: TsLabel;sLabel119: TsLabel;sLabel120: TsLabel;
     sLabel121: TsLabel;sLabel122: TsLabel;sLabel123: TsLabel;sLabel124: TsLabel;sLabel125: TsLabel;sLabel126: TsLabel;sLabel127: TsLabel;sLabel128: TsLabel;
     sLabel129: TsLabel;sLabel61: TsLabel;sLabel62: TsLabel;sLabel79: TsLabel;sLabel133: TsLabel;sLabel132: TsLabel;sLabel131: TsLabel;sLabel130: TsLabel;    
+    sLabel102: TsLabel;sLabel35: TsLabel;sLabel110: TsLabel;sLabel41: TsLabel;sLabel42: TsLabel;sLabel43: TsLabel;sLabel28: TsLabel;sLabel18: TsLabel;sLabel20: TsLabel;sLabel33: TsLabel;sLabel34: TsLabel;sLabel138: TsLabel;        
 //  sCheckBox Components
-    sCheckBox26: TsCheckBox;sCheckBox16: TsCheckBox;sCheckBox17: TsCheckBox;sCheckBox35: TsCheckBox;sCheckBox36: TsCheckBox;sCheckBox37: TsCheckBox;
-    sCheckBox38: TsCheckBox;sCheckBox39: TsCheckBox;sCheckBox3: TsCheckBox;sCheckBox4: TsCheckBox;sCheckBox5: TsCheckBox;sCheckBox6: TsCheckBox;sCheckBox7: TsCheckBox;
-    sCheckBox8: TsCheckBox;sCheckBox11: TsCheckBox;sCheckBox12: TsCheckBox;sCheckBox13: TsCheckBox;sCheckBox14: TsCheckBox;sCheckBox15: TsCheckBox;
-    sCheckBox40: TsCheckBox;sCheckBox41: TsCheckBox;sCheckBox43: TsCheckBox;sCheckBox1: TsCheckBox;sCheckBox2: TsCheckBox;sCheckBox18: TsCheckBox;
-    sCheckBox19: TsCheckBox;sCheckBox20: TsCheckBox;sCheckBox21: TsCheckBox;sCheckBox22: TsCheckBox;sCheckBox23: TsCheckBox;sCheckBox47: TsCheckBox;
-    sCheckBox24: TsCheckBox;sCheckBox27: TsCheckBox;sCheckBox28: TsCheckBox;sCheckBox30: TsCheckBox;sCheckBox31: TsCheckBox;sCheckBox48: TsCheckBox;sCheckBox49: TsCheckBox;sCheckBox50: TsCheckBox;sCheckBox51: TsCheckBox;sCheckBox52: TsCheckBox;
-    sCheckBox53: TsCheckBox;sCheckBox54: TsCheckBox;sCheckBox55: TsCheckBox;sCheckBox56: TsCheckBox;sCheckBox57: TsCheckBox;sCheckBox58: TsCheckBox;
-    sCheckBox59: TsCheckBox;sCheckBox79: TsCheckBox;sCheckBox80: TsCheckBox;sCheckBox81: TsCheckBox;sCheckBox82: TsCheckBox;sCheckBox63: TsCheckBox;sCheckBox64: TsCheckBox;sCheckBox101: TsCheckBox;
-    sCheckBox83: TsCheckBox;sCheckBox84: TsCheckBox;sCheckBox85: TsCheckBox;sCheckBox86: TsCheckBox;sCheckBox87: TsCheckBox;sCheckBox88: TsCheckBox;
-    sCheckBox89: TsCheckBox;sCheckBox91: TsCheckBox;sCheckBox95: TsCheckBox;sCheckBox92: TsCheckBox;sCheckBox93: TsCheckBox;sCheckBox94: TsCheckBox;
-    sCheckBox90: TsCheckBox;sCheckBox96: TsCheckBox;sCheckBox98: TsCheckBox;sCheckBox99: TsCheckBox;    sCheckBox62: TsCheckBox;
-    sCheckBox100: TsCheckBox;sCheckBox102: TsCheckBox;sCheckBox103: TsCheckBox;sCheckBox104: TsCheckBox;sCheckBox105: TsCheckBox;sCheckBox106: TsCheckBox;
+    sCheckBox26: TsCheckBox;sCheckBox16: TsCheckBox;sCheckBox17: TsCheckBox;sCheckBox3: TsCheckBox;sCheckBox4: TsCheckBox;sCheckBox5: TsCheckBox;sCheckBox6: TsCheckBox;sCheckBox43: TsCheckBox;sCheckBox1: TsCheckBox;sCheckBox2: TsCheckBox;sCheckBox18: TsCheckBox;
+    sCheckBox19: TsCheckBox;sCheckBox20: TsCheckBox;sCheckBox21: TsCheckBox;sCheckBox22: TsCheckBox;sCheckBox23: TsCheckBox;sCheckBox47: TsCheckBox;sCheckBox48: TsCheckBox;sCheckBox49: TsCheckBox;sCheckBox50: TsCheckBox;sCheckBox51: TsCheckBox;sCheckBox52: TsCheckBox;
+    sCheckBox53: TsCheckBox;sCheckBox54: TsCheckBox;sCheckBox55: TsCheckBox;sCheckBox56: TsCheckBox;sCheckBox57: TsCheckBox;sCheckBox58: TsCheckBox;sCheckBox44: TsCheckBox;sCheckBox41: TsCheckBox;sCheckBox40: TsCheckBox;sCheckBox9: TsCheckBox;sCheckBox11: TsCheckBox;sCheckBox13: TsCheckBox;    
+    sCheckBox59: TsCheckBox;sCheckBox79: TsCheckBox;sCheckBox80: TsCheckBox;sCheckBox81: TsCheckBox;sCheckBox82: TsCheckBox;sCheckBox101: TsCheckBox;sCheckBox12: TsCheckBox;sCheckBox14: TsCheckBox;sCheckBox63: TsCheckBox;sCheckBox64: TsCheckBox;sCheckBox24: TsCheckBox;
+    sCheckBox83: TsCheckBox;sCheckBox84: TsCheckBox;sCheckBox85: TsCheckBox;sCheckBox86: TsCheckBox;sCheckBox87: TsCheckBox;sCheckBox88: TsCheckBox;sCheckBox27: TsCheckBox;sCheckBox28: TsCheckBox;sCheckBox29: TsCheckBox;sCheckBox30: TsCheckBox;sCheckBox31: TsCheckBox;sCheckBox35: TsCheckBox;        
+    sCheckBox89: TsCheckBox;sCheckBox91: TsCheckBox;sCheckBox95: TsCheckBox;sCheckBox92: TsCheckBox;sCheckBox93: TsCheckBox;sCheckBox94: TsCheckBox;sCheckBox36: TsCheckBox;sCheckBox37: TsCheckBox;sCheckBox38: TsCheckBox;sCheckBox39: TsCheckBox;sCheckBox32: TsCheckBox;    
+    sCheckBox90: TsCheckBox;sCheckBox96: TsCheckBox;sCheckBox98: TsCheckBox;sCheckBox99: TsCheckBox;sCheckBox62: TsCheckBox;sCheckBox15: TsCheckBox;sCheckBox7: TsCheckBox;sCheckBox8: TsCheckBox;sCheckBox10: TsCheckBox;sCheckBox33: TsCheckBox;sCheckBox34: TsCheckBox;    
+    sCheckBox100: TsCheckBox;sCheckBox102: TsCheckBox;sCheckBox103: TsCheckBox;sCheckBox104: TsCheckBox;sCheckBox105: TsCheckBox;sCheckBox106: TsCheckBox;sCheckBox66: TsCheckBox;sCheckBox67: TsCheckBox;sCheckBox68: TsCheckBox;
     sCheckBox107: TsCheckBox;sCheckBox108: TsCheckBox;sCheckBox109: TsCheckBox;sCheckBox25: TsCheckBox;sCheckBox42: TsCheckBox;sCheckBox45: TsCheckBox;
     sCheckBox46: TsCheckBox;sCheckBox110: TsCheckBox;sCheckBox111: TsCheckBox;sCheckBox112: TsCheckBox;sCheckBox113: TsCheckBox;sCheckBox115: TsCheckBox;
     sCheckBox116: TsCheckBox;sCheckBox117: TsCheckBox;sCheckBox118: TsCheckBox;sCheckBox119: TsCheckBox;sCheckBox120: TsCheckBox;sCheckBox121: TsCheckBox;
     sCheckBox122: TsCheckBox;sCheckBox123: TsCheckBox;sCheckBox124: TsCheckBox;sCheckBox125: TsCheckBox;sCheckBox126: TsCheckBox;sCheckBox114: TsCheckBox;
-    sCheckBox127: TsCheckBox;sCheckBox9: TsCheckBox;sCheckBox10: TsCheckBox;sCheckBox29: TsCheckBox;sCheckBox32: TsCheckBox;sCheckBox33: TsCheckBox;
-    sCheckBox34: TsCheckBox;sCheckBox44: TsCheckBox;sCheckBox128: TsCheckBox;sCheckBox129: TsCheckBox;sCheckBox130: TsCheckBox;sCheckBox60: TsCheckBox;sCheckBox61: TsCheckBox;sCheckBox97: TsCheckBox;
+    sCheckBox127: TsCheckBox;sCheckBox60: TsCheckBox;sCheckBox61: TsCheckBox;sCheckBox97: TsCheckBox;
 //  sComboBox Components
     sComboBox18: TsComboBox;sComboBox10: TsComboBox;sComboBox11: TsComboBox;sComboBox12: TsComboBox;sComboBox13: TsComboBox;sComboBox14: TsComboBox;
-    sComboBox15: TsComboBox;sComboBox16: TsComboBox;sComboBox17: TsComboBox;sComboBox19: TsComboBox;sComboBox2: TsComboBox;sComboBox3: TsComboBox;
-    sComboBox4: TsComboBox;sComboBox5: TsComboBox;sComboBox9: TsComboBox;sComboBox20: TsComboBox;sComboBox1: TsComboBox;sComboBox21: TsComboBox;
+    sComboBox15: TsComboBox;sComboBox16: TsComboBox;sComboBox17: TsComboBox;sComboBox21: TsComboBox;sComboBox20: TsComboBox;sComboBox9: TsComboBox;sComboBox2: TsComboBox;
     sComboBox22: TsComboBox;sComboBox23: TsComboBox;sComboBox24: TsComboBox;sComboBox25: TsComboBox;sComboBox26: TsComboBox;sComboBox27: TsComboBox;
     sComboBox28: TsComboBox;sComboBox29: TsComboBox;sComboBox30: TsComboBox;sComboBox31: TsComboBox;sComboBox32: TsComboBox;sComboBox33: TsComboBox;
     sComboBox34: TsComboBox;sComboBox35: TsComboBox;sComboBox36: TsComboBox;sComboBox37: TsComboBox;sComboBox43: TsComboBox;sComboBox44: TsComboBox;sComboBox45: TsComboBox;
@@ -150,93 +143,95 @@ type
     sComboBox52: TsComboBox;sComboBox53: TsComboBox;sComboBox54: TsComboBox;sComboBox55: TsComboBox;sComboBox57: TsComboBox;sComboBox56: TsComboBox;
     sComboBox58: TsComboBox;sComboBox59: TsComboBox;sComboBox60: TsComboBox;sComboBox61: TsComboBox;sComboBox62: TsComboBox;sComboBox63: TsComboBox;
     sComboBox64: TsComboBox;sComboBox65: TsComboBox;sComboBox66: TsComboBox;sComboBox67: TsComboBox;sComboBox68: TsComboBox;sComboBox69: TsComboBox;
-    sComboBox70: TsComboBox;sComboBox71: TsComboBox;sComboBox72: TsComboBox;sComboBox6: TsComboBox;sComboBox7: TsComboBox;sComboBox8: TsComboBox;
-    sComboBox73: TsComboBox;sComboBox74: TsComboBox;sComboBox75: TsComboBox;sComboBox76: TsComboBox;sComboBox38: TsComboBox;sComboBox39: TsComboBox;sComboBox40: TsComboBox;sComboBox41: TsComboBox;
-    sComboBox77: TsComboBox;sComboBox42: TsComboBox;
+    sComboBox70: TsComboBox;sComboBox71: TsComboBox;sComboBox72: TsComboBox;sComboBox38: TsComboBox;sComboBox39: TsComboBox;sComboBox40: TsComboBox;sComboBox41: TsComboBox;
+    sComboBox77: TsComboBox;sComboBox42: TsComboBox;sComboBox3: TsComboBox;sComboBox4: TsComboBox;sComboBox5: TsComboBox;sComboBox6: TsComboBox;sComboBox7: TsComboBox;sComboBox8: TsComboBox;
+    sComboBox74: TsComboBox;sComboBox75: TsComboBox;sComboBox19: TsComboBox;sComboBox73: TsComboBox;sComboBox76: TsComboBox;sComboBox1: TsComboBox;
 //  sEdit Components
-    sEdit15: TsEdit;sEdit56: TsEdit;sEdit57: TsEdit;sEdit2: TsEdit;sEdit4: TsEdit;sEdit3: TsEdit;sEdit8: TsEdit;sEdit10: TsEdit;sEdit6: TsEdit;sEdit9: TsEdit;
-    sEdit7: TsEdit;sEdit11: TsEdit;sEdit5: TsEdit;sEdit58: TsEdit;sEdit59: TsEdit;sEdit60: TsEdit;sEdit61: TsEdit;sEdit62: TsEdit;sEdit63: TsEdit;sEdit64: TsEdit;
-    sEdit1: TsEdit;sEdit53: TsEdit;sEdit65: TsEdit;sEdit66: TsEdit;sEdit54: TsEdit;sEdit55: TsEdit;sEdit74: TsEdit;sEdit75: TsEdit;sEdit81: TsEdit;sEdit82: TsEdit;
-    sEdit83: TsEdit;sEdit84: TsEdit;sEdit85: TsEdit;sEdit86: TsEdit;sEdit87: TsEdit;sEdit88: TsEdit;sEdit89: TsEdit;sEdit90: TsEdit;sEdit91: TsEdit;sEdit92: TsEdit;
-    sEdit93: TsEdit;sEdit94: TsEdit;sEdit95: TsEdit;sEdit96: TsEdit;sEdit97: TsEdit;sEdit12: TsEdit;sEdit13: TsEdit;sEdit16: TsEdit;sEdit17: TsEdit;sEdit125: TsEdit;sEdit14: TsEdit;sEdit18: TsEdit;
-    sEdit19: TsEdit;sEdit20: TsEdit;sEdit21: TsEdit;sEdit22: TsEdit;sEdit23: TsEdit;sEdit24: TsEdit;sEdit25: TsEdit;sEdit26: TsEdit;sEdit27: TsEdit;sEdit28: TsEdit;sEdit29: TsEdit;sEdit30: TsEdit;sEdit31: TsEdit;
+    sEdit15: TsEdit;sEdit56: TsEdit;sEdit57: TsEdit;sEdit64: TsEdit;sEdit53: TsEdit;sEdit65: TsEdit;sEdit66: TsEdit;sEdit54: TsEdit;sEdit55: TsEdit;sEdit74: TsEdit;sEdit75: TsEdit;sEdit81: TsEdit;sEdit82: TsEdit;sEdit33: TsEdit;sEdit34: TsEdit;
+    sEdit36: TsEdit;sEdit37: TsEdit;sEdit38: TsEdit;sEdit39: TsEdit;sEdit40: TsEdit;sEdit41: TsEdit;sEdit42: TsEdit;sEdit43: TsEdit;sEdit44: TsEdit;sEdit45: TsEdit;sEdit46: TsEdit;sEdit47: TsEdit;sEdit48: TsEdit;sEdit49: TsEdit;sEdit50: TsEdit;
+    sEdit51: TsEdit;sEdit52: TsEdit;sEdit63: TsEdit;sEdit67: TsEdit;sEdit68: TsEdit;sEdit69: TsEdit;sEdit70: TsEdit;sEdit71: TsEdit;sEdit72: TsEdit;sEdit73: TsEdit;sEdit76: TsEdit;sEdit77: TsEdit;sEdit78: TsEdit;sEdit79: TsEdit;sEdit80: TsEdit;
+    sEdit98: TsEdit;sEdit99: TsEdit;sEdit100: TsEdit;sEdit101: TsEdit;sEdit113: TsEdit;sEdit114: TsEdit;sEdit115: TsEdit;sEdit112: TsEdit;sEdit111: TsEdit;sEdit110: TsEdit;sEdit109: TsEdit;sEdit108: TsEdit;sEdit107: TsEdit;sEdit106: TsEdit;sEdit105: TsEdit;
+    sEdit104: TsEdit;sEdit103: TsEdit;sEdit102: TsEdit;sEdit2: TsEdit;sEdit4: TsEdit;sEdit3: TsEdit;sEdit8: TsEdit;sEdit10: TsEdit;sEdit6: TsEdit;sEdit9: TsEdit;sEdit7: TsEdit;sEdit11: TsEdit;sEdit5: TsEdit;sEdit58: TsEdit;sEdit59: TsEdit;sEdit60: TsEdit;sEdit61: TsEdit;    
+    sEdit83: TsEdit;sEdit84: TsEdit;sEdit85: TsEdit;sEdit86: TsEdit;sEdit87: TsEdit;sEdit88: TsEdit;sEdit89: TsEdit;sEdit90: TsEdit;sEdit91: TsEdit;sEdit92: TsEdit;sEdit93: TsEdit;sEdit94: TsEdit;sEdit95: TsEdit;sEdit96: TsEdit;sEdit97: TsEdit;sEdit14: TsEdit;sEdit18: TsEdit;    sEdit19: TsEdit;sEdit20: TsEdit;sEdit21: TsEdit;sEdit22: TsEdit;sEdit23: TsEdit;sEdit24: TsEdit;sEdit25: TsEdit;sEdit26: TsEdit;sEdit27: TsEdit;sEdit28: TsEdit;sEdit29: TsEdit;sEdit30: TsEdit;sEdit1: TsEdit;sEdit31: TsEdit;sEdit62: TsEdit;
+    sEdit12: TsEdit;sEdit13: TsEdit;sEdit125: TsEdit;sEdit16: TsEdit;sEdit17: TsEdit;sEdit32: TsEdit;sEdit35: TsEdit;
 //  sBitBtn Components
     sBitBtn3: TsBitBtn;sBitBtn4: TsBitBtn;sBitBtn5: TsBitBtn;sBitBtn2: TsBitBtn;sBitBtn6: TsBitBtn;sBitBtn7: TsBitBtn;sBitBtn8: TsBitBtn;sBitBtn9: TsBitBtn;
-    sBitBtn10: TsBitBtn;sBitBtn11: TsBitBtn;sBitBtn12: TsBitBtn;sBitBtn13: TsBitBtn;sBitBtn14: TsBitBtn;sBitBtn15: TsBitBtn;sBitBtn16: TsBitBtn;sBB_apply_ce_themes: TsBitBtn;
-    sBitBtn17: TsBitBtn;sBitBtn18: TsBitBtn;sBitBtn19: TsBitBtn;sBitBtn20: TsBitBtn;sBitBtn21: TsBitBtn;sBitBtn22: TsBitBtn;sBitBtn23: TsBitBtn;sBitBtn24: TsBitBtn;
-    sBitBtn25: TsBitBtn;sBitBtn26: TsBitBtn;sBitBtn34: TsBitBtn;sBitBtn33: TsBitBtn;sBitBtn32: TsBitBtn;sBitBtn31: TsBitBtn;sBitBtn30: TsBitBtn;sBitBtn29: TsBitBtn;
-    sBitBtn28: TsBitBtn;sBitBtn27: TsBitBtn;sBitBtn35: TsBitBtn;sBitBtn36: TsBitBtn;sBitBtn37: TsBitBtn;sBitBtn38: TsBitBtn;sBitBtn39: TsBitBtn;sBitBtn40: TsBitBtn;
-    sBitBtn41: TsBitBtn;sBitBtn42: TsBitBtn;sBitBtn43: TsBitBtn;sBitBtn44: TsBitBtn;sBitBtn45: TsBitBtn;sBitBtn46: TsBitBtn;sBitBtn47: TsBitBtn;sBitBtn48: TsBitBtn;
+    sBitBtn10: TsBitBtn;sBitBtn11: TsBitBtn;sBitBtn12: TsBitBtn;sBitBtn13: TsBitBtn;sBitBtn14: TsBitBtn;sBitBtn15: TsBitBtn;sBitBtn16: TsBitBtn;sBB_apply_ce_themes: TsBitBtn;sBitBtn35: TsBitBtn;sBitBtn36: TsBitBtn;sBitBtn37: TsBitBtn;sBitBtn40: TsBitBtn;
+    sBitBtn41: TsBitBtn;sBitBtn47: TsBitBtn;sBitBtn48: TsBitBtn;sBitBtn44: TsBitBtn;sBitBtn45: TsBitBtn;sBitBtn46: TsBitBtn;sBitBtn33: TsBitBtn;sBitBtn0: TsBitBtn;sBitBtn42: TsBitBtn;    
     sBitBtn49: TsBitBtn;sBitBtn60: TsBitBtn;sBitBtn61: TsBitBtn;sBitBtn62: TsBitBtn;sBitBtn63: TsBitBtn;sBitBtn64: TsBitBtn;sBitBtn65: TsBitBtn;sBitBtn66: TsBitBtn;
     sBitBtn67: TsBitBtn;sBitBtn68: TsBitBtn;sBitBtn69: TsBitBtn;sBitBtn70: TsBitBtn;sBitBtn71: TsBitBtn;sBitBtn72: TsBitBtn;sBitBtn73: TsBitBtn;sBitBtn75: TsBitBtn;
     sBitBtn76: TsBitBtn;sBitBtn77: TsBitBtn;sBitBtn78: TsBitBtn;sBitBtn79: TsBitBtn;sBitBtn80: TsBitBtn;sBitBtn81: TsBitBtn;sBitBtn82: TsBitBtn;sBitBtn83: TsBitBtn;
     sBitBtn84: TsBitBtn;sBitBtn85: TsBitBtn;sBitBtn86: TsBitBtn;sBitBtn87: TsBitBtn;sBitBtn88: TsBitBtn;sBitBtn89: TsBitBtn;sBitBtn90: TsBitBtn;sBitBtn91: TsBitBtn;
-    sBitBtn92: TsBitBtn;sBitBtn93: TsBitBtn;sBitBtn96: TsBitBtn;sBitBtn97: TsBitBtn;sBitBtn94: TsBitBtn;sBitBtn95: TsBitBtn;sBitBtn1: TsBitBtn;sBitBtn98: TsBitBtn;
-    sBitBtn99: TsBitBtn;sBitBtn100: TsBitBtn;sBitBtn101: TsBitBtn;sBitBtn103: TsBitBtn;sBitBtn104: TsBitBtn;sBitBtn102: TsBitBtn;sBitBtn105: TsBitBtn;sBitBtn106: TsBitBtn;
+    sBitBtn92: TsBitBtn;sBitBtn93: TsBitBtn;sBitBtn96: TsBitBtn;sBitBtn97: TsBitBtn;sBitBtn94: TsBitBtn;sBitBtn95: TsBitBtn;sBitBtn102: TsBitBtn;sBitBtn105: TsBitBtn;sBitBtn106: TsBitBtn;
     sBitBtn50: TsBitBtn;sBitBtn51: TsBitBtn;sBitBtn52: TsBitBtn;sBitBtn53: TsBitBtn;sBitBtn54: TsBitBtn;sBitBtn55: TsBitBtn;sBitBtn56: TsBitBtn;sBitBtn57: TsBitBtn;sBitBtn58: TsBitBtn;
-    sBitBtn59: TsBitBtn;sBitBtn74: TsBitBtn;sBitBtn107: TsBitBtn;sBitBtn108: TsBitBtn;sBitBtn109: TsBitBtn;sBitBtn110: TsBitBtn;sBitBtn111: TsBitBtn;sBitBtn112: TsBitBtn;sBitBtn113: TsBitBtn;sBitBtn114: TsBitBtn;sBitBtn115: TsBitBtn;sBitBtn116: TsBitBtn;
+    sBitBtn59: TsBitBtn;sBitBtn74: TsBitBtn;sBitBtn107: TsBitBtn;sBitBtn108: TsBitBtn;sBitBtn109: TsBitBtn;sBitBtn110: TsBitBtn;sBitBtn111: TsBitBtn;sBitBtn114: TsBitBtn;sBitBtn115: TsBitBtn;sBitBtn116: TsBitBtn;
+    sBitBtn19: TsBitBtn;sBitBtn20: TsBitBtn;sBitBtn21: TsBitBtn;sBitBtn22: TsBitBtn;sBitBtn23: TsBitBtn;sBitBtn24: TsBitBtn;sBitBtn25: TsBitBtn;sBitBtn26: TsBitBtn;sBitBtn34: TsBitBtn;sBitBtn32: TsBitBtn;
+    sBitBtn31: TsBitBtn;sBitBtn30: TsBitBtn;sBitBtn29: TsBitBtn;sBitBtn28: TsBitBtn;sBitBtn27: TsBitBtn;sBitBtn18: TsBitBtn;sBitBtn17: TsBitBtn;sBitBtn38: TsBitBtn;sBitBtn39: TsBitBtn;sBitBtn113: TsBitBtn;sBitBtn112: TsBitBtn;
+    sBitBtn43: TsBitBtn;sBitBtn99: TsBitBtn;sBitBtn100: TsBitBtn;sBitBtn1: TsBitBtn;sBitBtn98: TsBitBtn;sBitBtn103: TsBitBtn;sBitBtn104: TsBitBtn;
 //  image Components
-    img1: TImage;img2: TImage;img_ce_theme: TImage;img86: TImage;img87: TImage;img88: TImage;
+    img1: TImage;img2: TImage;img_ce_theme: TImage;img86: TImage;img87: TImage;img88: TImage;       
     Menu_Image: TLMDNImage;
-//  Radio Button Components
-    rb3: TRadioButton;rb4: TRadioButton;rb5: TRadioButton;rb6: TRadioButton;rb9: TRadioButton;rb10: TRadioButton;rb13: TRadioButton;rb14: TRadioButton;rb15: TRadioButton;rb16: TRadioButton;rb17: TRadioButton;rb18: TRadioButton;
-    rb19: TRadioButton;rb20: TRadioButton;rb21: TRadioButton;rb22: TRadioButton;rb23: TRadioButton;rb24: TRadioButton;rb25: TRadioButton;rb26: TRadioButton;
-    rb27: TRadioButton;rb1: TRadioButton;rb2: TRadioButton;rb31: TRadioButton;rb32: TRadioButton;
-    rb33: TRadioButton;rb39: TRadioButton;rb40: TRadioButton;rb41: TRadioButton;rb42: TRadioButton;rb43: TRadioButton;
-    rb44: TRadioButton;rb45: TRadioButton;rb46: TRadioButton;rb47: TRadioButton;rb48: TRadioButton;rb49: TRadioButton;rb50: TRadioButton;rb51: TRadioButton;
-    rb52: TRadioButton;rb53: TRadioButton;rb54: TRadioButton;rb55: TRadioButton;rb36: TRadioButton;rb37: TRadioButton;rb38: TRadioButton;rb56: TRadioButton;
-    rb57: TRadioButton;rb28: TRadioButton;rb29: TRadioButton;rb30: TRadioButton;rb8: TRadioButton;rb7: TRadioButton;
 //  TsScrollBar Components
-    sbar_mame_valumeattenuation: TsScrollBar;sbar_mame_audiolatency: TsScrollBar;sbar_mame_joysdeadzone: TsScrollBar;sbar_mame_threadpriority: TsScrollBar;
-    sbar_mame_Fgamma: TsScrollBar;sbar_mame_Fbrightness: TsScrollBar;sbar_mame_Fcontrast: TsScrollBar;sbar_mame_pausebrightness: TsScrollBar;
-    sbar_mame_gammacorrection: TsScrollBar;sbar_mame_brightnesscorrection: TsScrollBar;sbar_mame_contrastcorrection: TsScrollBar;
-    sbar_mame_emulatrionspeed: TsScrollBar;sbar_mame_secondstorun: TsScrollBar;sbar_mame_scalescreen: TsScrollBar;sbar_mame_joysaturation: TsScrollBar;
-    sbar_mame_beamwidth: TsScrollBar;sbar_mame_flicker: TsScrollBar;sbar_psx_gamma: TsScrollBar;sbar_psx_brightness: TsScrollBar;sbar_psx_contrast: TsScrollBar;
-    sbar_psx_latency: TsScrollBar;sbar_psx_xalatency: TsScrollBar;sbar_kigb_soundvolume: TsScrollBar;sbar_kigb_soundpan: TsScrollBar;
-    sbar_Mame_UITransparent_MamePlus: TsScrollBar;sbar_Mame_UITransparent_MameXT: TsScrollBar;
+    sbar_mame_valumeattenuation: TsScrollBar;sbar_mame_audiolatency: TsScrollBar;sbar_mame_joysdeadzone: TsScrollBar;sbar_mame_joysaturation: TsScrollBar;sbar_psx_gamma: TsScrollBar;sbar_psx_brightness: TsScrollBar;sbar_psx_contrast: TsScrollBar;
+    sbar_psx_latency: TsScrollBar;sbar_psx_xalatency: TsScrollBar;sbar_kigb_soundvolume: TsScrollBar;sbar_kigb_soundpan: TsScrollBar;sScrollBar1: TsScrollBar;sScrollBar2: TsScrollBar;sScrollBar3: TsScrollBar;sScrollBar4: TsScrollBar;sScrollBar5: TsScrollBar;
+    sScrollBar6: TsScrollBar;sScrollBar7: TsScrollBar;sScrollBar8: TsScrollBar;sScrollBar9: TsScrollBar;sScrollBar10: TsScrollBar;sScrollBar11: TsScrollBar;sbar_mame_threadpriority: TsScrollBar;sbar_mame_beamwidth: TsScrollBar;sbar_mame_flicker: TsScrollBar;sbar_Mame_UITransparent_MamePlus: TsScrollBar;        
+    sbar_mame_pausebrightness: TsScrollBar;sbar_mame_gammacorrection: TsScrollBar;sbar_mame_brightnesscorrection: TsScrollBar;sbar_mame_contrastcorrection: TsScrollBar;sbar_mame_emulatrionspeed: TsScrollBar;sbar_mame_Fgamma: TsScrollBar;sbar_mame_Fbrightness: TsScrollBar;
+    sbar_mame_Fcontrast: TsScrollBar;sbar_mame_secondstorun: TsScrollBar;sbar_mame_scalescreen: TsScrollBar;
 //  TsButton Components
     sButton22: TsButton;sButton1: TsButton;sButton2: TsButton;sButton3: TsButton;sButton4: TsButton;sButton5: TsButton;sButton6: TsButton;sButton7: TsButton;
     sButton8: TsButton;sButton9: TsButton;sButton10: TsButton;sButton11: TsButton;sButton12: TsButton;sButton13: TsButton;sButton14: TsButton;sButton15: TsButton;
-    sButton16: TsButton;sButton17: TsButton;sButton18: TsButton;sButton19: TsButton;sButton20: TsButton;sButton25: TsButton;sButton23: TsButton;sButton21: TsButton;
+    sButton16: TsButton;sButton17: TsButton;sButton18: TsButton;sButton19: TsButton;sButton25: TsButton;sButton23: TsButton;sButton21: TsButton;sButton20: TsButton;
     sButton24: TsButton;sButton26: TsButton;
 //  TsAlphaImageList Components
     InBitBtn_Imagelist: TsAlphaImageList;
 //  TsLabelFX Components
     sLabelFX3: TsLabelFX;sLabelFX11: TsLabelFX;sLabelFX12: TsLabelFX;
 //  TsGauge Components
-    sGauge1: TsGauge;sGauge2: TsGauge;sGauge_MameData: TsGauge;sGauge_IPSMamePlus: TsGauge;sGauge_IPSMameXT: TsGauge;
-    sGauge_MameChange: TsGauge;sGauge_HatariData: TsGauge;sGauge_kigb: TsGauge;
+    sGauge1: TsGauge;sGauge2: TsGauge;sGauge_MameData: TsGauge;
+    sGauge_MameChange: TsGauge;sGauge_HatariData: TsGauge;sGauge_kigb: TsGauge;sGauge_IPSMamePlus: TsGauge;
 //  sWebLabel Components
     sWebLabel2: TsWebLabel;sWebLabel1: TsWebLabel;sWebLabel3: TsWebLabel;
 //  sCheckListBox Components
     sCheckListBox1: TsCheckListBox;
 //  ListBox Components
     sLB_ce_themes: TsListBox;sListBox1: TsListBox;
-//  spin Components
-    se1: TSpinEdit;
-//  Font Components
-    LMDFontComboBox1: TLMDFontComboBox;LMDFontSizeComboBox1: TLMDFontSizeComboBox;
 //  Pick Color Components
-    JvOfficeColorPanel1: TJvOfficeColorPanel;    
-//  Led Components
-    JvLED1: TJvLED;JvLED2: TJvLED;JvLED3: TJvLED;JvLED4: TJvLED;JvLED5: TJvLED;
-//  JvgCheckBox Components
-    JvgCheckBox1: TJvgCheckBox;JvgCheckBox2: TJvgCheckBox;JvgCheckBox3: TJvgCheckBox;JvgCheckBox4: TJvgCheckBox;JvgCheckBox5: TJvgCheckBox;JvgCheckBox6: TJvgCheckBox;JvgCheckBox7: TJvgCheckBox;JvgCheckBox8: TJvgCheckBox;JvgCheckBox9: TJvgCheckBox;
-    JvgCheckBox10: TJvgCheckBox;JvgCheckBox11: TJvgCheckBox;JvgCheckBox12: TJvgCheckBox;JvgCheckBox13: TJvgCheckBox;JvgCheckBox14: TJvgCheckBox;JvgCheckBox15: TJvgCheckBox;JvgCheckBox16: TJvgCheckBox;JvgCheckBox17: TJvgCheckBox;JvgCheckBox18: TJvgCheckBox;JvgCheckBox19: TJvgCheckBox;
-    JvgCheckBox20: TJvgCheckBox;JvgCheckBox21: TJvgCheckBox;JvgCheckBox22: TJvgCheckBox;JvgCheckBox23: TJvgCheckBox;JvgCheckBox24: TJvgCheckBox;JvgCheckBox25: TJvgCheckBox;JvgCheckBox26: TJvgCheckBox;JvgCheckBox27: TJvgCheckBox;JvgCheckBox28: TJvgCheckBox;JvgCheckBox29: TJvgCheckBox;
-    JvgCheckBox30: TJvgCheckBox;JvgCheckBox31: TJvgCheckBox; JvgCheckBox32: TJvgCheckBox;
+    JvOfficeColorPanel1: TJvOfficeColorPanel;
 //  UnKnow Panels
-    pnl1: TPanel;pnl2: TPanel;pnl3: TPanel;pnl4: TPanel;
-//  Labels Components
-    L_Joy1Buttons: TLabel;L_Joy1Axis: TLabel;L_Joy1POV: TLabel;L_Joy2Id: TLabel;L_Joy2Buttons: TLabel;L_Joy2Axis: TLabel;L_Joy2POV: TLabel;L_FoundJoy1: TLabel;L_FoundJoy2: TLabel;L_Joy1Id: TLabel;    
+    pnl1: TPanel;pnl2: TPanel;pnl3: TPanel;pnl4: TPanel;    
 //  Internet Components
     IdHTTP1: TIdHTTP;
 //  Scrolllbox Components
-    ScrollBox1: TScrollBox;ScrollBox2: TScrollBox;
-//  Joystick Components  
-    CEJoy1: TNLDJoystick;CEJoy2: TNLDJoystick;
+    ScrollBox1: TJvScrollBox;ScrollBox2: TJvScrollBox;
+//  Joystick Components
+    CEJoy1: TNLDJoystick;CEJoy2: TNLDJoystick;        
 //  Button Components
     Button1: TButton;
+//  Led Components
+    JvLED2: TJvLED;JvLED5: TJvLED;JvLED1: TJvLED;JvLED4: TJvLED;JvLED3: TJvLED;JvLED6: TJvLED;JvLED7: TJvLED;JvLED8: TJvLED;JvLED9: TJvLED;JvLED10: TJvLED;JvLED11: TJvLED;JvLED12: TJvLED;JvLED13: TJvLED;JvLED14: TJvLED;
+    JvLED15: TJvLED;JvLED16: TJvLED;JvLED17: TJvLED;JvLED18: TJvLED;JvLED19: TJvLED;JvLED20: TJvLED;JvLED21: TJvLED;JvLED22: TJvLED;JvLED23: TJvLED;JvLED24: TJvLED;JvLED25: TJvLED;JvLED26: TJvLED;JvLED27: TJvLED;JvLED28: TJvLED;
+    JvLED29: TJvLED;JvLED30: TJvLED;JvLED31: TJvLED;JvLED32: TJvLED;JvLED33: TJvLED;JvLED34: TJvLED;JvLED35: TJvLED;JvLED36: TJvLED;JvLED37: TJvLED;
+//  Label Components
+    lbl1: TLabel;lbl31: TLabel;lbl2: TLabel;lbl3: TLabel;lbl4: TLabel;lbl5: TLabel;lbl6: TLabel;lbl7: TLabel;lbl8: TLabel;lbl9: TLabel;lbl10: TLabel;lbl11: TLabel;lbl12: TLabel;lbl13: TLabel;lbl14: TLabel;lbl15: TLabel;lbl16: TLabel;
+    lbl17: TLabel;lbl18: TLabel;lbl19: TLabel;lbl32: TLabel;lbl20: TLabel;lbl21: TLabel;lbl22: TLabel;lbl23: TLabel;lbl24: TLabel;lbl25: TLabel;lbl26: TLabel;lbl27: TLabel;lbl28: TLabel;lbl29: TLabel;lbl30: TLabel;L_FoundJoy1: TLabel;
+    L_Joy1Id: TLabel;L_Joy1Buttons: TLabel;L_Joy1Axis: TLabel;L_Joy1POV: TLabel;L_FoundJoy2: TLabel;L_Joy2Id: TLabel;L_Joy2Buttons: TLabel;L_Joy2Axis: TLabel;L_Joy2POV: TLabel;lbl34: TLabel;lbl35: TLabel;lbl37: TLabel;lbl36: TLabel;
+    lbl38: TLabel;lbl39: TLabel;lbl41: TLabel;lbl40: TLabel;lbl43: TLabel;lbl42: TLabel;lbl45: TLabel;lbl44: TLabel;lbl47: TLabel;lbl46: TLabel;lbl48: TLabel;lbl49: TLabel;lbl50: TLabel;lbl51: TLabel;lbl52: TLabel;lbl53: TLabel;lbl55: TLabel;lbl54: TLabel;
+//  TLMDRadioButton Components
+    rb36: TLMDRadioButton;rb37: TLMDRadioButton;rb38: TLMDRadioButton;rb1: TLMDRadioButton;rb2: TLMDRadioButton;rb31: TLMDRadioButton;rb32: TLMDRadioButton;rb33: TLMDRadioButton;rb43: TLMDRadioButton;rb44: TLMDRadioButton;rb45: TLMDRadioButton;rb46: TLMDRadioButton;
+    rb47: TLMDRadioButton;rb48: TLMDRadioButton;rb49: TLMDRadioButton;rb50: TLMDRadioButton;rb51: TLMDRadioButton;rb52: TLMDRadioButton;rb53: TLMDRadioButton;rb39: TLMDRadioButton;rb40: TLMDRadioButton;rb41: TLMDRadioButton;rb42: TLMDRadioButton;rb54: TLMDRadioButton;
+    rb55: TLMDRadioButton;rb9: TLMDRadioButton;rb10: TLMDRadioButton;rb3: TLMDRadioButton;rb4: TLMDRadioButton;rb5: TLMDRadioButton;rb6: TLMDRadioButton;rb13: TLMDRadioButton;rb14: TLMDRadioButton;rb15: TLMDRadioButton;rb16: TLMDRadioButton;rb17: TLMDRadioButton;
+    rb18: TLMDRadioButton;rb19: TLMDRadioButton;rb20: TLMDRadioButton;rb21: TLMDRadioButton;rb22: TLMDRadioButton;rb23: TLMDRadioButton;rb24: TLMDRadioButton;rb25: TLMDRadioButton;rb26: TLMDRadioButton;rb27: TLMDRadioButton;rb28: TLMDRadioButton;rb29: TLMDRadioButton;
+    rb30: TLMDRadioButton;rb7: TLMDRadioButton;rb8: TLMDRadioButton;
+//  TJvRichEdit Components
+    RE_Log: TJvRichEdit;    
+//  TSpinEdit Components
+    se1: TSpinEdit;    
+//  TLmdFont Components
+    LMDFontComboBox1: TLMDFontComboBox;
+    LMDFontSizeComboBox1: TLMDFontSizeComboBox;
+//  TRadioButton        
+    rb56: TRadioButton;rb57: TRadioButton;
+    sCheckBox65: TsCheckBox;
         
 //  Main form actions
     procedure FormCreate(Sender: TObject);
@@ -266,13 +261,11 @@ type
     procedure sCheckListBox1DrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
     procedure Mame_ManageGraphics(Sender: TObject);
+    procedure Mame_ManageHlsl(Sender: TObject);
     procedure Mame_ManageSound(Sender: TObject);
-    procedure Mame_ManageOthers(Sender: TObject);
-    procedure Mame_ManageBuilds(Sender: TObject);
+    procedure Mame_ManageOthers(Sender: TObject);    
     procedure nxtgrd_ips_mameplusCellClick(Sender: TObject; ACol,ARow: Integer);
     procedure nxtgrd_ips_mameplusExpand(Sender: TObject; ARow: Integer);
-    procedure nxtgrd_ips_mamextCellClick(Sender: TObject; ACol,ARow: Integer);
-    procedure nxtgrd_ips_mamextExpand(Sender: TObject; ARow: Integer);
     procedure Mame_ManageDatabase(Sender: TObject);
     procedure Mame_GlobalOrTopicSave(Sender: TObject);
 //  Zinc
@@ -517,9 +510,9 @@ end;
 
 procedure TConf.Zinc_ClickGraphicsState(Sender: TObject);
 begin
-  if TRadioButton(Sender).Hint = 'OpenGL' then
+  if TLMDRadioButton(Sender).Hint = 'OpenGL' then
     UseZinc_OpenGL_Settings
-  else if TRadioButton(Sender).Hint = 'D3D' then
+  else if TLMDRadioButton(Sender).Hint = 'D3D' then
     UseZinc_D3D_Settings;
 end;
 
@@ -627,25 +620,25 @@ end;
 procedure TConf.Mame_ManageGraphics(Sender: TObject);
 begin
   if TsScrollBar(Sender).Hint = 'Change_emulation_speed' then
-    MameEmulationSpeedChange
+    Graphics_MovingScrollbar('sbar_mame_emulatrionspeed','sLabel11','0.00',100)
 //  else if TsComboBox(Sender).Hint = 'Change_rotation' then
 //    MameRotationChange
   else if TsScrollBar(Sender).Hint = 'Change_pause_brightness' then
-    MamePauseChange
+    Graphics_MovingScrollbar('sbar_mame_pausebrightness','sLabel3','0.00',100)
   else if TsScrollBar(Sender).Hint = 'Change_gamma' then
-    MameGammaChange
+    Graphics_MovingScrollbar('sbar_mame_gammacorrection','sLabel4','0.00',100)
   else if TsScrollBar(Sender).Hint = 'Change_brightness' then
-    MameBrightnessChange
+    Graphics_MovingScrollbar('sbar_mame_brightnesscorrection','sLabel5','0.00',100)
   else if TsScrollBar(Sender).Hint = 'Change_contrast' then
-    MameContrastChange
+    Graphics_MovingScrollbar('sbar_mame_contrastcorrection','sLabel2','0.00',100)
   else if TsComboBox(Sender).Hint = 'Change_video_mode' then
     MameVideoModeChange('')
   else if TsScrollBar(Sender).Hint = 'Change_fullscreen_gamma' then
-    MameFullscreenGammaChange
+    Graphics_MovingScrollbar('sbar_mame_Fgamma','sLabel8','0.00',100)
   else if TsScrollBar(Sender).Hint = 'Change_fullscreen_brightness' then
-    MameFullscreenBrightnessChange
+    Graphics_MovingScrollbar('sbar_mame_Fbrightness','sLabel7','0.00',100)
   else if TsScrollBar(Sender).Hint = 'Change_fullscreen_contrast' then
-    MameFullscreenContrastChange
+    Graphics_MovingScrollbar('sbar_mame_Fcontrast','sLabel6','0.00',100)
   else if TsScrollBar(Sender).Hint = 'Change_seconds_to_run' then
     MameSecondsToRunChange
   else if TsScrollBar(Sender).Hint = 'Change_scale_screen' then
@@ -684,48 +677,28 @@ end;
 
 procedure TConf.Mame_ManageOthers(Sender: TObject);
 begin
-  if TsScrollBar(Sender).Hint = 'Change_thread_priority' then
+  if TsBitBtn(Sender).Hint = 'Others_Others' then
+    Others_ButtonOthersClick
+  else if TsBitBtn(Sender).Hint = 'Others_MamePlus' then
+    Others_ButtonMamePlusClick
+  else if TsBitBtn(Sender).Hint = 'Others_Tools' then
+    Others_ButtonToolsClick
+  else if TsScrollBar(Sender).Hint = 'Change_thread_priority' then
     MameThreadPriorityChange
   else if TsScrollBar(Sender).Hint = 'Change_beam_width' then
     MameBeamWidthChange
   else if TsScrollBar(Sender).Hint = 'Change_flicker' then
     MameFlickerChange
-end;
-
-procedure TConf.Mame_ManageBuilds(Sender: TObject);
-begin
-  if TsBitBtn(Sender).Hint = 'Builds' then
-    BuildsClick
-  else if TsBitBtn(Sender).Hint = 'Tools' then
-    ToolsClick
-  else if TsBitBtn(Sender).Hint = 'MamePlus' then
-    Builds_MamePlus
-  else if TsBitBtn(Sender).Hint = 'MameXT' then
-    Builds_MameXT
+  else if TsCheckBox(Sender).Hint = 'Mplus_enable_ips' then
+    IPSEnableClick_MamePlus
+  else if TsBitBtn(Sender).Hint = 'Mplus_find_ips' then
+    FindIPSDir_MamePlus
   else if TsCheckBox(Sender).Hint = 'Mplus_check_hiscore' then
     HiScorePath_MamePlus
   else if TsBitBtn(Sender).Hint = 'Mplus_find_hiscore' then
     FindHiScoreDat_MamePlus
   else if TsScrollBar(Sender).Hint = 'Mplus_change_ui_transparent' then
     MameUITrasparentChange_MamePlus
-  else if TsCheckBox(Sender).Hint = 'Mplus_enable_ips' then
-    IPSEnableClick_MamePlus
-  else if TsBitBtn(Sender).Hint = 'Mplus_find_ips' then
-    FindIPSDir_MamePlus
-  else if TsCheckBox(Sender).Hint = 'Mxt_check_hiscore' then
-    HiScorePath_MameXT
-  else if TsBitBtn(Sender).Hint = 'Mxt_find_hiscore' then
-    FindHiScoreDat_MameXT
-  else if TsScrollBar(Sender).Hint = 'Mxt_change_ui_transparent' then
-    MameUITrasparentChange_MameXT
-  else if TsCheckBox(Sender).Hint = 'Mxt_enable_ips' then
-    IPSEnableClick_MameXT
-  else if TsBitBtn(Sender).Hint = 'Mxt_find_ips' then
-    FindIPSDir_MameXT
-  else if TsComboBox(Sender).Hint = 'Mxt_get_games_count_times' then
-    GetMameXT_Game_CountTime
-  else if TsBitBtn(Sender).Hint = 'Mxt_zero_games_count_times' then
-    ZeroPlayTime_Count(sComboBox76.Text)
   else if TRadioButton(Sender).Hint = 'System font' then
     Tools_SystemFont_RadioButtonClick
   else if TRadioButton(Sender).Hint = 'Directory font' then
@@ -740,6 +713,42 @@ begin
     Tools_CreateFont;
 end;
 
+procedure TConf.Mame_ManageHlsl(Sender: TObject);
+begin    
+  If TsCheckBox(Sender).Hint = 'HLSL_Enable' then
+    Enable_HLSL(TsCheckBox(Sender).Checked)
+  else if TsCheckBox(Sender).Hint = 'HLSL_EnableYIQ' then
+    Enable_HLSL_YIQ(TsCheckBox(Sender).Checked)
+  else if TsBitBtn(Sender).Hint = 'HLSL_Switches' then
+    HLSL_ButtonSwithcesClick
+  else if TsBitBtn(Sender).Hint = 'HLSL_Surface/Color' then
+    HLSL_ButtonSurface_ColorClick
+  else if TsBitBtn(Sender).Hint = 'HLSL_NTSC' then
+    HLSL_ButtonNTSCClick
+  else if TsScrollBar(Sender).Hint = 'Change_ShadowMaskAlpha' then
+    HLSL_MovingScrollbar('sScrollbar1','lbl35','0.00',100)      
+  else if TsScrollBar(Sender).Hint = 'Change_ShadowMaskUSize' then
+    HLSL_MovingScrollbar('sScrollbar2','lbl37','0.000000',1000000)
+  else if TsScrollBar(Sender).Hint = 'Change_ShadowMaskVSize' then
+    HLSL_MovingScrollbar('sScrollbar3','lbl39','0.000000',1000000)
+  else if TsScrollBar(Sender).Hint = 'Change_Curvature' then
+    HLSL_MovingScrollbar('sScrollbar4','lbl41','0.00',100)
+  else if TsScrollBar(Sender).Hint = 'Change_Pincushion' then
+    HLSL_MovingScrollbar('sScrollbar5','lbl43','0.00',100)
+  else if TsScrollBar(Sender).Hint = 'Change_ScanlineAlpha' then
+    HLSL_MovingScrollbar('sScrollbar6','lbl45','0.00',100)
+  else if TsScrollBar(Sender).Hint = 'Change_ScanlineSize' then
+    HLSL_MovingScrollbar('sScrollbar7','lbl47','0.00',100)
+  else if TsScrollBar(Sender).Hint = 'Change_ScanlineBrightScale' then
+    HLSL_MovingScrollbar('sScrollbar8','lbl49','0.00',100)
+  else if TsScrollBar(Sender).Hint = 'Change_ScanlineBrightOffset' then
+    HLSL_MovingScrollbar('sScrollbar9','lbl51','0.00',100)
+  else if TsScrollBar(Sender).Hint = 'Change_ScanlineJitter' then
+    HLSL_MovingScrollbar('sScrollbar10','lbl53','0.00',100)
+  else if TsScrollBar(Sender).Hint = 'Change_Saturation' then
+    HLSL_MovingScrollbar('sScrollbar11','lbl55','0.00',100);
+end;
+
 procedure TConf.nxtgrd_ips_mameplusCellClick(Sender: TObject; ACol,
   ARow: Integer);
 begin
@@ -749,17 +758,6 @@ end;
 procedure TConf.nxtgrd_ips_mameplusExpand(Sender: TObject; ARow: Integer);
 begin
   IpsMamePlus_Expand(ARow);
-end;
-
-procedure TConf.nxtgrd_ips_mamextCellClick(Sender: TObject; ACol,
-  ARow: Integer);
-begin
-  IpsMameXT_CellClick(Acol,Arow);
-end;
-
-procedure TConf.nxtgrd_ips_mamextExpand(Sender: TObject; ARow: Integer);
-begin
-  IpsMameXT_Expand(ARow);
 end;
 
 procedure TConf.Mame_ManageDatabase(Sender: TObject);
@@ -857,18 +855,18 @@ end;
 
 procedure TConf.Hatari_ConfigJoy(Sender: TObject);
 begin
-  if TRadioButton(Sender).Hint = 'Joystick_disable' then
-    PressJoy_Disable
-  else if TRadioButton(Sender).Hint = 'Joystick_keyboard' then
-    PressJoy_Keyboard
-  else if TRadioButton(Sender).Hint = 'Joystick_real' then
-    PressJoy_RealJoystick
+  if TsComboBox(Sender).Hint = 'Change_joystick_port' then
+    SaveCurrentState_Joy(TsComboBox(Sender).ItemIndex)
   else if TsBitBtn(Sender).Hint = 'Set_mapping' then
     SetHatari_Mapping
   else if TsBitBtn(Sender).Hint = 'Eject_mapping' then
     EjectHatari_Mapping
-  else if TsComboBox(Sender).Hint = 'Change_joystick_port' then
-    SaveCurrentState_Joy(TsComboBox(Sender).ItemIndex);
+  else if TLMDRadioButton(Sender).Hint = 'Joystick_disable' then
+    PressJoy_Disable
+  else if TLMDRadioButton(Sender).Hint = 'Joystick_keyboard' then
+    PressJoy_Keyboard
+  else if TLMDRadioButton(Sender).Hint = 'Joystick_real' then
+    PressJoy_RealJoystick;
 end;
 
 procedure TConf.Hatari_ConfigJoy2(Sender: TObject);
@@ -969,14 +967,14 @@ end;
 
 procedure TConf.Kigb_ConfigScreen(Sender: TObject);
 begin
-  if TRadioButton(Sender).Hint = 'Kigb_otherthancustom' then
-    OnPallete_AllOtherExeptCustomClick
-  else if TRadioButton(Sender).Hint = 'Kigb_custom' then
-    OnPallete_CustomClick
-  else if TPanel(Sender).Hint = 'Kigb_color' then
+  if TPanel(Sender).Hint = 'Kigb_color' then
     OnPallete_ColorPanelClick(TPanel(Sender).Tag)
   else if TJvOfficeColorPanel(Sender).Hint = 'Kigb_setcolor' then
-    OnPallete_ChangeCustomColor;
+    OnPallete_ChangeCustomColor
+  else if TLMDRadioButton(Sender).Hint = 'Kigb_otherthancustom' then
+    OnPallete_AllOtherExeptCustomClick
+  else if TLMDRadioButton(Sender).Hint = 'Kigb_custom' then
+    OnPallete_CustomClick;
 end;
 
 procedure TConf.Kigb_ConfigSound(Sender: TObject);
@@ -1109,6 +1107,7 @@ end;
 procedure TConf.FormShow(Sender: TObject);
 begin
   FoundAndSetJoystics;
+  SkinM.UpdateSkin(True);
 end;
 
 procedure TConf.CEJoy1Idle(Sender: TObject);

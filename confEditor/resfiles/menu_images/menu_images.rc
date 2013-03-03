@@ -2,6 +2,7 @@ CONFEDITOR Bitmap confeditor.bmp
 CONFEDITOR_WIZARD Bitmap confeditor_wizard.bmp
 CONFEDITOR_CONFIG Bitmap confeditor_config.bmp
 CONFEDITOR_THEMES Bitmap confeditor_themes.bmp
+CONFEDITOR_LOG Bitmap confeditor_logsession.bmp
 EXTRAFE Bitmap extrafe.bmp
 EXTRAFE_CONFIG Bitmap extrafe_config.bmp
 EXTRAFE_THEMES Bitmap extrafe_themes.bmp

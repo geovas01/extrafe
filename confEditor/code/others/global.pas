@@ -22,7 +22,7 @@ implementation
 
 uses
   main,menu,FunctionX,form_splash,mainconf,
-  mame_dirs,mame_graphics,mame_database,mame_builds,
+  mame_dirs,mame_graphics,mame_database,mame_others,
   zinc_paths,
   hatari_paths,hatari_roms,hatari_joy,hatari_database,
   psx_paths,psx_database,
@@ -39,8 +39,6 @@ begin
     Conf.sEdit15.Text := Conf.Find_Files.FileName
   else if gFindFiles = 'hiscoredat_mameplus' then
     FindHiScoreDat_MamePlusReturn
-  else if gFindFiles = 'hiscoredat_mamext' then
-    FindHiScoreDat_MameXTReturn
   else if gFindFiles = 'MameTools_FontName' then
     Conf.sEdit125.Text := Conf.Find_Files.FileName
 // Zinc
@@ -114,8 +112,6 @@ begin
     AddNewRom_Dir
   else if gFindDirs = 'IPSDir_mameplus' then
     SetTheNewIPSDir_MamePlus
-  else if gFindDirs = 'IPSDir_mamext' then
-    SetTheNewIPSDir_MameXT
 // ZInc  
   else if gFindDirs = 'AddNewZinc_RomDir' then
     SetTheNewZincRomDirectory
@@ -206,16 +202,9 @@ end;
 
 procedure ProgressTgauge(Position: Int64);
 begin
-  if FFileSize > 0 then
-    if progressComesFrom = 'Zinc_start' then
-      Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Loading Zinc Database...')
-    else if progressComesFrom = 'Mame_start' then
+  if FFileSize > 0 then    
+    if progressComesFrom = 'Mame_start' then
       Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Loading Mame Database...')
-    else if progressComesFrom = 'Hatari_Database' then
-      begin
-        Conf.sGauge_HatariData.Progress := Round(position / FFileSize) * 100;
-        Application.ProcessMessages;
-      end
     else if progressComesFrom = 'Mame_database' then
       begin
         Conf.sGauge_MameData.Progress := Round(position / FFileSize) * 100;
@@ -225,10 +214,19 @@ begin
       begin
         Conf.sGauge_MameChange.Progress := Round(position / FFileSize) * 100;
         Application.ProcessMessages;
-      end
+      end    
     else if progressComesFrom = 'Ips_Start' then
       begin
         Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Found IPS Files. Try to Sotring (Please Wait...)');
+        Application.ProcessMessages;
+      end
+    else if progressComesFrom = 'Zinc_start' then
+      Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Loading Zinc Database...')
+    else if progressComesFrom = 'Arcade_start' then
+      Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Loading Common Arcade Database...')
+    else if progressComesFrom = 'Hatari_Database' then
+      begin
+        Conf.sGauge_HatariData.Progress := Round(position / FFileSize) * 100;
         Application.ProcessMessages;
       end
     else if progressComesFrom = 'Playstation_Database' then

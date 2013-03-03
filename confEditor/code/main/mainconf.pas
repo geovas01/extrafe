@@ -2,12 +2,12 @@ unit mainconf;
 
 interface
 uses
-  Windows,Variants,Classes,SysUtils,Forms,StdCtrls,ComCtrls,IniFiles,ExtCtrls,
-  Graphics,FunctionX,sPanel,sComboBox,sCheckBox,sEdit,sBitBtn,sButton,
+  Windows,Variants,Classes,SysUtils,Forms,StdCtrls,ComCtrls,IniFiles,ExtCtrls,dialogs,
+  Graphics,FunctionX,sPanel,sComboBox,sCheckBox,sEdit,sBitBtn,sButton,sScrollbar,
   form_splash,
   menu,global,
-  ce_themes,ce_config,
-  mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds,mame_database,
+  ce_themes,ce_config,ce_logsession,
+  mame_dirs,mame_graphics,mame_sound,mame_others,mame_hlsl,mame_database,
   zinc_paths,zinc_graphics,zinc_sound,zinc_database,
   hatari_paths,hatari_system,hatari_roms,hatari_screen,hatari_joy,hatari_database,
   psx_paths,psx_screen,psx_sound,psx_others,psx_database,
@@ -23,6 +23,8 @@ uses
 
   procedure StartEmuMame;
   procedure StartEmuZinc;
+  procedure StartArcadeDatabase;
+  
   procedure StartEmuHatari;
   procedure StartEmupSX;
   procedure StartEmuKigb;
@@ -33,11 +35,11 @@ uses
   procedure CreateSTBarInfo;
   procedure HideAllPanels;
   procedure StartSkinEngine;
-  procedure GroupBoxColors(i : Integer);
   procedure LoadStaticImages;
   procedure SetAllCursor(Theme: Byte);
   procedure SetCursors(Cur: Byte);
   procedure AllCursor(cur: Byte);
+  procedure ScrollBoxTheme(num: integer);
 //  procedure SetCursorToBusy(cur: Byte);
   procedure LoadCostumCursors;
 
@@ -56,12 +58,15 @@ var
   pSX_Exe,FullPathpSX_Exe,pSX_confEditor_ini: string;
   pSX_Config,pSX_Ini: TIniFile;
 //Kigb Vars
-  Kigb_Exe,FullPathKigb_Exe,Kigb_confEditor_ini,KigbCfg_File: string;
+  Kigb_Exe,FullPathKigb_Exe,KigbCfg_File: string;
   Kigb_Config: TIniFile;
 //Weather Vars
   WeatherIni: TIniFile;
 //TimeDate Vars
   DateTimeIni: TIniFile;
+
+//Common Arcade Database
+  FXml_CArcade: TNativeXml;
 
 implementation
 
@@ -73,7 +78,7 @@ var
   rec : TSearchRec;
   themeName: string;
 Begin
-  Conf.skinM.SkinDirectory := Program_Path+'media\confeditor\skins';
+  Conf.skinM.SkinDirectory := Program_Path + 'media\confeditor\skins';
   SkinNames := TStringList.Create;
   Conf.SkinM.SkinName := Conf.SkinM.GetSkinNames(SkinNames);
   Conf.sLB_ce_themes.Items.Clear;
@@ -89,65 +94,52 @@ Begin
     end;
   Conf.sLB_ce_themes.Selected[ThemeNumber] := true;
   Conf.sLabelFX3.Caption := Conf.sLB_ce_themes.Items.Strings[ThemeNumber];
-  Conf.img_ce_theme.Picture.LoadFromFile('media\confeditor\skins\preview\'+conf.sLB_ce_themes.items.strings[ThemeNumber]+'.png');
+  Conf.img_ce_theme.Picture.LoadFromFile(Program_Path + 'media\confeditor\skins\preview\'+conf.sLB_ce_themes.items.strings[ThemeNumber]+'.png');
   ThemeCreator(ThemeNumber+1);
   SetAllCursor(ThemeNumber+1);
-  GroupBoxColors(ThemeNumber);
+  ScrollBoxTheme(ThemeNumber + 1);
   conf.skinM.SkinName := Conf.sLB_ce_themes.Items.Strings[ThemeNumber];
   Conf.skinM.Active := True;
   Application.ProcessMessages;
   skinnames.Free;
 end;
 
-Procedure GroupBoxColors(i : Integer);
-var
-  component: TComponent;
-  k: Integer;
-Begin
-  if i = 3 then
-    i := 2;
-  Case i of
-    0 : begin
-          for k := 1 to 122 do
-            begin
-              if (k <> 35)  then
-                begin
-                  component := FindComponentEx('Conf.grp'+inttostr(k));
-                  TGroupBox(component).Color := $00e4eaed;
-                end;
-            end;
-          Conf.ScrollBox1.Color := $00e4eaed;
-          Conf.ScrollBox2.Color := $00e4eaed;
-          Conf.PBuilds_MamePlus.Color := $00e4eaed;
-          Conf.PBuilds_MameXT.Color := $00e4eaed;
-        end;
+procedure ScrollBoxTheme(num: integer);
+const
+  ThemePath = 'media\confeditor\skins\backs\';
+begin
+  case num of 
     1 : begin
-          for k := 1 to 122 do
-            begin
-              if (k <> 35)  then
-                begin
-                  component := FindComponentEx('Conf.grp'+inttostr(k));
-                  TGroupBox(component).Color := $00bae5e8;
-                end;
-            end;
-          Conf.ScrollBox1.Color := $00bae5e8;
-          Conf.ScrollBox2.Color := $00bae5e8;
-          Conf.PBuilds_MamePlus.Color := $00bae5e8;
-          Conf.PBuilds_MameXT.Color := $00bae5e8;
+          Conf.ScrollBox1.Background.LoadFromFile(Program_Path + ThemePath + 'creamy_velvet.png');
+          Conf.ScrollBox2.Background.LoadFromFile(Program_Path + ThemePath + 'creamy_velvet.png');
         end;
     2 : begin
-          for k := 1 to 122 do
-            begin
-              if (k <> 35) then
-                begin
-                  component := FindComponentEx('Conf.grp'+inttostr(k));
-                  TGroupBox(component).Color := $00e7e7e7;
-                end;
-            end;
-          Conf.ScrollBox1.Color := $00e7e7e7;
-          Conf.ScrollBox2.Color := $00e7e7e7;
-          Conf.PBuilds_MamePlus.Color := $00e7e7e7;
-          Conf.PBuilds_MameXT.Color := $00e7e7e7;
+          Conf.ScrollBox1.Background.LoadFromFile(Program_Path + ThemePath + 'fallen.png');
+          Conf.ScrollBox2.Background.LoadFromFile(Program_Path + ThemePath + 'fallen.png');
+        end;
+    3 : begin
+          Conf.ScrollBox1.Background.LoadFromFile(Program_Path + ThemePath + 'forest.png');
+          Conf.ScrollBox2.Background.LoadFromFile(Program_Path + ThemePath + 'forest.png');
+        end;
+    4 : begin
+          Conf.ScrollBox1.Background.LoadFromFile(Program_Path + ThemePath + 'genes.png');
+          Conf.ScrollBox2.Background.LoadFromFile(Program_Path + ThemePath + 'genes.png');
+        end;
+    5 : begin
+          Conf.ScrollBox1.Background.LoadFromFile(Program_Path + ThemePath + 'heroes.png');
+          Conf.ScrollBox2.Background.LoadFromFile(Program_Path + ThemePath + 'heroes.png');
+        end;
+    6 : begin
+          Conf.ScrollBox1.Background.LoadFromFile(Program_Path + ThemePath + 'hippies.png');
+          Conf.ScrollBox2.Background.LoadFromFile(Program_Path + ThemePath + 'hippies.png');
+        end;
+    7 : begin
+          Conf.ScrollBox1.Background.LoadFromFile(Program_Path + ThemePath + 'lmint.png');
+          Conf.ScrollBox2.Background.LoadFromFile(Program_Path + ThemePath + 'lmint.png');
+        end;
+    8 : begin
+          Conf.ScrollBox1.Background.LoadFromFile(Program_Path + ThemePath + 'noir.png');     
+          Conf.ScrollBox2.Background.LoadFromFile(Program_Path + ThemePath + 'noir.png');     
         end;
   end;
 end;
@@ -156,9 +148,13 @@ procedure SetAllCursor(Theme : Byte);
 begin
   case Theme of
     1 : AllCursor(2);
-    2 : AllCursor(3);
-    3 : AllCursor(4);
-    4 : AllCursor(1);
+    2 : AllCursor(7);
+    3 : AllCursor(3);
+    4 : AllCursor(6);
+    5 : AllCursor(5);
+    6 : AllCursor(4);
+    7 : AllCursor(8);
+    8 : AllCursor(1);
   end;
 end;
 
@@ -201,6 +197,42 @@ begin
           Vertical := AniVertical4;
           Precision := AniPrecision4;
         end;
+    5 : begin
+          Arrow := AniArrow5;
+          TArrow := AniText5;
+          Link := AniLink5;
+          Busy := AniBusy5;
+          Horizontal := AniHorizontal5;
+          Vertical := AniVertical5;
+          Precision := AniPrecision5;
+        end;
+    6 : begin
+          Arrow := AniArrow6;
+          TArrow := AniText6;
+          Link := AniLink6;
+          Busy := AniBusy6;
+          Horizontal := AniHorizontal6;
+          Vertical := AniVertical6;
+          Precision := AniPrecision6;
+        end;
+    7 : begin
+          Arrow := AniArrow7;
+          TArrow := AniText7;
+          Link := AniLink7;
+          Busy := AniBusy7;
+          Horizontal := AniHorizontal7;
+          Vertical := AniVertical7;
+          Precision := AniPrecision7;
+        end;
+    8 : begin
+          Arrow := AniArrow8;
+          TArrow := AniText8;
+          Link := AniLink8;
+          Busy := AniBusy8;
+          Horizontal := AniHorizontal8;
+          Vertical := AniVertical8;
+          Precision := AniPrecision8;
+        end;
   end;
 end;
 
@@ -224,13 +256,14 @@ begin
   Conf.Pce_wizard.Cursor := Arrow;
   Conf.Pce_config.Cursor := Arrow;
   Conf.Pce_themes.Cursor := Arrow;
+  Conf.Pce_logsession.Cursor := Arrow;
   Conf.Pexf_configuration.Cursor := Arrow;
   Conf.Pexf_themes.Cursor := Arrow;
   Conf.Pem_mame_dirs.Cursor := Arrow;
   Conf.Pem_mame_graphics.Cursor := Arrow;
   Conf.Pem_mame_sound.Cursor := Arrow;
   Conf.Pem_mame_others.Cursor := Arrow;
-  Conf.Pem_mame_builds.Cursor := Arrow;
+  Conf.Pem_mame_hlsl.Cursor := Arrow;
   Conf.Pem_mame_database.Cursor := Arrow;
   Conf.Pem_zinc_paths.Cursor := Arrow;
   Conf.Pem_zinc_graphics.Cursor := Arrow;
@@ -256,7 +289,7 @@ begin
   Conf.Pwg_timedate.Cursor := Arrow;
   Conf.Ptimedate_internettime.Cursor := Arrow;
   Conf.Ptimedate_worldclock.Cursor := Arrow;
-
+    
   //groupBoxes(grp)
   for i := 0 to 200 do
     begin
@@ -335,7 +368,14 @@ begin
           TsButton(Comp).Cursor := Arrow;
         end;
     end;
-
+  for i := 0 to 100 do 
+    begin
+      if FindComponentEx('Conf.sScrollBar' + IntToStr(i)) <> nil then
+        begin
+          Comp := FindComponentEx('Conf.sScrollBar' + IntToStr(i));
+          TsScrollBar(Comp).Cursor := Horizontal;
+        end;
+    end;
   //(confEditor)
   //Panel CE_Config
   Conf.se1.Cursor := Arrow;
@@ -373,14 +413,8 @@ begin
   Conf.sbar_mame_beamwidth.Cursor := Horizontal;
   Conf.sbar_mame_flicker.Cursor := Horizontal;
   //Panel Mame_Builds
-  Conf.PBuilds_MameBuilds.Cursor := Arrow;
-  Conf.PBuilds_MamePlus.Cursor := Arrow;
   Conf.nxtgrd_ips_mameplus.Cursor := Arrow;
   Conf.sbar_Mame_UITransparent_MamePlus.Cursor := Horizontal;
-  Conf.PBuilds_MameXT.Cursor := Arrow;
-  Conf.sbar_Mame_UITransparent_MameXT.Cursor := Horizontal;
-  Conf.nxtgrd_ips_mamext.Cursor := Arrow;
-  Conf.PBuilds_MameTools.Cursor := Arrow;
   Conf.LMDFontComboBox1.Cursor := Arrow;
   Conf.LMDFontSizeComboBox1.Cursor := Arrow;
   Conf.img86.Cursor := Arrow;
@@ -487,13 +521,41 @@ begin
   Screen.Cursors[AniHorizontal4] := GetResourceAsAniCursor('HORIZONTAL4');
   Screen.Cursors[AniVertical4] := GetResourceAsAniCursor('VERTICAL4');
   Screen.Cursors[AniPrecision4] := GetResourceAsAniCursor('PRECISION4');
+  Screen.Cursors[AniArrow5] := GetResourceAsAniCursor('ARROW5');
+  Screen.Cursors[AniText5] := GetResourceAsAniCursor('TEXT5');
+  Screen.Cursors[AniLink5] := GetResourceAsAniCursor('LINK5');
+  Screen.Cursors[AniBusy5] := GetResourceAsAniCursor('BUSY5');
+  Screen.Cursors[AniHorizontal5] := GetResourceAsAniCursor('HORIZONTAL5');
+  Screen.Cursors[AniVertical5] := GetResourceAsAniCursor('VERTICAL5');
+  Screen.Cursors[AniPrecision5] := GetResourceAsAniCursor('PRECISION5');
+  Screen.Cursors[AniArrow6] := GetResourceAsAniCursor('ARROW6');
+  Screen.Cursors[AniText6] := GetResourceAsAniCursor('TEXT6');
+  Screen.Cursors[AniLink6] := GetResourceAsAniCursor('LINK6');
+  Screen.Cursors[AniBusy6] := GetResourceAsAniCursor('BUSY6');
+  Screen.Cursors[AniHorizontal6] := GetResourceAsAniCursor('HORIZONTAL6');
+  Screen.Cursors[AniVertical6] := GetResourceAsAniCursor('VERTICAL6');
+  Screen.Cursors[AniPrecision6] := GetResourceAsAniCursor('PRECISION6');
+  Screen.Cursors[AniArrow7] := GetResourceAsAniCursor('ARROW7');
+  Screen.Cursors[AniText7] := GetResourceAsAniCursor('TEXT7');
+  Screen.Cursors[AniLink7] := GetResourceAsAniCursor('LINK7');
+  Screen.Cursors[AniBusy7] := GetResourceAsAniCursor('BUSY7');
+  Screen.Cursors[AniHorizontal7] := GetResourceAsAniCursor('HORIZONTAL7');
+  Screen.Cursors[AniVertical7] := GetResourceAsAniCursor('VERTICAL7');
+  Screen.Cursors[AniPrecision7] := GetResourceAsAniCursor('PRECISION7');
+  Screen.Cursors[AniArrow8] := GetResourceAsAniCursor('ARROW8');
+  Screen.Cursors[AniText8] := GetResourceAsAniCursor('TEXT8');
+  Screen.Cursors[AniLink8] := GetResourceAsAniCursor('LINK8');
+  Screen.Cursors[AniBusy8] := GetResourceAsAniCursor('BUSY8');
+  Screen.Cursors[AniHorizontal8] := GetResourceAsAniCursor('HORIZONTAL8');
+  Screen.Cursors[AniVertical8] := GetResourceAsAniCursor('VERTICAL8');
+  Screen.Cursors[AniPrecision8] := GetResourceAsAniCursor('PRECISION8');
 end;
 
 procedure HideAllPanels;
 const
-  ConfEditorPanels: array [0..2] of string = ('themes','config','wizard');
+  ConfEditorPanels: array [0..3] of string = ('themes','config','wizard','logsession');
   ExtraFePanels: array [0..1] of string = ('configuration','themes');
-  MamePanels: array [0..5] of string = ('dirs','graphics','sound','others','builds','database');
+  MamePanels: array [0..5] of string = ('dirs','graphics','sound','others','hlsl','database');
   ZincPanels: array [0..3] of string = ('paths','graphics','sound','database');
   HatariPanels: array [0..5] of string = ('paths','system','roms','screen','joy','database');
   pSXPanels: array [0..4] of string = ('paths','screen','sound','others','database');
@@ -503,7 +565,7 @@ var
   run: Integer;
   comp: TComponent;
 begin
-  for run := 0 to 2 do
+  for run := 0 to 3 do
     begin
       Comp := FindComponentEx('Conf.Pce_' + ConfEditorPanels[run]);
       TsPanel(comp).Left := 727;
@@ -547,22 +609,26 @@ end;
 
 procedure StartConfEditor;
 begin
-  Program_Path := ExtractFilePath(Application.ExeName); //The Path of my program
-  ConfEditor_ImagePath:= Program_Path+'media\confeditor\images\'; // The Path of programs images
-  StartProgConfEditor;
-  StartEmuMame;
-  StartEmuZinc;
-  StartEmuHatari;
-  StartEmupSX;
-  StartEmuKigb;
-  StartWidget_Weather;
-  StartWidget_TimeDate;
+  StartProgConfEditor;  // Start Logging Done
+  StartProgExtraFe; // Start Logging Done
+  StartEmuMame; // Start Logging Done
+  StartEmuZinc; // Start Logging
+  StartArcadeDatabase; // Start Logging Done
+  StartEmuHatari; // Start Logging Done
+  StartEmupSX; // Start Logging Done
+  StartEmuKigb; // Start Logging
+  StartWidget_Weather; // Start Logging
+  StartWidget_TimeDate; // Start Logging
   resolutions.Free;
 end;
 
 procedure StartProgConfEditor;
 begin
+  Program_Path := ExtractFilePath(Application.ExeName); //The Path of my program
+  ConfEditor_ImagePath:= Program_Path+'media\confeditor\images\'; // The Path of programs images  
+  Log_WelcomeMessage(True);
   Ce_XMLPath := Program_Path+'media\confeditor\config\config.xml';
+  Log_NewTextStartingTheme('Starting Reading settings for confEditor');
   if FileExists(Ce_XMLPath) then
     ReadConfiguration
   else
@@ -572,28 +638,72 @@ end;
 
 procedure StartProgExtraFE;
 begin
-
+  Log_NewTextStartingTheme('Starting Reading Settings for ExtraFe');
+  Log_Bullets(True);
+  Log_NewTextEnter('Nothing is here Yet');
+  Log_Bullets(False);
+  Log_NewLine;
 end;
 
 procedure StartEmuMame;
 var
   F: TFileStream;
+  i,k: Integer;
+  FirstTimeMame: Boolean;
 begin
+  Started := True;
+  Log_NewTextStartingTheme('Starting Reading settings for Mame emulator');
+  Log_Bullets(True);
   PathXmlMamePath := Program_Path+'media\emulators\arcade\mame\config\';
-  MameConfigFile := Program_Path+'media\emulators\arcade\mame\config\config.xml';
-  if FileExists(Program_Path +'media\emulators\arcade\mame\config\config.xml') then
-    begin
-      MameConfigFile := Program_Path+'media\emulators\arcade\mame\config\config.xml';
+  MameConfigFile := PathXmlMamePath + 'config.xml';
+  if FileExists(MameConfigFile) then
+    begin      
+      Log_NewTextEnter('Mame config file found.');
       Assigned_MameConfiguration;
       FXml_MameConfing.LoadFromFile(MameConfigFile);
       Mame_Exe := FXml_MameConfing.Root.ReadAttributeString('SelectedMame');
       SelectedMame := FXml_MameConfing.Root.ReadAttributeInteger('Selected');
       FullPathMame_Exe := FXml_MameConfing.Root.ReadAttributeString('FullPathOfSelectedMame');
+      Log_NewTextEnter('Get all info from mame config.');
     end
   else
-    SelectedMame := -1;
+    begin
+      if IsFirstTimeStart <> true then
+        begin
+          FirstTimeMame:= True;
+          for i := 0 to 4 do
+            if WrongStart[i] <> ' ' then
+              begin
+                Log_NewTextEnter('The below entries is wrong or from previous installations');
+                for k:= 0 to 4 do 
+                  begin
+                    if WrongStart[k] <> ' ' then           
+                      begin
+                        Log_NewText(WrongStart[k] + ' suppose not exist. Please ');
+                        Log_ChangeFontColor(clRed); 
+                        Log_NewTextEnter('erase it.');
+                        Log_ChangeFontColor(clBlack);                
+                      end;              
+                  end;        
+                Log_NewLine;
+                Break;
+                FirstTimeMame := False;
+              end;
+          if FirstTimeMame = True then
+            begin
+              Log_NewTextEnter('Mame emulator not setting up. Go to Emulators->Arcade->Mame and setup');
+              SelectedMame := -1;
+            end;
+        end;
+    end;
   if Mame_Exe <> '' then
     begin
+      if not FileExists(FullPathMame_Exe + Mame_Exe) then
+        begin
+          Log_WarningMessage('I cant find the mame executive file. The settings will load OK but in ExtraFe the mame will not run as the mame file is missing or something gone really bad.');
+        end
+      else
+        Log_NewTextEnter('Mame executive file is found');
       PathXmlMame := Program_Path+'media\emulators\arcade\mame\database\'+Mame_Exe;
       Delete(PathXmlMame,Length(PathXmlMame)-3,4);
       MameDatabaseFile := PathXmlMame+'_efuse.xml';
@@ -616,172 +726,374 @@ begin
         finally
           F.Free;
         end;
+      Log_NewTextEnter('Mame Databse loading OK');
       Conf.sEdit64.Text := FullPathMame_Exe+Mame_Exe;
       InitGlobal_MameMemo_ForMameIni;
-      SetMame_DirsFromMameIni;
+      Log_NewTextEnter('initialization of mame.ini OK');
+      Log_NewTextEnter('Load Directories settings.');
+      SetMame_DirsFromMameIni;      
       ShowProgressBar(20,'Mame Directories Ready','Mame');
+      Log_NewTextEnter('Mame Directories settings loading OK');
+      Log_NewTextEnter('Load Graphics settings.');
       SetMame_GraphicsFromMameIni;
       ShowProgressBar(35,'Mame Graphics Ready','Mame');
+      Log_NewTextEnter('Mame Graphics settings loading OK');
+      Log_NewTextEnter('Load Hlsl settings.');
+      SetMame_HlslFromMameIni;
+      ShowProgressBar(50,'Mame Hlsl Ready','Mame');
+      Log_NewTextEnter('Mame Hlsl settings loading OK');
+      Log_NewTextEnter('Load Sound settings.');
       SetMame_SoundFromMameIni;
-      ShowProgressBar(50,'Mame Sound Ready','Mame');
+      ShowProgressBar(65,'Mame Sound Ready','Mame');
+      Log_NewTextEnter('Mame Sound settings loading OK');
+      Log_NewTextEnter('Load Others settings.');
       SetMame_OthersFromMameIni;
-      ShowProgressBar(65,'Mame Others Ready','Mame');
-      SetMame_BuildsFromMameIni;
-      ShowProgressBar(80,'Mame Builds Ready','Mame');
+      ShowProgressBar(80,'Mame Others Ready','Mame');
+      Log_NewTextEnter('Mame Others settings loading OK');      
+      Log_NewTextEnter('Load Database settings.');
       SetMame_DatabaseFromMameIni;
       ShowProgressBar(100,'Mame Database Ready','Mame');
+      Log_NewTextEnter('Mame Database settings loading OK');
       Started := False;
       FromDatabase := False;
-    end
+    end;
+  Log_Bullets(False);
+  Log_NewLine;
 end;
 
 procedure StartEmuZinc;
 var
   F : TFileStream;
 begin
-  if FileExists(ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\config.ini') then
+  Log_NewTextStartingTheme('Starting Reading settings for Zinc emulator');
+  Log_Bullets(True);
+  if FileExists(Program_Path + 'media\emulators\arcade\zinc\config\config.ini') then
     begin
       Started := True;
       Zinc_ini := ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\config\config.ini';
       Zinc_Config := TIniFile.Create(Zinc_ini);
       Zinc_Exe := Zinc_Config.ReadString('Zinc_Paths','Zinc_Exe',Zinc_Exe);
+      Log_NewTextEnter('Zinc.ini is found and take config data.');
       FullPathZinc_Exe := Zinc_Config.ReadString('Zinc_Paths','Zinc_Path',FullPathZinc_Exe);
-      ZincDatabaseFile := ExtractFilePath(Application.ExeName)+'media\emulators\arcade\zinc\database\zinc_efuse.xml';
-      FFileName := ZincDatabaseFile;
-      progressComesFrom := 'Zinc_start';
-      FXml_Zinc := TNativeXml.Create(nil);
-      FXml_Zinc.XmlFormat := xfReadable; 
-      FXml_Zinc.OnProgress := Conf.XMLProgress;
+      ZincDatabaseFile := Program_Path +'media\emulators\arcade\zinc\database\zinc_efuse.xml';
+      if not FileExists(ZincDatabaseFile) then
+        begin
+          Log_WarningMessage('The database file "zinc_efuse" NOT Found. Try to Erase the "config.ini" file from zinc folder.');
+          if sysutils.DeleteFile(Zinc_ini) then 
+            Log_NewTextEnter('The "config.ini" file is deleted. Now Go to Emulators->Arcade->Zinc and make a fresh setup');
+        end
+      else
+        begin
+          Log_NewTextEnter('Database file is Found and Loading');
+          FFileName := ZincDatabaseFile;
+          progressComesFrom := 'Zinc_start';
+          FXml_Zinc := TNativeXml.Create(nil);
+          FXml_Zinc.XmlFormat := xfReadable; 
+          FXml_Zinc.OnProgress := Conf.XMLProgress;
+          F := TFileStream.Create(FFileName, fmOpenRead or fmShareDenyWrite);
+          try
+            FFileSize := F.Size;
+            if IsBinary(F) then
+              FXml_Zinc.LoadFromBinaryStream(F)
+            else
+              FXml_Zinc.LoadFromStream(F);
+          finally
+            F.Free;
+          end;
+          Log_NewTextEnter('Database load successfully');
+          ZincDatabaseFile := Program_Path + 'media\emulators\arcade\zinc\database\zinc_efuse';
+          Log_NewTextEnter('Load Directories Settings');
+          ShowProgressBar(20,'Zinc Files Ready','Zinc');
+          SetZinc_PathsFromZincIni;
+          Log_NewTextEnter('Directories Settings OK');
+          Log_NewTextEnter('Load Graphics Settings');
+          ShowProgressBar(40,'Zinc Paths Ready','Zinc');
+          SetZinc_GraphicsFromZincIni;
+          Log_NewTextEnter('Graphics Settings OK');
+          Log_NewTextEnter('Load Sound Settings');
+          ShowProgressBar(60,'Zinc Graphics Ready','Zinc');
+          SetZinc_SoundFromZincIni;
+          Log_NewTextEnter('Sound Settings OK');
+          Log_NewTextEnter('Load Database Settings');
+          ShowProgressBar(80,'Zinc Sound Ready','Zinc');
+          SetZinc_DatabaseFromZincIni;
+          Log_NewTextEnter('Database Settings OK');
+          ShowProgressBar(100,'Zinc Database Ready','Zinc');
+        end;
+      Started := False;
+    end
+  else
+    begin
+      if IsFirstTimeStart <> True then 
+        begin
+          if WrongStart[6] <> ' '  then
+            begin
+              Log_NewTextEnter('The below entries is wrong or from previous installations');        
+              Log_NewText(WrongStart[6] + ' suppose not exist. Please ');
+              Log_ChangeFontColor(clRed); 
+              Log_NewTextEnter('erase it.');
+              Log_ChangeFontColor(clBlack);                
+            end
+          else
+            Log_NewTextEnter('Zinc emulator not setting up. Go to Emulators->Arcade->Zinc and setup');
+        end
+      else 
+        Log_NewTextEnter('Zinc emulator not setting up. Go to Emulators->Arcade->Zinc and setup');
+    end;
+  Log_Bullets(False);
+  Log_NewLine;
+end;
+
+procedure StartArcadeDatabase;
+var
+  F : TFileStream;
+  ArcadeDatabaseFile: String;
+begin
+  ArcadeDatabaseFile := Program_Path + 'media\emulators\arcade\arcade.xml';  
+  Log_NewTextStartingTheme('Starting Reading common Arcade database');
+  Log_Bullets(True);
+  if FileExists(ArcadeDatabaseFile) then
+    begin      
+      Log_NewTextEnter('Database found and Loading.');
+      FFileName := ArcadeDatabaseFile;
+      progressComesFrom := 'Arcade_start';
+      FXml_CArcade := TNativeXml.Create(nil);
+      FXml_CArcade.XmlFormat := xfReadable;      
+      FXml_CArcade.OnProgress := Conf.XMLProgress;
       F := TFileStream.Create(FFileName, fmOpenRead or fmShareDenyWrite);
         try
           FFileSize := F.Size;
           if IsBinary(F) then
-            FXml_Zinc.LoadFromBinaryStream(F)
+            FXml_CArcade.LoadFromBinaryStream(F)
           else
-            FXml_Zinc.LoadFromStream(F);
+            FXml_CArcade.LoadFromStream(F);
         finally
           F.Free;
         end;
-      ShowProgressBar(20,'Zinc Files Ready','Zinc');
-      SetZinc_PathsFromZincIni;
-      ShowProgressBar(40,'Zinc Paths Ready','Zinc');
-      SetZinc_GraphicsFromZincIni;
-      ShowProgressBar(60,'Zinc Graphics Ready','Zinc');
-      SetZinc_SoundFromZincIni;
-      ShowProgressBar(80,'Zinc Sound Ready','Zinc');
-      SetZinc_DatabaseFromZincIni;
-      ShowProgressBar(100,'Zinc Database Ready','Zinc');
-      Started := False;
-    end;  
+      Log_NewTextEnter('Database loading successfully.');
+    end
+  else
+    begin
+      Log_WarningMessage('Database NOT Found something is wrong here');
+    end;        
+  Log_Bullets(False);
+  Log_NewLine;
 end;
 
 procedure StartEmuHatari;
 begin
   Hatari_confeditor_ini := ExtractFilePath(Application.ExeName)+'media\emulators\computers\atari\hatari\config\config.ini';
+  Log_NewTextStartingTheme('Starting Reading Hatari Settings');
+  Log_Bullets(True);
   if FileExists(Hatari_confeditor_ini) then
     begin
-      Hatari_Config := TIniFile.Create(Hatari_confeditor_ini);
       Started := True;
+      Hatari_Config := TIniFile.Create(Hatari_confeditor_ini);      
+      Log_NewTextEnter('Config.ini Found OK. Getting Data...');
+      Log_NewTextEnter('Load Directories Settings');
       SetHatari_PathsfromHatariIni;
       ShowProgressBar(10,'Hatari Paths Ready','Hatari');
-      SetHatari_SystemfromHatariIni;
+      Log_NewTextEnter('Directories Settings OK');
+      Log_NewTextEnter('Load System Settings');
+      SetHatari_SystemfromHatariIni;   
       ShowProgressBar(25,'Hatari System Ready','Hatari');
+      Log_NewTextEnter('System Settings OK');
+      Log_NewTextEnter('Load Roms Settings');
       SetHatari_RomsfromHatariIni;
       ShowProgressBar(40,'Hatari Roms Ready','Hatari');
+      Log_NewTextEnter('Roms Settings OK');
+      Log_NewTextEnter('Load Screen Settings');
       SetHatari_ScreenfromHatariIni;
       ShowProgressBar(55,'Hatari Screen/Sound Ready','Hatari');
+      Log_NewTextEnter('Screen Settings OK');
+      Log_NewTextEnter('Load Joystick Settings');
       SetHatari_JoyfromHatariIni;
       ShowProgressBar(70,'Hatari Joystics/Keyboard Ready','Hatari');
+      Log_NewTextEnter('Joystick Settings OK');
+      Log_NewTextEnter('Load Database Settings');
       SetHatari_DatabaseFromHatariIni;
       ShowProgressBar(100,'Hatari Database Ready','Hatari');
+      Log_NewTextEnter('Database Settings OK');
       Started := False;
+    end
+  else
+    begin
+      Log_NewTextEnter('Hatari emulator not setting up. Go to Emulators->Computers->Hatari and setup');    
     end;
+  Log_Bullets(False);
+  Log_NewLine;
 end;
 
 procedure StartEmupSX;
+var
+  SpSX_ini: string;
 begin
-  pSX_confEditor_ini := ExtractFilePath(Application.ExeName) + 'media\emulators\consoles\playstation\psxemulator\config\config.ini';
+  Started := True;
+  pSX_confEditor_ini := Program_Path + 'media\emulators\consoles\playstation\psxemulator\config\config.ini';  
+  Log_NewTextStartingTheme('Starting Reading pSX Settings');
+  Log_Bullets(True);
   if FileExists(pSX_confEditor_ini) then
     begin
+      Log_NewTextEnter('Config.ini Found OK. Getting Data...');
       pSX_Config := TIniFile.Create(pSX_confEditor_ini);
       pSX_Exe := pSX_Config.ReadString('Paths','ExeName',pSX_Exe);
       if pSX_Config.ValueExists('Paths','FoundBIOS') then
         begin
+          Log_NewTextEnter('Bios File is Found OK.');
           FullPathpSX_Exe := pSX_Config.ReadString('Paths','FullPathExe',FullPathpSX_Exe);
           pSX_Ini := TIniFile.Create(FullPathpSX_Exe + 'psx.ini');
-          Started := True;
-          SetpSX_PathsfrompSXIni;
-          ShowProgressBar(20,'pSX Paths Ready','pSX');
-          SetpSX_ScreenfrompSXIni;
-          ShowProgressBar(40,'pSX Screen Ready','pSX');
-          SetpSX_SoundfrompSXIni;
-          ShowProgressBar(60,'pSX Sound and Controllers Ready','pSX');
-          SetpSX_OthersfrompSXIni;
-          ShowProgressBar(80,'pSX Others Ready','pSX');
-          SetpSX_DatabasefrompSXIni;
-          ShowProgressBar(100,'pSX Database Ready','pSX');
-          Started := False;
-        end;
+          SpSX_ini := FullPathpSX_Exe + 'psx.ini';
+          if FileExists(SpSX_Ini) then 
+            begin               
+              SetpSX_PathsfrompSXIni;
+              Log_NewTextEnter('Load Directories Settings');
+              ShowProgressBar(20,'pSX Paths Ready','pSX');
+              Log_NewTextEnter('Directories Settings OK');
+              Log_NewTextEnter('Load Screen Settings');
+              SetpSX_ScreenfrompSXIni;
+              ShowProgressBar(40,'pSX Screen Ready','pSX');
+              Log_NewTextEnter('Screen Settings OK');
+              Log_NewTextEnter('Load Sound Settings');
+              SetpSX_SoundfrompSXIni;
+              ShowProgressBar(60,'pSX Sound and Controllers Ready','pSX');
+              Log_NewTextEnter('Sound Settings OK');
+              Log_NewTextEnter('Load Other Settings');
+              SetpSX_OthersfrompSXIni;
+              ShowProgressBar(80,'pSX Others Ready','pSX');
+              Log_NewTextEnter('Other Settings OK');
+              Log_NewTextEnter('Load Database Settings');
+              SetpSX_DatabasefrompSXIni;
+              Log_NewTextEnter('Database Settings OK');
+              ShowProgressBar(100,'pSX Database Ready','pSX');              
+            end
+          else
+            begin
+              Log_WarningMessage('The "psx.ini" is lost. Try to erase "config.ini" so you start a new Setup');
+              if SysUtils.DeleteFile(pSX_confEditor_ini) then
+                Log_NewTextEnter('The "config.ini" file is deleted.Now Go to Emulators->Consoles->psx and make a fresh setup');
+            end;
+          end
+       else
+        Log_NewTextEnter('Needed Bios File "SCPH1001.BIN" or "SCPH39001.BIN" not found.');
+    end
+  else
+    begin
+      Log_NewTextEnter('Hatari emulator not setting up. Go to Emulators->Computers->Hatari and setup');
     end;
+  Log_Bullets(False);
+  Log_NewLine;
+  Started := False;
 end;
 
 procedure StartEmuKigb;
+var
+  Kigb_confEditor_ini: string;
 begin
+  Started := True;
+  Log_NewTextStartingTheme('Starting Reading KiBG Settings');
+  Log_Bullets(True);
   Kigb_confEditor_ini := ExtractFilePath(Application.ExeName) + 'media\emulators\handheld\nintendo\kigb\config\config.ini';
   if FileExists(Kigb_confEditor_ini) then
     begin
+      Log_NewTextEnter('Config File is Found OK. Getting Data...');
       Kigb_Config := TIniFile.Create(Kigb_confEditor_ini);
       Kigb_Exe := Kigb_Config.ReadString('Paths','KigbExe',Kigb_Exe);
-      FullPathKigb_Exe := Kigb_Config.ReadString('Paths','FullPathKigbExe',FullPathKigb_Exe);
-      Started := True;
+      FullPathKigb_Exe := Kigb_Config.ReadString('Paths','FullPathKigbExe',FullPathKigb_Exe);      
       KigbCfg_File := FullPathKigb_Exe + 'kigb.cfg';
-      SetKigb_PathsfromKigbIni;
-      ShowProgressBar(20,'Kigb Paths Ready','Kigb');
-      SetKigb_ScreenfromKigbIni;
-      ShowProgressBar(40,'Kigb Screen Ready','Kigb');
-      SetKigb_SoundfromKigbIni;
-      ShowProgressBar(60,'Kigb Sound and Controllers Ready','Kigb');
-      SetKigb_OthersfromKigbIni;
-      ShowProgressBar(80,'Kigb Others Ready','Kigb');
-      SetKigb_DatabasefromKigbIni;
-      ShowProgressBar(100,'Kigb Database Ready','Kigb');
-      Started := False;
+      if FileExists(KigbCfg_File) then 
+        begin
+          Log_NewTextEnter('Load Directories Settings');
+          SetKigb_PathsfromKigbIni;
+          ShowProgressBar(20,'Kigb Paths Ready','Kigb');
+          Log_NewTextEnter('Directories Settings OK');
+          Log_NewTextEnter('Load Screen Settings');
+          SetKigb_ScreenfromKigbIni;
+          ShowProgressBar(40,'Kigb Screen Ready','Kigb');
+          Log_NewTextEnter('Screen Settings OK');
+          Log_NewTextEnter('Load Sound and Controllers Settings');
+          SetKigb_SoundfromKigbIni;
+          ShowProgressBar(60,'Kigb Sound and Controllers Ready','Kigb');
+          Log_NewTextEnter('Sound and Controllers Settings OK');
+          Log_NewTextEnter('Load Others Settings');
+          SetKigb_OthersfromKigbIni;
+          ShowProgressBar(80,'Kigb Others Ready','Kigb');
+          Log_NewTextEnter('Others Settings OK');
+          Log_NewTextEnter('Load Database Settings');
+          SetKigb_DatabasefromKigbIni;
+          ShowProgressBar(100,'Kigb Database Ready','Kigb');      
+          Log_NewTextEnter('Database Settings OK');
+        end
+      else
+        begin
+          Log_WarningMessage('The "kigb.cfg" is lost. Try to erase "config.ini" so you start a new Setup');
+          if SysUtils.DeleteFile(Kigb_confEditor_ini) then
+            Log_NewTextEnter('The "config.ini" file is deleted.Now Go to Emulators->Handhelds->KiGB and make a fresh setup');
+        end
+    end
+  else  
+    begin
+      Log_NewTextEnter('Kigb emulator not setting up. Go to Emulators->Handhelds->KiGB and setup');    
     end;
+  Log_NewLine;
+  Log_Bullets(False);
+  Started := False;
 end;
 
 procedure StartWidget_Weather;
 const
   WeatherIniPath = 'media\widgets\weather\weather.ini';
 begin
+  Log_NewTextStartingTheme('Starting Reading Weather Widget Settings');
+  Log_Bullets(True);
   if FileExists(Program_Path + WeatherIniPath) then
     begin
       Started := True;
       if StBarInfo[3] = 'Internet Connected' then
         begin
+          Log_NewTextEnter('Load Weather Users Selections.');
           WeatherIni := TIniFile.Create(Extractfilepath(Application.ExeName) + 'media\widgets\weather\weather.ini');
           SetWeather_FromWeatherIni;
+          Log_NewTextEnter('Weather Users Selections OK.');
         end
       else
         Conf.sLabel62.Visible := True;
       Started := False;
     end
   else
-    CreateWeatherIniFirstTime;
+    begin
+      Log_NewTextEnter('This is the First Time accessing weather widget');
+      CreateWeatherIniFirstTime;
+      Log_NewTextEnter('"weather.ini" created successfully');
+    end;
+  Log_Bullets(False);
+  Log_NewLine;
 end;
 
 procedure StartWidget_TimeDate;
 const
   DateTimeIniPath = 'media\widgets\datetime\datetime.ini';
 begin
+  Log_NewTextStartingTheme('Starting Reading Weather Widget Settings');
+  Log_Bullets(True);
   if FileExists(Program_Path + DateTimeIniPath) then
     begin
       Started := True;
+      Log_NewTextEnter('Load Countries Users Selections.');
       DateTimeIni := TIniFile.Create(Program_Path + DateTimeIniPath);
       SetDateTime_FromDateTimeIni;
+      Log_NewTextEnter('Weather Users Selections OK.');
       Started := False;
     end
   else
-    CreateDateTimeIniFirstTime;
+    begin
+      Log_NewTextEnter('This is the First Time accessing datetime widget');    
+      CreateDateTimeIniFirstTime;
+      Log_NewTextEnter('"datetime.ini" created successfully');
+    end;
+  Log_Bullets(False);
+  Log_NewLine;
+  Log_FooterMessage(True);
+  Log_WelcomeMessage(False);
 end;
 
 procedure CreateSTBarInfo;
@@ -824,7 +1136,7 @@ begin
           else
             begin
               Conf.sLabel109.Caption := 'SetSettings To Mame (ConfEditor)';
-              Conf.sGauge_MameData.Progress := progress;
+              Conf.sGauge_MameData.Progress := progress;            
             end
         end
       else
@@ -833,14 +1145,14 @@ begin
           Conf.sGauge_MameChange.Progress := progress;
         end;
       Application.ProcessMessages;
-      Sleep(50);
+      Sleep(20);
       Started := True;
     end
   else
     begin
       Splash_Screen.Progress_Label(progress,Comment);
       Application.ProcessMessages;
-      Sleep(50);    
+      Sleep(20);    
     end;
 end;
 

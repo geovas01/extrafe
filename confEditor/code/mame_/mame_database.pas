@@ -55,7 +55,8 @@ implementation
 uses
   main,mainconf,menu,onflycomponents,
   form_splash,
-  mame_dirs,mame_graphics,mame_sound,mame_others,mame_builds;
+  mame_dirs,mame_graphics,mame_sound,mame_others,mame_hlsl,
+  ce_logsession;
 
 var
   iNode,FinalRomsFound,k: Integer;
@@ -91,6 +92,7 @@ begin
   Delete(PathXmlMame,Length(PathXmlMame)-3,4);
   Conf.sLabel109.Caption := 'Generating Mame Game List...';
   Application.ProcessMessages;
+  Screen.Cursor := AniBusy;
   RunCaptured(ExtractFileDrive(FullPathMame_Exe),Mame_Exe,' -ll',PathXmlMame+'.txt');
 end;
 
@@ -135,6 +137,7 @@ begin
       Conf.nxtgrd_mame.AddRow(ttGames);
       Conf.nxtgrd_mame.BeginUpdate;
       Reset(mText);
+      FXml_MameDatabase.Clear;
       while not Eof(mText) do
         begin
           Readln(mText,mString);
@@ -173,11 +176,12 @@ begin
         end;
       CloseFile(mText);
       SysUtils.DeleteFile(PathXmlMame+'.txt');
-      FXml_MameDatabase.Root.WriteAttributeString('Ver',GetMameVer(FullPathMame_Exe,Mame_Exe,PathXmlMame));
+      MameBuildName := GetMameVer(FullPathMame_Exe,Mame_Exe,PathXmlMame);
+      FXml_MameDatabase.Root.WriteAttributeString('Ver',MameBuildName);
       FXml_MameDatabase.Root.WriteAttributeString('MameExeName',Mame_Exe);
       FXml_MameDatabase.Root.WriteAttributeInteger('RomsEmulated',ttGames);
       FXml_MameDatabase.Root.WriteAttributeInteger('FinalRomsFound',FinalRomsFound);
-      if (Mame_Exe = 'mamep.exe') or (Mame_Exe = 'mamepuiXT_x86.exe') or (Mame_Exe = 'mamepuiXT_x64.exe') then
+      if (Mame_Exe = 'mamep.exe') then
         begin
           FXml_MameDatabase.Root.WriteAttributeBool('IpsChecked',False);
           FXml_MameDatabase.Root.WriteAttributeBool('HiScoreChecked',False);
@@ -221,7 +225,6 @@ begin
     FXml_MameDatabase.SaveToFile(PathXmlMame+'_efuse.xml');
     FXml_MameConfing.SaveToFile(PathXmlMamePath+'config.xml');
   end;
-//  ReloadDatabase(PathXmlMame,PathXmlMamePath);
 end;
 
 procedure CreateRowDir;
@@ -293,7 +296,7 @@ end;
 procedure SetMame_DatabaseFromMameIni;
 var
   MameBuildVer,MameName: string;
-  TotalRoms,TotalEmulated,i: Integer;
+  TotalRoms,TotalEmulated,i,k: Integer;
   node: TXMLNode;
 begin
   if FromDatabase = false then
@@ -311,19 +314,23 @@ begin
           TotalEmulated := FXml_MameDatabase.Root.AttributeByName['RomsEmulated'].ValueAsInteger;
           Conf.nxtgrd_mame.AddRow(TotalEmulated);
           Conf.nxtgrd_mame.BeginUpdate;
-          for i := 4 to Fxml_MameDatabase.Root.NodeCount - 1 do
+          if MameName = 'mamep.exe' then
+            k := 6
+          else
+            k := 4;
+          for i := k to Fxml_MameDatabase.Root.NodeCount - 1 do
             begin
               node := FXml_MameDatabase.Root.Nodes[i];
-              Conf.nxtgrd_mame.Cell[1,i-4].AsString := node.Nodes[1].Value;
-              Conf.nxtgrd_mame.Cell[2,i-4].AsString := node.Nodes[2].Value;
+              Conf.nxtgrd_mame.Cell[1,i-k].AsString := node.Nodes[1].Value;
+              Conf.nxtgrd_mame.Cell[2,i-k].AsString := node.Nodes[2].Value;
               if node.Nodes[3].Value <> ' ' then
-                Conf.nxtgrd_mame.Cell[3,i-4].AsInteger := 32
+                Conf.nxtgrd_mame.Cell[3,i-k].AsInteger := 32
               else
-                Conf.nxtgrd_mame.Cell[3,i-4].AsInteger := 33;
+                Conf.nxtgrd_mame.Cell[3,i-k].AsInteger := 33;
               if FromArrows_Mamedirs = False then
-                Splash_Screen.sGauge_Splash.Progress := (100 * (i-4)) div (TotalRoms)
+                Splash_Screen.sGauge_Splash.Progress := (100 * (i-k)) div (TotalEmulated)
               else
-                Conf.sGauge_MameChange.Progress := (100 * (i-4)) div (TotalRoms);
+                Conf.sGauge_MameChange.Progress := (100 * (i-k)) div (TotalEmulated);
               Application.ProcessMessages;
             end;
           BestFitForMameGrid;
@@ -347,8 +354,9 @@ begin
           Conf.nxtgrd_mame.Columns[0].Options := [coEditing];
           Conf.nxtgrd_mame.Cell[0,Conf.nxtgrd_mame.LastAddedRow].AsString := '<b>Found</b> no setuped rom directory. <font color="red">Please</font> go <a href="mame_dir_panel">here</a> and add a rom directory';
           TNxHtmlColumn(Conf.nxtgrd_mame.Columns[0]).OnClick := htmlClass.DoHtmlColClick;
-        end;
+        end;      
     end;
+  Log_NewTextEnter(#9 + 'Found all Settings OK');
   Started := False;
 end;
 
@@ -798,9 +806,9 @@ begin
   else if (Cmenustate = 'em_arcade_mame_sound') then
     em_mame_sound_FreeDynamicComps
   else if (Cmenustate = 'em_arcade_mame_others') then
-    em_mame_others_ShowDynamicComps
+    em_mame_others_FreeDynamicComps
   else if (Cmenustate = 'em_arcade_mame_builds') then
-    em_mame_builds_FreeDynamicComps
+    em_mame_hlsl_FreeDynamicComps
   else if (Cmenustate = 'em_arcade_mame_paths') then
     em_mame_dirs_FreeDynamicComps;
   ShowPathInCaption(CDirPath,Conf.sBitBtn11.Caption,False,True);
