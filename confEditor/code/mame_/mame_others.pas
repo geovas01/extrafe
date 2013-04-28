@@ -5,7 +5,6 @@ uses
   SysUtils,Classes,ExtCtrls,StdCtrls,ComCtrls,Graphics,Forms,
   Windows,Messages,Controls,Dialogs,FileCtrl,
   NativeXML,
-  VclFixes,
   NxColumnClasses,NxGrid,NxCustomGridControl,pngimage;
   
   procedure SetMame_OthersFromMameIni;

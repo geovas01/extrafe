@@ -3,8 +3,12 @@ unit global;
 interface
 
 uses
-  SysUtils,Forms,GLKeyboard,StdCtrls,sPanel,Graphics,Classes;
-
+  SysUtils,Forms,GLKeyboard,StdCtrls,sPanel,Graphics,Classes,
+  Commctrl,Messages,Controls,Types,windows,
+  sLabel,sEdit;
+  
+  procedure ShowToolTip(tCompName,kindComp: String);
+  
   procedure global_Find_FilesCanClose;
   procedure global_Find_FilesClose;
   procedure global_Find_DirsClose;
@@ -27,6 +31,45 @@ uses
   hatari_paths,hatari_roms,hatari_joy,hatari_database,
   psx_paths,psx_database,
   kigb_paths;
+
+
+procedure ShowToolTip(tCompName,kindComp: String);
+
+// 1001 ~ 1100 Mame         sEdit (1001~1020)  sLabel()
+// 1101 ~ 1200 Zinc         sEdit (1101~1103)  sLabel()
+// 1201 ~ 1300 Hatari       sEdit (1201~1214)  sLabel()
+// 1301 ~ 1400 pSXEmulator  sEdit (1301~1308)  sLabel()
+// 1401 ~ 1500 Kigb         sEdit (1401~1409)  sLabel()
+
+// Edit  --> TsEdit
+// Label --> TsLabel
+var
+  comp: TComponent;
+  compPixels,lcompPixels: integer;
+begin
+  comp := FindComponentEx('Conf.'+ tCompName);
+  if kindComp = 'Edit' then
+    begin
+      lcompPixels := LengthInPixels(TsEdit(comp).Text,TsEdit(comp).Font.Name,TsEdit(comp).Font.Size,True);
+      compPixels := TsEdit(comp).Width;
+    end
+  else if kindComp = 'Label' then
+    begin
+      lcompPixels := LengthInPixels(TsLabel(comp).Caption,TsLabel(comp).Font.Name,TsLabel(comp).Font.Size,True);
+      compPixels := TsLabel(comp).Width;    
+    end;
+  if lcompPixels > compPixels then
+    if kindComp = 'Edit' then
+      begin
+        TsEdit(comp).Hint := TsEdit(comp).Text;
+        TsEdit(Comp).ShowHint := true;
+      end
+    else if kindComp = 'Label' then
+      begin
+        TsLabel(comp).Hint := TLabel(comp).Caption;
+        TsLabel(Comp).ShowHint := true;      
+      end;
+end;
 
 procedure global_Find_FilesCanClose;
 begin
@@ -208,17 +251,17 @@ begin
     else if progressComesFrom = 'Mame_database' then
       begin
         Conf.sGauge_MameData.Progress := Round(position / FFileSize) * 100;
-        Application.ProcessMessages;
+//        Application.ProcessMessages;
       end
     else if progressComesFrom = 'Mame_dirs' then
       begin
         Conf.sGauge_MameChange.Progress := Round(position / FFileSize) * 100;
-        Application.ProcessMessages;
+//        Application.ProcessMessages;
       end    
     else if progressComesFrom = 'Ips_Start' then
       begin
         Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Found IPS Files. Try to Sotring (Please Wait...)');
-        Application.ProcessMessages;
+//        Application.ProcessMessages;
       end
     else if progressComesFrom = 'Zinc_start' then
       Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Loading Zinc Database...')
@@ -227,14 +270,14 @@ begin
     else if progressComesFrom = 'Hatari_Database' then
       begin
         Conf.sGauge_HatariData.Progress := Round(position / FFileSize) * 100;
-        Application.ProcessMessages;
+//        Application.ProcessMessages;
       end
     else if progressComesFrom = 'Playstation_Database' then
       begin
         if Started = True then
           begin
             Splash_Screen.Progress_Label(Round((position / FFileSize) * 100),'Loading Playstation Database (Please Wait...)');
-            Application.ProcessMessages;
+//            Application.ProcessMessages;
           end
         else
           begin

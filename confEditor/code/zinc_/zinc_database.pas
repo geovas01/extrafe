@@ -14,6 +14,9 @@ uses
   procedure SetUpTheGrid;
   procedure BestFitForZincGrid;
 
+  procedure ShowZincGameInfoPanel(gameName,romName: String);
+  procedure BackToZinc_DatabaseSheet;
+
 // Menu actions
   procedure Show_zinc_databasepanel;
   procedure em_zinc_database_ShowDynamicComps;
@@ -241,6 +244,63 @@ begin
   Conf.nxtgrd_zinc.BestFitColumn(5,bfBoth);
 end;
 
+procedure ShowZincGameInfoPanel(gameName,romName: String);
+var
+  node: TXmlNode;
+  i,iPos: Integer;
+  t1,t2,text: String;  
+  procedure Clear_GameInfoPanel;  
+  begin
+    Conf.sLabel149.Caption := '';
+    Conf.sLabel150.Caption := '';
+    Conf.sLabel151.Caption := '';
+    Conf.sLabel152.Caption := '';
+    Conf.sLabel153.Caption := '';
+    Conf.sLabel154.Caption := '';
+    Conf.sLabel155.Caption := '';
+    Conf.sLabel156.Caption := '';
+  end;
+begin
+  Clear_GameInfoPanel;
+  Conf.nxtgrd_zinc.SendToBack;
+  Conf.sLabel148.Caption := gameName;
+  with FXml_CArcade.Root do
+    for i := 0 to NodeCount - 1 do
+      begin
+        node := FXml_CArcade.Root.Nodes[i];
+        if node.Name = 'row' then
+          if node.ReadAttributeString('RomName') = romName then
+            begin
+              Conf.sLabel149.Caption := node.ReadAttributeString('Manufactor');
+              Conf.sLabel150.Caption := node.ReadAttributeString('Year');
+              Conf.sLabel151.Caption := node.ReadAttributeString('Players');
+              Conf.sLabel152.Caption := node.ReadAttributeString('Levels');
+              if (node.ReadAttributeString('Sim') <> '') and (node.ReadAttributeString('Sim') <> ' ') then
+                Conf.sLabel153.Caption := 'OK'
+              else
+                Conf.sLabel153.Caption := 'Nope';
+              if (node.ReadAttributeString('Alt') <> '') and (node.ReadAttributeString('Alt') <> ' ') then
+                Conf.sLabel154.Caption := 'OK'
+              else
+                Conf.sLabel154.Caption := 'Nope';
+              text:= node.ReadAttributeString('Genre');
+              iPos := Pos('/',text);
+              t1 := Trim(Copy(text,0,iPos - 1));
+              t2 := Trim(Copy(text,iPos + 1,Length(text) - iPos));
+              Conf.sLabel155.Caption := t1;
+              Conf.sLabel156.Caption := t2;
+              Break;
+            end;
+      end; 
+  // Episis na do an kai poses foto video yparxoun... 
+  // An einai exei ginei eksetasi tis rom "aduit"... 
+end;
+
+procedure BackToZinc_DatabaseSheet;
+begin
+  Conf.Zinc_GameInfoPanel.SendToBack;
+end;
+
 ///////////////////////////////////////////////////////////////////
 
 procedure Show_zinc_databasepanel;
@@ -255,6 +315,7 @@ begin
   Cmenustate := 'em_arcade_zinc_database';
   em_zinc_database_ShowDynamicComps;
   ShowButtonDown(9,'EM_ARCADE_ZINC_DATABASE');
+  Conf.Zinc_GameInfoPanel.SendToBack;
   ShowHidePanel(CurrentPanel,'Pem_zinc_database');
 end;
 

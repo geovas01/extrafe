@@ -2,7 +2,7 @@ unit functionX;
 
 interface
 uses
-  Windows, SysUtils, Classes, Controls, Forms, ComObj,
+  Windows, SysUtils, Classes, Controls, Forms, ComObj, Graphics,
   Winsock, Math,ShellAPI,sGauge,WinInet;
 
 type
@@ -37,7 +37,7 @@ function GetCharFromVirtualKey(Key: Word): string;
 function IsConnectedToInternet:Boolean;
 function IsBinary(S: TStream): boolean;
 function SetCapitalTheFirstLetter(Word : String) : string;
-
+function LengthInPixels(const word: string; fontName: String; fontSize: Integer; IsBold: Boolean): Integer;
 
 const
   InfoNum = 10;
@@ -518,6 +518,23 @@ begin
       else
         Result := Word;
     end;
+end;
+
+function LengthInPixels(const word: string; fontName: String; fontSize: Integer; IsBold: Boolean): Integer;
+var
+  aB: TBitmap;
+  aF: TFont;
+begin
+  aF := TFont.Create;
+  aF.Name := fontName;
+  aF.Size := fontSize;
+  if IsBold = true then
+    af.Style := af.Style + [fsBold];
+  aB := TBitmap.Create;
+  aB.Canvas.Font := aF;
+  Result := aB.Canvas.TextWidth(word);
+  aB.Free;
+  aF.Free;
 end;
 
 end.

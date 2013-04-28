@@ -358,6 +358,7 @@ begin
               end;            
           end;
       k:= 0;
+      Conf.sCheckBox127.Enabled := True;
       AssignFile(MameIniFile,MameIniPath);
       Reset(MameIniFile);
       while not Eof(MameIniFile) do
@@ -567,11 +568,14 @@ end;
 procedure GetMamePath(name:string);
 begin
   FromMame_DirsToFindDirs := True;
-  OldDirIs(name);
-  gFindDirs := name;
+  OldDirIs(name);  
   if Mame_Exe <> '' then
-    if SelectDirectory('Select Dir',OldDir,NewDir) then
-      global_Find_DirsClose;
+    if FileCtrl.SelectDirectory(NewDir,[sdAllowCreate,sdPerformCreate],0) then
+       if OldDir <> NewDir then
+        begin
+          gFindDirs := name;
+          global_Find_DirsClose;
+        end;
 end;
 
 procedure SetMamePath(name:string);

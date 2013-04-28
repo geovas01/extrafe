@@ -140,7 +140,7 @@ begin
         begin
           MainForm.GLCadencer.Scene := MainForm.GLS_MainMenu;
           MainForm.GLSceneViewer.Camera := MainForm.GlCamera_MainMenu;
-          MainForm.GLSceneViewer.Cursor := crHandPoint;
+          MainForm.GLSceneViewer.Cursor := crDefault;
 
           if fromback = False then
             begin

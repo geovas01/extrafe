@@ -14,19 +14,18 @@ procedure RunGame(gameNum: Integer);
 procedure ReturnToMainMenu;
 
 var
-  VK_Zinc: TVirtualKeyboard;
+
 
   fButtonNow,fNumOfZinc_Games: TGLHUDText;
 //  fcube_zinc: TGLCube;
   fcube_zinc: TGLPlane;
-  
+
 implementation
 uses
   main,main_menu,GLKeyboard,loadT;
 
 procedure ZincMenu(aTime: Double);
 var
-  Letter: TSimpleButton;
   Mpos: TPoint;
   Game: TSimpleListItem;
 

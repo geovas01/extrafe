@@ -2,8 +2,8 @@ unit used_pro;
 
 interface
   uses
-    main,windows,Classes,SysUtils,ShellAPI,Graphics,loadT,
-    GLmaterial,GLTexture,GlCompositeImage;
+    main,windows,Classes,SysUtils,ShellAPI,Graphics,loadT,GLScene,
+    GLmaterial,GLTexture,GlCompositeImage,Forms,GLObjects;
 
   procedure SetScreen(bpp:byte; width,height,FR:integer);
   function GetDisplayFrequency: Integer;
@@ -17,6 +17,11 @@ interface
 
   function AddMaterial(aMatLib: TGlMaterialLibrary; aFileName, aMaterialName: string): TGlLibMaterial;
   Procedure AddMaterials(aMatLib: TGlMaterialLibrary; aFolder: String; aFiles: array of String; aNames: array of String);
+
+  function FindComponentEx(const Name: string): TComponent;
+  function FindGlSceneComponent(const CompName: string; SceneName: TglScene): TGLSceneObject;
+
+  function CountFilesOrFolders(directory : String; Kind: string): integer;
 
   const
     InfoNum = 10;
@@ -216,6 +221,89 @@ begin
           Break;
         end;
     end;
+end;
+
+function FindGlSceneComponent(const CompName: string; SceneName: TglScene): TGLSceneObject;
+var
+  i,k: integer;
+  Found: Boolean;
+  fGlSceneObject: TGLSceneObject;
+begin
+  for i := 0 to SceneName.ComponentCount - 1 do
+    begin
+      k := SceneName.Objects.Count;
+      if Result.Name = CompName then
+        exit;
+    end;
+  Result := nil;
+end;
+
+function FindComponentEx(const Name: string): TComponent;
+var
+  FormName: string;
+  CompName: string;
+  P: Integer;
+  Found: Boolean;
+  Form: TForm;
+  I: Integer;
+begin
+  // Split up in a valid form and a valid component name
+  P := Pos('.', Name);
+  if P = 0 then
+  begin
+    raise Exception.Create('No valid form name given');
+  end;
+  FormName := Copy(Name, 1, P - 1);
+  CompName := Copy(Name, P + 1, High(Integer));
+  Found    := False;
+  // find the form
+  for I := 0 to Screen.FormCount - 1 do
+  begin
+    Form := Screen.Forms[I];
+    // case insensitive comparing
+    if AnsiSameText(Form.Name, FormName) then
+    begin
+      Found := True;
+      Break;
+    end;
+  end;
+  if Found then
+  begin
+    for I := 0 to  Form.ComponentCount - 1 do
+    begin
+      Result := Form.Components[I];
+      if AnsiSameText(Result.Name, CompName) then Exit;
+    end;
+  end;
+  Result := nil;
+end;
+
+function CountFilesOrFolders(directory : String; Kind: string): integer;
+var
+	Rec : TSearchRec;
+	nFileCount : integer;
+begin
+	nFileCount := 0;
+  if Kind = 'files' then
+    begin
+    	if FindFirst(directory+'\*.*', faAnyFile, Rec) = 0 then
+		    repeat
+		    	// Exclude directories from the list of files.
+    			if ((Rec.Attr and faDirectory) <> faDirectory) then
+    				Inc(nFileCount);
+    		until FindNext(Rec) <> 0;
+      FindClose(Rec);
+    end
+  else if Kind = 'folders' then
+    begin
+      if FindFirst(directory+'\*.*', faDirectory, Rec) = 0 then
+        repeat
+          if ((Rec.Attr and fadirectory) = fadirectory) then
+            inc(nFileCount);
+        until FindNext(Rec) <> 0;
+      FindClose(Rec);
+    end;
+	Result := nFileCount;
 end;
 
 end.

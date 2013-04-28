@@ -7,6 +7,7 @@ uses
   pngimage,JvGIF,sLabel,sPanel,sBitBtn,AnalogClock;
 
   procedure Image_Comp(Location: TWinControl; Picture_path: string; Pic_Left,Pic_Top,Pic_Width,Pic_Height,Numofcomp: Integer; NameOwn:string; Pic_Trans,Pic_Stretch: Boolean);
+  procedure pImage_Comp(Location: TWinControl; Picture_path: string; Pic_Left,Pic_Top,Pic_Width,Pic_Height,Numofcomp: Integer; NameOwn:string; Pic_Trans,Pic_Stretch: Boolean);
   procedure Label_Comp(Location: TWinControl; Text: String; Label_Left,Label_Top,Numofcomp: Integer; NameOwn: string; Label_Autosize,Label_FontBold,Label_Trans: Boolean);
   procedure Memo_Comp(Location: TWinControl; NumOfComp: Integer; Aling:string; Memo_Left, Memo_Top, Memo_Width, Memo_Height: Integer; Memo_Visible: Boolean);
   procedure MemoEmu_Comp(Location: TWinControl; Name: string);
@@ -16,6 +17,7 @@ uses
 
 var
   MyImage: TImage;
+  MyGIPImage: TImage;
   MyLabel: TsLabel;
   MyMemoEmu,MyMemo: TMemo;
   MyPanel: TsPanel;
@@ -39,6 +41,20 @@ begin
   MyImage.Height := Pic_Height;
   MyImage.Transparent := Pic_Trans;
   MyImage.Stretch := Pic_Stretch;
+end;
+
+procedure pImage_Comp(Location: TWinControl; Picture_path: string; Pic_Left,Pic_Top,Pic_Width,Pic_Height,Numofcomp: Integer; NameOwn:string; Pic_Trans,Pic_Stretch: Boolean);
+begin
+  MyGIPImage := TImage.Create(Conf);
+  MyGIPImage.Name := 'Pic' + NameOwn + IntToStr(Numofcomp);
+  MyGIPImage.Picture.LoadFromFile(Picture_path);
+  MyGIPImage.Parent := Location;
+  MyGIPImage.Left := Pic_Left;
+  MyGIPImage.Top := Pic_Top;
+  MyGIPImage.Width := Pic_Width;
+  MyGIPImage.Height := Pic_Height;
+  MyGIPImage.Transparent := Pic_Trans;
+  MyGIPImage.Stretch := Pic_Stretch;
 end;
 
 procedure Label_Comp(Location: TWinControl; Text: String; Label_Left,Label_Top,Numofcomp: Integer; NameOwn: string; Label_Autosize,Label_FontBold,Label_Trans: Boolean);

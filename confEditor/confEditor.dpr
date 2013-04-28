@@ -52,7 +52,7 @@ uses
   kigb_database in 'code\kigb_\kigb_database.pas',
   AnalogClock in 'code\widgets_\AnalogClock.pas',
   ce_logsession in 'code\ce_\ce_logsession.pas',
-  VCLFixes in 'code\mame_\VCLFixes.pas';
+  form_search in 'code\other_forms_\form_search.pas' {fSearch};
 
 var
   Map : THandle;
@@ -80,6 +80,7 @@ begin
   Application.CreateForm(TConf, Conf);
   Application.CreateForm(TFormWizard, FormWizard);
   Application.CreateForm(TFGeneral, FGeneral);
+  Application.CreateForm(TfSearch, fSearch);
   Splash_Screen.JvBmpAnimator1.Active := False;
   Splash_Screen.Progress_Label(100,'ConfEditor Ready To Run');
   Sleep(1000);
