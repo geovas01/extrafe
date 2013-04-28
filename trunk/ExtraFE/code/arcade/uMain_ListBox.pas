@@ -87,6 +87,7 @@ type
   function CompareNames(Item1, Item2: Pointer): Integer;
 
   var
+
     sItem,sleeping : Integer;
     MyTimer: TMyTimer;
 
@@ -94,7 +95,7 @@ type
 implementation
 uses
   GLCrossPlatform,
-  SysUtils,mame,zinc;
+  SysUtils,mame,zinc,main;
 //------------------------------------------------------------------------------
 Constructor TSimpleListItem.Create(aText: WideString);
 begin
@@ -322,6 +323,8 @@ begin
       sItem := sItem + 1;
       Sleep(sleeping);
       mame.IsImgShowed := False;
+      MainForm.Timer_MameImageRolling.Enabled := false;
+      fSnapImgCountState := 0;
     end;
 end;
 
@@ -334,12 +337,16 @@ begin
       sItem := sItem - 16;
       Sleep(sleeping);
       mame.IsImgShowed := False;
+      MainForm.Timer_MameImageRolling.Enabled := false;
+      fSnapImgCountState := 0;
     end
   else
     begin
       fYPosition := 0;
       sItem := 6;
       mame.IsImgShowed := False;
+      MainForm.Timer_MameImageRolling.Enabled := false;
+      fSnapImgCountState := 0;
     end;
 end;
 
@@ -352,12 +359,16 @@ begin
       sItem := sItem + 16;
       Sleep(sleeping);
       mame.IsImgShowed := False;
+      MainForm.Timer_MameImageRolling.Enabled := false;
+      fSnapImgCountState := 0;
     end
   else
     begin
       fYPosition := -(30 * (fItems.Count - 7));
       sItem := fItems.Count - 1;
       mame.IsImgShowed := False;
+      MainForm.Timer_MameImageRolling.Enabled := false;
+      fSnapImgCountState := 0;
     end;
 end;
 
@@ -370,6 +381,8 @@ begin
       sItem := sItem - 1;
       Sleep(sleeping);
       mame.IsImgShowed := False;
+      MainForm.Timer_MameImageRolling.Enabled := false;
+      fSnapImgCountState := 0;
     end;
 end;
 

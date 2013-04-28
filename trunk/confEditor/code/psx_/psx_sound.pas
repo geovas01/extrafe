@@ -424,6 +424,7 @@ end;
 procedure em_psx_sound_ShowDynamicComps;
 var
   i: Integer;
+  comp: TComponent;
 begin
   for i := 1 to 4 do
     begin
@@ -437,7 +438,9 @@ begin
         4 : Image_Comp(Conf.grp12,'media\confeditor\images\psx\joystick.png',
               85,48,402,272,i,'',True,True);
       end;
-    end;
+    end;  
+  comp := FindComponentEx('Conf.Pic4');
+  TImage(comp).SendToBack;
 end;
 
 procedure em_psx_sound_FreeDynamicComps;

@@ -264,6 +264,10 @@ begin
   Conf.Pem_mame_sound.Cursor := Arrow;
   Conf.Pem_mame_others.Cursor := Arrow;
   Conf.Pem_mame_hlsl.Cursor := Arrow;
+  Conf.Mame_GameInfoPanel.Cursor := Arrow;
+  Conf.mTabGameInfo.Cursor := Arrow;
+  Conf.mTabMedia.Cursor := Arrow;
+  Conf.mTabRom.Cursor := Arrow;
   Conf.Pem_mame_database.Cursor := Arrow;
   Conf.Pem_zinc_paths.Cursor := Arrow;
   Conf.Pem_zinc_graphics.Cursor := Arrow;
@@ -731,7 +735,7 @@ begin
       InitGlobal_MameMemo_ForMameIni;
       Log_NewTextEnter('initialization of mame.ini OK');
       Log_NewTextEnter('Load Directories settings.');
-      SetMame_DirsFromMameIni;      
+      SetMame_DirsFromMameIni;
       ShowProgressBar(20,'Mame Directories Ready','Mame');
       Log_NewTextEnter('Mame Directories settings loading OK');
       Log_NewTextEnter('Load Graphics settings.');

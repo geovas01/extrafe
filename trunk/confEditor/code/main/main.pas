@@ -19,7 +19,9 @@ uses
   NLDJoystick, // Joystick units
   GLKeyboard, // Glsnene Units
   Spin,
-  //my units
+  //forms
+  form_search,
+  //my units    
   menu,
   ce_themes,ce_config,
   mame_dirs,mame_graphics,mame_sound,mame_others,mame_hlsl,mame_database,
@@ -27,7 +29,7 @@ uses
   hatari_system,hatari_roms,hatari_screen,hatari_joy,hatari_paths,hatari_database,
   psx_paths,psx_screen,psx_sound,psx_others,psx_database,
   kigb_paths,kigb_screen,kigb_sound,kigb_others,kigb_database,
-  wg_weather,wg_timedate;
+  wg_weather,wg_timedate, Menus;
 
 
 const
@@ -232,6 +234,56 @@ type
 //  TRadioButton        
     rb56: TRadioButton;rb57: TRadioButton;
     sCheckBox65: TsCheckBox;
+    Mame_GameInfoPanel: TsPanel;
+    sLabel139: TsLabel;
+    sBitBtn101: TsBitBtn;
+    Image7: TImage;
+    Image8: TImage;
+    sLabel146: TsLabel;
+    sLabel147: TsLabel;
+    Zinc_GameInfoPanel: TsPanel;
+    sLabel148: TsLabel;
+    Image9: TImage;
+    Image10: TImage;
+    Image11: TImage;
+    Image12: TImage;
+    sLabel149: TsLabel;
+    sLabel150: TsLabel;
+    sLabel151: TsLabel;
+    sLabel152: TsLabel;
+    Image13: TImage;
+    Image14: TImage;
+    sLabel153: TsLabel;
+    sLabel154: TsLabel;
+    Image15: TImage;
+    Image16: TImage;
+    sLabel155: TsLabel;
+    sLabel156: TsLabel;
+    sBitBtn117: TsBitBtn;
+    pm1: TPopupMenu;
+    Search1: TMenuItem;
+    sBitBtn118: TsBitBtn;
+    sBitBtn119: TsBitBtn;
+    sBitBtn120: TsBitBtn;
+    mTabGameInfo: TsPanel;
+    Image1: TImage;
+    sLabel140: TsLabel;
+    Image2: TImage;
+    sLabel141: TsLabel;
+    Image3: TImage;
+    sLabel142: TsLabel;
+    Image5: TImage;
+    sLabel144: TsLabel;
+    Image6: TImage;
+    sLabel145: TsLabel;
+    Image4: TImage;
+    sLabel143: TsLabel;
+    sLabel157: TsLabel;
+    Image17: TImage;
+    mTabMedia: TsPanel;
+    mTabRom: TsPanel;
+    Image18: TImage;
+    sLabel158: TsLabel;
         
 //  Main form actions
     procedure FormCreate(Sender: TObject);
@@ -272,6 +324,7 @@ type
     procedure Zinc_ConfigPaths(Sender: TObject);
     procedure Zinc_ClickGraphicsState(Sender: TObject);
     procedure Zinc_SoundChecking(Sender: TObject);
+    procedure Zinc_Database(Sender: TObject);
 //  Hatari
     procedure Hatari_ConfigPaths(Sender: TObject);
     procedure Hatari_ConfigSystem(Sender: TObject);
@@ -308,7 +361,13 @@ type
     procedure CEJoy1Idle(Sender: TObject);
     procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
-
+    procedure OnMouseOverToolTip(Sender: TObject;Shift: TShiftState; X,Y: Integer);
+    procedure nxtgrd_mameCellDblClick(Sender: TObject; ACol,
+      ARow: Integer);
+    procedure nxtgrd_zincCellDblClick(Sender: TObject; ACol,
+      ARow: Integer);
+    procedure Search1Click(Sender: TObject);
+      
   private
     { Private declarations }
     procedure UMDestroyPanel(var Message: TMessage); message UM_DESTROYPANEL;
@@ -392,7 +451,6 @@ var
 begin
   RestoreTheOriginalColor;
   PrevKey := TsPanel(Sender).Caption;
-  TsPanel(Sender).Color := clSkyBlue;
   TsPanel(Sender).Caption := 'Waiting...';
   if Pem_psx_sound.Tag = 1 then
     sLabel108.Caption := 'Hit KEY for '+ TsPanel(Sender).Hint;
@@ -406,7 +464,6 @@ begin
   CheckForHittingKey;
   if CheckedTimes > 0 then
     begin
-      TsPanel(Sender).Color := clBtnFace;
       TsPanel(Sender).Caption := PrevKey;
       if Pem_psx_sound.Tag = 1 then
         sLabel108.Caption := 'This key already used.'
@@ -421,7 +478,6 @@ begin
   else
     begin
       TsPanel(Sender).Caption := VirtualKeyCodeToKeyName(keyCode);
-      TsPanel(Sender).Color := clBtnFace;
       if Pem_psx_sound.Tag = 1 then
         sLabel108.Caption := ''
       else if Pem_psx_others.Tag = 1 then
@@ -532,6 +588,12 @@ begin
     Zinc_FilterEnabled
   else if TsCheckBox(Sender).Hint = 'Surround' then
     Zinc_SurroundLiteEnabled;
+end;
+
+procedure TConf.Zinc_Database(Sender: TObject);
+begin
+  if TsBitBtn(Sender).Hint = 'Back_ZincDatabaseSheet' then
+    BackToZinc_DatabaseSheet;
 end;
 
 procedure TConf.confEditor_Config_Set(Sender: TObject);
@@ -766,6 +828,14 @@ begin
     EraseMameDir(sComboBox72.Text)
   else if TsComboBox(Sender).Hint = 'Show_statistics' then
     ShowDatabaseStatsFor(sComboBox72.Text)
+  else if TsBitBtn(Sender).Hint = 'Back_DatabaseSheet' then
+    BackToDatabaseSheet
+  else if TsBitBtn(Sender).Hint = 'Tab_GameInfo' then
+    ShowMame_TabGameInfoClick
+  else if TsBitBtn(Sender).Hint = 'Tab_Media' then
+    ShowMame_TabMediaClick
+  else if TsBitBtn(Sender).Hint = 'Tab_Rom' then  
+    ShowMame_TabRomClick;
 end;
 
 procedure TConf.Mame_GlobalOrTopicSave(Sender: TObject);
@@ -1134,6 +1204,32 @@ begin
     WeatherWheelAction(WheelDelta,Handled)
   else if Cmenustate = 'wg_datetime' then
     DateTimeWheelAction(WheelDelta,Handled);    
+end;
+
+procedure TConf.OnMouseOverToolTip(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+  if TsEdit(Sender).Tag > 1000 then
+    ShowToolTip(TsEdit(Sender).Name,'Edit')
+  else if TsLabel(Sender).Tag > 1000 then
+    ShowToolTip(TsLabel(Sender).Name,'Label');
+end;
+
+procedure TConf.nxtgrd_mameCellDblClick(Sender: TObject; ACol,
+  ARow: Integer);
+begin
+  ShowMameGameInfoPanel(nxtgrd_mame.Cell[1,ARow].AsString,nxtgrd_mame.Cell[2,ARow].AsString);
+end;
+
+procedure TConf.nxtgrd_zincCellDblClick(Sender: TObject; ACol,
+  ARow: Integer);
+begin
+  ShowZincGameInfoPanel(nxtgrd_zinc.Cell[1,Arow].AsString,nxtgrd_zinc.Cell[2,Arow].AsString);
+end;
+
+procedure TConf.Search1Click(Sender: TObject);
+begin
+  fSearch.Show;
 end;
 
 end.

@@ -1,6 +1,9 @@
 program ExtraFe;
 
 {%ToDo 'ExtraFe.todo'}
+{%File 'dlls\7z.dll'}
+{%File 'dlls\bass.dll'}
+{%File 'dlls\VampyreImaging.dll'}
 
 uses
   Forms,
@@ -19,7 +22,9 @@ uses
   vitru_key in 'code\special\vitru_key.pas',
   zinc in 'code\arcade\zinc.pas',
   mame_res in 'code\arcade\mame_res.pas',
-  zinc_res in 'code\arcade\zinc_res.pas';
+  zinc_res in 'code\arcade\zinc_res.pas',
+  DSiWin32 in 'code\special\DSiWin32.pas',
+  mame_upper in 'code\arcade\mame_upper.pas';
 
 {$R *.res}
 

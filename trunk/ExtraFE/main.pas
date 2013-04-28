@@ -9,7 +9,9 @@ uses
   GLObjects, GLHUDObjects, GLMaterial, GLTexture, GLCadencer, GLBitmapFont,
   GLWindowsFont,GLColor,
   uBaseButton,uTweener, ExtCtrls,
-  GLSpaceText, GLParticleFX, GLBlur, AsyncTimer, BMDThread;
+  GLSpaceText, GLParticleFX, GLBlur, AsyncTimer, BMDThread,
+  DSiWin32, GLUserShader, GLRenderContextInfo,GLTextureFormat,OpenGLTokens,
+  GLContext,PasLibVlcPlayerUnit, JvExExtCtrls, JvExtComponent, JvPanel;
 
   type
   TMainForm = class(TForm)
@@ -52,8 +54,18 @@ uses
     GLLightSource2: TGLLightSource;
     GLDummyCube_Intro: TGLDummyCube;
     GLHUDText_Loading: TGLHUDText;
-    GLSprite_Cursor: TGLSprite;
     GLLightSource3: TGLLightSource;
+    dc_blurS: TGLDummyCube;
+    Hud_BlurS: TGLHUDSprite;
+    MatLib1: TGLMaterialLibrary;
+    Hud_Shandow: TGLHUDSprite;
+    Dummy_VirtualKey: TGLDummyCube;
+    Dummy_virtualtext: TGLDummyCube;
+    Dummy_info: TGLDummyCube;
+    Dummy_infotext: TGLDummyCube;
+    mvp: TGLMemoryViewer;
+    video: TPanel;
+    Timer_MameImageRolling: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure GLCadencerProgress(Sender: TObject; const deltaTime,
@@ -61,6 +73,10 @@ uses
     function IsMouseOverImage(const AButton: TGLHudSprite; const X, Y: Integer): Boolean;
     procedure GLSceneViewerMouseMove(Sender: TObject; Shift: TShiftState;
       X, Y: Integer);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure Timer_MameImageRollingTimer(Sender: TObject);
+    procedure GLSceneViewerAfterRender(Sender: TObject);
   private
     { Private declarations }
   public
@@ -71,6 +87,8 @@ uses
 var
 // SceneList = (0.intro) (1.MainMenu) (2.Mame) (3.Zinc)
 //   (4.Atari ST) (5.Playstation) (6.Gameboy) (7.Widgets)
+
+  ProgramPath: String;
 
   EmuList: array [0..7] of Boolean;
   fromback: Boolean;
@@ -86,16 +104,23 @@ var
 
   oldPick: TGLCustomSceneObject;
 
+  PlayVideo: Boolean;
+
+  MyVideo: TPasLibVlcPlayer;
+
+
+  handleMouseMoves: boolean;
 implementation
 
 {$R *.dfm}
 
 uses
   main_menu,used_pro,jpeg,loadT,
-  mame,zinc;
+  mame,zinc,vitru_key;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
+  ProgramPath := ExtractFilePath(Application.ExeName);
   if MatLib=nil then
     MatLib := TGLMaterialLibrary.Create(MainForm);
   Frequency := GetDisplayFrequency;
@@ -104,6 +129,7 @@ begin
   TurnNum := 10;
   ActiveScene(0);
   fromback := False;
+  PlayVideo := False;
 end;
 
 procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -151,62 +177,36 @@ end;
 
 procedure TMainForm.GLSceneViewerMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
- var
-	pick : TGLCustomSceneObject;
 begin
-	// find what's under the mouse
-	pick:=(GLSceneViewer.Buffer.GetPickedObject(x, y) as TGLCustomSceneObject);
-	// if it has changed since last MouseMove...
-	if (pick<>oldPick)then begin
-		// ...turn to black previous "hot" object...
-		if Assigned(oldPick) then
-			oldPick.Material.FrontProperties.Emission.Color:=clrBlack;
-		// ...and heat up the new selection...
-		if Assigned(pick) then
-			pick.Material.FrontProperties.Emission.Color:=clrRed;
-		// ...and don't forget it !
-		oldPick:=pick;
-	end;
-
-//  if EmuList[1] = True then
-//    begin
-//      GLSprite_Cursor.Position.X := X;
-//      GLSprite_Cursor.Position.Y := Y;
-//      GLCadencer.Progress;
-//    end;
-end;
-{
-procedure TForm1.GLSceneViewer1MouseMove(Sender: TObject;
-  Shift: TShiftState; X, Y: Integer);
-var
-	pick : TGLCustomSceneObject;
-begin
-	// find what's under the mouse
-	pick:=(GLSceneViewer1.Buffer.GetPickedObject(x, y) as TGLCustomSceneObject);
-	// if it has changed since last MouseMove...
-	if (pick<>oldPick) then begin
-		// ...turn to black previous "hot" object...
-		if Assigned(oldPick) then
-			oldPick.Material.FrontProperties.Emission.Color:=clrBlack;
-		// ...and heat up the new selection...
-		if Assigned(pick) then
-			pick.Material.FrontProperties.Emission.Color:=clrRed;
-		// ...and don't forget it !
-		oldPick:=pick;
-	end;
+//
 end;
 
-procedure TForm1.GLSceneViewer1MouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-var
-	pick : TGLCustomSceneObject;
+
+procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
-	// if an object is picked...
-	pick:=(GLSceneViewer1.Buffer.GetPickedObject(x, y) as TGLCustomSceneObject);
-	if Assigned(pick) then begin
-		// ...turn it to yellow and show its name
-		pick.Material.FrontProperties.Emission.Color:=clrYellow;
-		ShowMessage('You clicked the '+pick.Name);
-	end;}
+  if IsVKeyboardShowing = true then
+    DoVSAction(Key,Shift);
+end;
+
+procedure TMainForm.Timer_MameImageRollingTimer(Sender: TObject);
+begin
+  if fSnapImgCountState < fImgSnapNumOld - 1 then
+    begin
+      frLed.Position.X := frLed.Position.X + 30;
+      fSnapImgCountState := fSnapImgCountState + 1;
+    end
+  else
+    begin
+      frLed.Position.X := 530;
+      fSnapImgCountState := 0;
+    end;
+  IsImgShowed := false;
+end;
+
+procedure TMainForm.GLSceneViewerAfterRender(Sender: TObject);
+begin
+  handleMouseMoves := true;
+end;
 
 end.
